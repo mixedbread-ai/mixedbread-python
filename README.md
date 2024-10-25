@@ -40,6 +40,11 @@ file_object = client.files.create(
 print(file_object.user_id)
 ```
 
+While you can provide an `api_key` keyword argument,
+we recommend using [python-dotenv](https://pypi.org/project/python-dotenv/)
+to add `API_KEY="My API Key"` to your `.env` file
+so that your API Key is not stored in source control.
+
 ## Async usage
 
 Simply import `AsyncMixedbread` instead of `Mixedbread` and use `await` with each API call:

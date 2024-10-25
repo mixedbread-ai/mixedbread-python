@@ -12,3 +12,5 @@ from .job_delete_response import JobDeleteResponse as JobDeleteResponse
 from .job_status_response import JobStatusResponse as JobStatusResponse
 from .embedding_create_params import EmbeddingCreateParams as EmbeddingCreateParams
 from .embedding_create_response import EmbeddingCreateResponse as EmbeddingCreateResponse
+from .service_status_rerank_params import ServiceStatusRerankParams as ServiceStatusRerankParams
+from .service_status_rerank_response import ServiceStatusRerankResponse as ServiceStatusRerankResponse

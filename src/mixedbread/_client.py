@@ -25,7 +25,7 @@ from ._utils import (
 )
 from ._version import __version__
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
-from ._exceptions import APIStatusError
+from ._exceptions import APIStatusError, MixedbreadError
 from ._base_client import (
     DEFAULT_MAX_RETRIES,
     SyncAPIClient,
@@ -61,12 +61,14 @@ class Mixedbread(SyncAPIClient):
     with_streaming_response: MixedbreadWithStreamedResponse
 
     # client options
+    api_key: str
 
     _environment: Literal["production", "environment_1"] | NotGiven
 
     def __init__(
         self,
         *,
+        api_key: str | None = None,
         environment: Literal["production", "environment_1"] | NotGiven = NOT_GIVEN,
         base_url: str | httpx.URL | None | NotGiven = NOT_GIVEN,
         timeout: Union[float, Timeout, None, NotGiven] = NOT_GIVEN,
@@ -87,7 +89,18 @@ class Mixedbread(SyncAPIClient):
         # part of our public interface in the future.
         _strict_response_validation: bool = False,
     ) -> None:
-        """Construct a new synchronous mixedbread client instance."""
+        """Construct a new synchronous mixedbread client instance.
+
+        This automatically infers the `api_key` argument from the `API_KEY` environment variable if it is not provided.
+        """
+        if api_key is None:
+            api_key = os.environ.get("API_KEY")
+        if api_key is None:
+            raise MixedbreadError(
+                "The api_key client option must be set either by passing api_key to the client or by setting the API_KEY environment variable"
+            )
+        self.api_key = api_key
+
         self._environment = environment
 
         base_url_env = os.environ.get("MIXEDBREAD_BASE_URL")
@@ -140,6 +153,12 @@ class Mixedbread(SyncAPIClient):
 
     @property
     @override
+    def auth_headers(self) -> dict[str, str]:
+        api_key = self.api_key
+        return {"Authorization": api_key}
+
+    @property
+    @override
     def default_headers(self) -> dict[str, str | Omit]:
         return {
             **super().default_headers,
@@ -150,6 +169,7 @@ class Mixedbread(SyncAPIClient):
     def copy(
         self,
         *,
+        api_key: str | None = None,
         environment: Literal["production", "environment_1"] | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = NOT_GIVEN,
@@ -184,6 +204,7 @@ class Mixedbread(SyncAPIClient):
 
         http_client = http_client or self._client
         return self.__class__(
+            api_key=api_key or self.api_key,
             base_url=base_url or self.base_url,
             environment=environment or self._environment,
             timeout=self.timeout if isinstance(timeout, NotGiven) else timeout,
@@ -242,12 +263,14 @@ class AsyncMixedbread(AsyncAPIClient):
     with_streaming_response: AsyncMixedbreadWithStreamedResponse
 
     # client options
+    api_key: str
 
     _environment: Literal["production", "environment_1"] | NotGiven
 
     def __init__(
         self,
         *,
+        api_key: str | None = None,
         environment: Literal["production", "environment_1"] | NotGiven = NOT_GIVEN,
         base_url: str | httpx.URL | None | NotGiven = NOT_GIVEN,
         timeout: Union[float, Timeout, None, NotGiven] = NOT_GIVEN,
@@ -268,7 +291,18 @@ class AsyncMixedbread(AsyncAPIClient):
         # part of our public interface in the future.
         _strict_response_validation: bool = False,
     ) -> None:
-        """Construct a new async mixedbread client instance."""
+        """Construct a new async mixedbread client instance.
+
+        This automatically infers the `api_key` argument from the `API_KEY` environment variable if it is not provided.
+        """
+        if api_key is None:
+            api_key = os.environ.get("API_KEY")
+        if api_key is None:
+            raise MixedbreadError(
+                "The api_key client option must be set either by passing api_key to the client or by setting the API_KEY environment variable"
+            )
+        self.api_key = api_key
+
         self._environment = environment
 
         base_url_env = os.environ.get("MIXEDBREAD_BASE_URL")
@@ -321,6 +355,12 @@ class AsyncMixedbread(AsyncAPIClient):
 
     @property
     @override
+    def auth_headers(self) -> dict[str, str]:
+        api_key = self.api_key
+        return {"Authorization": api_key}
+
+    @property
+    @override
     def default_headers(self) -> dict[str, str | Omit]:
         return {
             **super().default_headers,
@@ -331,6 +371,7 @@ class AsyncMixedbread(AsyncAPIClient):
     def copy(
         self,
         *,
+        api_key: str | None = None,
         environment: Literal["production", "environment_1"] | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = NOT_GIVEN,
@@ -365,6 +406,7 @@ class AsyncMixedbread(AsyncAPIClient):
 
         http_client = http_client or self._client
         return self.__class__(
+            api_key=api_key or self.api_key,
             base_url=base_url or self.base_url,
             environment=environment or self._environment,
             timeout=self.timeout if isinstance(timeout, NotGiven) else timeout,
