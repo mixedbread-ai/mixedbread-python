@@ -3,13 +3,12 @@
 Types:
 
 ```python
-from mixedbread.types import InfoResponse, ServiceStatusRerankResponse
+from mixedbread.types import InfoResponse
 ```
 
 Methods:
 
 - <code title="get /">client.service_status.<a href="./src/mixedbread/resources/service_status.py">retrieve</a>() -> <a href="./src/mixedbread/types/info_response.py">InfoResponse</a></code>
-- <code title="post /v1/v1/reranking">client.service_status.<a href="./src/mixedbread/resources/service_status.py">rerank</a>(\*\*<a href="src/mixedbread/types/service_status_rerank_params.py">params</a>) -> <a href="./src/mixedbread/types/service_status_rerank_response.py">ServiceStatusRerankResponse</a></code>
 
 # Di
 

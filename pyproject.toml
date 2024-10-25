@@ -5,7 +5,7 @@ description = "The official Python library for the mixedbread API"
 dynamic = ["readme"]
 license = "Apache-2.0"
 authors = [
-{ name = "Mixedbread", email = "dev-feedback@mixedbread.com" },
+{ name = "Mixedbread", email = "support@mixedbread.com" },
 ]
 dependencies = [
     "httpx>=0.23.0, <1",
