@@ -1,5 +1,13 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
+from .di import (
+    DiResource,
+    AsyncDiResource,
+    DiResourceWithRawResponse,
+    AsyncDiResourceWithRawResponse,
+    DiResourceWithStreamingResponse,
+    AsyncDiResourceWithStreamingResponse,
+)
 from .jobs import (
     JobsResource,
     AsyncJobsResource,
@@ -16,36 +24,36 @@ from .files import (
     FilesResourceWithStreamingResponse,
     AsyncFilesResourceWithStreamingResponse,
 )
-from .base_status import (
-    BaseStatusResource,
-    AsyncBaseStatusResource,
-    BaseStatusResourceWithRawResponse,
-    AsyncBaseStatusResourceWithRawResponse,
-    BaseStatusResourceWithStreamingResponse,
-    AsyncBaseStatusResourceWithStreamingResponse,
+from .embeddings import (
+    EmbeddingsResource,
+    AsyncEmbeddingsResource,
+    EmbeddingsResourceWithRawResponse,
+    AsyncEmbeddingsResourceWithRawResponse,
+    EmbeddingsResourceWithStreamingResponse,
+    AsyncEmbeddingsResourceWithStreamingResponse,
 )
-from .document_intelligence import (
-    DocumentIntelligenceResource,
-    AsyncDocumentIntelligenceResource,
-    DocumentIntelligenceResourceWithRawResponse,
-    AsyncDocumentIntelligenceResourceWithRawResponse,
-    DocumentIntelligenceResourceWithStreamingResponse,
-    AsyncDocumentIntelligenceResourceWithStreamingResponse,
+from .service_status import (
+    ServiceStatusResource,
+    AsyncServiceStatusResource,
+    ServiceStatusResourceWithRawResponse,
+    AsyncServiceStatusResourceWithRawResponse,
+    ServiceStatusResourceWithStreamingResponse,
+    AsyncServiceStatusResourceWithStreamingResponse,
 )
 
 __all__ = [
-    "BaseStatusResource",
-    "AsyncBaseStatusResource",
-    "BaseStatusResourceWithRawResponse",
-    "AsyncBaseStatusResourceWithRawResponse",
-    "BaseStatusResourceWithStreamingResponse",
-    "AsyncBaseStatusResourceWithStreamingResponse",
-    "DocumentIntelligenceResource",
-    "AsyncDocumentIntelligenceResource",
-    "DocumentIntelligenceResourceWithRawResponse",
-    "AsyncDocumentIntelligenceResourceWithRawResponse",
-    "DocumentIntelligenceResourceWithStreamingResponse",
-    "AsyncDocumentIntelligenceResourceWithStreamingResponse",
+    "ServiceStatusResource",
+    "AsyncServiceStatusResource",
+    "ServiceStatusResourceWithRawResponse",
+    "AsyncServiceStatusResourceWithRawResponse",
+    "ServiceStatusResourceWithStreamingResponse",
+    "AsyncServiceStatusResourceWithStreamingResponse",
+    "DiResource",
+    "AsyncDiResource",
+    "DiResourceWithRawResponse",
+    "AsyncDiResourceWithRawResponse",
+    "DiResourceWithStreamingResponse",
+    "AsyncDiResourceWithStreamingResponse",
     "FilesResource",
     "AsyncFilesResource",
     "FilesResourceWithRawResponse",
@@ -58,4 +66,10 @@ __all__ = [
     "AsyncJobsResourceWithRawResponse",
     "JobsResourceWithStreamingResponse",
     "AsyncJobsResourceWithStreamingResponse",
+    "EmbeddingsResource",
+    "AsyncEmbeddingsResource",
+    "EmbeddingsResourceWithRawResponse",
+    "AsyncEmbeddingsResourceWithRawResponse",
+    "EmbeddingsResourceWithStreamingResponse",
+    "AsyncEmbeddingsResourceWithStreamingResponse",
 ]

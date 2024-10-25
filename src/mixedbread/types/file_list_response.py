@@ -1,38 +1,24 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 from typing import List, Optional
-from datetime import datetime
 
 from .._models import BaseModel
+from .file_object import FileObject
 
-__all__ = ["FileListResponse", "Data", "Pagination"]
-
-
-class Data(BaseModel):
-    mime_type: str
-
-    name: str
-
-    size: int
-
-    user_id: str
-
-    id: Optional[str] = None
-
-    created_at: Optional[datetime] = None
-
-    updated_at: Optional[datetime] = None
+__all__ = ["FileListResponse", "Pagination"]
 
 
 class Pagination(BaseModel):
     total: int
 
-    limit: Optional[int] = None
+    after: Optional[str] = None
+    """The cursor after which to paginate"""
 
-    offset: Optional[int] = None
+    limit: Optional[int] = None
+    """The maximum number of items to return"""
 
 
 class FileListResponse(BaseModel):
-    data: List[Data]
+    data: List[FileObject]
 
     pagination: Pagination

@@ -676,13 +676,11 @@ class TestMixedbread:
     @mock.patch("mixedbread._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
-        respx_mock.post("/v1/document-intelligence/parse").mock(
-            side_effect=httpx.TimeoutException("Test timeout error")
-        )
+        respx_mock.post("/v1/files").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
             self.client.post(
-                "/v1/document-intelligence/parse",
+                "/v1/files",
                 body=cast(object, dict(file=b"raw file contents")),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
@@ -693,11 +691,11 @@ class TestMixedbread:
     @mock.patch("mixedbread._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
-        respx_mock.post("/v1/document-intelligence/parse").mock(return_value=httpx.Response(500))
+        respx_mock.post("/v1/files").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
             self.client.post(
-                "/v1/document-intelligence/parse",
+                "/v1/files",
                 body=cast(object, dict(file=b"raw file contents")),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
@@ -729,9 +727,9 @@ class TestMixedbread:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v1/document-intelligence/parse").mock(side_effect=retry_handler)
+        respx_mock.post("/v1/files").mock(side_effect=retry_handler)
 
-        response = client.document_intelligence.parse.with_raw_response.create(file=b"raw file contents")
+        response = client.files.with_raw_response.create(file=b"raw file contents")
 
         assert response.retries_taken == failures_before_success
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
@@ -753,9 +751,9 @@ class TestMixedbread:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v1/document-intelligence/parse").mock(side_effect=retry_handler)
+        respx_mock.post("/v1/files").mock(side_effect=retry_handler)
 
-        response = client.document_intelligence.parse.with_raw_response.create(
+        response = client.files.with_raw_response.create(
             file=b"raw file contents", extra_headers={"x-stainless-retry-count": Omit()}
         )
 
@@ -778,9 +776,9 @@ class TestMixedbread:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v1/document-intelligence/parse").mock(side_effect=retry_handler)
+        respx_mock.post("/v1/files").mock(side_effect=retry_handler)
 
-        response = client.document_intelligence.parse.with_raw_response.create(
+        response = client.files.with_raw_response.create(
             file=b"raw file contents", extra_headers={"x-stainless-retry-count": "42"}
         )
 
@@ -1419,13 +1417,11 @@ class TestAsyncMixedbread:
     @mock.patch("mixedbread._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     async def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
-        respx_mock.post("/v1/document-intelligence/parse").mock(
-            side_effect=httpx.TimeoutException("Test timeout error")
-        )
+        respx_mock.post("/v1/files").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
             await self.client.post(
-                "/v1/document-intelligence/parse",
+                "/v1/files",
                 body=cast(object, dict(file=b"raw file contents")),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
@@ -1436,11 +1432,11 @@ class TestAsyncMixedbread:
     @mock.patch("mixedbread._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     async def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
-        respx_mock.post("/v1/document-intelligence/parse").mock(return_value=httpx.Response(500))
+        respx_mock.post("/v1/files").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
             await self.client.post(
-                "/v1/document-intelligence/parse",
+                "/v1/files",
                 body=cast(object, dict(file=b"raw file contents")),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
@@ -1473,9 +1469,9 @@ class TestAsyncMixedbread:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v1/document-intelligence/parse").mock(side_effect=retry_handler)
+        respx_mock.post("/v1/files").mock(side_effect=retry_handler)
 
-        response = await client.document_intelligence.parse.with_raw_response.create(file=b"raw file contents")
+        response = await client.files.with_raw_response.create(file=b"raw file contents")
 
         assert response.retries_taken == failures_before_success
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
@@ -1498,9 +1494,9 @@ class TestAsyncMixedbread:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v1/document-intelligence/parse").mock(side_effect=retry_handler)
+        respx_mock.post("/v1/files").mock(side_effect=retry_handler)
 
-        response = await client.document_intelligence.parse.with_raw_response.create(
+        response = await client.files.with_raw_response.create(
             file=b"raw file contents", extra_headers={"x-stainless-retry-count": Omit()}
         )
 
@@ -1524,9 +1520,9 @@ class TestAsyncMixedbread:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v1/document-intelligence/parse").mock(side_effect=retry_handler)
+        respx_mock.post("/v1/files").mock(side_effect=retry_handler)
 
-        response = await client.document_intelligence.parse.with_raw_response.create(
+        response = await client.files.with_raw_response.create(
             file=b"raw file contents", extra_headers={"x-stainless-retry-count": "42"}
         )
 

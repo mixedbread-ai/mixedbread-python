@@ -34,10 +34,10 @@ client = Mixedbread(
     environment="environment_1",
 )
 
-parse_response = client.document_intelligence.parse.create(
+file_object = client.files.create(
     file=b"raw file contents",
 )
-print(parse_response.data)
+print(file_object.user_id)
 ```
 
 ## Async usage
@@ -55,10 +55,10 @@ client = AsyncMixedbread(
 
 
 async def main() -> None:
-    parse_response = await client.document_intelligence.parse.create(
+    file_object = await client.files.create(
         file=b"raw file contents",
     )
-    print(parse_response.data)
+    print(file_object.user_id)
 
 
 asyncio.run(main())
@@ -91,7 +91,7 @@ from mixedbread import Mixedbread
 client = Mixedbread()
 
 try:
-    client.document_intelligence.parse.create(
+    client.files.create(
         file=b"raw file contents",
     )
 except mixedbread.APIConnectionError as e:
@@ -136,7 +136,7 @@ client = Mixedbread(
 )
 
 # Or, configure per-request:
-client.with_options(max_retries=5).document_intelligence.parse.create(
+client.with_options(max_retries=5).files.create(
     file=b"raw file contents",
 )
 ```
@@ -161,7 +161,7 @@ client = Mixedbread(
 )
 
 # Override per-request:
-client.with_options(timeout=5.0).document_intelligence.parse.create(
+client.with_options(timeout=5.0).files.create(
     file=b"raw file contents",
 )
 ```
@@ -202,13 +202,13 @@ The "raw" Response object can be accessed by prefixing `.with_raw_response.` to 
 from mixedbread import Mixedbread
 
 client = Mixedbread()
-response = client.document_intelligence.parse.with_raw_response.create(
+response = client.files.with_raw_response.create(
     file=b'raw file contents',
 )
 print(response.headers.get('X-My-Header'))
 
-parse = response.parse()  # get the object that `document_intelligence.parse.create()` would have returned
-print(parse.data)
+file = response.parse()  # get the object that `files.create()` would have returned
+print(file.user_id)
 ```
 
 These methods return an [`APIResponse`](https://github.com/stainless-sdks/mixedbread-python/tree/main/src/mixedbread/_response.py) object.
@@ -222,7 +222,7 @@ The above interface eagerly reads the full response body when you make the reque
 To stream the response body, use `.with_streaming_response` instead, which requires a context manager and only reads the response body once you call `.read()`, `.text()`, `.json()`, `.iter_bytes()`, `.iter_text()`, `.iter_lines()` or `.parse()`. In the async client, these are async methods.
 
 ```python
-with client.document_intelligence.parse.with_streaming_response.create(
+with client.files.with_streaming_response.create(
     file=b"raw file contents",
 ) as response:
     print(response.headers.get("X-My-Header"))

@@ -52,10 +52,11 @@ ENVIRONMENTS: Dict[str, str] = {
 
 
 class Mixedbread(SyncAPIClient):
-    base_status: resources.BaseStatusResource
-    document_intelligence: resources.DocumentIntelligenceResource
+    service_status: resources.ServiceStatusResource
+    di: resources.DiResource
     files: resources.FilesResource
     jobs: resources.JobsResource
+    embeddings: resources.EmbeddingsResource
     with_raw_response: MixedbreadWithRawResponse
     with_streaming_response: MixedbreadWithStreamedResponse
 
@@ -124,10 +125,11 @@ class Mixedbread(SyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.base_status = resources.BaseStatusResource(self)
-        self.document_intelligence = resources.DocumentIntelligenceResource(self)
+        self.service_status = resources.ServiceStatusResource(self)
+        self.di = resources.DiResource(self)
         self.files = resources.FilesResource(self)
         self.jobs = resources.JobsResource(self)
+        self.embeddings = resources.EmbeddingsResource(self)
         self.with_raw_response = MixedbreadWithRawResponse(self)
         self.with_streaming_response = MixedbreadWithStreamedResponse(self)
 
@@ -231,10 +233,11 @@ class Mixedbread(SyncAPIClient):
 
 
 class AsyncMixedbread(AsyncAPIClient):
-    base_status: resources.AsyncBaseStatusResource
-    document_intelligence: resources.AsyncDocumentIntelligenceResource
+    service_status: resources.AsyncServiceStatusResource
+    di: resources.AsyncDiResource
     files: resources.AsyncFilesResource
     jobs: resources.AsyncJobsResource
+    embeddings: resources.AsyncEmbeddingsResource
     with_raw_response: AsyncMixedbreadWithRawResponse
     with_streaming_response: AsyncMixedbreadWithStreamedResponse
 
@@ -303,10 +306,11 @@ class AsyncMixedbread(AsyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.base_status = resources.AsyncBaseStatusResource(self)
-        self.document_intelligence = resources.AsyncDocumentIntelligenceResource(self)
+        self.service_status = resources.AsyncServiceStatusResource(self)
+        self.di = resources.AsyncDiResource(self)
         self.files = resources.AsyncFilesResource(self)
         self.jobs = resources.AsyncJobsResource(self)
+        self.embeddings = resources.AsyncEmbeddingsResource(self)
         self.with_raw_response = AsyncMixedbreadWithRawResponse(self)
         self.with_streaming_response = AsyncMixedbreadWithStreamedResponse(self)
 
@@ -411,40 +415,38 @@ class AsyncMixedbread(AsyncAPIClient):
 
 class MixedbreadWithRawResponse:
     def __init__(self, client: Mixedbread) -> None:
-        self.base_status = resources.BaseStatusResourceWithRawResponse(client.base_status)
-        self.document_intelligence = resources.DocumentIntelligenceResourceWithRawResponse(client.document_intelligence)
+        self.service_status = resources.ServiceStatusResourceWithRawResponse(client.service_status)
+        self.di = resources.DiResourceWithRawResponse(client.di)
         self.files = resources.FilesResourceWithRawResponse(client.files)
         self.jobs = resources.JobsResourceWithRawResponse(client.jobs)
+        self.embeddings = resources.EmbeddingsResourceWithRawResponse(client.embeddings)
 
 
 class AsyncMixedbreadWithRawResponse:
     def __init__(self, client: AsyncMixedbread) -> None:
-        self.base_status = resources.AsyncBaseStatusResourceWithRawResponse(client.base_status)
-        self.document_intelligence = resources.AsyncDocumentIntelligenceResourceWithRawResponse(
-            client.document_intelligence
-        )
+        self.service_status = resources.AsyncServiceStatusResourceWithRawResponse(client.service_status)
+        self.di = resources.AsyncDiResourceWithRawResponse(client.di)
         self.files = resources.AsyncFilesResourceWithRawResponse(client.files)
         self.jobs = resources.AsyncJobsResourceWithRawResponse(client.jobs)
+        self.embeddings = resources.AsyncEmbeddingsResourceWithRawResponse(client.embeddings)
 
 
 class MixedbreadWithStreamedResponse:
     def __init__(self, client: Mixedbread) -> None:
-        self.base_status = resources.BaseStatusResourceWithStreamingResponse(client.base_status)
-        self.document_intelligence = resources.DocumentIntelligenceResourceWithStreamingResponse(
-            client.document_intelligence
-        )
+        self.service_status = resources.ServiceStatusResourceWithStreamingResponse(client.service_status)
+        self.di = resources.DiResourceWithStreamingResponse(client.di)
         self.files = resources.FilesResourceWithStreamingResponse(client.files)
         self.jobs = resources.JobsResourceWithStreamingResponse(client.jobs)
+        self.embeddings = resources.EmbeddingsResourceWithStreamingResponse(client.embeddings)
 
 
 class AsyncMixedbreadWithStreamedResponse:
     def __init__(self, client: AsyncMixedbread) -> None:
-        self.base_status = resources.AsyncBaseStatusResourceWithStreamingResponse(client.base_status)
-        self.document_intelligence = resources.AsyncDocumentIntelligenceResourceWithStreamingResponse(
-            client.document_intelligence
-        )
+        self.service_status = resources.AsyncServiceStatusResourceWithStreamingResponse(client.service_status)
+        self.di = resources.AsyncDiResourceWithStreamingResponse(client.di)
         self.files = resources.AsyncFilesResourceWithStreamingResponse(client.files)
         self.jobs = resources.AsyncJobsResourceWithStreamingResponse(client.jobs)
+        self.embeddings = resources.AsyncEmbeddingsResourceWithStreamingResponse(client.embeddings)
 
 
 Client = Mixedbread

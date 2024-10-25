@@ -4,11 +4,11 @@ from __future__ import annotations
 
 from typing_extensions import Required, TypedDict
 
-from .._types import FileTypes
+from ..._types import FileTypes
 
-__all__ = ["FileCreateParams"]
+__all__ = ["ParseCreateParams"]
 
 
-class FileCreateParams(TypedDict, total=False):
+class ParseCreateParams(TypedDict, total=False):
     file: Required[FileTypes]
-    """The file to upload"""
+    """The file to parse information from"""
