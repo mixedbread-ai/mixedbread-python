@@ -2,11 +2,11 @@
 
 from __future__ import annotations
 
-from typing import List
+from typing import Optional
 
 import httpx
 
-from ...types import file_create_params, file_update_params
+from ...types import file_list_params, file_create_params, file_update_params
 from .content import (
     ContentResource,
     AsyncContentResource,
@@ -15,7 +15,7 @@ from .content import (
     ContentResourceWithStreamingResponse,
     AsyncContentResourceWithStreamingResponse,
 )
-from ..._types import NOT_GIVEN, Body, Query, Headers, NoneType, NotGiven, FileTypes
+from ..._types import NOT_GIVEN, Body, Query, Headers, NotGiven, FileTypes
 from ..._utils import (
     maybe_transform,
     async_maybe_transform,
@@ -29,9 +29,8 @@ from ..._response import (
     async_to_streamed_response_wrapper,
 )
 from ..._base_client import make_request_options
-from ...types.file_response import FileResponse
+from ...types.file_object import FileObject
 from ...types.file_list_response import FileListResponse
-from ...types.file_update_response import FileUpdateResponse
 
 __all__ = ["FilesResource", "AsyncFilesResource"]
 
@@ -63,25 +62,24 @@ class FilesResource(SyncAPIResource):
     def create(
         self,
         *,
-        files: List[FileTypes],
+        file: FileTypes,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> FileResponse:
-        """
-        Upload new files or update existing ones.
+    ) -> FileObject:
+        """Upload a new file.
 
-        Args: file_upload: FileUploadRequest object containing the files and their
-        purposes. state: The application state.
+        Args: file: The file to upload.
 
-        Returns: FileResponse: The response containing the details of the uploaded
-        files.
+        state: The application state.
+
+        Returns: FileResponse: The response containing the details of the uploaded file.
 
         Args:
-          files: The files to upload
+          file: The file to upload
 
           extra_headers: Send extra headers
 
@@ -93,11 +91,11 @@ class FilesResource(SyncAPIResource):
         """
         return self._post(
             "/v1/files",
-            body=maybe_transform({"files": files}, file_create_params.FileCreateParams),
+            body=maybe_transform({"file": file}, file_create_params.FileCreateParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=FileResponse,
+            cast_to=FileObject,
         )
 
     def retrieve(
@@ -110,7 +108,7 @@ class FilesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> FileResponse:
+    ) -> FileObject:
         """
         Retrieve details of a specific file by its ID.
 
@@ -134,7 +132,7 @@ class FilesResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=FileResponse,
+            cast_to=FileObject,
         )
 
     def update(
@@ -148,14 +146,14 @@ class FilesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> FileUpdateResponse:
+    ) -> FileObject:
         """
         Update the details of a specific file.
 
         Args: file_id: The ID of the file to update. file_update: The new details for
         the file. state: The application state.
 
-        Returns: FileResponse: The response containing the updated file details.
+        Returns: FileObject: The updated file details.
 
         Args:
           file_id: The ID of the file to update
@@ -178,12 +176,14 @@ class FilesResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=FileUpdateResponse,
+            cast_to=FileObject,
         )
 
     def list(
         self,
         *,
+        after: Optional[str] | NotGiven = NOT_GIVEN,
+        limit: int | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -197,11 +197,34 @@ class FilesResource(SyncAPIResource):
         Args: state: The application state.
 
         Returns: A list of files belonging to the user.
+
+        Args:
+          after: The cursor after which to paginate
+
+          limit: The maximum number of items to return
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
         """
         return self._get(
             "/v1/files",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "after": after,
+                        "limit": limit,
+                    },
+                    file_list_params.FileListParams,
+                ),
             ),
             cast_to=FileListResponse,
         )
@@ -216,13 +239,14 @@ class FilesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> None:
-        """
-        Delete a specific file by its ID.
+    ) -> FileObject:
+        """Delete a specific file by its ID.
 
-        Args: file_name: The name of the file to delete. state: The application state.
+        Args: file_id: The ID of the file to delete.
 
-        Returns: None
+        state: The application state.
+
+        Returns: FileDeleted: The response containing the details of the deleted file.
 
         Args:
           extra_headers: Send extra headers
@@ -235,13 +259,12 @@ class FilesResource(SyncAPIResource):
         """
         if not file_id:
             raise ValueError(f"Expected a non-empty value for `file_id` but received {file_id!r}")
-        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return self._delete(
             f"/v1/files/{file_id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=NoneType,
+            cast_to=FileObject,
         )
 
 
@@ -272,25 +295,24 @@ class AsyncFilesResource(AsyncAPIResource):
     async def create(
         self,
         *,
-        files: List[FileTypes],
+        file: FileTypes,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> FileResponse:
-        """
-        Upload new files or update existing ones.
+    ) -> FileObject:
+        """Upload a new file.
 
-        Args: file_upload: FileUploadRequest object containing the files and their
-        purposes. state: The application state.
+        Args: file: The file to upload.
 
-        Returns: FileResponse: The response containing the details of the uploaded
-        files.
+        state: The application state.
+
+        Returns: FileResponse: The response containing the details of the uploaded file.
 
         Args:
-          files: The files to upload
+          file: The file to upload
 
           extra_headers: Send extra headers
 
@@ -302,11 +324,11 @@ class AsyncFilesResource(AsyncAPIResource):
         """
         return await self._post(
             "/v1/files",
-            body=await async_maybe_transform({"files": files}, file_create_params.FileCreateParams),
+            body=await async_maybe_transform({"file": file}, file_create_params.FileCreateParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=FileResponse,
+            cast_to=FileObject,
         )
 
     async def retrieve(
@@ -319,7 +341,7 @@ class AsyncFilesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> FileResponse:
+    ) -> FileObject:
         """
         Retrieve details of a specific file by its ID.
 
@@ -343,7 +365,7 @@ class AsyncFilesResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=FileResponse,
+            cast_to=FileObject,
         )
 
     async def update(
@@ -357,14 +379,14 @@ class AsyncFilesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> FileUpdateResponse:
+    ) -> FileObject:
         """
         Update the details of a specific file.
 
         Args: file_id: The ID of the file to update. file_update: The new details for
         the file. state: The application state.
 
-        Returns: FileResponse: The response containing the updated file details.
+        Returns: FileObject: The updated file details.
 
         Args:
           file_id: The ID of the file to update
@@ -387,12 +409,14 @@ class AsyncFilesResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=FileUpdateResponse,
+            cast_to=FileObject,
         )
 
     async def list(
         self,
         *,
+        after: Optional[str] | NotGiven = NOT_GIVEN,
+        limit: int | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -406,11 +430,34 @@ class AsyncFilesResource(AsyncAPIResource):
         Args: state: The application state.
 
         Returns: A list of files belonging to the user.
+
+        Args:
+          after: The cursor after which to paginate
+
+          limit: The maximum number of items to return
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
         """
         return await self._get(
             "/v1/files",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "after": after,
+                        "limit": limit,
+                    },
+                    file_list_params.FileListParams,
+                ),
             ),
             cast_to=FileListResponse,
         )
@@ -425,13 +472,14 @@ class AsyncFilesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> None:
-        """
-        Delete a specific file by its ID.
+    ) -> FileObject:
+        """Delete a specific file by its ID.
 
-        Args: file_name: The name of the file to delete. state: The application state.
+        Args: file_id: The ID of the file to delete.
 
-        Returns: None
+        state: The application state.
+
+        Returns: FileDeleted: The response containing the details of the deleted file.
 
         Args:
           extra_headers: Send extra headers
@@ -444,13 +492,12 @@ class AsyncFilesResource(AsyncAPIResource):
         """
         if not file_id:
             raise ValueError(f"Expected a non-empty value for `file_id` but received {file_id!r}")
-        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return await self._delete(
             f"/v1/files/{file_id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=NoneType,
+            cast_to=FileObject,
         )
 
 
