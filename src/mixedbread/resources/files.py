@@ -233,7 +233,7 @@ class FilesResource(SyncAPIResource):
 
         Args: file_id: The ID of the file to download. state: The application state.
 
-        Returns: FastAPIFileResponse: The response containing the file to be downloaded.
+        Returns: FileResponse: The response containing the file to be downloaded.
 
         Args:
           extra_headers: Send extra headers
@@ -500,7 +500,7 @@ class AsyncFilesResource(AsyncAPIResource):
 
         Args: file_id: The ID of the file to download. state: The application state.
 
-        Returns: FastAPIFileResponse: The response containing the file to be downloaded.
+        Returns: FileResponse: The response containing the file to be downloaded.
 
         Args:
           extra_headers: Send extra headers

@@ -57,6 +57,7 @@ class Mixedbread(SyncAPIClient):
     files: resources.FilesResource
     jobs: resources.JobsResource
     embeddings: resources.EmbeddingsResource
+    reranking: resources.RerankingResource
     with_raw_response: MixedbreadWithRawResponse
     with_streaming_response: MixedbreadWithStreamedResponse
 
@@ -143,6 +144,7 @@ class Mixedbread(SyncAPIClient):
         self.files = resources.FilesResource(self)
         self.jobs = resources.JobsResource(self)
         self.embeddings = resources.EmbeddingsResource(self)
+        self.reranking = resources.RerankingResource(self)
         self.with_raw_response = MixedbreadWithRawResponse(self)
         self.with_streaming_response = MixedbreadWithStreamedResponse(self)
 
@@ -259,6 +261,7 @@ class AsyncMixedbread(AsyncAPIClient):
     files: resources.AsyncFilesResource
     jobs: resources.AsyncJobsResource
     embeddings: resources.AsyncEmbeddingsResource
+    reranking: resources.AsyncRerankingResource
     with_raw_response: AsyncMixedbreadWithRawResponse
     with_streaming_response: AsyncMixedbreadWithStreamedResponse
 
@@ -345,6 +348,7 @@ class AsyncMixedbread(AsyncAPIClient):
         self.files = resources.AsyncFilesResource(self)
         self.jobs = resources.AsyncJobsResource(self)
         self.embeddings = resources.AsyncEmbeddingsResource(self)
+        self.reranking = resources.AsyncRerankingResource(self)
         self.with_raw_response = AsyncMixedbreadWithRawResponse(self)
         self.with_streaming_response = AsyncMixedbreadWithStreamedResponse(self)
 
@@ -462,6 +466,7 @@ class MixedbreadWithRawResponse:
         self.files = resources.FilesResourceWithRawResponse(client.files)
         self.jobs = resources.JobsResourceWithRawResponse(client.jobs)
         self.embeddings = resources.EmbeddingsResourceWithRawResponse(client.embeddings)
+        self.reranking = resources.RerankingResourceWithRawResponse(client.reranking)
 
 
 class AsyncMixedbreadWithRawResponse:
@@ -471,6 +476,7 @@ class AsyncMixedbreadWithRawResponse:
         self.files = resources.AsyncFilesResourceWithRawResponse(client.files)
         self.jobs = resources.AsyncJobsResourceWithRawResponse(client.jobs)
         self.embeddings = resources.AsyncEmbeddingsResourceWithRawResponse(client.embeddings)
+        self.reranking = resources.AsyncRerankingResourceWithRawResponse(client.reranking)
 
 
 class MixedbreadWithStreamedResponse:
@@ -480,6 +486,7 @@ class MixedbreadWithStreamedResponse:
         self.files = resources.FilesResourceWithStreamingResponse(client.files)
         self.jobs = resources.JobsResourceWithStreamingResponse(client.jobs)
         self.embeddings = resources.EmbeddingsResourceWithStreamingResponse(client.embeddings)
+        self.reranking = resources.RerankingResourceWithStreamingResponse(client.reranking)
 
 
 class AsyncMixedbreadWithStreamedResponse:
@@ -489,6 +496,7 @@ class AsyncMixedbreadWithStreamedResponse:
         self.files = resources.AsyncFilesResourceWithStreamingResponse(client.files)
         self.jobs = resources.AsyncJobsResourceWithStreamingResponse(client.jobs)
         self.embeddings = resources.AsyncEmbeddingsResourceWithStreamingResponse(client.embeddings)
+        self.reranking = resources.AsyncRerankingResourceWithStreamingResponse(client.reranking)
 
 
 Client = Mixedbread

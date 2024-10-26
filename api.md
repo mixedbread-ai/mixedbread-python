@@ -66,3 +66,15 @@ from mixedbread.types import EmbeddingCreateResponse
 Methods:
 
 - <code title="post /v1/embeddings">client.embeddings.<a href="./src/mixedbread/resources/embeddings.py">create</a>(\*\*<a href="src/mixedbread/types/embedding_create_params.py">params</a>) -> <a href="./src/mixedbread/types/embedding_create_response.py">EmbeddingCreateResponse</a></code>
+
+# Reranking
+
+Types:
+
+```python
+from mixedbread.types import RerankingCreateResponse
+```
+
+Methods:
+
+- <code title="post /v1/reranking">client.reranking.<a href="./src/mixedbread/resources/reranking.py">create</a>(\*\*<a href="src/mixedbread/types/reranking_create_params.py">params</a>) -> <a href="./src/mixedbread/types/reranking_create_response.py">RerankingCreateResponse</a></code>

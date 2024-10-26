@@ -24,6 +24,14 @@ from .files import (
     FilesResourceWithStreamingResponse,
     AsyncFilesResourceWithStreamingResponse,
 )
+from .reranking import (
+    RerankingResource,
+    AsyncRerankingResource,
+    RerankingResourceWithRawResponse,
+    AsyncRerankingResourceWithRawResponse,
+    RerankingResourceWithStreamingResponse,
+    AsyncRerankingResourceWithStreamingResponse,
+)
 from .embeddings import (
     EmbeddingsResource,
     AsyncEmbeddingsResource,
@@ -72,4 +80,10 @@ __all__ = [
     "AsyncEmbeddingsResourceWithRawResponse",
     "EmbeddingsResourceWithStreamingResponse",
     "AsyncEmbeddingsResourceWithStreamingResponse",
+    "RerankingResource",
+    "AsyncRerankingResource",
+    "RerankingResourceWithRawResponse",
+    "AsyncRerankingResourceWithRawResponse",
+    "RerankingResourceWithStreamingResponse",
+    "AsyncRerankingResourceWithStreamingResponse",
 ]

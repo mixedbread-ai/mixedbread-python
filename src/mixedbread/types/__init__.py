@@ -11,4 +11,6 @@ from .file_update_params import FileUpdateParams as FileUpdateParams
 from .job_delete_response import JobDeleteResponse as JobDeleteResponse
 from .job_status_response import JobStatusResponse as JobStatusResponse
 from .embedding_create_params import EmbeddingCreateParams as EmbeddingCreateParams
+from .reranking_create_params import RerankingCreateParams as RerankingCreateParams
 from .embedding_create_response import EmbeddingCreateResponse as EmbeddingCreateResponse
+from .reranking_create_response import RerankingCreateResponse as RerankingCreateResponse
