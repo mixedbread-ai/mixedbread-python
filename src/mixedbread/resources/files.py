@@ -7,7 +7,7 @@ from typing import Optional
 import httpx
 
 from ..types import file_list_params, file_create_params, file_update_params
-from .._types import NOT_GIVEN, Body, Query, Headers, NoneType, NotGiven, FileTypes
+from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven, FileTypes
 from .._utils import (
     maybe_transform,
     async_maybe_transform,
@@ -15,10 +15,18 @@ from .._utils import (
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
 from .._response import (
+    BinaryAPIResponse,
+    AsyncBinaryAPIResponse,
+    StreamedBinaryAPIResponse,
+    AsyncStreamedBinaryAPIResponse,
     to_raw_response_wrapper,
     to_streamed_response_wrapper,
     async_to_raw_response_wrapper,
+    to_custom_raw_response_wrapper,
     async_to_streamed_response_wrapper,
+    to_custom_streamed_response_wrapper,
+    async_to_custom_raw_response_wrapper,
+    async_to_custom_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
 from ..types.file_object import FileObject
@@ -227,13 +235,13 @@ class FilesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> None:
+    ) -> BinaryAPIResponse:
         """
         Download a specific file by its ID.
 
         Args: file_id: The ID of the file to download. state: The application state.
 
-        Returns: FileResponse: The response containing the file to be downloaded.
+        Returns: FileStreamResponse: The response containing the file to be downloaded.
 
         Args:
           extra_headers: Send extra headers
@@ -246,13 +254,13 @@ class FilesResource(SyncAPIResource):
         """
         if not file_id:
             raise ValueError(f"Expected a non-empty value for `file_id` but received {file_id!r}")
-        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
+        extra_headers = {"Accept": "application/octet-stream", **(extra_headers or {})}
         return self._get(
             f"/v1/files/{file_id}/content",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=NoneType,
+            cast_to=BinaryAPIResponse,
         )
 
     def delete(
@@ -494,13 +502,13 @@ class AsyncFilesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> None:
+    ) -> AsyncBinaryAPIResponse:
         """
         Download a specific file by its ID.
 
         Args: file_id: The ID of the file to download. state: The application state.
 
-        Returns: FileResponse: The response containing the file to be downloaded.
+        Returns: FileStreamResponse: The response containing the file to be downloaded.
 
         Args:
           extra_headers: Send extra headers
@@ -513,13 +521,13 @@ class AsyncFilesResource(AsyncAPIResource):
         """
         if not file_id:
             raise ValueError(f"Expected a non-empty value for `file_id` but received {file_id!r}")
-        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
+        extra_headers = {"Accept": "application/octet-stream", **(extra_headers or {})}
         return await self._get(
             f"/v1/files/{file_id}/content",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=NoneType,
+            cast_to=AsyncBinaryAPIResponse,
         )
 
     async def delete(
@@ -577,8 +585,9 @@ class FilesResourceWithRawResponse:
         self.list = to_raw_response_wrapper(
             files.list,
         )
-        self.content = to_raw_response_wrapper(
+        self.content = to_custom_raw_response_wrapper(
             files.content,
+            BinaryAPIResponse,
         )
         self.delete = to_raw_response_wrapper(
             files.delete,
@@ -601,8 +610,9 @@ class AsyncFilesResourceWithRawResponse:
         self.list = async_to_raw_response_wrapper(
             files.list,
         )
-        self.content = async_to_raw_response_wrapper(
+        self.content = async_to_custom_raw_response_wrapper(
             files.content,
+            AsyncBinaryAPIResponse,
         )
         self.delete = async_to_raw_response_wrapper(
             files.delete,
@@ -625,8 +635,9 @@ class FilesResourceWithStreamingResponse:
         self.list = to_streamed_response_wrapper(
             files.list,
         )
-        self.content = to_streamed_response_wrapper(
+        self.content = to_custom_streamed_response_wrapper(
             files.content,
+            StreamedBinaryAPIResponse,
         )
         self.delete = to_streamed_response_wrapper(
             files.delete,
@@ -649,8 +660,9 @@ class AsyncFilesResourceWithStreamingResponse:
         self.list = async_to_streamed_response_wrapper(
             files.list,
         )
-        self.content = async_to_streamed_response_wrapper(
+        self.content = async_to_custom_streamed_response_wrapper(
             files.content,
+            AsyncStreamedBinaryAPIResponse,
         )
         self.delete = async_to_streamed_response_wrapper(
             files.delete,
