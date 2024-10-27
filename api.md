@@ -59,17 +59,12 @@ from mixedbread.types import FileObject, FileListResponse
 
 Methods:
 
-- <code title="post /v1/files">client.files.<a href="./src/mixedbread/resources/files/files.py">create</a>(\*\*<a href="src/mixedbread/types/file_create_params.py">params</a>) -> <a href="./src/mixedbread/types/file_object.py">FileObject</a></code>
-- <code title="get /v1/files/{file_id}">client.files.<a href="./src/mixedbread/resources/files/files.py">retrieve</a>(file_id) -> <a href="./src/mixedbread/types/file_object.py">FileObject</a></code>
-- <code title="put /v1/files/{file_id}">client.files.<a href="./src/mixedbread/resources/files/files.py">update</a>(file_id, \*\*<a href="src/mixedbread/types/file_update_params.py">params</a>) -> <a href="./src/mixedbread/types/file_object.py">FileObject</a></code>
-- <code title="get /v1/files">client.files.<a href="./src/mixedbread/resources/files/files.py">list</a>(\*\*<a href="src/mixedbread/types/file_list_params.py">params</a>) -> <a href="./src/mixedbread/types/file_list_response.py">FileListResponse</a></code>
-- <code title="delete /v1/files/{file_id}">client.files.<a href="./src/mixedbread/resources/files/files.py">delete</a>(file_id) -> <a href="./src/mixedbread/types/file_object.py">FileObject</a></code>
-
-## Content
-
-Methods:
-
-- <code title="get /v1/files/{file_id}/content">client.files.content.<a href="./src/mixedbread/resources/files/content.py">retrieve</a>(file_id) -> BinaryAPIResponse</code>
+- <code title="post /v1/files">client.files.<a href="./src/mixedbread/resources/files.py">create</a>(\*\*<a href="src/mixedbread/types/file_create_params.py">params</a>) -> <a href="./src/mixedbread/types/file_object.py">FileObject</a></code>
+- <code title="get /v1/files/{file_id}">client.files.<a href="./src/mixedbread/resources/files.py">retrieve</a>(file_id) -> <a href="./src/mixedbread/types/file_object.py">FileObject</a></code>
+- <code title="put /v1/files/{file_id}">client.files.<a href="./src/mixedbread/resources/files.py">update</a>(file_id, \*\*<a href="src/mixedbread/types/file_update_params.py">params</a>) -> <a href="./src/mixedbread/types/file_object.py">FileObject</a></code>
+- <code title="get /v1/files">client.files.<a href="./src/mixedbread/resources/files.py">list</a>(\*\*<a href="src/mixedbread/types/file_list_params.py">params</a>) -> <a href="./src/mixedbread/types/file_list_response.py">FileListResponse</a></code>
+- <code title="delete /v1/files/{file_id}">client.files.<a href="./src/mixedbread/resources/files.py">delete</a>(file_id) -> <a href="./src/mixedbread/types/file_object.py">FileObject</a></code>
+- <code title="get /v1/files/{file_id}/content">client.files.<a href="./src/mixedbread/resources/files.py">content</a>(file_id) -> BinaryAPIResponse</code>
 
 # Jobs
 
