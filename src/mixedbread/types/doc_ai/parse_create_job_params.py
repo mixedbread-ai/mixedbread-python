@@ -2,13 +2,21 @@
 
 from __future__ import annotations
 
-from typing_extensions import Required, TypedDict
-
-from ..._types import FileTypes
+from typing import List, Optional
+from typing_extensions import Literal, Required, TypedDict
 
 __all__ = ["ParseCreateJobParams"]
 
 
 class ParseCreateJobParams(TypedDict, total=False):
-    file: Required[FileTypes]
-    """The file to parse information from"""
+    file_id: Required[str]
+    """The ID of the file to parse"""
+
+    chunking_strategy: Literal["page"]
+    """The strategy to use for chunking the content"""
+
+    element_types: Optional[List[str]]
+    """The elements to extract from the document"""
+
+    return_format: Literal["html", "markdown", "plain"]
+    """The format of the returned content"""

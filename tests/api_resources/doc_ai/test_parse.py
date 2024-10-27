@@ -20,14 +20,24 @@ class TestParse:
     @parametrize
     def test_method_create_job(self, client: Mixedbread) -> None:
         parse = client.doc_ai.parse.create_job(
-            file=b"raw file contents",
+            file_id="file_id",
+        )
+        assert_matches_type(ParseResponse, parse, path=["response"])
+
+    @parametrize
+    def test_method_create_job_with_all_params(self, client: Mixedbread) -> None:
+        parse = client.doc_ai.parse.create_job(
+            file_id="file_id",
+            chunking_strategy="page",
+            element_types=["string", "string", "string"],
+            return_format="html",
         )
         assert_matches_type(ParseResponse, parse, path=["response"])
 
     @parametrize
     def test_raw_response_create_job(self, client: Mixedbread) -> None:
         response = client.doc_ai.parse.with_raw_response.create_job(
-            file=b"raw file contents",
+            file_id="file_id",
         )
 
         assert response.is_closed is True
@@ -38,7 +48,7 @@ class TestParse:
     @parametrize
     def test_streaming_response_create_job(self, client: Mixedbread) -> None:
         with client.doc_ai.parse.with_streaming_response.create_job(
-            file=b"raw file contents",
+            file_id="file_id",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -93,14 +103,24 @@ class TestAsyncParse:
     @parametrize
     async def test_method_create_job(self, async_client: AsyncMixedbread) -> None:
         parse = await async_client.doc_ai.parse.create_job(
-            file=b"raw file contents",
+            file_id="file_id",
+        )
+        assert_matches_type(ParseResponse, parse, path=["response"])
+
+    @parametrize
+    async def test_method_create_job_with_all_params(self, async_client: AsyncMixedbread) -> None:
+        parse = await async_client.doc_ai.parse.create_job(
+            file_id="file_id",
+            chunking_strategy="page",
+            element_types=["string", "string", "string"],
+            return_format="html",
         )
         assert_matches_type(ParseResponse, parse, path=["response"])
 
     @parametrize
     async def test_raw_response_create_job(self, async_client: AsyncMixedbread) -> None:
         response = await async_client.doc_ai.parse.with_raw_response.create_job(
-            file=b"raw file contents",
+            file_id="file_id",
         )
 
         assert response.is_closed is True
@@ -111,7 +131,7 @@ class TestAsyncParse:
     @parametrize
     async def test_streaming_response_create_job(self, async_client: AsyncMixedbread) -> None:
         async with async_client.doc_ai.parse.with_streaming_response.create_job(
-            file=b"raw file contents",
+            file_id="file_id",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"

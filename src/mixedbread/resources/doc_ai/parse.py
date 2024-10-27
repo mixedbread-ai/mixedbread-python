@@ -2,15 +2,14 @@
 
 from __future__ import annotations
 
-from typing import Mapping, cast
+from typing import List, Optional
+from typing_extensions import Literal
 
 import httpx
 
-from ..._types import NOT_GIVEN, Body, Query, Headers, NotGiven, FileTypes
+from ..._types import NOT_GIVEN, Body, Query, Headers, NotGiven
 from ..._utils import (
-    extract_files,
     maybe_transform,
-    deepcopy_minimal,
     async_maybe_transform,
 )
 from ..._compat import cached_property
@@ -51,7 +50,10 @@ class ParseResource(SyncAPIResource):
     def create_job(
         self,
         *,
-        file: FileTypes,
+        file_id: str,
+        chunking_strategy: Literal["page"] | NotGiven = NOT_GIVEN,
+        element_types: Optional[List[str]] | NotGiven = NOT_GIVEN,
+        return_format: Literal["html", "markdown", "plain"] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -62,12 +64,18 @@ class ParseResource(SyncAPIResource):
         """
         Start a parse job for the provided file.
 
-        Args: file: The file to parse information from. state: The application state.
+        Args: params: ParseJobCreateParams The parameters for creating a parse job.
 
         Returns: ParseResponse: The response containing the created job information.
 
         Args:
-          file: The file to parse information from
+          file_id: The ID of the file to parse
+
+          chunking_strategy: The strategy to use for chunking the content
+
+          element_types: The elements to extract from the document
+
+          return_format: The format of the returned content
 
           extra_headers: Send extra headers
 
@@ -77,16 +85,17 @@ class ParseResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        body = deepcopy_minimal({"file": file})
-        files = extract_files(cast(Mapping[str, object], body), paths=[["file"]])
-        # It should be noted that the actual Content-Type header that will be
-        # sent to the server will contain a `boundary` parameter, e.g.
-        # multipart/form-data; boundary=---abc--
-        extra_headers = {"Content-Type": "multipart/form-data", **(extra_headers or {})}
         return self._post(
             "/v1/document-intelligence/parse",
-            body=maybe_transform(body, parse_create_job_params.ParseCreateJobParams),
-            files=files,
+            body=maybe_transform(
+                {
+                    "file_id": file_id,
+                    "chunking_strategy": chunking_strategy,
+                    "element_types": element_types,
+                    "return_format": return_format,
+                },
+                parse_create_job_params.ParseCreateJobParams,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -154,7 +163,10 @@ class AsyncParseResource(AsyncAPIResource):
     async def create_job(
         self,
         *,
-        file: FileTypes,
+        file_id: str,
+        chunking_strategy: Literal["page"] | NotGiven = NOT_GIVEN,
+        element_types: Optional[List[str]] | NotGiven = NOT_GIVEN,
+        return_format: Literal["html", "markdown", "plain"] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -165,12 +177,18 @@ class AsyncParseResource(AsyncAPIResource):
         """
         Start a parse job for the provided file.
 
-        Args: file: The file to parse information from. state: The application state.
+        Args: params: ParseJobCreateParams The parameters for creating a parse job.
 
         Returns: ParseResponse: The response containing the created job information.
 
         Args:
-          file: The file to parse information from
+          file_id: The ID of the file to parse
+
+          chunking_strategy: The strategy to use for chunking the content
+
+          element_types: The elements to extract from the document
+
+          return_format: The format of the returned content
 
           extra_headers: Send extra headers
 
@@ -180,16 +198,17 @@ class AsyncParseResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        body = deepcopy_minimal({"file": file})
-        files = extract_files(cast(Mapping[str, object], body), paths=[["file"]])
-        # It should be noted that the actual Content-Type header that will be
-        # sent to the server will contain a `boundary` parameter, e.g.
-        # multipart/form-data; boundary=---abc--
-        extra_headers = {"Content-Type": "multipart/form-data", **(extra_headers or {})}
         return await self._post(
             "/v1/document-intelligence/parse",
-            body=await async_maybe_transform(body, parse_create_job_params.ParseCreateJobParams),
-            files=files,
+            body=await async_maybe_transform(
+                {
+                    "file_id": file_id,
+                    "chunking_strategy": chunking_strategy,
+                    "element_types": element_types,
+                    "return_format": return_format,
+                },
+                parse_create_job_params.ParseCreateJobParams,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),

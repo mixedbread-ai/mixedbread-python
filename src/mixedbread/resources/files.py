@@ -156,7 +156,7 @@ class FilesResource(SyncAPIResource):
         Update the details of a specific file.
 
         Args: file_id: The ID of the file to update. file_update: The new details for
-        the file. state: The application state.
+        the file.
 
         Returns: FileObject: The updated file details.
 
@@ -286,7 +286,7 @@ class FilesResource(SyncAPIResource):
         """
         Download a specific file by its ID.
 
-        Args: file_id: The ID of the file to download. state: The application state.
+        Args: file_id: The ID of the file to download.
 
         Returns: FileStreamResponse: The response containing the file to be downloaded.
 
@@ -430,7 +430,7 @@ class AsyncFilesResource(AsyncAPIResource):
         Update the details of a specific file.
 
         Args: file_id: The ID of the file to update. file_update: The new details for
-        the file. state: The application state.
+        the file.
 
         Returns: FileObject: The updated file details.
 
@@ -560,7 +560,7 @@ class AsyncFilesResource(AsyncAPIResource):
         """
         Download a specific file by its ID.
 
-        Args: file_id: The ID of the file to download. state: The application state.
+        Args: file_id: The ID of the file to download.
 
         Returns: FileStreamResponse: The response containing the file to be downloaded.
 
