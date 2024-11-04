@@ -3,14 +3,19 @@
 from __future__ import annotations
 
 from .file_object import FileObject as FileObject
+from .search_response import SearchResponse as SearchResponse
 from .file_list_params import FileListParams as FileListParams
 from .file_create_params import FileCreateParams as FileCreateParams
 from .file_list_response import FileListResponse as FileListResponse
 from .file_update_params import FileUpdateParams as FileUpdateParams
 from .job_delete_response import JobDeleteResponse as JobDeleteResponse
-from .job_status_response import JobStatusResponse as JobStatusResponse
-from .embedding_create_params import EmbeddingCreateParams as EmbeddingCreateParams
-from .reranking_create_params import RerankingCreateParams as RerankingCreateParams
-from .embedding_create_response import EmbeddingCreateResponse as EmbeddingCreateResponse
-from .reranking_create_response import RerankingCreateResponse as RerankingCreateResponse
+from .vector_store_object import VectorStoreObject as VectorStoreObject
+from .file_delete_response import FileDeleteResponse as FileDeleteResponse
+from .vector_store_deleted import VectorStoreDeleted as VectorStoreDeleted
+from .job_retrieve_response import JobRetrieveResponse as JobRetrieveResponse
+from .vector_store_list_params import VectorStoreListParams as VectorStoreListParams
 from .base_status_check_response import BaseStatusCheckResponse as BaseStatusCheckResponse
+from .vector_store_create_params import VectorStoreCreateParams as VectorStoreCreateParams
+from .vector_store_list_response import VectorStoreListResponse as VectorStoreListResponse
+from .vector_store_search_params import VectorStoreSearchParams as VectorStoreSearchParams
+from .vector_store_update_params import VectorStoreUpdateParams as VectorStoreUpdateParams

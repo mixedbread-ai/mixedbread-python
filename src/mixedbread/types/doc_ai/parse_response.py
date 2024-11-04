@@ -31,6 +31,9 @@ class DataRunningJob(BaseModel):
     finished_at: Optional[datetime] = None
     """The finished time of the job"""
 
+    memory: Optional[object] = None
+    """Job memory"""
+
     result: Optional[object] = None
     """The result of the job"""
 
@@ -50,6 +53,9 @@ class DataFailedJob(BaseModel):
 
     finished_at: Optional[datetime] = None
     """The finished time of the job"""
+
+    memory: Optional[object] = None
+    """Job memory"""
 
     result: Optional[object] = None
     """The result of the job"""
@@ -108,6 +114,26 @@ class DataSuccessfulParsingJobResult(BaseModel):
     chunks: List[DataSuccessfulParsingJobResultChunk]
     """List of extracted chunks from the document"""
 
+    element_types: List[
+        Literal[
+            "caption",
+            "footnote",
+            "formula",
+            "list-item",
+            "page-footer",
+            "page-header",
+            "picture",
+            "section-header",
+            "table",
+            "text",
+            "title",
+        ]
+    ]
+    """The types of elements extracted"""
+
+    return_format: Literal["html", "markdown", "plain"]
+    """The format of the returned content"""
+
 
 class DataSuccessfulParsingJob(BaseModel):
     id: str
@@ -124,6 +150,9 @@ class DataSuccessfulParsingJob(BaseModel):
 
     finished_at: Optional[datetime] = None
     """The finished time of the job"""
+
+    memory: Optional[object] = None
+    """Job memory"""
 
     status: Optional[Literal["successful"]] = None
     """The status of the job"""

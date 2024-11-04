@@ -15,7 +15,7 @@ from .._response import (
 )
 from .._base_client import make_request_options
 from ..types.job_delete_response import JobDeleteResponse
-from ..types.job_status_response import JobStatusResponse
+from ..types.job_retrieve_response import JobRetrieveResponse
 
 __all__ = ["JobsResource", "AsyncJobsResource"]
 
@@ -50,7 +50,7 @@ class JobsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> JobStatusResponse:
+    ) -> JobRetrieveResponse:
         """
         Retrieve the status of a specific job by its ID.
 
@@ -75,7 +75,7 @@ class JobsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=JobStatusResponse,
+            cast_to=JobRetrieveResponse,
         )
 
     def delete(
@@ -148,7 +148,7 @@ class AsyncJobsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> JobStatusResponse:
+    ) -> JobRetrieveResponse:
         """
         Retrieve the status of a specific job by its ID.
 
@@ -173,7 +173,7 @@ class AsyncJobsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=JobStatusResponse,
+            cast_to=JobRetrieveResponse,
         )
 
     async def delete(

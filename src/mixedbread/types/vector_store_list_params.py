@@ -4,10 +4,10 @@ from __future__ import annotations
 
 from typing_extensions import TypedDict
 
-__all__ = ["FileListParams"]
+__all__ = ["VectorStoreListParams"]
 
 
-class FileListParams(TypedDict, total=False):
+class VectorStoreListParams(TypedDict, total=False):
     after: int
 
     limit: int

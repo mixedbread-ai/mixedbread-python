@@ -2,84 +2,94 @@
 
 from __future__ import annotations
 
-from typing import Mapping, cast
+from typing import List, Union, Optional
+from datetime import datetime
 
 import httpx
 
-from ..types import file_list_params, file_create_params, file_update_params
-from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven, FileTypes
-from .._utils import (
-    extract_files,
+from .files import (
+    FilesResource,
+    AsyncFilesResource,
+    FilesResourceWithRawResponse,
+    AsyncFilesResourceWithRawResponse,
+    FilesResourceWithStreamingResponse,
+    AsyncFilesResourceWithStreamingResponse,
+)
+from ...types import (
+    vector_store_list_params,
+    vector_store_create_params,
+    vector_store_search_params,
+    vector_store_update_params,
+)
+from ..._types import NOT_GIVEN, Body, Query, Headers, NotGiven
+from ..._utils import (
     maybe_transform,
-    deepcopy_minimal,
     async_maybe_transform,
 )
-from .._compat import cached_property
-from .._resource import SyncAPIResource, AsyncAPIResource
-from .._response import (
-    BinaryAPIResponse,
-    AsyncBinaryAPIResponse,
-    StreamedBinaryAPIResponse,
-    AsyncStreamedBinaryAPIResponse,
+from ..._compat import cached_property
+from ..._resource import SyncAPIResource, AsyncAPIResource
+from ..._response import (
     to_raw_response_wrapper,
     to_streamed_response_wrapper,
     async_to_raw_response_wrapper,
-    to_custom_raw_response_wrapper,
     async_to_streamed_response_wrapper,
-    to_custom_streamed_response_wrapper,
-    async_to_custom_raw_response_wrapper,
-    async_to_custom_streamed_response_wrapper,
 )
-from .._base_client import make_request_options
-from ..types.file_object import FileObject
-from ..types.file_list_response import FileListResponse
-from ..types.file_delete_response import FileDeleteResponse
+from ..._base_client import make_request_options
+from ...types.search_response import SearchResponse
+from ...types.vector_store_object import VectorStoreObject
+from ...types.vector_store_deleted import VectorStoreDeleted
+from ...types.vector_store_list_response import VectorStoreListResponse
 
-__all__ = ["FilesResource", "AsyncFilesResource"]
+__all__ = ["VectorStoresResource", "AsyncVectorStoresResource"]
 
 
-class FilesResource(SyncAPIResource):
+class VectorStoresResource(SyncAPIResource):
     @cached_property
-    def with_raw_response(self) -> FilesResourceWithRawResponse:
+    def files(self) -> FilesResource:
+        return FilesResource(self._client)
+
+    @cached_property
+    def with_raw_response(self) -> VectorStoresResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return the
         the raw response object instead of the parsed content.
 
         For more information, see https://www.github.com/stainless-sdks/mixedbread-python#accessing-raw-response-data-eg-headers
         """
-        return FilesResourceWithRawResponse(self)
+        return VectorStoresResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> FilesResourceWithStreamingResponse:
+    def with_streaming_response(self) -> VectorStoresResourceWithStreamingResponse:
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
         For more information, see https://www.github.com/stainless-sdks/mixedbread-python#with_streaming_response
         """
-        return FilesResourceWithStreamingResponse(self)
+        return VectorStoresResourceWithStreamingResponse(self)
 
     def create(
         self,
         *,
-        file: FileTypes,
+        description: Optional[str] | NotGiven = NOT_GIVEN,
+        expires_at: Union[str, datetime, None] | NotGiven = NOT_GIVEN,
+        metadata: Optional[object] | NotGiven = NOT_GIVEN,
+        name: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> FileObject:
-        """Upload a new file.
+    ) -> VectorStoreObject:
+        """
+        Create a new vector store.
 
-        Args: file: The file to upload.
+        Args: vector_store_create: VectorStoreCreate object containing the name,
+        description, and metadata. state: The application state.
 
-        state: The application state.
-
-        Returns: FileResponse: The response containing the details of the uploaded file.
+        Returns: VectorStore: The response containing the created vector store details.
 
         Args:
-          file: The file to upload
-
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -88,25 +98,26 @@ class FilesResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        body = deepcopy_minimal({"file": file})
-        files = extract_files(cast(Mapping[str, object], body), paths=[["file"]])
-        # It should be noted that the actual Content-Type header that will be
-        # sent to the server will contain a `boundary` parameter, e.g.
-        # multipart/form-data; boundary=---abc--
-        extra_headers = {"Content-Type": "multipart/form-data", **(extra_headers or {})}
         return self._post(
-            "/v1/files",
-            body=maybe_transform(body, file_create_params.FileCreateParams),
-            files=files,
+            "/v1/vector_stores",
+            body=maybe_transform(
+                {
+                    "description": description,
+                    "expires_at": expires_at,
+                    "metadata": metadata,
+                    "name": name,
+                },
+                vector_store_create_params.VectorStoreCreateParams,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=FileObject,
+            cast_to=VectorStoreObject,
         )
 
     def retrieve(
         self,
-        file_id: str,
+        vector_store_id: str,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -114,15 +125,18 @@ class FilesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> FileObject:
+    ) -> VectorStoreObject:
         """
-        Retrieve details of a specific file by its ID.
+        Get a vector store by ID.
 
-        Args: file_id: The ID of the file to retrieve. state: The application state.
+        Args: vector_store_id: The ID of the vector store to retrieve. state: The
+        application state.
 
-        Returns: FileResponse: The response containing the file details.
+        Returns: VectorStore: The response containing the vector store details.
 
         Args:
+          vector_store_id: The ID of the vector store
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -131,39 +145,42 @@ class FilesResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not file_id:
-            raise ValueError(f"Expected a non-empty value for `file_id` but received {file_id!r}")
+        if not vector_store_id:
+            raise ValueError(f"Expected a non-empty value for `vector_store_id` but received {vector_store_id!r}")
         return self._get(
-            f"/v1/files/{file_id}",
+            f"/v1/vector_stores/{vector_store_id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=FileObject,
+            cast_to=VectorStoreObject,
         )
 
     def update(
         self,
-        file_id: str,
+        vector_store_id: str,
         *,
-        file: FileTypes,
+        description: Optional[str] | NotGiven = NOT_GIVEN,
+        expires_at: Union[str, datetime, None] | NotGiven = NOT_GIVEN,
+        metadata: Optional[object] | NotGiven = NOT_GIVEN,
+        name: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> FileObject:
+    ) -> VectorStoreObject:
         """
-        Update the details of a specific file.
+        Update a vector store by ID.
 
-        Args: file_id: The ID of the file to update. file: The new details for the file.
+        Args: vector_store_id: The ID of the vector store to update.
+        vector_store_create: VectorStoreCreate object containing the name, description,
+        and metadata. state: The application state.
 
-        Returns: FileObject: The updated file details.
+        Returns: VectorStore: The response containing the updated vector store details.
 
         Args:
-          file_id: The ID of the file to update
-
-          file: The file to update
+          vector_store_id: The ID of the vector store
 
           extra_headers: Send extra headers
 
@@ -173,15 +190,23 @@ class FilesResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not file_id:
-            raise ValueError(f"Expected a non-empty value for `file_id` but received {file_id!r}")
+        if not vector_store_id:
+            raise ValueError(f"Expected a non-empty value for `vector_store_id` but received {vector_store_id!r}")
         return self._put(
-            f"/v1/files/{file_id}",
-            body=maybe_transform({"file": file}, file_update_params.FileUpdateParams),
+            f"/v1/vector_stores/{vector_store_id}",
+            body=maybe_transform(
+                {
+                    "description": description,
+                    "expires_at": expires_at,
+                    "metadata": metadata,
+                    "name": name,
+                },
+                vector_store_update_params.VectorStoreUpdateParams,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=FileObject,
+            cast_to=VectorStoreObject,
         )
 
     def list(
@@ -195,13 +220,13 @@ class FilesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> FileListResponse:
+    ) -> VectorStoreListResponse:
         """
-        List all files for the authenticated user.
+        List all vector stores.
 
         Args: state: The application state.
 
-        Returns: A list of files belonging to the user.
+        Returns: list[VectorStore]: The list of vector stores.
 
         Args:
           extra_headers: Send extra headers
@@ -213,7 +238,7 @@ class FilesResource(SyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return self._get(
-            "/v1/files",
+            "/v1/vector_stores",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -224,15 +249,15 @@ class FilesResource(SyncAPIResource):
                         "after": after,
                         "limit": limit,
                     },
-                    file_list_params.FileListParams,
+                    vector_store_list_params.VectorStoreListParams,
                 ),
             ),
-            cast_to=FileListResponse,
+            cast_to=VectorStoreListResponse,
         )
 
     def delete(
         self,
-        file_id: str,
+        vector_store_id: str,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -240,15 +265,18 @@ class FilesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> FileDeleteResponse:
+    ) -> VectorStoreDeleted:
         """
-        Delete a specific file by its ID.
+        Delete a vector store by ID.
 
-        Args: file_id: The ID of the file to delete.
+        Args: vector_store_id: The ID of the vector store to delete. state: The
+        application state.
 
-        Returns: FileDeleted: The response containing the details of the deleted file.
+        Returns: VectorStore: The response containing the deleted vector store details.
 
         Args:
+          vector_store_id: The ID of the vector store to delete
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -257,35 +285,44 @@ class FilesResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not file_id:
-            raise ValueError(f"Expected a non-empty value for `file_id` but received {file_id!r}")
+        if not vector_store_id:
+            raise ValueError(f"Expected a non-empty value for `vector_store_id` but received {vector_store_id!r}")
         return self._delete(
-            f"/v1/files/{file_id}",
+            f"/v1/vector_stores/{vector_store_id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=FileDeleteResponse,
+            cast_to=VectorStoreDeleted,
         )
 
-    def content(
+    def search(
         self,
-        file_id: str,
         *,
+        query: str,
+        vector_store_ids: List[str],
+        after: int | NotGiven = NOT_GIVEN,
+        filter: Optional[vector_store_search_params.Filter] | NotGiven = NOT_GIVEN,
+        limit: int | NotGiven = NOT_GIVEN,
+        options: Optional[vector_store_search_params.Options] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> BinaryAPIResponse:
+    ) -> SearchResponse:
         """
-        Download a specific file by its ID.
+        Perform a search based on the provided query.
 
-        Args: file_id: The ID of the file to download.
+        Args: search_query: SearchQuery object containing the search parameters. state:
+        The application state.
 
-        Returns: FileStreamResponse: The response containing the file to be downloaded.
+        Returns: SearchResponse: The response containing the search results and
+        pagination details.
 
         Args:
+          filter: List of conditions or filters to be ANDed together
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -294,60 +331,73 @@ class FilesResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not file_id:
-            raise ValueError(f"Expected a non-empty value for `file_id` but received {file_id!r}")
-        extra_headers = {"Accept": "application/octet-stream", **(extra_headers or {})}
-        return self._get(
-            f"/v1/files/{file_id}/content",
+        return self._post(
+            "/v1/vector_stores/search",
+            body=maybe_transform(
+                {
+                    "query": query,
+                    "vector_store_ids": vector_store_ids,
+                    "after": after,
+                    "filter": filter,
+                    "limit": limit,
+                    "options": options,
+                },
+                vector_store_search_params.VectorStoreSearchParams,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=BinaryAPIResponse,
+            cast_to=SearchResponse,
         )
 
 
-class AsyncFilesResource(AsyncAPIResource):
+class AsyncVectorStoresResource(AsyncAPIResource):
     @cached_property
-    def with_raw_response(self) -> AsyncFilesResourceWithRawResponse:
+    def files(self) -> AsyncFilesResource:
+        return AsyncFilesResource(self._client)
+
+    @cached_property
+    def with_raw_response(self) -> AsyncVectorStoresResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return the
         the raw response object instead of the parsed content.
 
         For more information, see https://www.github.com/stainless-sdks/mixedbread-python#accessing-raw-response-data-eg-headers
         """
-        return AsyncFilesResourceWithRawResponse(self)
+        return AsyncVectorStoresResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> AsyncFilesResourceWithStreamingResponse:
+    def with_streaming_response(self) -> AsyncVectorStoresResourceWithStreamingResponse:
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
         For more information, see https://www.github.com/stainless-sdks/mixedbread-python#with_streaming_response
         """
-        return AsyncFilesResourceWithStreamingResponse(self)
+        return AsyncVectorStoresResourceWithStreamingResponse(self)
 
     async def create(
         self,
         *,
-        file: FileTypes,
+        description: Optional[str] | NotGiven = NOT_GIVEN,
+        expires_at: Union[str, datetime, None] | NotGiven = NOT_GIVEN,
+        metadata: Optional[object] | NotGiven = NOT_GIVEN,
+        name: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> FileObject:
-        """Upload a new file.
+    ) -> VectorStoreObject:
+        """
+        Create a new vector store.
 
-        Args: file: The file to upload.
+        Args: vector_store_create: VectorStoreCreate object containing the name,
+        description, and metadata. state: The application state.
 
-        state: The application state.
-
-        Returns: FileResponse: The response containing the details of the uploaded file.
+        Returns: VectorStore: The response containing the created vector store details.
 
         Args:
-          file: The file to upload
-
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -356,25 +406,26 @@ class AsyncFilesResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        body = deepcopy_minimal({"file": file})
-        files = extract_files(cast(Mapping[str, object], body), paths=[["file"]])
-        # It should be noted that the actual Content-Type header that will be
-        # sent to the server will contain a `boundary` parameter, e.g.
-        # multipart/form-data; boundary=---abc--
-        extra_headers = {"Content-Type": "multipart/form-data", **(extra_headers or {})}
         return await self._post(
-            "/v1/files",
-            body=await async_maybe_transform(body, file_create_params.FileCreateParams),
-            files=files,
+            "/v1/vector_stores",
+            body=await async_maybe_transform(
+                {
+                    "description": description,
+                    "expires_at": expires_at,
+                    "metadata": metadata,
+                    "name": name,
+                },
+                vector_store_create_params.VectorStoreCreateParams,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=FileObject,
+            cast_to=VectorStoreObject,
         )
 
     async def retrieve(
         self,
-        file_id: str,
+        vector_store_id: str,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -382,15 +433,18 @@ class AsyncFilesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> FileObject:
+    ) -> VectorStoreObject:
         """
-        Retrieve details of a specific file by its ID.
+        Get a vector store by ID.
 
-        Args: file_id: The ID of the file to retrieve. state: The application state.
+        Args: vector_store_id: The ID of the vector store to retrieve. state: The
+        application state.
 
-        Returns: FileResponse: The response containing the file details.
+        Returns: VectorStore: The response containing the vector store details.
 
         Args:
+          vector_store_id: The ID of the vector store
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -399,39 +453,42 @@ class AsyncFilesResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not file_id:
-            raise ValueError(f"Expected a non-empty value for `file_id` but received {file_id!r}")
+        if not vector_store_id:
+            raise ValueError(f"Expected a non-empty value for `vector_store_id` but received {vector_store_id!r}")
         return await self._get(
-            f"/v1/files/{file_id}",
+            f"/v1/vector_stores/{vector_store_id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=FileObject,
+            cast_to=VectorStoreObject,
         )
 
     async def update(
         self,
-        file_id: str,
+        vector_store_id: str,
         *,
-        file: FileTypes,
+        description: Optional[str] | NotGiven = NOT_GIVEN,
+        expires_at: Union[str, datetime, None] | NotGiven = NOT_GIVEN,
+        metadata: Optional[object] | NotGiven = NOT_GIVEN,
+        name: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> FileObject:
+    ) -> VectorStoreObject:
         """
-        Update the details of a specific file.
+        Update a vector store by ID.
 
-        Args: file_id: The ID of the file to update. file: The new details for the file.
+        Args: vector_store_id: The ID of the vector store to update.
+        vector_store_create: VectorStoreCreate object containing the name, description,
+        and metadata. state: The application state.
 
-        Returns: FileObject: The updated file details.
+        Returns: VectorStore: The response containing the updated vector store details.
 
         Args:
-          file_id: The ID of the file to update
-
-          file: The file to update
+          vector_store_id: The ID of the vector store
 
           extra_headers: Send extra headers
 
@@ -441,15 +498,23 @@ class AsyncFilesResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not file_id:
-            raise ValueError(f"Expected a non-empty value for `file_id` but received {file_id!r}")
+        if not vector_store_id:
+            raise ValueError(f"Expected a non-empty value for `vector_store_id` but received {vector_store_id!r}")
         return await self._put(
-            f"/v1/files/{file_id}",
-            body=await async_maybe_transform({"file": file}, file_update_params.FileUpdateParams),
+            f"/v1/vector_stores/{vector_store_id}",
+            body=await async_maybe_transform(
+                {
+                    "description": description,
+                    "expires_at": expires_at,
+                    "metadata": metadata,
+                    "name": name,
+                },
+                vector_store_update_params.VectorStoreUpdateParams,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=FileObject,
+            cast_to=VectorStoreObject,
         )
 
     async def list(
@@ -463,13 +528,13 @@ class AsyncFilesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> FileListResponse:
+    ) -> VectorStoreListResponse:
         """
-        List all files for the authenticated user.
+        List all vector stores.
 
         Args: state: The application state.
 
-        Returns: A list of files belonging to the user.
+        Returns: list[VectorStore]: The list of vector stores.
 
         Args:
           extra_headers: Send extra headers
@@ -481,7 +546,7 @@ class AsyncFilesResource(AsyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return await self._get(
-            "/v1/files",
+            "/v1/vector_stores",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -492,15 +557,15 @@ class AsyncFilesResource(AsyncAPIResource):
                         "after": after,
                         "limit": limit,
                     },
-                    file_list_params.FileListParams,
+                    vector_store_list_params.VectorStoreListParams,
                 ),
             ),
-            cast_to=FileListResponse,
+            cast_to=VectorStoreListResponse,
         )
 
     async def delete(
         self,
-        file_id: str,
+        vector_store_id: str,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -508,15 +573,18 @@ class AsyncFilesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> FileDeleteResponse:
+    ) -> VectorStoreDeleted:
         """
-        Delete a specific file by its ID.
+        Delete a vector store by ID.
 
-        Args: file_id: The ID of the file to delete.
+        Args: vector_store_id: The ID of the vector store to delete. state: The
+        application state.
 
-        Returns: FileDeleted: The response containing the details of the deleted file.
+        Returns: VectorStore: The response containing the deleted vector store details.
 
         Args:
+          vector_store_id: The ID of the vector store to delete
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -525,35 +593,44 @@ class AsyncFilesResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not file_id:
-            raise ValueError(f"Expected a non-empty value for `file_id` but received {file_id!r}")
+        if not vector_store_id:
+            raise ValueError(f"Expected a non-empty value for `vector_store_id` but received {vector_store_id!r}")
         return await self._delete(
-            f"/v1/files/{file_id}",
+            f"/v1/vector_stores/{vector_store_id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=FileDeleteResponse,
+            cast_to=VectorStoreDeleted,
         )
 
-    async def content(
+    async def search(
         self,
-        file_id: str,
         *,
+        query: str,
+        vector_store_ids: List[str],
+        after: int | NotGiven = NOT_GIVEN,
+        filter: Optional[vector_store_search_params.Filter] | NotGiven = NOT_GIVEN,
+        limit: int | NotGiven = NOT_GIVEN,
+        options: Optional[vector_store_search_params.Options] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> AsyncBinaryAPIResponse:
+    ) -> SearchResponse:
         """
-        Download a specific file by its ID.
+        Perform a search based on the provided query.
 
-        Args: file_id: The ID of the file to download.
+        Args: search_query: SearchQuery object containing the search parameters. state:
+        The application state.
 
-        Returns: FileStreamResponse: The response containing the file to be downloaded.
+        Returns: SearchResponse: The response containing the search results and
+        pagination details.
 
         Args:
+          filter: List of conditions or filters to be ANDed together
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -562,113 +639,133 @@ class AsyncFilesResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not file_id:
-            raise ValueError(f"Expected a non-empty value for `file_id` but received {file_id!r}")
-        extra_headers = {"Accept": "application/octet-stream", **(extra_headers or {})}
-        return await self._get(
-            f"/v1/files/{file_id}/content",
+        return await self._post(
+            "/v1/vector_stores/search",
+            body=await async_maybe_transform(
+                {
+                    "query": query,
+                    "vector_store_ids": vector_store_ids,
+                    "after": after,
+                    "filter": filter,
+                    "limit": limit,
+                    "options": options,
+                },
+                vector_store_search_params.VectorStoreSearchParams,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=AsyncBinaryAPIResponse,
+            cast_to=SearchResponse,
         )
 
 
-class FilesResourceWithRawResponse:
-    def __init__(self, files: FilesResource) -> None:
-        self._files = files
+class VectorStoresResourceWithRawResponse:
+    def __init__(self, vector_stores: VectorStoresResource) -> None:
+        self._vector_stores = vector_stores
 
         self.create = to_raw_response_wrapper(
-            files.create,
+            vector_stores.create,
         )
         self.retrieve = to_raw_response_wrapper(
-            files.retrieve,
+            vector_stores.retrieve,
         )
         self.update = to_raw_response_wrapper(
-            files.update,
+            vector_stores.update,
         )
         self.list = to_raw_response_wrapper(
-            files.list,
+            vector_stores.list,
         )
         self.delete = to_raw_response_wrapper(
-            files.delete,
+            vector_stores.delete,
         )
-        self.content = to_custom_raw_response_wrapper(
-            files.content,
-            BinaryAPIResponse,
+        self.search = to_raw_response_wrapper(
+            vector_stores.search,
         )
 
+    @cached_property
+    def files(self) -> FilesResourceWithRawResponse:
+        return FilesResourceWithRawResponse(self._vector_stores.files)
 
-class AsyncFilesResourceWithRawResponse:
-    def __init__(self, files: AsyncFilesResource) -> None:
-        self._files = files
+
+class AsyncVectorStoresResourceWithRawResponse:
+    def __init__(self, vector_stores: AsyncVectorStoresResource) -> None:
+        self._vector_stores = vector_stores
 
         self.create = async_to_raw_response_wrapper(
-            files.create,
+            vector_stores.create,
         )
         self.retrieve = async_to_raw_response_wrapper(
-            files.retrieve,
+            vector_stores.retrieve,
         )
         self.update = async_to_raw_response_wrapper(
-            files.update,
+            vector_stores.update,
         )
         self.list = async_to_raw_response_wrapper(
-            files.list,
+            vector_stores.list,
         )
         self.delete = async_to_raw_response_wrapper(
-            files.delete,
+            vector_stores.delete,
         )
-        self.content = async_to_custom_raw_response_wrapper(
-            files.content,
-            AsyncBinaryAPIResponse,
+        self.search = async_to_raw_response_wrapper(
+            vector_stores.search,
         )
 
+    @cached_property
+    def files(self) -> AsyncFilesResourceWithRawResponse:
+        return AsyncFilesResourceWithRawResponse(self._vector_stores.files)
 
-class FilesResourceWithStreamingResponse:
-    def __init__(self, files: FilesResource) -> None:
-        self._files = files
+
+class VectorStoresResourceWithStreamingResponse:
+    def __init__(self, vector_stores: VectorStoresResource) -> None:
+        self._vector_stores = vector_stores
 
         self.create = to_streamed_response_wrapper(
-            files.create,
+            vector_stores.create,
         )
         self.retrieve = to_streamed_response_wrapper(
-            files.retrieve,
+            vector_stores.retrieve,
         )
         self.update = to_streamed_response_wrapper(
-            files.update,
+            vector_stores.update,
         )
         self.list = to_streamed_response_wrapper(
-            files.list,
+            vector_stores.list,
         )
         self.delete = to_streamed_response_wrapper(
-            files.delete,
+            vector_stores.delete,
         )
-        self.content = to_custom_streamed_response_wrapper(
-            files.content,
-            StreamedBinaryAPIResponse,
+        self.search = to_streamed_response_wrapper(
+            vector_stores.search,
         )
 
+    @cached_property
+    def files(self) -> FilesResourceWithStreamingResponse:
+        return FilesResourceWithStreamingResponse(self._vector_stores.files)
 
-class AsyncFilesResourceWithStreamingResponse:
-    def __init__(self, files: AsyncFilesResource) -> None:
-        self._files = files
+
+class AsyncVectorStoresResourceWithStreamingResponse:
+    def __init__(self, vector_stores: AsyncVectorStoresResource) -> None:
+        self._vector_stores = vector_stores
 
         self.create = async_to_streamed_response_wrapper(
-            files.create,
+            vector_stores.create,
         )
         self.retrieve = async_to_streamed_response_wrapper(
-            files.retrieve,
+            vector_stores.retrieve,
         )
         self.update = async_to_streamed_response_wrapper(
-            files.update,
+            vector_stores.update,
         )
         self.list = async_to_streamed_response_wrapper(
-            files.list,
+            vector_stores.list,
         )
         self.delete = async_to_streamed_response_wrapper(
-            files.delete,
+            vector_stores.delete,
         )
-        self.content = async_to_custom_streamed_response_wrapper(
-            files.content,
-            AsyncStreamedBinaryAPIResponse,
+        self.search = async_to_streamed_response_wrapper(
+            vector_stores.search,
         )
+
+    @cached_property
+    def files(self) -> AsyncFilesResourceWithStreamingResponse:
+        return AsyncFilesResourceWithStreamingResponse(self._vector_stores.files)

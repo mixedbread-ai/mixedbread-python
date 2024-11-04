@@ -25,3 +25,6 @@ class FileObject(BaseModel):
 
     updated_at: datetime
     """Timestamp of last record update"""
+
+    version: int
+    """Version of the file"""
