@@ -2,7 +2,7 @@
 
 [![PyPI version](https://img.shields.io/pypi/v/mixedbread.svg)](https://pypi.org/project/mixedbread/)
 
-The Mixedbread Python library provides convenient access to the Mixedbread REST API from any Python 3.7+
+The Mixedbread Python library provides convenient access to the Mixedbread REST API from any Python 3.8+
 application. The library includes type definitions for all request params and response fields,
 and offers both synchronous and asynchronous clients powered by [httpx](https://github.com/encode/httpx).
 
@@ -315,7 +315,7 @@ print(mixedbread.__version__)
 
 ## Requirements
 
-Python 3.7 or higher.
+Python 3.8 or higher.
 
 ## Contributing
 
