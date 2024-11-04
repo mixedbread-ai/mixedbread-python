@@ -41,7 +41,7 @@ from ._base_client import (
     AsyncAPIClient,
     make_request_options,
 )
-from .types.base_status_check_response import BaseStatusCheckResponse
+from .types.info_response import InfoResponse
 
 __all__ = [
     "ENVIRONMENTS",
@@ -228,7 +228,7 @@ class Mixedbread(SyncAPIClient):
     # client.with_options(timeout=10).foo.create(...)
     with_options = copy
 
-    def base_status_check(
+    def info(
         self,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -237,7 +237,7 @@ class Mixedbread(SyncAPIClient):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> BaseStatusCheckResponse:
+    ) -> InfoResponse:
         """
         Perform a base search to check the service status and configuration.
 
@@ -251,7 +251,7 @@ class Mixedbread(SyncAPIClient):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=BaseStatusCheckResponse,
+            cast_to=InfoResponse,
         )
 
     @override
@@ -454,7 +454,7 @@ class AsyncMixedbread(AsyncAPIClient):
     # client.with_options(timeout=10).foo.create(...)
     with_options = copy
 
-    async def base_status_check(
+    async def info(
         self,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -463,7 +463,7 @@ class AsyncMixedbread(AsyncAPIClient):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> BaseStatusCheckResponse:
+    ) -> InfoResponse:
         """
         Perform a base search to check the service status and configuration.
 
@@ -477,7 +477,7 @@ class AsyncMixedbread(AsyncAPIClient):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=BaseStatusCheckResponse,
+            cast_to=InfoResponse,
         )
 
     @override
@@ -521,8 +521,8 @@ class MixedbreadWithRawResponse:
         self.jobs = resources.JobsResourceWithRawResponse(client.jobs)
         self.vector_stores = resources.VectorStoresResourceWithRawResponse(client.vector_stores)
 
-        self.base_status_check = to_raw_response_wrapper(
-            client.base_status_check,
+        self.info = to_raw_response_wrapper(
+            client.info,
         )
 
 
@@ -533,8 +533,8 @@ class AsyncMixedbreadWithRawResponse:
         self.jobs = resources.AsyncJobsResourceWithRawResponse(client.jobs)
         self.vector_stores = resources.AsyncVectorStoresResourceWithRawResponse(client.vector_stores)
 
-        self.base_status_check = async_to_raw_response_wrapper(
-            client.base_status_check,
+        self.info = async_to_raw_response_wrapper(
+            client.info,
         )
 
 
@@ -545,8 +545,8 @@ class MixedbreadWithStreamedResponse:
         self.jobs = resources.JobsResourceWithStreamingResponse(client.jobs)
         self.vector_stores = resources.VectorStoresResourceWithStreamingResponse(client.vector_stores)
 
-        self.base_status_check = to_streamed_response_wrapper(
-            client.base_status_check,
+        self.info = to_streamed_response_wrapper(
+            client.info,
         )
 
 
@@ -557,8 +557,8 @@ class AsyncMixedbreadWithStreamedResponse:
         self.jobs = resources.AsyncJobsResourceWithStreamingResponse(client.jobs)
         self.vector_stores = resources.AsyncVectorStoresResourceWithStreamingResponse(client.vector_stores)
 
-        self.base_status_check = async_to_streamed_response_wrapper(
-            client.base_status_check,
+        self.info = async_to_streamed_response_wrapper(
+            client.info,
         )
 
 

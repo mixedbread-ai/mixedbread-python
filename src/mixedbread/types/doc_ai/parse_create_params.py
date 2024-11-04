@@ -5,10 +5,10 @@ from __future__ import annotations
 from typing import List, Optional
 from typing_extensions import Literal, Required, TypedDict
 
-__all__ = ["ParseCreateJobParams"]
+__all__ = ["ParseCreateParams"]
 
 
-class ParseCreateJobParams(TypedDict, total=False):
+class ParseCreateParams(TypedDict, total=False):
     file_id: Required[str]
     """The ID of the file to parse"""
 

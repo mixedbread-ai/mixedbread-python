@@ -21,7 +21,7 @@ from ..._response import (
     async_to_streamed_response_wrapper,
 )
 from ..._base_client import make_request_options
-from ...types.doc_ai import parse_create_job_params
+from ...types.doc_ai import parse_create_params
 from ...types.doc_ai.parse_response import ParseResponse
 
 __all__ = ["ParseResource", "AsyncParseResource"]
@@ -47,7 +47,7 @@ class ParseResource(SyncAPIResource):
         """
         return ParseResourceWithStreamingResponse(self)
 
-    def create_job(
+    def create(
         self,
         *,
         file_id: str,
@@ -94,7 +94,7 @@ class ParseResource(SyncAPIResource):
                     "element_types": element_types,
                     "return_format": return_format,
                 },
-                parse_create_job_params.ParseCreateJobParams,
+                parse_create_params.ParseCreateParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
@@ -102,7 +102,7 @@ class ParseResource(SyncAPIResource):
             cast_to=ParseResponse,
         )
 
-    def retrieve_job(
+    def retrieve(
         self,
         job_id: str,
         *,
@@ -160,7 +160,7 @@ class AsyncParseResource(AsyncAPIResource):
         """
         return AsyncParseResourceWithStreamingResponse(self)
 
-    async def create_job(
+    async def create(
         self,
         *,
         file_id: str,
@@ -207,7 +207,7 @@ class AsyncParseResource(AsyncAPIResource):
                     "element_types": element_types,
                     "return_format": return_format,
                 },
-                parse_create_job_params.ParseCreateJobParams,
+                parse_create_params.ParseCreateParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
@@ -215,7 +215,7 @@ class AsyncParseResource(AsyncAPIResource):
             cast_to=ParseResponse,
         )
 
-    async def retrieve_job(
+    async def retrieve(
         self,
         job_id: str,
         *,
@@ -257,11 +257,11 @@ class ParseResourceWithRawResponse:
     def __init__(self, parse: ParseResource) -> None:
         self._parse = parse
 
-        self.create_job = to_raw_response_wrapper(
-            parse.create_job,
+        self.create = to_raw_response_wrapper(
+            parse.create,
         )
-        self.retrieve_job = to_raw_response_wrapper(
-            parse.retrieve_job,
+        self.retrieve = to_raw_response_wrapper(
+            parse.retrieve,
         )
 
 
@@ -269,11 +269,11 @@ class AsyncParseResourceWithRawResponse:
     def __init__(self, parse: AsyncParseResource) -> None:
         self._parse = parse
 
-        self.create_job = async_to_raw_response_wrapper(
-            parse.create_job,
+        self.create = async_to_raw_response_wrapper(
+            parse.create,
         )
-        self.retrieve_job = async_to_raw_response_wrapper(
-            parse.retrieve_job,
+        self.retrieve = async_to_raw_response_wrapper(
+            parse.retrieve,
         )
 
 
@@ -281,11 +281,11 @@ class ParseResourceWithStreamingResponse:
     def __init__(self, parse: ParseResource) -> None:
         self._parse = parse
 
-        self.create_job = to_streamed_response_wrapper(
-            parse.create_job,
+        self.create = to_streamed_response_wrapper(
+            parse.create,
         )
-        self.retrieve_job = to_streamed_response_wrapper(
-            parse.retrieve_job,
+        self.retrieve = to_streamed_response_wrapper(
+            parse.retrieve,
         )
 
 
@@ -293,9 +293,9 @@ class AsyncParseResourceWithStreamingResponse:
     def __init__(self, parse: AsyncParseResource) -> None:
         self._parse = parse
 
-        self.create_job = async_to_streamed_response_wrapper(
-            parse.create_job,
+        self.create = async_to_streamed_response_wrapper(
+            parse.create,
         )
-        self.retrieve_job = async_to_streamed_response_wrapper(
-            parse.retrieve_job,
+        self.retrieve = async_to_streamed_response_wrapper(
+            parse.retrieve,
         )

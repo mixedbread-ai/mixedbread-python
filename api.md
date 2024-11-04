@@ -3,12 +3,12 @@
 Types:
 
 ```python
-from mixedbread.types import BaseStatusCheckResponse
+from mixedbread.types import InfoResponse
 ```
 
 Methods:
 
-- <code title="get /">client.<a href="./src/mixedbread/_client.py">base_status_check</a>() -> <a href="./src/mixedbread/types/base_status_check_response.py">BaseStatusCheckResponse</a></code>
+- <code title="get /">client.<a href="./src/mixedbread/_client.py">info</a>() -> <a href="./src/mixedbread/types/info_response.py">InfoResponse</a></code>
 
 # DocAI
 
@@ -22,8 +22,8 @@ from mixedbread.types.doc_ai import ParseResponse
 
 Methods:
 
-- <code title="post /v1/document-intelligence/parse">client.doc_ai.parse.<a href="./src/mixedbread/resources/doc_ai/parse.py">create_job</a>(\*\*<a href="src/mixedbread/types/doc_ai/parse_create_job_params.py">params</a>) -> <a href="./src/mixedbread/types/doc_ai/parse_response.py">ParseResponse</a></code>
-- <code title="get /v1/document-intelligence/parse/{job_id}">client.doc_ai.parse.<a href="./src/mixedbread/resources/doc_ai/parse.py">retrieve_job</a>(job_id) -> <a href="./src/mixedbread/types/doc_ai/parse_response.py">ParseResponse</a></code>
+- <code title="post /v1/document-intelligence/parse">client.doc_ai.parse.<a href="./src/mixedbread/resources/doc_ai/parse.py">create</a>(\*\*<a href="src/mixedbread/types/doc_ai/parse_create_params.py">params</a>) -> <a href="./src/mixedbread/types/doc_ai/parse_response.py">ParseResponse</a></code>
+- <code title="get /v1/document-intelligence/parse/{job_id}">client.doc_ai.parse.<a href="./src/mixedbread/resources/doc_ai/parse.py">retrieve</a>(job_id) -> <a href="./src/mixedbread/types/doc_ai/parse_response.py">ParseResponse</a></code>
 
 # Files
 

@@ -18,15 +18,15 @@ class TestParse:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
     @parametrize
-    def test_method_create_job(self, client: Mixedbread) -> None:
-        parse = client.doc_ai.parse.create_job(
+    def test_method_create(self, client: Mixedbread) -> None:
+        parse = client.doc_ai.parse.create(
             file_id="file_id",
         )
         assert_matches_type(ParseResponse, parse, path=["response"])
 
     @parametrize
-    def test_method_create_job_with_all_params(self, client: Mixedbread) -> None:
-        parse = client.doc_ai.parse.create_job(
+    def test_method_create_with_all_params(self, client: Mixedbread) -> None:
+        parse = client.doc_ai.parse.create(
             file_id="file_id",
             chunking_strategy="page",
             element_types=["string", "string", "string"],
@@ -35,8 +35,8 @@ class TestParse:
         assert_matches_type(ParseResponse, parse, path=["response"])
 
     @parametrize
-    def test_raw_response_create_job(self, client: Mixedbread) -> None:
-        response = client.doc_ai.parse.with_raw_response.create_job(
+    def test_raw_response_create(self, client: Mixedbread) -> None:
+        response = client.doc_ai.parse.with_raw_response.create(
             file_id="file_id",
         )
 
@@ -46,8 +46,8 @@ class TestParse:
         assert_matches_type(ParseResponse, parse, path=["response"])
 
     @parametrize
-    def test_streaming_response_create_job(self, client: Mixedbread) -> None:
-        with client.doc_ai.parse.with_streaming_response.create_job(
+    def test_streaming_response_create(self, client: Mixedbread) -> None:
+        with client.doc_ai.parse.with_streaming_response.create(
             file_id="file_id",
         ) as response:
             assert not response.is_closed
@@ -59,15 +59,15 @@ class TestParse:
         assert cast(Any, response.is_closed) is True
 
     @parametrize
-    def test_method_retrieve_job(self, client: Mixedbread) -> None:
-        parse = client.doc_ai.parse.retrieve_job(
+    def test_method_retrieve(self, client: Mixedbread) -> None:
+        parse = client.doc_ai.parse.retrieve(
             "job_id",
         )
         assert_matches_type(ParseResponse, parse, path=["response"])
 
     @parametrize
-    def test_raw_response_retrieve_job(self, client: Mixedbread) -> None:
-        response = client.doc_ai.parse.with_raw_response.retrieve_job(
+    def test_raw_response_retrieve(self, client: Mixedbread) -> None:
+        response = client.doc_ai.parse.with_raw_response.retrieve(
             "job_id",
         )
 
@@ -77,8 +77,8 @@ class TestParse:
         assert_matches_type(ParseResponse, parse, path=["response"])
 
     @parametrize
-    def test_streaming_response_retrieve_job(self, client: Mixedbread) -> None:
-        with client.doc_ai.parse.with_streaming_response.retrieve_job(
+    def test_streaming_response_retrieve(self, client: Mixedbread) -> None:
+        with client.doc_ai.parse.with_streaming_response.retrieve(
             "job_id",
         ) as response:
             assert not response.is_closed
@@ -90,9 +90,9 @@ class TestParse:
         assert cast(Any, response.is_closed) is True
 
     @parametrize
-    def test_path_params_retrieve_job(self, client: Mixedbread) -> None:
+    def test_path_params_retrieve(self, client: Mixedbread) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `job_id` but received ''"):
-            client.doc_ai.parse.with_raw_response.retrieve_job(
+            client.doc_ai.parse.with_raw_response.retrieve(
                 "",
             )
 
@@ -101,15 +101,15 @@ class TestAsyncParse:
     parametrize = pytest.mark.parametrize("async_client", [False, True], indirect=True, ids=["loose", "strict"])
 
     @parametrize
-    async def test_method_create_job(self, async_client: AsyncMixedbread) -> None:
-        parse = await async_client.doc_ai.parse.create_job(
+    async def test_method_create(self, async_client: AsyncMixedbread) -> None:
+        parse = await async_client.doc_ai.parse.create(
             file_id="file_id",
         )
         assert_matches_type(ParseResponse, parse, path=["response"])
 
     @parametrize
-    async def test_method_create_job_with_all_params(self, async_client: AsyncMixedbread) -> None:
-        parse = await async_client.doc_ai.parse.create_job(
+    async def test_method_create_with_all_params(self, async_client: AsyncMixedbread) -> None:
+        parse = await async_client.doc_ai.parse.create(
             file_id="file_id",
             chunking_strategy="page",
             element_types=["string", "string", "string"],
@@ -118,8 +118,8 @@ class TestAsyncParse:
         assert_matches_type(ParseResponse, parse, path=["response"])
 
     @parametrize
-    async def test_raw_response_create_job(self, async_client: AsyncMixedbread) -> None:
-        response = await async_client.doc_ai.parse.with_raw_response.create_job(
+    async def test_raw_response_create(self, async_client: AsyncMixedbread) -> None:
+        response = await async_client.doc_ai.parse.with_raw_response.create(
             file_id="file_id",
         )
 
@@ -129,8 +129,8 @@ class TestAsyncParse:
         assert_matches_type(ParseResponse, parse, path=["response"])
 
     @parametrize
-    async def test_streaming_response_create_job(self, async_client: AsyncMixedbread) -> None:
-        async with async_client.doc_ai.parse.with_streaming_response.create_job(
+    async def test_streaming_response_create(self, async_client: AsyncMixedbread) -> None:
+        async with async_client.doc_ai.parse.with_streaming_response.create(
             file_id="file_id",
         ) as response:
             assert not response.is_closed
@@ -142,15 +142,15 @@ class TestAsyncParse:
         assert cast(Any, response.is_closed) is True
 
     @parametrize
-    async def test_method_retrieve_job(self, async_client: AsyncMixedbread) -> None:
-        parse = await async_client.doc_ai.parse.retrieve_job(
+    async def test_method_retrieve(self, async_client: AsyncMixedbread) -> None:
+        parse = await async_client.doc_ai.parse.retrieve(
             "job_id",
         )
         assert_matches_type(ParseResponse, parse, path=["response"])
 
     @parametrize
-    async def test_raw_response_retrieve_job(self, async_client: AsyncMixedbread) -> None:
-        response = await async_client.doc_ai.parse.with_raw_response.retrieve_job(
+    async def test_raw_response_retrieve(self, async_client: AsyncMixedbread) -> None:
+        response = await async_client.doc_ai.parse.with_raw_response.retrieve(
             "job_id",
         )
 
@@ -160,8 +160,8 @@ class TestAsyncParse:
         assert_matches_type(ParseResponse, parse, path=["response"])
 
     @parametrize
-    async def test_streaming_response_retrieve_job(self, async_client: AsyncMixedbread) -> None:
-        async with async_client.doc_ai.parse.with_streaming_response.retrieve_job(
+    async def test_streaming_response_retrieve(self, async_client: AsyncMixedbread) -> None:
+        async with async_client.doc_ai.parse.with_streaming_response.retrieve(
             "job_id",
         ) as response:
             assert not response.is_closed
@@ -173,8 +173,8 @@ class TestAsyncParse:
         assert cast(Any, response.is_closed) is True
 
     @parametrize
-    async def test_path_params_retrieve_job(self, async_client: AsyncMixedbread) -> None:
+    async def test_path_params_retrieve(self, async_client: AsyncMixedbread) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `job_id` but received ''"):
-            await async_client.doc_ai.parse.with_raw_response.retrieve_job(
+            await async_client.doc_ai.parse.with_raw_response.retrieve(
                 "",
             )

@@ -34,8 +34,10 @@ client = Mixedbread(
     environment="environment_1",
 )
 
-response = client.base_status_check()
-print(response.name)
+file_object = client.files.create(
+    file=b"raw file contents",
+)
+print(file_object.id)
 ```
 
 While you can provide an `api_key` keyword argument,
@@ -58,8 +60,10 @@ client = AsyncMixedbread(
 
 
 async def main() -> None:
-    response = await client.base_status_check()
-    print(response.name)
+    file_object = await client.files.create(
+        file=b"raw file contents",
+    )
+    print(file_object.id)
 
 
 asyncio.run(main())
@@ -92,7 +96,9 @@ from mixedbread import Mixedbread
 client = Mixedbread()
 
 try:
-    client.base_status_check()
+    client.files.create(
+        file=b"raw file contents",
+    )
 except mixedbread.APIConnectionError as e:
     print("The server could not be reached")
     print(e.__cause__)  # an underlying Exception, likely raised within httpx.
@@ -135,7 +141,9 @@ client = Mixedbread(
 )
 
 # Or, configure per-request:
-client.with_options(max_retries=5).base_status_check()
+client.with_options(max_retries=5).files.create(
+    file=b"raw file contents",
+)
 ```
 
 ### Timeouts
@@ -158,7 +166,9 @@ client = Mixedbread(
 )
 
 # Override per-request:
-client.with_options(timeout=5.0).base_status_check()
+client.with_options(timeout=5.0).files.create(
+    file=b"raw file contents",
+)
 ```
 
 On timeout, an `APITimeoutError` is thrown.
@@ -197,11 +207,13 @@ The "raw" Response object can be accessed by prefixing `.with_raw_response.` to 
 from mixedbread import Mixedbread
 
 client = Mixedbread()
-response = client.with_raw_response.base_status_check()
+response = client.files.with_raw_response.create(
+    file=b'raw file contents',
+)
 print(response.headers.get('X-My-Header'))
 
-client = response.parse()  # get the object that `base_status_check()` would have returned
-print(client.name)
+file = response.parse()  # get the object that `files.create()` would have returned
+print(file.id)
 ```
 
 These methods return an [`APIResponse`](https://github.com/stainless-sdks/mixedbread-python/tree/main/src/mixedbread/_response.py) object.
@@ -215,7 +227,9 @@ The above interface eagerly reads the full response body when you make the reque
 To stream the response body, use `.with_streaming_response` instead, which requires a context manager and only reads the response body once you call `.read()`, `.text()`, `.json()`, `.iter_bytes()`, `.iter_text()`, `.iter_lines()` or `.parse()`. In the async client, these are async methods.
 
 ```python
-with client.with_streaming_response.base_status_check() as response:
+with client.files.with_streaming_response.create(
+    file=b"raw file contents",
+) as response:
     print(response.headers.get("X-My-Header"))
 
     for line in response.iter_lines():
