@@ -227,7 +227,7 @@ class VectorStoresResource(SyncAPIResource):
 
         Args: pagination: The pagination options.
 
-        Returns: list[VectorStore]: The list of vector stores.
+        Returns: VectorStoreListResponse: The list of vector stores.
 
         Args:
           extra_headers: Send extra headers
@@ -532,7 +532,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
 
         Args: pagination: The pagination options.
 
-        Returns: list[VectorStore]: The list of vector stores.
+        Returns: VectorStoreListResponse: The list of vector stores.
 
         Args:
           extra_headers: Send extra headers

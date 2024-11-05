@@ -69,7 +69,7 @@ class FilesResource(SyncAPIResource):
         Args: vector_store_id: The ID of the vector store to upload to file: The file to
         upload and index
 
-        Returns: VectorStoreFileResponse: Details of the uploaded and indexed file
+        Returns: VectorStoreFile: Details of the uploaded and indexed file
 
         Args:
           vector_store_id: The ID of the vector store
@@ -116,7 +116,7 @@ class FilesResource(SyncAPIResource):
 
         Args: vector_store_id: The ID of the vector store file_id: The ID of the file
 
-        Returns: VectorStoreFileResponse: Details of the vector store file
+        Returns: VectorStoreFile: Details of the vector store file
 
         Args:
           vector_store_id: The ID of the vector store
@@ -369,7 +369,7 @@ class AsyncFilesResource(AsyncAPIResource):
         Args: vector_store_id: The ID of the vector store to upload to file: The file to
         upload and index
 
-        Returns: VectorStoreFileResponse: Details of the uploaded and indexed file
+        Returns: VectorStoreFile: Details of the uploaded and indexed file
 
         Args:
           vector_store_id: The ID of the vector store
@@ -416,7 +416,7 @@ class AsyncFilesResource(AsyncAPIResource):
 
         Args: vector_store_id: The ID of the vector store file_id: The ID of the file
 
-        Returns: VectorStoreFileResponse: Details of the vector store file
+        Returns: VectorStoreFile: Details of the vector store file
 
         Args:
           vector_store_id: The ID of the vector store
