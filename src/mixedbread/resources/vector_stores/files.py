@@ -242,7 +242,7 @@ class FilesResource(SyncAPIResource):
         vector_store_id: str,
         poll_interval_ms: int | NotGiven = NOT_GIVEN,
         poll_timeout_ms: float | NotGiven = NOT_GIVEN,
-    ) -> VectorStoreFileObject:
+    ) -> VectorStoreFile:
         """
         Poll for a file's status until it reaches a terminal state.
 
@@ -273,7 +273,7 @@ class FilesResource(SyncAPIResource):
         metadata: object,
         poll_interval_ms: int | NotGiven = NOT_GIVEN,
         poll_timeout_ms: float | NotGiven = NOT_GIVEN,
-    ) -> VectorStoreFileObject:
+    ) -> VectorStoreFile:
         """
         Attach a file to the given vector store and wait for it to be processed.
 
@@ -301,7 +301,7 @@ class FilesResource(SyncAPIResource):
         vector_store_id: str,
         file: FileTypes,
         metadata: object,
-    ) -> VectorStoreFileObject:
+    ) -> VectorStoreFile:
         """Upload a file to the `files` API and then attach it to the given vector store.
 
         Note the file will be asynchronously processed (you can use the alternative
@@ -317,7 +317,7 @@ class FilesResource(SyncAPIResource):
         file: FileTypes,
         metadata: object,
         poll_interval_ms: int | NotGiven = NOT_GIVEN,
-    ) -> VectorStoreFileObject:
+    ) -> VectorStoreFile:
         """Add a file to a vector store and poll until processing is complete."""
         file_obj = self._client.files.create(file=file)
 
