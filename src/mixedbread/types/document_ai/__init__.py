@@ -2,6 +2,6 @@
 
 from __future__ import annotations
 
-from .parse_create_params import ParseCreateParams as ParseCreateParams
-from .parse_create_response import ParseCreateResponse as ParseCreateResponse
-from .parse_retrieve_response import ParseRetrieveResponse as ParseRetrieveResponse
+from .parse_create_job_params import ParseCreateJobParams as ParseCreateJobParams
+from .parse_create_job_response import ParseCreateJobResponse as ParseCreateJobResponse
+from .parse_retrieve_job_response import ParseRetrieveJobResponse as ParseRetrieveJobResponse

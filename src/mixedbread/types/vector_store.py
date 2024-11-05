@@ -6,7 +6,7 @@ from typing_extensions import Literal
 
 from .._models import BaseModel
 
-__all__ = ["VectorStoreRetrieveResponse", "FileCounts"]
+__all__ = ["VectorStore", "FileCounts"]
 
 
 class FileCounts(BaseModel):
@@ -21,7 +21,7 @@ class FileCounts(BaseModel):
     total: Optional[int] = None
 
 
-class VectorStoreRetrieveResponse(BaseModel):
+class VectorStore(BaseModel):
     id: str
 
     created_at: datetime

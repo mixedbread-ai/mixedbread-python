@@ -7,7 +7,7 @@ from typing_extensions import Literal, TypeAlias
 from ..._models import BaseModel
 
 __all__ = [
-    "ParseRetrieveResponse",
+    "ParseCreateJobResponse",
     "RunningJob",
     "FailedJob",
     "SuccessfulParsingJob",
@@ -157,4 +157,4 @@ class SuccessfulParsingJob(BaseModel):
     """The status of the job"""
 
 
-ParseRetrieveResponse: TypeAlias = Union[RunningJob, FailedJob, SuccessfulParsingJob]
+ParseCreateJobResponse: TypeAlias = Union[RunningJob, FailedJob, SuccessfulParsingJob]

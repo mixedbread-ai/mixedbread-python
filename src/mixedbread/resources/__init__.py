@@ -1,13 +1,5 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from .base import (
-    BaseResource,
-    AsyncBaseResource,
-    BaseResourceWithRawResponse,
-    AsyncBaseResourceWithRawResponse,
-    BaseResourceWithStreamingResponse,
-    AsyncBaseResourceWithStreamingResponse,
-)
 from .jobs import (
     JobsResource,
     AsyncJobsResource,
@@ -24,14 +16,6 @@ from .files import (
     FilesResourceWithStreamingResponse,
     AsyncFilesResourceWithStreamingResponse,
 )
-from .reranking import (
-    RerankingResource,
-    AsyncRerankingResource,
-    RerankingResourceWithRawResponse,
-    AsyncRerankingResourceWithRawResponse,
-    RerankingResourceWithStreamingResponse,
-    AsyncRerankingResourceWithStreamingResponse,
-)
 from .embeddings import (
     EmbeddingsResource,
     AsyncEmbeddingsResource,
@@ -39,6 +23,14 @@ from .embeddings import (
     AsyncEmbeddingsResourceWithRawResponse,
     EmbeddingsResourceWithStreamingResponse,
     AsyncEmbeddingsResourceWithStreamingResponse,
+)
+from .rerankings import (
+    RerankingsResource,
+    AsyncRerankingsResource,
+    RerankingsResourceWithRawResponse,
+    AsyncRerankingsResourceWithRawResponse,
+    RerankingsResourceWithStreamingResponse,
+    AsyncRerankingsResourceWithStreamingResponse,
 )
 from .document_ai import (
     DocumentAIResource,
@@ -58,12 +50,6 @@ from .vector_stores import (
 )
 
 __all__ = [
-    "BaseResource",
-    "AsyncBaseResource",
-    "BaseResourceWithRawResponse",
-    "AsyncBaseResourceWithRawResponse",
-    "BaseResourceWithStreamingResponse",
-    "AsyncBaseResourceWithStreamingResponse",
     "VectorStoresResource",
     "AsyncVectorStoresResource",
     "VectorStoresResourceWithRawResponse",
@@ -82,12 +68,12 @@ __all__ = [
     "AsyncEmbeddingsResourceWithRawResponse",
     "EmbeddingsResourceWithStreamingResponse",
     "AsyncEmbeddingsResourceWithStreamingResponse",
-    "RerankingResource",
-    "AsyncRerankingResource",
-    "RerankingResourceWithRawResponse",
-    "AsyncRerankingResourceWithRawResponse",
-    "RerankingResourceWithStreamingResponse",
-    "AsyncRerankingResourceWithStreamingResponse",
+    "RerankingsResource",
+    "AsyncRerankingsResource",
+    "RerankingsResourceWithRawResponse",
+    "AsyncRerankingsResourceWithRawResponse",
+    "RerankingsResourceWithStreamingResponse",
+    "AsyncRerankingsResourceWithStreamingResponse",
     "FilesResource",
     "AsyncFilesResource",
     "FilesResourceWithRawResponse",

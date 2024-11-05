@@ -21,9 +21,9 @@ from ..._response import (
     async_to_streamed_response_wrapper,
 )
 from ..._base_client import make_request_options
-from ...types.document_ai import parse_create_params
-from ...types.document_ai.parse_create_response import ParseCreateResponse
-from ...types.document_ai.parse_retrieve_response import ParseRetrieveResponse
+from ...types.document_ai import parse_create_job_params
+from ...types.document_ai.parse_create_job_response import ParseCreateJobResponse
+from ...types.document_ai.parse_retrieve_job_response import ParseRetrieveJobResponse
 
 __all__ = ["ParseResource", "AsyncParseResource"]
 
@@ -48,7 +48,7 @@ class ParseResource(SyncAPIResource):
         """
         return ParseResourceWithStreamingResponse(self)
 
-    def create(
+    def create_job(
         self,
         *,
         file_id: str,
@@ -61,7 +61,7 @@ class ParseResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ParseCreateResponse:
+    ) -> ParseCreateJobResponse:
         """
         Start a parse job for the provided file.
 
@@ -87,7 +87,7 @@ class ParseResource(SyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return cast(
-            ParseCreateResponse,
+            ParseCreateJobResponse,
             self._post(
                 "/v1/document-ai/parse",
                 body=maybe_transform(
@@ -97,18 +97,18 @@ class ParseResource(SyncAPIResource):
                         "element_types": element_types,
                         "return_format": return_format,
                     },
-                    parse_create_params.ParseCreateParams,
+                    parse_create_job_params.ParseCreateJobParams,
                 ),
                 options=make_request_options(
                     extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
                 ),
                 cast_to=cast(
-                    Any, ParseCreateResponse
+                    Any, ParseCreateJobResponse
                 ),  # Union types cannot be passed in as arguments in the type system
             ),
         )
 
-    def retrieve(
+    def retrieve_job(
         self,
         job_id: str,
         *,
@@ -118,7 +118,7 @@ class ParseResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ParseRetrieveResponse:
+    ) -> ParseRetrieveJobResponse:
         """
         Get detailed information about a specific parse job.
 
@@ -140,14 +140,14 @@ class ParseResource(SyncAPIResource):
         if not job_id:
             raise ValueError(f"Expected a non-empty value for `job_id` but received {job_id!r}")
         return cast(
-            ParseRetrieveResponse,
+            ParseRetrieveJobResponse,
             self._get(
                 f"/v1/document-ai/parse/{job_id}",
                 options=make_request_options(
                     extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
                 ),
                 cast_to=cast(
-                    Any, ParseRetrieveResponse
+                    Any, ParseRetrieveJobResponse
                 ),  # Union types cannot be passed in as arguments in the type system
             ),
         )
@@ -173,7 +173,7 @@ class AsyncParseResource(AsyncAPIResource):
         """
         return AsyncParseResourceWithStreamingResponse(self)
 
-    async def create(
+    async def create_job(
         self,
         *,
         file_id: str,
@@ -186,7 +186,7 @@ class AsyncParseResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ParseCreateResponse:
+    ) -> ParseCreateJobResponse:
         """
         Start a parse job for the provided file.
 
@@ -212,7 +212,7 @@ class AsyncParseResource(AsyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return cast(
-            ParseCreateResponse,
+            ParseCreateJobResponse,
             await self._post(
                 "/v1/document-ai/parse",
                 body=await async_maybe_transform(
@@ -222,18 +222,18 @@ class AsyncParseResource(AsyncAPIResource):
                         "element_types": element_types,
                         "return_format": return_format,
                     },
-                    parse_create_params.ParseCreateParams,
+                    parse_create_job_params.ParseCreateJobParams,
                 ),
                 options=make_request_options(
                     extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
                 ),
                 cast_to=cast(
-                    Any, ParseCreateResponse
+                    Any, ParseCreateJobResponse
                 ),  # Union types cannot be passed in as arguments in the type system
             ),
         )
 
-    async def retrieve(
+    async def retrieve_job(
         self,
         job_id: str,
         *,
@@ -243,7 +243,7 @@ class AsyncParseResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ParseRetrieveResponse:
+    ) -> ParseRetrieveJobResponse:
         """
         Get detailed information about a specific parse job.
 
@@ -265,14 +265,14 @@ class AsyncParseResource(AsyncAPIResource):
         if not job_id:
             raise ValueError(f"Expected a non-empty value for `job_id` but received {job_id!r}")
         return cast(
-            ParseRetrieveResponse,
+            ParseRetrieveJobResponse,
             await self._get(
                 f"/v1/document-ai/parse/{job_id}",
                 options=make_request_options(
                     extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
                 ),
                 cast_to=cast(
-                    Any, ParseRetrieveResponse
+                    Any, ParseRetrieveJobResponse
                 ),  # Union types cannot be passed in as arguments in the type system
             ),
         )
@@ -282,11 +282,11 @@ class ParseResourceWithRawResponse:
     def __init__(self, parse: ParseResource) -> None:
         self._parse = parse
 
-        self.create = to_raw_response_wrapper(
-            parse.create,
+        self.create_job = to_raw_response_wrapper(
+            parse.create_job,
         )
-        self.retrieve = to_raw_response_wrapper(
-            parse.retrieve,
+        self.retrieve_job = to_raw_response_wrapper(
+            parse.retrieve_job,
         )
 
 
@@ -294,11 +294,11 @@ class AsyncParseResourceWithRawResponse:
     def __init__(self, parse: AsyncParseResource) -> None:
         self._parse = parse
 
-        self.create = async_to_raw_response_wrapper(
-            parse.create,
+        self.create_job = async_to_raw_response_wrapper(
+            parse.create_job,
         )
-        self.retrieve = async_to_raw_response_wrapper(
-            parse.retrieve,
+        self.retrieve_job = async_to_raw_response_wrapper(
+            parse.retrieve_job,
         )
 
 
@@ -306,11 +306,11 @@ class ParseResourceWithStreamingResponse:
     def __init__(self, parse: ParseResource) -> None:
         self._parse = parse
 
-        self.create = to_streamed_response_wrapper(
-            parse.create,
+        self.create_job = to_streamed_response_wrapper(
+            parse.create_job,
         )
-        self.retrieve = to_streamed_response_wrapper(
-            parse.retrieve,
+        self.retrieve_job = to_streamed_response_wrapper(
+            parse.retrieve_job,
         )
 
 
@@ -318,9 +318,9 @@ class AsyncParseResourceWithStreamingResponse:
     def __init__(self, parse: AsyncParseResource) -> None:
         self._parse = parse
 
-        self.create = async_to_streamed_response_wrapper(
-            parse.create,
+        self.create_job = async_to_streamed_response_wrapper(
+            parse.create_job,
         )
-        self.retrieve = async_to_streamed_response_wrapper(
-            parse.retrieve,
+        self.retrieve_job = async_to_streamed_response_wrapper(
+            parse.retrieve_job,
         )

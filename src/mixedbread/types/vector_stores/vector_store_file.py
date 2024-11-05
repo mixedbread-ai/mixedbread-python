@@ -2,14 +2,14 @@
 
 from typing import List, Optional
 from datetime import datetime
-from typing_extensions import Literal
 
 from ..._models import BaseModel
+from ..job_status import JobStatus
 
-__all__ = ["FileCreateResponse"]
+__all__ = ["VectorStoreFile"]
 
 
-class FileCreateResponse(BaseModel):
+class VectorStoreFile(BaseModel):
     id: str
 
     created_at: datetime
@@ -21,7 +21,7 @@ class FileCreateResponse(BaseModel):
 
     metadata: Optional[object] = None
 
-    status: Optional[Literal["none", "running", "canceled", "successful", "failed", "resumable", "pending"]] = None
+    status: Optional[JobStatus] = None
 
     usage_bytes: Optional[int] = None
 

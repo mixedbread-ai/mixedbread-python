@@ -2,10 +2,10 @@
 
 from typing import List, Optional
 
-from ..._models import BaseModel
-from .vector_store_file import VectorStoreFile
+from .._models import BaseModel
+from .vector_stores.vector_store_file import VectorStoreFile
 
-__all__ = ["FileListResponse", "Pagination"]
+__all__ = ["SearchResponse", "Pagination"]
 
 
 class Pagination(BaseModel):
@@ -16,7 +16,7 @@ class Pagination(BaseModel):
     total: Optional[int] = None
 
 
-class FileListResponse(BaseModel):
-    data: List[VectorStoreFile]
+class SearchResponse(BaseModel):
+    data: List[List[VectorStoreFile]]
 
     pagination: Pagination

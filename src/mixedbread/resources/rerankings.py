@@ -23,28 +23,28 @@ from .._response import (
 from .._base_client import make_request_options
 from ..types.reranking_create_response import RerankingCreateResponse
 
-__all__ = ["RerankingResource", "AsyncRerankingResource"]
+__all__ = ["RerankingsResource", "AsyncRerankingsResource"]
 
 
-class RerankingResource(SyncAPIResource):
+class RerankingsResource(SyncAPIResource):
     @cached_property
-    def with_raw_response(self) -> RerankingResourceWithRawResponse:
+    def with_raw_response(self) -> RerankingsResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return the
         the raw response object instead of the parsed content.
 
         For more information, see https://www.github.com/stainless-sdks/mixedbread-python#accessing-raw-response-data-eg-headers
         """
-        return RerankingResourceWithRawResponse(self)
+        return RerankingsResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> RerankingResourceWithStreamingResponse:
+    def with_streaming_response(self) -> RerankingsResourceWithStreamingResponse:
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
         For more information, see https://www.github.com/stainless-sdks/mixedbread-python#with_streaming_response
         """
-        return RerankingResourceWithStreamingResponse(self)
+        return RerankingsResourceWithStreamingResponse(self)
 
     def create(
         self,
@@ -108,25 +108,25 @@ class RerankingResource(SyncAPIResource):
         )
 
 
-class AsyncRerankingResource(AsyncAPIResource):
+class AsyncRerankingsResource(AsyncAPIResource):
     @cached_property
-    def with_raw_response(self) -> AsyncRerankingResourceWithRawResponse:
+    def with_raw_response(self) -> AsyncRerankingsResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return the
         the raw response object instead of the parsed content.
 
         For more information, see https://www.github.com/stainless-sdks/mixedbread-python#accessing-raw-response-data-eg-headers
         """
-        return AsyncRerankingResourceWithRawResponse(self)
+        return AsyncRerankingsResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> AsyncRerankingResourceWithStreamingResponse:
+    def with_streaming_response(self) -> AsyncRerankingsResourceWithStreamingResponse:
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
         For more information, see https://www.github.com/stainless-sdks/mixedbread-python#with_streaming_response
         """
-        return AsyncRerankingResourceWithStreamingResponse(self)
+        return AsyncRerankingsResourceWithStreamingResponse(self)
 
     async def create(
         self,
@@ -190,37 +190,37 @@ class AsyncRerankingResource(AsyncAPIResource):
         )
 
 
-class RerankingResourceWithRawResponse:
-    def __init__(self, reranking: RerankingResource) -> None:
-        self._reranking = reranking
+class RerankingsResourceWithRawResponse:
+    def __init__(self, rerankings: RerankingsResource) -> None:
+        self._rerankings = rerankings
 
         self.create = to_raw_response_wrapper(
-            reranking.create,
+            rerankings.create,
         )
 
 
-class AsyncRerankingResourceWithRawResponse:
-    def __init__(self, reranking: AsyncRerankingResource) -> None:
-        self._reranking = reranking
+class AsyncRerankingsResourceWithRawResponse:
+    def __init__(self, rerankings: AsyncRerankingsResource) -> None:
+        self._rerankings = rerankings
 
         self.create = async_to_raw_response_wrapper(
-            reranking.create,
+            rerankings.create,
         )
 
 
-class RerankingResourceWithStreamingResponse:
-    def __init__(self, reranking: RerankingResource) -> None:
-        self._reranking = reranking
+class RerankingsResourceWithStreamingResponse:
+    def __init__(self, rerankings: RerankingsResource) -> None:
+        self._rerankings = rerankings
 
         self.create = to_streamed_response_wrapper(
-            reranking.create,
+            rerankings.create,
         )
 
 
-class AsyncRerankingResourceWithStreamingResponse:
-    def __init__(self, reranking: AsyncRerankingResource) -> None:
-        self._reranking = reranking
+class AsyncRerankingsResourceWithStreamingResponse:
+    def __init__(self, rerankings: AsyncRerankingsResource) -> None:
+        self._rerankings = rerankings
 
         self.create = async_to_streamed_response_wrapper(
-            reranking.create,
+            rerankings.create,
         )

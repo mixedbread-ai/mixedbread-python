@@ -35,12 +35,10 @@ from ..._response import (
     async_to_streamed_response_wrapper,
 )
 from ..._base_client import make_request_options
+from ...types.vector_store import VectorStore
+from ...types.search_response import SearchResponse
 from ...types.vector_store_list_response import VectorStoreListResponse
-from ...types.vector_store_create_response import VectorStoreCreateResponse
 from ...types.vector_store_delete_response import VectorStoreDeleteResponse
-from ...types.vector_store_search_response import VectorStoreSearchResponse
-from ...types.vector_store_update_response import VectorStoreUpdateResponse
-from ...types.vector_store_retrieve_response import VectorStoreRetrieveResponse
 
 __all__ = ["VectorStoresResource", "AsyncVectorStoresResource"]
 
@@ -82,7 +80,7 @@ class VectorStoresResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> VectorStoreCreateResponse:
+    ) -> VectorStore:
         """
         Create a new vector store.
 
@@ -114,7 +112,7 @@ class VectorStoresResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=VectorStoreCreateResponse,
+            cast_to=VectorStore,
         )
 
     def retrieve(
@@ -127,7 +125,7 @@ class VectorStoresResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> VectorStoreRetrieveResponse:
+    ) -> VectorStore:
         """
         Get a vector store by ID.
 
@@ -153,7 +151,7 @@ class VectorStoresResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=VectorStoreRetrieveResponse,
+            cast_to=VectorStore,
         )
 
     def update(
@@ -170,7 +168,7 @@ class VectorStoresResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> VectorStoreUpdateResponse:
+    ) -> VectorStore:
         """
         Update a vector store by ID.
 
@@ -207,7 +205,7 @@ class VectorStoresResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=VectorStoreUpdateResponse,
+            cast_to=VectorStore,
         )
 
     def list(
@@ -310,7 +308,7 @@ class VectorStoresResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> VectorStoreSearchResponse:
+    ) -> SearchResponse:
         """
         Perform a search based on the provided query.
 
@@ -346,7 +344,7 @@ class VectorStoresResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=VectorStoreSearchResponse,
+            cast_to=SearchResponse,
         )
 
 
@@ -387,7 +385,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> VectorStoreCreateResponse:
+    ) -> VectorStore:
         """
         Create a new vector store.
 
@@ -419,7 +417,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=VectorStoreCreateResponse,
+            cast_to=VectorStore,
         )
 
     async def retrieve(
@@ -432,7 +430,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> VectorStoreRetrieveResponse:
+    ) -> VectorStore:
         """
         Get a vector store by ID.
 
@@ -458,7 +456,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=VectorStoreRetrieveResponse,
+            cast_to=VectorStore,
         )
 
     async def update(
@@ -475,7 +473,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> VectorStoreUpdateResponse:
+    ) -> VectorStore:
         """
         Update a vector store by ID.
 
@@ -512,7 +510,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=VectorStoreUpdateResponse,
+            cast_to=VectorStore,
         )
 
     async def list(
@@ -615,7 +613,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> VectorStoreSearchResponse:
+    ) -> SearchResponse:
         """
         Perform a search based on the provided query.
 
@@ -651,7 +649,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=VectorStoreSearchResponse,
+            cast_to=SearchResponse,
         )
 
 

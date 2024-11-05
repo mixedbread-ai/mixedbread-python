@@ -4,10 +4,10 @@ from datetime import datetime
 
 from .._models import BaseModel
 
-__all__ = ["FileUpdateResponse"]
+__all__ = ["FileObject"]
 
 
-class FileUpdateResponse(BaseModel):
+class FileObject(BaseModel):
     id: str
     """Unique identifier for the record"""
 

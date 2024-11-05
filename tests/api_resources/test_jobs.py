@@ -9,7 +9,7 @@ import pytest
 
 from mixedbread import Mixedbread, AsyncMixedbread
 from tests.utils import assert_matches_type
-from mixedbread.types import JobDeleteResponse, JobRetrieveResponse
+from mixedbread.types import JobStatus, JobDeleteResponse
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -22,7 +22,7 @@ class TestJobs:
         job = client.jobs.retrieve(
             "job_id",
         )
-        assert_matches_type(JobRetrieveResponse, job, path=["response"])
+        assert_matches_type(JobStatus, job, path=["response"])
 
     @parametrize
     def test_raw_response_retrieve(self, client: Mixedbread) -> None:
@@ -33,7 +33,7 @@ class TestJobs:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         job = response.parse()
-        assert_matches_type(JobRetrieveResponse, job, path=["response"])
+        assert_matches_type(JobStatus, job, path=["response"])
 
     @parametrize
     def test_streaming_response_retrieve(self, client: Mixedbread) -> None:
@@ -44,7 +44,7 @@ class TestJobs:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             job = response.parse()
-            assert_matches_type(JobRetrieveResponse, job, path=["response"])
+            assert_matches_type(JobStatus, job, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -102,7 +102,7 @@ class TestAsyncJobs:
         job = await async_client.jobs.retrieve(
             "job_id",
         )
-        assert_matches_type(JobRetrieveResponse, job, path=["response"])
+        assert_matches_type(JobStatus, job, path=["response"])
 
     @parametrize
     async def test_raw_response_retrieve(self, async_client: AsyncMixedbread) -> None:
@@ -113,7 +113,7 @@ class TestAsyncJobs:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         job = await response.parse()
-        assert_matches_type(JobRetrieveResponse, job, path=["response"])
+        assert_matches_type(JobStatus, job, path=["response"])
 
     @parametrize
     async def test_streaming_response_retrieve(self, async_client: AsyncMixedbread) -> None:
@@ -124,7 +124,7 @@ class TestAsyncJobs:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             job = await response.parse()
-            assert_matches_type(JobRetrieveResponse, job, path=["response"])
+            assert_matches_type(JobStatus, job, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
