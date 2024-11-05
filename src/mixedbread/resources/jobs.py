@@ -54,8 +54,7 @@ class JobsResource(SyncAPIResource):
         """
         Retrieve the status of a specific job by its ID.
 
-        Args: job_id: The ID of the job to retrieve the status for. state: The
-        application state.
+        Args: job_id: The ID of the job to retrieve the status for.
 
         Returns: JobStatusResponse: The response containing the job status.
 
@@ -89,11 +88,10 @@ class JobsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> JobDeleteResponse:
-        """Delete a specific job by its ID.
+        """
+        Delete a specific job by its ID.
 
         Args: job_id: The ID of the job to delete.
-
-        state: The application state.
 
         Returns: JobDeleteResponse: The response containing the result of the job
         deletion.
@@ -152,8 +150,7 @@ class AsyncJobsResource(AsyncAPIResource):
         """
         Retrieve the status of a specific job by its ID.
 
-        Args: job_id: The ID of the job to retrieve the status for. state: The
-        application state.
+        Args: job_id: The ID of the job to retrieve the status for.
 
         Returns: JobStatusResponse: The response containing the job status.
 
@@ -187,11 +184,10 @@ class AsyncJobsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> JobDeleteResponse:
-        """Delete a specific job by its ID.
+        """
+        Delete a specific job by its ID.
 
         Args: job_id: The ID of the job to delete.
-
-        state: The application state.
 
         Returns: JobDeleteResponse: The response containing the result of the job
         deletion.

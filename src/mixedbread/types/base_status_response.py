@@ -3,10 +3,10 @@
 
 from .._models import BaseModel
 
-__all__ = ["VectorStoreDeleted"]
+__all__ = ["BaseStatusResponse"]
 
 
-class VectorStoreDeleted(BaseModel):
-    id: str
+class BaseStatusResponse(BaseModel):
+    name: str
 
-    deleted: bool
+    version: str

@@ -22,9 +22,10 @@ from ..._response import (
 )
 from ..._base_client import make_request_options
 from ...types.vector_stores import file_list_params, file_create_params
-from ...types.vector_stores.vector_store_file_object import VectorStoreFileObject
-from ...types.vector_stores.vector_store_file_deleted import VectorStoreFileDeleted
-from ...types.vector_stores.vector_store_file_list_response import VectorStoreFileListResponse
+from ...types.vector_stores.file_list_response import FileListResponse
+from ...types.vector_stores.file_create_response import FileCreateResponse
+from ...types.vector_stores.file_delete_response import FileDeleteResponse
+from ...types.vector_stores.file_retrieve_response import FileRetrieveResponse
 
 __all__ = ["FilesResource", "AsyncFilesResource"]
 
@@ -61,12 +62,12 @@ class FilesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> VectorStoreFileObject:
+    ) -> FileCreateResponse:
         """
         Upload a new file to a vector store for indexing.
 
         Args: vector_store_id: The ID of the vector store to upload to file: The file to
-        upload and index state: The application state
+        upload and index
 
         Returns: VectorStoreFileResponse: Details of the uploaded and indexed file
 
@@ -95,7 +96,7 @@ class FilesResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=VectorStoreFileObject,
+            cast_to=FileCreateResponse,
         )
 
     def retrieve(
@@ -109,12 +110,11 @@ class FilesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> VectorStoreFileObject:
+    ) -> FileRetrieveResponse:
         """
         Get details of a specific file in a vector store.
 
         Args: vector_store_id: The ID of the vector store file_id: The ID of the file
-        state: The application state
 
         Returns: VectorStoreFileResponse: Details of the vector store file
 
@@ -140,7 +140,7 @@ class FilesResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=VectorStoreFileObject,
+            cast_to=FileRetrieveResponse,
         )
 
     def list(
@@ -155,12 +155,12 @@ class FilesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> VectorStoreFileListResponse:
+    ) -> FileListResponse:
         """
         List files indexed in a vector store with pagination.
 
         Args: vector_store_id: The ID of the vector store pagination: Pagination
-        parameters state: The application state
+        parameters
 
         Returns: VectorStoreFileListResponse: Paginated list of vector store files
 
@@ -192,7 +192,7 @@ class FilesResource(SyncAPIResource):
                     file_list_params.FileListParams,
                 ),
             ),
-            cast_to=VectorStoreFileListResponse,
+            cast_to=FileListResponse,
         )
 
     def delete(
@@ -206,12 +206,14 @@ class FilesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> VectorStoreFileDeleted:
+    ) -> FileDeleteResponse:
         """
         Delete a file from a vector store.
 
         Args: vector_store_id: The ID of the vector store file_id: The ID of the file to
-        delete state: The application state
+        delete
+
+        Returns: VectorStoreFileDeleted: The deleted file
 
         Args:
           extra_headers: Send extra headers
@@ -231,7 +233,7 @@ class FilesResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=VectorStoreFileDeleted,
+            cast_to=FileDeleteResponse,
         )
 
     def poll(
@@ -360,12 +362,12 @@ class AsyncFilesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> VectorStoreFileObject:
+    ) -> FileCreateResponse:
         """
         Upload a new file to a vector store for indexing.
 
         Args: vector_store_id: The ID of the vector store to upload to file: The file to
-        upload and index state: The application state
+        upload and index
 
         Returns: VectorStoreFileResponse: Details of the uploaded and indexed file
 
@@ -394,7 +396,7 @@ class AsyncFilesResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=VectorStoreFileObject,
+            cast_to=FileCreateResponse,
         )
 
     async def retrieve(
@@ -408,12 +410,11 @@ class AsyncFilesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> VectorStoreFileObject:
+    ) -> FileRetrieveResponse:
         """
         Get details of a specific file in a vector store.
 
         Args: vector_store_id: The ID of the vector store file_id: The ID of the file
-        state: The application state
 
         Returns: VectorStoreFileResponse: Details of the vector store file
 
@@ -439,7 +440,7 @@ class AsyncFilesResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=VectorStoreFileObject,
+            cast_to=FileRetrieveResponse,
         )
 
     async def list(
@@ -454,12 +455,12 @@ class AsyncFilesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> VectorStoreFileListResponse:
+    ) -> FileListResponse:
         """
         List files indexed in a vector store with pagination.
 
         Args: vector_store_id: The ID of the vector store pagination: Pagination
-        parameters state: The application state
+        parameters
 
         Returns: VectorStoreFileListResponse: Paginated list of vector store files
 
@@ -491,7 +492,7 @@ class AsyncFilesResource(AsyncAPIResource):
                     file_list_params.FileListParams,
                 ),
             ),
-            cast_to=VectorStoreFileListResponse,
+            cast_to=FileListResponse,
         )
 
     async def delete(
@@ -505,12 +506,14 @@ class AsyncFilesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> VectorStoreFileDeleted:
+    ) -> FileDeleteResponse:
         """
         Delete a file from a vector store.
 
         Args: vector_store_id: The ID of the vector store file_id: The ID of the file to
-        delete state: The application state
+        delete
+
+        Returns: VectorStoreFileDeleted: The deleted file
 
         Args:
           extra_headers: Send extra headers
@@ -530,7 +533,7 @@ class AsyncFilesResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=VectorStoreFileDeleted,
+            cast_to=FileDeleteResponse,
         )
 
     async def poll(

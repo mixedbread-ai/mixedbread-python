@@ -1,5 +1,13 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
+from .base import (
+    BaseResource,
+    AsyncBaseResource,
+    BaseResourceWithRawResponse,
+    AsyncBaseResourceWithRawResponse,
+    BaseResourceWithStreamingResponse,
+    AsyncBaseResourceWithStreamingResponse,
+)
 from .jobs import (
     JobsResource,
     AsyncJobsResource,
@@ -16,13 +24,29 @@ from .files import (
     FilesResourceWithStreamingResponse,
     AsyncFilesResourceWithStreamingResponse,
 )
-from .doc_ai import (
-    DocAIResource,
-    AsyncDocAIResource,
-    DocAIResourceWithRawResponse,
-    AsyncDocAIResourceWithRawResponse,
-    DocAIResourceWithStreamingResponse,
-    AsyncDocAIResourceWithStreamingResponse,
+from .reranking import (
+    RerankingResource,
+    AsyncRerankingResource,
+    RerankingResourceWithRawResponse,
+    AsyncRerankingResourceWithRawResponse,
+    RerankingResourceWithStreamingResponse,
+    AsyncRerankingResourceWithStreamingResponse,
+)
+from .embeddings import (
+    EmbeddingsResource,
+    AsyncEmbeddingsResource,
+    EmbeddingsResourceWithRawResponse,
+    AsyncEmbeddingsResourceWithRawResponse,
+    EmbeddingsResourceWithStreamingResponse,
+    AsyncEmbeddingsResourceWithStreamingResponse,
+)
+from .document_ai import (
+    DocumentAIResource,
+    AsyncDocumentAIResource,
+    DocumentAIResourceWithRawResponse,
+    AsyncDocumentAIResourceWithRawResponse,
+    DocumentAIResourceWithStreamingResponse,
+    AsyncDocumentAIResourceWithStreamingResponse,
 )
 from .vector_stores import (
     VectorStoresResource,
@@ -34,12 +58,36 @@ from .vector_stores import (
 )
 
 __all__ = [
-    "DocAIResource",
-    "AsyncDocAIResource",
-    "DocAIResourceWithRawResponse",
-    "AsyncDocAIResourceWithRawResponse",
-    "DocAIResourceWithStreamingResponse",
-    "AsyncDocAIResourceWithStreamingResponse",
+    "BaseResource",
+    "AsyncBaseResource",
+    "BaseResourceWithRawResponse",
+    "AsyncBaseResourceWithRawResponse",
+    "BaseResourceWithStreamingResponse",
+    "AsyncBaseResourceWithStreamingResponse",
+    "VectorStoresResource",
+    "AsyncVectorStoresResource",
+    "VectorStoresResourceWithRawResponse",
+    "AsyncVectorStoresResourceWithRawResponse",
+    "VectorStoresResourceWithStreamingResponse",
+    "AsyncVectorStoresResourceWithStreamingResponse",
+    "DocumentAIResource",
+    "AsyncDocumentAIResource",
+    "DocumentAIResourceWithRawResponse",
+    "AsyncDocumentAIResourceWithRawResponse",
+    "DocumentAIResourceWithStreamingResponse",
+    "AsyncDocumentAIResourceWithStreamingResponse",
+    "EmbeddingsResource",
+    "AsyncEmbeddingsResource",
+    "EmbeddingsResourceWithRawResponse",
+    "AsyncEmbeddingsResourceWithRawResponse",
+    "EmbeddingsResourceWithStreamingResponse",
+    "AsyncEmbeddingsResourceWithStreamingResponse",
+    "RerankingResource",
+    "AsyncRerankingResource",
+    "RerankingResourceWithRawResponse",
+    "AsyncRerankingResourceWithRawResponse",
+    "RerankingResourceWithStreamingResponse",
+    "AsyncRerankingResourceWithStreamingResponse",
     "FilesResource",
     "AsyncFilesResource",
     "FilesResourceWithRawResponse",
@@ -52,10 +100,4 @@ __all__ = [
     "AsyncJobsResourceWithRawResponse",
     "JobsResourceWithStreamingResponse",
     "AsyncJobsResourceWithStreamingResponse",
-    "VectorStoresResource",
-    "AsyncVectorStoresResource",
-    "VectorStoresResourceWithRawResponse",
-    "AsyncVectorStoresResourceWithRawResponse",
-    "VectorStoresResourceWithStreamingResponse",
-    "AsyncVectorStoresResourceWithStreamingResponse",
 ]

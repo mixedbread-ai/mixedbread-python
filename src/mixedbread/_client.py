@@ -12,10 +12,7 @@ from . import resources, _exceptions
 from ._qs import Querystring
 from ._types import (
     NOT_GIVEN,
-    Body,
     Omit,
-    Query,
-    Headers,
     Timeout,
     NotGiven,
     Transport,
@@ -27,21 +24,13 @@ from ._utils import (
     get_async_library,
 )
 from ._version import __version__
-from ._response import (
-    to_raw_response_wrapper,
-    to_streamed_response_wrapper,
-    async_to_raw_response_wrapper,
-    async_to_streamed_response_wrapper,
-)
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import APIStatusError, MixedbreadError
 from ._base_client import (
     DEFAULT_MAX_RETRIES,
     SyncAPIClient,
     AsyncAPIClient,
-    make_request_options,
 )
-from .types.info_response import InfoResponse
 
 __all__ = [
     "ENVIRONMENTS",
@@ -63,10 +52,13 @@ ENVIRONMENTS: Dict[str, str] = {
 
 
 class Mixedbread(SyncAPIClient):
-    doc_ai: resources.DocAIResource
+    base: resources.BaseResource
+    vector_stores: resources.VectorStoresResource
+    document_ai: resources.DocumentAIResource
+    embeddings: resources.EmbeddingsResource
+    reranking: resources.RerankingResource
     files: resources.FilesResource
     jobs: resources.JobsResource
-    vector_stores: resources.VectorStoresResource
     with_raw_response: MixedbreadWithRawResponse
     with_streaming_response: MixedbreadWithStreamedResponse
 
@@ -101,13 +93,13 @@ class Mixedbread(SyncAPIClient):
     ) -> None:
         """Construct a new synchronous mixedbread client instance.
 
-        This automatically infers the `api_key` argument from the `BEARER_API_KEY` environment variable if it is not provided.
+        This automatically infers the `api_key` argument from the `MXBAI_API_KEY` environment variable if it is not provided.
         """
         if api_key is None:
-            api_key = os.environ.get("BEARER_API_KEY")
+            api_key = os.environ.get("MXBAI_API_KEY")
         if api_key is None:
             raise MixedbreadError(
-                "The api_key client option must be set either by passing api_key to the client or by setting the BEARER_API_KEY environment variable"
+                "The api_key client option must be set either by passing api_key to the client or by setting the MXBAI_API_KEY environment variable"
             )
         self.api_key = api_key
 
@@ -148,10 +140,13 @@ class Mixedbread(SyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.doc_ai = resources.DocAIResource(self)
+        self.base = resources.BaseResource(self)
+        self.vector_stores = resources.VectorStoresResource(self)
+        self.document_ai = resources.DocumentAIResource(self)
+        self.embeddings = resources.EmbeddingsResource(self)
+        self.reranking = resources.RerankingResource(self)
         self.files = resources.FilesResource(self)
         self.jobs = resources.JobsResource(self)
-        self.vector_stores = resources.VectorStoresResource(self)
         self.with_raw_response = MixedbreadWithRawResponse(self)
         self.with_streaming_response = MixedbreadWithStreamedResponse(self)
 
@@ -228,32 +223,6 @@ class Mixedbread(SyncAPIClient):
     # client.with_options(timeout=10).foo.create(...)
     with_options = copy
 
-    def info(
-        self,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> InfoResponse:
-        """
-        Perform a base search to check the service status and configuration.
-
-        Args: state: The application state.
-
-        Returns: dict: A dictionary containing the service status and public
-        configuration details.
-        """
-        return self.get(
-            "/",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=InfoResponse,
-        )
-
     @override
     def _make_status_error(
         self,
@@ -289,10 +258,13 @@ class Mixedbread(SyncAPIClient):
 
 
 class AsyncMixedbread(AsyncAPIClient):
-    doc_ai: resources.AsyncDocAIResource
+    base: resources.AsyncBaseResource
+    vector_stores: resources.AsyncVectorStoresResource
+    document_ai: resources.AsyncDocumentAIResource
+    embeddings: resources.AsyncEmbeddingsResource
+    reranking: resources.AsyncRerankingResource
     files: resources.AsyncFilesResource
     jobs: resources.AsyncJobsResource
-    vector_stores: resources.AsyncVectorStoresResource
     with_raw_response: AsyncMixedbreadWithRawResponse
     with_streaming_response: AsyncMixedbreadWithStreamedResponse
 
@@ -327,13 +299,13 @@ class AsyncMixedbread(AsyncAPIClient):
     ) -> None:
         """Construct a new async mixedbread client instance.
 
-        This automatically infers the `api_key` argument from the `BEARER_API_KEY` environment variable if it is not provided.
+        This automatically infers the `api_key` argument from the `MXBAI_API_KEY` environment variable if it is not provided.
         """
         if api_key is None:
-            api_key = os.environ.get("BEARER_API_KEY")
+            api_key = os.environ.get("MXBAI_API_KEY")
         if api_key is None:
             raise MixedbreadError(
-                "The api_key client option must be set either by passing api_key to the client or by setting the BEARER_API_KEY environment variable"
+                "The api_key client option must be set either by passing api_key to the client or by setting the MXBAI_API_KEY environment variable"
             )
         self.api_key = api_key
 
@@ -374,10 +346,13 @@ class AsyncMixedbread(AsyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.doc_ai = resources.AsyncDocAIResource(self)
+        self.base = resources.AsyncBaseResource(self)
+        self.vector_stores = resources.AsyncVectorStoresResource(self)
+        self.document_ai = resources.AsyncDocumentAIResource(self)
+        self.embeddings = resources.AsyncEmbeddingsResource(self)
+        self.reranking = resources.AsyncRerankingResource(self)
         self.files = resources.AsyncFilesResource(self)
         self.jobs = resources.AsyncJobsResource(self)
-        self.vector_stores = resources.AsyncVectorStoresResource(self)
         self.with_raw_response = AsyncMixedbreadWithRawResponse(self)
         self.with_streaming_response = AsyncMixedbreadWithStreamedResponse(self)
 
@@ -454,32 +429,6 @@ class AsyncMixedbread(AsyncAPIClient):
     # client.with_options(timeout=10).foo.create(...)
     with_options = copy
 
-    async def info(
-        self,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> InfoResponse:
-        """
-        Perform a base search to check the service status and configuration.
-
-        Args: state: The application state.
-
-        Returns: dict: A dictionary containing the service status and public
-        configuration details.
-        """
-        return await self.get(
-            "/",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=InfoResponse,
-        )
-
     @override
     def _make_status_error(
         self,
@@ -516,50 +465,46 @@ class AsyncMixedbread(AsyncAPIClient):
 
 class MixedbreadWithRawResponse:
     def __init__(self, client: Mixedbread) -> None:
-        self.doc_ai = resources.DocAIResourceWithRawResponse(client.doc_ai)
+        self.base = resources.BaseResourceWithRawResponse(client.base)
+        self.vector_stores = resources.VectorStoresResourceWithRawResponse(client.vector_stores)
+        self.document_ai = resources.DocumentAIResourceWithRawResponse(client.document_ai)
+        self.embeddings = resources.EmbeddingsResourceWithRawResponse(client.embeddings)
+        self.reranking = resources.RerankingResourceWithRawResponse(client.reranking)
         self.files = resources.FilesResourceWithRawResponse(client.files)
         self.jobs = resources.JobsResourceWithRawResponse(client.jobs)
-        self.vector_stores = resources.VectorStoresResourceWithRawResponse(client.vector_stores)
-
-        self.info = to_raw_response_wrapper(
-            client.info,
-        )
 
 
 class AsyncMixedbreadWithRawResponse:
     def __init__(self, client: AsyncMixedbread) -> None:
-        self.doc_ai = resources.AsyncDocAIResourceWithRawResponse(client.doc_ai)
+        self.base = resources.AsyncBaseResourceWithRawResponse(client.base)
+        self.vector_stores = resources.AsyncVectorStoresResourceWithRawResponse(client.vector_stores)
+        self.document_ai = resources.AsyncDocumentAIResourceWithRawResponse(client.document_ai)
+        self.embeddings = resources.AsyncEmbeddingsResourceWithRawResponse(client.embeddings)
+        self.reranking = resources.AsyncRerankingResourceWithRawResponse(client.reranking)
         self.files = resources.AsyncFilesResourceWithRawResponse(client.files)
         self.jobs = resources.AsyncJobsResourceWithRawResponse(client.jobs)
-        self.vector_stores = resources.AsyncVectorStoresResourceWithRawResponse(client.vector_stores)
-
-        self.info = async_to_raw_response_wrapper(
-            client.info,
-        )
 
 
 class MixedbreadWithStreamedResponse:
     def __init__(self, client: Mixedbread) -> None:
-        self.doc_ai = resources.DocAIResourceWithStreamingResponse(client.doc_ai)
+        self.base = resources.BaseResourceWithStreamingResponse(client.base)
+        self.vector_stores = resources.VectorStoresResourceWithStreamingResponse(client.vector_stores)
+        self.document_ai = resources.DocumentAIResourceWithStreamingResponse(client.document_ai)
+        self.embeddings = resources.EmbeddingsResourceWithStreamingResponse(client.embeddings)
+        self.reranking = resources.RerankingResourceWithStreamingResponse(client.reranking)
         self.files = resources.FilesResourceWithStreamingResponse(client.files)
         self.jobs = resources.JobsResourceWithStreamingResponse(client.jobs)
-        self.vector_stores = resources.VectorStoresResourceWithStreamingResponse(client.vector_stores)
-
-        self.info = to_streamed_response_wrapper(
-            client.info,
-        )
 
 
 class AsyncMixedbreadWithStreamedResponse:
     def __init__(self, client: AsyncMixedbread) -> None:
-        self.doc_ai = resources.AsyncDocAIResourceWithStreamingResponse(client.doc_ai)
+        self.base = resources.AsyncBaseResourceWithStreamingResponse(client.base)
+        self.vector_stores = resources.AsyncVectorStoresResourceWithStreamingResponse(client.vector_stores)
+        self.document_ai = resources.AsyncDocumentAIResourceWithStreamingResponse(client.document_ai)
+        self.embeddings = resources.AsyncEmbeddingsResourceWithStreamingResponse(client.embeddings)
+        self.reranking = resources.AsyncRerankingResourceWithStreamingResponse(client.reranking)
         self.files = resources.AsyncFilesResourceWithStreamingResponse(client.files)
         self.jobs = resources.AsyncJobsResourceWithStreamingResponse(client.jobs)
-        self.vector_stores = resources.AsyncVectorStoresResourceWithStreamingResponse(client.vector_stores)
-
-        self.info = async_to_streamed_response_wrapper(
-            client.info,
-        )
 
 
 Client = Mixedbread

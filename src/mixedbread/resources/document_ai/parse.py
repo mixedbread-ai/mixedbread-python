@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import List, Optional
+from typing import Any, List, Optional, cast
 from typing_extensions import Literal
 
 import httpx
@@ -21,8 +21,9 @@ from ..._response import (
     async_to_streamed_response_wrapper,
 )
 from ..._base_client import make_request_options
-from ...types.doc_ai import parse_create_params
-from ...types.doc_ai.parse_response import ParseResponse
+from ...types.document_ai import parse_create_params
+from ...types.document_ai.parse_create_response import ParseCreateResponse
+from ...types.document_ai.parse_retrieve_response import ParseRetrieveResponse
 
 __all__ = ["ParseResource", "AsyncParseResource"]
 
@@ -60,13 +61,13 @@ class ParseResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ParseResponse:
+    ) -> ParseCreateResponse:
         """
         Start a parse job for the provided file.
 
         Args: params: ParseJobCreateParams The parameters for creating a parse job.
 
-        Returns: ParseResponse: The response containing the created job information.
+        Returns: ParsingJob: The created parse job.
 
         Args:
           file_id: The ID of the file to parse
@@ -85,21 +86,26 @@ class ParseResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return self._post(
-            "/v1/document-intelligence/parse",
-            body=maybe_transform(
-                {
-                    "file_id": file_id,
-                    "chunking_strategy": chunking_strategy,
-                    "element_types": element_types,
-                    "return_format": return_format,
-                },
-                parse_create_params.ParseCreateParams,
+        return cast(
+            ParseCreateResponse,
+            self._post(
+                "/v1/document-ai/parse",
+                body=maybe_transform(
+                    {
+                        "file_id": file_id,
+                        "chunking_strategy": chunking_strategy,
+                        "element_types": element_types,
+                        "return_format": return_format,
+                    },
+                    parse_create_params.ParseCreateParams,
+                ),
+                options=make_request_options(
+                    extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                ),
+                cast_to=cast(
+                    Any, ParseCreateResponse
+                ),  # Union types cannot be passed in as arguments in the type system
             ),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=ParseResponse,
         )
 
     def retrieve(
@@ -112,15 +118,17 @@ class ParseResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ParseResponse:
+    ) -> ParseRetrieveResponse:
         """
         Get detailed information about a specific parse job.
 
-        Args: job_id: The ID of the parse job. state: The application state.
+        Args: job_id: The ID of the parse job.
 
-        Returns: ParseResponse: Detailed information about the parse job.
+        Returns: ParsingJob: Detailed information about the parse job.
 
         Args:
+          job_id: The ID of the parse job to retrieve
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -131,12 +139,17 @@ class ParseResource(SyncAPIResource):
         """
         if not job_id:
             raise ValueError(f"Expected a non-empty value for `job_id` but received {job_id!r}")
-        return self._get(
-            f"/v1/document-intelligence/parse/{job_id}",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+        return cast(
+            ParseRetrieveResponse,
+            self._get(
+                f"/v1/document-ai/parse/{job_id}",
+                options=make_request_options(
+                    extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                ),
+                cast_to=cast(
+                    Any, ParseRetrieveResponse
+                ),  # Union types cannot be passed in as arguments in the type system
             ),
-            cast_to=ParseResponse,
         )
 
 
@@ -173,13 +186,13 @@ class AsyncParseResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ParseResponse:
+    ) -> ParseCreateResponse:
         """
         Start a parse job for the provided file.
 
         Args: params: ParseJobCreateParams The parameters for creating a parse job.
 
-        Returns: ParseResponse: The response containing the created job information.
+        Returns: ParsingJob: The created parse job.
 
         Args:
           file_id: The ID of the file to parse
@@ -198,21 +211,26 @@ class AsyncParseResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return await self._post(
-            "/v1/document-intelligence/parse",
-            body=await async_maybe_transform(
-                {
-                    "file_id": file_id,
-                    "chunking_strategy": chunking_strategy,
-                    "element_types": element_types,
-                    "return_format": return_format,
-                },
-                parse_create_params.ParseCreateParams,
+        return cast(
+            ParseCreateResponse,
+            await self._post(
+                "/v1/document-ai/parse",
+                body=await async_maybe_transform(
+                    {
+                        "file_id": file_id,
+                        "chunking_strategy": chunking_strategy,
+                        "element_types": element_types,
+                        "return_format": return_format,
+                    },
+                    parse_create_params.ParseCreateParams,
+                ),
+                options=make_request_options(
+                    extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                ),
+                cast_to=cast(
+                    Any, ParseCreateResponse
+                ),  # Union types cannot be passed in as arguments in the type system
             ),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=ParseResponse,
         )
 
     async def retrieve(
@@ -225,15 +243,17 @@ class AsyncParseResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ParseResponse:
+    ) -> ParseRetrieveResponse:
         """
         Get detailed information about a specific parse job.
 
-        Args: job_id: The ID of the parse job. state: The application state.
+        Args: job_id: The ID of the parse job.
 
-        Returns: ParseResponse: Detailed information about the parse job.
+        Returns: ParsingJob: Detailed information about the parse job.
 
         Args:
+          job_id: The ID of the parse job to retrieve
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -244,12 +264,17 @@ class AsyncParseResource(AsyncAPIResource):
         """
         if not job_id:
             raise ValueError(f"Expected a non-empty value for `job_id` but received {job_id!r}")
-        return await self._get(
-            f"/v1/document-intelligence/parse/{job_id}",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+        return cast(
+            ParseRetrieveResponse,
+            await self._get(
+                f"/v1/document-ai/parse/{job_id}",
+                options=make_request_options(
+                    extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                ),
+                cast_to=cast(
+                    Any, ParseRetrieveResponse
+                ),  # Union types cannot be passed in as arguments in the type system
             ),
-            cast_to=ParseResponse,
         )
 
 

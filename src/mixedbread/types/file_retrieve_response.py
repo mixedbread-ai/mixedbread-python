@@ -1,14 +1,13 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import List, Optional
 from datetime import datetime
 
 from .._models import BaseModel
 
-__all__ = ["FileListResponse", "Data", "Pagination"]
+__all__ = ["FileRetrieveResponse"]
 
 
-class Data(BaseModel):
+class FileRetrieveResponse(BaseModel):
     id: str
     """Unique identifier for the record"""
 
@@ -29,17 +28,3 @@ class Data(BaseModel):
 
     version: int
     """Version of the file"""
-
-
-class Pagination(BaseModel):
-    after: Optional[int] = None
-
-    limit: Optional[int] = None
-
-    total: Optional[int] = None
-
-
-class FileListResponse(BaseModel):
-    data: List[Data]
-
-    pagination: Pagination

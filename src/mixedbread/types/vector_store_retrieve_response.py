@@ -6,7 +6,7 @@ from typing_extensions import Literal
 
 from .._models import BaseModel
 
-__all__ = ["VectorStoreObject", "FileCounts"]
+__all__ = ["VectorStoreRetrieveResponse", "FileCounts"]
 
 
 class FileCounts(BaseModel):
@@ -21,7 +21,7 @@ class FileCounts(BaseModel):
     total: Optional[int] = None
 
 
-class VectorStoreObject(BaseModel):
+class VectorStoreRetrieveResponse(BaseModel):
     id: str
 
     created_at: datetime
@@ -34,7 +34,7 @@ class VectorStoreObject(BaseModel):
 
     name: str
 
-    status: Literal["expired", "alive"]
+    status: Literal["expired", "active"]
     """The status of the vector store"""
 
     file_counts: Optional[FileCounts] = None

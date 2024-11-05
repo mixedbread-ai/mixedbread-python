@@ -3,10 +3,10 @@
 
 from ..._models import BaseModel
 
-__all__ = ["VectorStoreFileDeleted"]
+__all__ = ["FileDeleteResponse"]
 
 
-class VectorStoreFileDeleted(BaseModel):
+class FileDeleteResponse(BaseModel):
     id: str
 
     deleted: bool

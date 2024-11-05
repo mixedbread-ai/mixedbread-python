@@ -10,9 +10,10 @@ import pytest
 from mixedbread import Mixedbread, AsyncMixedbread
 from tests.utils import assert_matches_type
 from mixedbread.types.vector_stores import (
-    VectorStoreFileObject,
-    VectorStoreFileDeleted,
-    VectorStoreFileListResponse,
+    FileListResponse,
+    FileCreateResponse,
+    FileDeleteResponse,
+    FileRetrieveResponse,
 )
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
@@ -28,7 +29,7 @@ class TestFiles:
             file_id="file_id",
             metadata={},
         )
-        assert_matches_type(VectorStoreFileObject, file, path=["response"])
+        assert_matches_type(FileCreateResponse, file, path=["response"])
 
     @parametrize
     def test_raw_response_create(self, client: Mixedbread) -> None:
@@ -41,7 +42,7 @@ class TestFiles:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         file = response.parse()
-        assert_matches_type(VectorStoreFileObject, file, path=["response"])
+        assert_matches_type(FileCreateResponse, file, path=["response"])
 
     @parametrize
     def test_streaming_response_create(self, client: Mixedbread) -> None:
@@ -54,7 +55,7 @@ class TestFiles:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             file = response.parse()
-            assert_matches_type(VectorStoreFileObject, file, path=["response"])
+            assert_matches_type(FileCreateResponse, file, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -73,7 +74,7 @@ class TestFiles:
             file_id="file_id",
             vector_store_id="vector_store_id",
         )
-        assert_matches_type(VectorStoreFileObject, file, path=["response"])
+        assert_matches_type(FileRetrieveResponse, file, path=["response"])
 
     @parametrize
     def test_raw_response_retrieve(self, client: Mixedbread) -> None:
@@ -85,7 +86,7 @@ class TestFiles:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         file = response.parse()
-        assert_matches_type(VectorStoreFileObject, file, path=["response"])
+        assert_matches_type(FileRetrieveResponse, file, path=["response"])
 
     @parametrize
     def test_streaming_response_retrieve(self, client: Mixedbread) -> None:
@@ -97,7 +98,7 @@ class TestFiles:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             file = response.parse()
-            assert_matches_type(VectorStoreFileObject, file, path=["response"])
+            assert_matches_type(FileRetrieveResponse, file, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -120,7 +121,7 @@ class TestFiles:
         file = client.vector_stores.files.list(
             vector_store_id="vector_store_id",
         )
-        assert_matches_type(VectorStoreFileListResponse, file, path=["response"])
+        assert_matches_type(FileListResponse, file, path=["response"])
 
     @parametrize
     def test_method_list_with_all_params(self, client: Mixedbread) -> None:
@@ -129,7 +130,7 @@ class TestFiles:
             after=0,
             limit=0,
         )
-        assert_matches_type(VectorStoreFileListResponse, file, path=["response"])
+        assert_matches_type(FileListResponse, file, path=["response"])
 
     @parametrize
     def test_raw_response_list(self, client: Mixedbread) -> None:
@@ -140,7 +141,7 @@ class TestFiles:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         file = response.parse()
-        assert_matches_type(VectorStoreFileListResponse, file, path=["response"])
+        assert_matches_type(FileListResponse, file, path=["response"])
 
     @parametrize
     def test_streaming_response_list(self, client: Mixedbread) -> None:
@@ -151,7 +152,7 @@ class TestFiles:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             file = response.parse()
-            assert_matches_type(VectorStoreFileListResponse, file, path=["response"])
+            assert_matches_type(FileListResponse, file, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -168,7 +169,7 @@ class TestFiles:
             file_id="file_id",
             vector_store_id="vector_store_id",
         )
-        assert_matches_type(VectorStoreFileDeleted, file, path=["response"])
+        assert_matches_type(FileDeleteResponse, file, path=["response"])
 
     @parametrize
     def test_raw_response_delete(self, client: Mixedbread) -> None:
@@ -180,7 +181,7 @@ class TestFiles:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         file = response.parse()
-        assert_matches_type(VectorStoreFileDeleted, file, path=["response"])
+        assert_matches_type(FileDeleteResponse, file, path=["response"])
 
     @parametrize
     def test_streaming_response_delete(self, client: Mixedbread) -> None:
@@ -192,7 +193,7 @@ class TestFiles:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             file = response.parse()
-            assert_matches_type(VectorStoreFileDeleted, file, path=["response"])
+            assert_matches_type(FileDeleteResponse, file, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -221,7 +222,7 @@ class TestAsyncFiles:
             file_id="file_id",
             metadata={},
         )
-        assert_matches_type(VectorStoreFileObject, file, path=["response"])
+        assert_matches_type(FileCreateResponse, file, path=["response"])
 
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncMixedbread) -> None:
@@ -234,7 +235,7 @@ class TestAsyncFiles:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         file = await response.parse()
-        assert_matches_type(VectorStoreFileObject, file, path=["response"])
+        assert_matches_type(FileCreateResponse, file, path=["response"])
 
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncMixedbread) -> None:
@@ -247,7 +248,7 @@ class TestAsyncFiles:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             file = await response.parse()
-            assert_matches_type(VectorStoreFileObject, file, path=["response"])
+            assert_matches_type(FileCreateResponse, file, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -266,7 +267,7 @@ class TestAsyncFiles:
             file_id="file_id",
             vector_store_id="vector_store_id",
         )
-        assert_matches_type(VectorStoreFileObject, file, path=["response"])
+        assert_matches_type(FileRetrieveResponse, file, path=["response"])
 
     @parametrize
     async def test_raw_response_retrieve(self, async_client: AsyncMixedbread) -> None:
@@ -278,7 +279,7 @@ class TestAsyncFiles:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         file = await response.parse()
-        assert_matches_type(VectorStoreFileObject, file, path=["response"])
+        assert_matches_type(FileRetrieveResponse, file, path=["response"])
 
     @parametrize
     async def test_streaming_response_retrieve(self, async_client: AsyncMixedbread) -> None:
@@ -290,7 +291,7 @@ class TestAsyncFiles:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             file = await response.parse()
-            assert_matches_type(VectorStoreFileObject, file, path=["response"])
+            assert_matches_type(FileRetrieveResponse, file, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -313,7 +314,7 @@ class TestAsyncFiles:
         file = await async_client.vector_stores.files.list(
             vector_store_id="vector_store_id",
         )
-        assert_matches_type(VectorStoreFileListResponse, file, path=["response"])
+        assert_matches_type(FileListResponse, file, path=["response"])
 
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncMixedbread) -> None:
@@ -322,7 +323,7 @@ class TestAsyncFiles:
             after=0,
             limit=0,
         )
-        assert_matches_type(VectorStoreFileListResponse, file, path=["response"])
+        assert_matches_type(FileListResponse, file, path=["response"])
 
     @parametrize
     async def test_raw_response_list(self, async_client: AsyncMixedbread) -> None:
@@ -333,7 +334,7 @@ class TestAsyncFiles:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         file = await response.parse()
-        assert_matches_type(VectorStoreFileListResponse, file, path=["response"])
+        assert_matches_type(FileListResponse, file, path=["response"])
 
     @parametrize
     async def test_streaming_response_list(self, async_client: AsyncMixedbread) -> None:
@@ -344,7 +345,7 @@ class TestAsyncFiles:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             file = await response.parse()
-            assert_matches_type(VectorStoreFileListResponse, file, path=["response"])
+            assert_matches_type(FileListResponse, file, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -361,7 +362,7 @@ class TestAsyncFiles:
             file_id="file_id",
             vector_store_id="vector_store_id",
         )
-        assert_matches_type(VectorStoreFileDeleted, file, path=["response"])
+        assert_matches_type(FileDeleteResponse, file, path=["response"])
 
     @parametrize
     async def test_raw_response_delete(self, async_client: AsyncMixedbread) -> None:
@@ -373,7 +374,7 @@ class TestAsyncFiles:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         file = await response.parse()
-        assert_matches_type(VectorStoreFileDeleted, file, path=["response"])
+        assert_matches_type(FileDeleteResponse, file, path=["response"])
 
     @parametrize
     async def test_streaming_response_delete(self, async_client: AsyncMixedbread) -> None:
@@ -385,7 +386,7 @@ class TestAsyncFiles:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             file = await response.parse()
-            assert_matches_type(VectorStoreFileDeleted, file, path=["response"])
+            assert_matches_type(FileDeleteResponse, file, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 

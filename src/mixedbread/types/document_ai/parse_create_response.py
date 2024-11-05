@@ -7,18 +7,17 @@ from typing_extensions import Literal, TypeAlias
 from ..._models import BaseModel
 
 __all__ = [
-    "ParseResponse",
-    "Data",
-    "DataRunningJob",
-    "DataFailedJob",
-    "DataSuccessfulParsingJob",
-    "DataSuccessfulParsingJobResult",
-    "DataSuccessfulParsingJobResultChunk",
-    "DataSuccessfulParsingJobResultChunkElement",
+    "ParseCreateResponse",
+    "RunningJob",
+    "FailedJob",
+    "SuccessfulParsingJob",
+    "SuccessfulParsingJobResult",
+    "SuccessfulParsingJobResultChunk",
+    "SuccessfulParsingJobResultChunkElement",
 ]
 
 
-class DataRunningJob(BaseModel):
+class RunningJob(BaseModel):
     id: str
     """The ID of the job"""
 
@@ -41,7 +40,7 @@ class DataRunningJob(BaseModel):
     """The status of the job"""
 
 
-class DataFailedJob(BaseModel):
+class FailedJob(BaseModel):
     id: str
     """The ID of the job"""
 
@@ -64,7 +63,7 @@ class DataFailedJob(BaseModel):
     """The status of the job"""
 
 
-class DataSuccessfulParsingJobResultChunkElement(BaseModel):
+class SuccessfulParsingJobResultChunkElement(BaseModel):
     bbox: List[float]
     """The bounding box coordinates [x1, y1, x2, y2]"""
 
@@ -96,22 +95,22 @@ class DataSuccessfulParsingJobResultChunkElement(BaseModel):
     """A brief summary of the element's content"""
 
 
-class DataSuccessfulParsingJobResultChunk(BaseModel):
+class SuccessfulParsingJobResultChunk(BaseModel):
     content: str
     """The full content of the chunk"""
 
     content_to_embed: str
     """The content to be used for embedding"""
 
-    elements: List[DataSuccessfulParsingJobResultChunkElement]
+    elements: List[SuccessfulParsingJobResultChunkElement]
     """List of elements contained in this chunk"""
 
 
-class DataSuccessfulParsingJobResult(BaseModel):
+class SuccessfulParsingJobResult(BaseModel):
     chunking_strategy: Literal["page"]
     """The strategy used for chunking the document"""
 
-    chunks: List[DataSuccessfulParsingJobResultChunk]
+    chunks: List[SuccessfulParsingJobResultChunk]
     """List of extracted chunks from the document"""
 
     element_types: List[
@@ -135,11 +134,11 @@ class DataSuccessfulParsingJobResult(BaseModel):
     """The format of the returned content"""
 
 
-class DataSuccessfulParsingJob(BaseModel):
+class SuccessfulParsingJob(BaseModel):
     id: str
     """The ID of the job"""
 
-    result: DataSuccessfulParsingJobResult
+    result: SuccessfulParsingJobResult
     """The extracted content and metadata from the document"""
 
     created_at: Optional[datetime] = None
@@ -158,9 +157,4 @@ class DataSuccessfulParsingJob(BaseModel):
     """The status of the job"""
 
 
-Data: TypeAlias = Union[DataRunningJob, DataFailedJob, DataSuccessfulParsingJob]
-
-
-class ParseResponse(BaseModel):
-    data: Data
-    """Discriminated union of all possible parsing job states"""
+ParseCreateResponse: TypeAlias = Union[RunningJob, FailedJob, SuccessfulParsingJob]

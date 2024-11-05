@@ -1,15 +1,15 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import List, Optional
+from typing import Optional
 from datetime import datetime
 from typing_extensions import Literal
 
 from .._models import BaseModel
 
-__all__ = ["VectorStoreListResponse", "Data", "DataFileCounts", "Pagination"]
+__all__ = ["VectorStoreCreateResponse", "FileCounts"]
 
 
-class DataFileCounts(BaseModel):
+class FileCounts(BaseModel):
     canceled: Optional[int] = None
 
     failed: Optional[int] = None
@@ -21,7 +21,7 @@ class DataFileCounts(BaseModel):
     total: Optional[int] = None
 
 
-class Data(BaseModel):
+class VectorStoreCreateResponse(BaseModel):
     id: str
 
     created_at: datetime
@@ -37,23 +37,9 @@ class Data(BaseModel):
     status: Literal["expired", "active"]
     """The status of the vector store"""
 
-    file_counts: Optional[DataFileCounts] = None
+    file_counts: Optional[FileCounts] = None
 
     metadata: Optional[object] = None
     """Set of key-value pairs that can be attached to an object."""
 
     usage_bytes: Optional[int] = None
-
-
-class Pagination(BaseModel):
-    after: Optional[int] = None
-
-    limit: Optional[int] = None
-
-    total: Optional[int] = None
-
-
-class VectorStoreListResponse(BaseModel):
-    data: List[Data]
-
-    pagination: Pagination

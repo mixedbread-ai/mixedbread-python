@@ -6,10 +6,10 @@ from typing_extensions import Literal
 
 from ..._models import BaseModel
 
-__all__ = ["VectorStoreFileObject"]
+__all__ = ["FileCreateResponse"]
 
 
-class VectorStoreFileObject(BaseModel):
+class FileCreateResponse(BaseModel):
     id: str
 
     created_at: datetime

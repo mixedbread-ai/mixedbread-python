@@ -8,13 +8,13 @@ from .parse import (
     ParseResourceWithStreamingResponse,
     AsyncParseResourceWithStreamingResponse,
 )
-from .doc_ai import (
-    DocAIResource,
-    AsyncDocAIResource,
-    DocAIResourceWithRawResponse,
-    AsyncDocAIResourceWithRawResponse,
-    DocAIResourceWithStreamingResponse,
-    AsyncDocAIResourceWithStreamingResponse,
+from .document_ai import (
+    DocumentAIResource,
+    AsyncDocumentAIResource,
+    DocumentAIResourceWithRawResponse,
+    AsyncDocumentAIResourceWithRawResponse,
+    DocumentAIResourceWithStreamingResponse,
+    AsyncDocumentAIResourceWithStreamingResponse,
 )
 
 __all__ = [
@@ -24,10 +24,10 @@ __all__ = [
     "AsyncParseResourceWithRawResponse",
     "ParseResourceWithStreamingResponse",
     "AsyncParseResourceWithStreamingResponse",
-    "DocAIResource",
-    "AsyncDocAIResource",
-    "DocAIResourceWithRawResponse",
-    "AsyncDocAIResourceWithRawResponse",
-    "DocAIResourceWithStreamingResponse",
-    "AsyncDocAIResourceWithStreamingResponse",
+    "DocumentAIResource",
+    "AsyncDocumentAIResource",
+    "DocumentAIResourceWithRawResponse",
+    "AsyncDocumentAIResourceWithRawResponse",
+    "DocumentAIResourceWithStreamingResponse",
+    "AsyncDocumentAIResourceWithStreamingResponse",
 ]

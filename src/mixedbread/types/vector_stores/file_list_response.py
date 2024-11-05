@@ -2,33 +2,30 @@
 
 from typing import List, Optional
 from datetime import datetime
+from typing_extensions import Literal
 
-from .._models import BaseModel
+from ..._models import BaseModel
 
 __all__ = ["FileListResponse", "Data", "Pagination"]
 
 
 class Data(BaseModel):
     id: str
-    """Unique identifier for the record"""
 
     created_at: datetime
-    """Timestamp of record creation"""
+    """Timestamp of vector store file creation"""
 
-    mime_type: str
-    """MIME type of the file"""
+    vector_store_id: str
 
-    name: str
-    """Name of the file"""
+    errors: Optional[List[str]] = None
 
-    size: int
-    """Size of the file in bytes"""
+    metadata: Optional[object] = None
 
-    updated_at: datetime
-    """Timestamp of last record update"""
+    status: Optional[Literal["none", "running", "canceled", "successful", "failed", "resumable", "pending"]] = None
 
-    version: int
-    """Version of the file"""
+    usage_bytes: Optional[int] = None
+
+    version: Optional[int] = None
 
 
 class Pagination(BaseModel):
