@@ -68,12 +68,12 @@ ENVIRONMENTS: Dict[str, str] = {
 
 
 class Mixedbread(SyncAPIClient):
-    vector_stores: resources.VectorStoresResource
     document_ai: resources.DocumentAIResource
     embeddings: resources.EmbeddingsResource
     rerankings: resources.RerankingsResource
     files: resources.FilesResource
     jobs: resources.JobsResource
+    vector_stores: resources.VectorStoresResource
     with_raw_response: MixedbreadWithRawResponse
     with_streaming_response: MixedbreadWithStreamedResponse
 
@@ -155,12 +155,12 @@ class Mixedbread(SyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.vector_stores = resources.VectorStoresResource(self)
         self.document_ai = resources.DocumentAIResource(self)
         self.embeddings = resources.EmbeddingsResource(self)
         self.rerankings = resources.RerankingsResource(self)
         self.files = resources.FilesResource(self)
         self.jobs = resources.JobsResource(self)
+        self.vector_stores = resources.VectorStoresResource(self)
         self.with_raw_response = MixedbreadWithRawResponse(self)
         self.with_streaming_response = MixedbreadWithStreamedResponse(self)
 
@@ -427,12 +427,12 @@ class Mixedbread(SyncAPIClient):
 
 
 class AsyncMixedbread(AsyncAPIClient):
-    vector_stores: resources.AsyncVectorStoresResource
     document_ai: resources.AsyncDocumentAIResource
     embeddings: resources.AsyncEmbeddingsResource
     rerankings: resources.AsyncRerankingsResource
     files: resources.AsyncFilesResource
     jobs: resources.AsyncJobsResource
+    vector_stores: resources.AsyncVectorStoresResource
     with_raw_response: AsyncMixedbreadWithRawResponse
     with_streaming_response: AsyncMixedbreadWithStreamedResponse
 
@@ -514,12 +514,12 @@ class AsyncMixedbread(AsyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.vector_stores = resources.AsyncVectorStoresResource(self)
         self.document_ai = resources.AsyncDocumentAIResource(self)
         self.embeddings = resources.AsyncEmbeddingsResource(self)
         self.rerankings = resources.AsyncRerankingsResource(self)
         self.files = resources.AsyncFilesResource(self)
         self.jobs = resources.AsyncJobsResource(self)
+        self.vector_stores = resources.AsyncVectorStoresResource(self)
         self.with_raw_response = AsyncMixedbreadWithRawResponse(self)
         self.with_streaming_response = AsyncMixedbreadWithStreamedResponse(self)
 
@@ -787,12 +787,12 @@ class AsyncMixedbread(AsyncAPIClient):
 
 class MixedbreadWithRawResponse:
     def __init__(self, client: Mixedbread) -> None:
-        self.vector_stores = resources.VectorStoresResourceWithRawResponse(client.vector_stores)
         self.document_ai = resources.DocumentAIResourceWithRawResponse(client.document_ai)
         self.embeddings = resources.EmbeddingsResourceWithRawResponse(client.embeddings)
         self.rerankings = resources.RerankingsResourceWithRawResponse(client.rerankings)
         self.files = resources.FilesResourceWithRawResponse(client.files)
         self.jobs = resources.JobsResourceWithRawResponse(client.jobs)
+        self.vector_stores = resources.VectorStoresResourceWithRawResponse(client.vector_stores)
 
         self.embed = to_raw_response_wrapper(
             client.embed,
@@ -807,12 +807,12 @@ class MixedbreadWithRawResponse:
 
 class AsyncMixedbreadWithRawResponse:
     def __init__(self, client: AsyncMixedbread) -> None:
-        self.vector_stores = resources.AsyncVectorStoresResourceWithRawResponse(client.vector_stores)
         self.document_ai = resources.AsyncDocumentAIResourceWithRawResponse(client.document_ai)
         self.embeddings = resources.AsyncEmbeddingsResourceWithRawResponse(client.embeddings)
         self.rerankings = resources.AsyncRerankingsResourceWithRawResponse(client.rerankings)
         self.files = resources.AsyncFilesResourceWithRawResponse(client.files)
         self.jobs = resources.AsyncJobsResourceWithRawResponse(client.jobs)
+        self.vector_stores = resources.AsyncVectorStoresResourceWithRawResponse(client.vector_stores)
 
         self.embed = async_to_raw_response_wrapper(
             client.embed,
@@ -827,12 +827,12 @@ class AsyncMixedbreadWithRawResponse:
 
 class MixedbreadWithStreamedResponse:
     def __init__(self, client: Mixedbread) -> None:
-        self.vector_stores = resources.VectorStoresResourceWithStreamingResponse(client.vector_stores)
         self.document_ai = resources.DocumentAIResourceWithStreamingResponse(client.document_ai)
         self.embeddings = resources.EmbeddingsResourceWithStreamingResponse(client.embeddings)
         self.rerankings = resources.RerankingsResourceWithStreamingResponse(client.rerankings)
         self.files = resources.FilesResourceWithStreamingResponse(client.files)
         self.jobs = resources.JobsResourceWithStreamingResponse(client.jobs)
+        self.vector_stores = resources.VectorStoresResourceWithStreamingResponse(client.vector_stores)
 
         self.embed = to_streamed_response_wrapper(
             client.embed,
@@ -847,12 +847,12 @@ class MixedbreadWithStreamedResponse:
 
 class AsyncMixedbreadWithStreamedResponse:
     def __init__(self, client: AsyncMixedbread) -> None:
-        self.vector_stores = resources.AsyncVectorStoresResourceWithStreamingResponse(client.vector_stores)
         self.document_ai = resources.AsyncDocumentAIResourceWithStreamingResponse(client.document_ai)
         self.embeddings = resources.AsyncEmbeddingsResourceWithStreamingResponse(client.embeddings)
         self.rerankings = resources.AsyncRerankingsResourceWithStreamingResponse(client.rerankings)
         self.files = resources.AsyncFilesResourceWithStreamingResponse(client.files)
         self.jobs = resources.AsyncJobsResourceWithStreamingResponse(client.jobs)
+        self.vector_stores = resources.AsyncVectorStoresResourceWithStreamingResponse(client.vector_stores)
 
         self.embed = async_to_streamed_response_wrapper(
             client.embed,

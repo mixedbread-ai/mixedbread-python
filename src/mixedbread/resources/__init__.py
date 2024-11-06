@@ -50,12 +50,6 @@ from .vector_stores import (
 )
 
 __all__ = [
-    "VectorStoresResource",
-    "AsyncVectorStoresResource",
-    "VectorStoresResourceWithRawResponse",
-    "AsyncVectorStoresResourceWithRawResponse",
-    "VectorStoresResourceWithStreamingResponse",
-    "AsyncVectorStoresResourceWithStreamingResponse",
     "DocumentAIResource",
     "AsyncDocumentAIResource",
     "DocumentAIResourceWithRawResponse",
@@ -86,4 +80,10 @@ __all__ = [
     "AsyncJobsResourceWithRawResponse",
     "JobsResourceWithStreamingResponse",
     "AsyncJobsResourceWithStreamingResponse",
+    "VectorStoresResource",
+    "AsyncVectorStoresResource",
+    "VectorStoresResourceWithRawResponse",
+    "AsyncVectorStoresResourceWithRawResponse",
+    "VectorStoresResourceWithStreamingResponse",
+    "AsyncVectorStoresResourceWithStreamingResponse",
 ]
