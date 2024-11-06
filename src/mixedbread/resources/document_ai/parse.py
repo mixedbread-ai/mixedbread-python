@@ -2,13 +2,11 @@
 
 from __future__ import annotations
 
-import functools
-from typing import Any, List, Optional, Union, cast
+from typing import Any, List, Optional, cast
 from typing_extensions import Literal
 
 import httpx
 
-from ...lib import polling
 from ..._types import NOT_GIVEN, Body, Query, Headers, NotGiven
 from ..._utils import (
     maybe_transform,
@@ -25,7 +23,7 @@ from ..._response import (
 from ..._base_client import make_request_options
 from ...types.document_ai import parse_create_job_params
 from ...types.document_ai.parse_create_job_response import ParseCreateJobResponse
-from ...types.document_ai.parse_retrieve_job_response import FailedJob, ParseRetrieveJobResponse, SuccessfulParsingJob
+from ...types.document_ai.parse_retrieve_job_response import ParseRetrieveJobResponse
 
 __all__ = ["ParseResource", "AsyncParseResource"]
 
@@ -154,71 +152,6 @@ class ParseResource(SyncAPIResource):
             ),
         )
 
-    def poll(
-        self,
-        job_id: str,
-        *,
-        poll_interval_ms: int | NotGiven = NOT_GIVEN,
-        poll_timeout_ms: float | NotGiven = NOT_GIVEN,
-    ) -> ParseRetrieveResponse:
-        """
-        Poll for a parse job's status until it reaches a terminal state.
-
-        Args:
-            job_id: The ID of the parse job to poll
-            poll_interval_ms: The interval between polls in milliseconds
-            poll_timeout_ms: The maximum time to poll for in milliseconds
-
-        Returns:
-            The parse job object once it reaches a terminal state
-        """
-        polling_interval_ms = poll_interval_ms or 500
-        polling_timeout_ms = poll_timeout_ms or None
-
-        return polling.poll(
-            fn=functools.partial(self.retrieve, job_id),
-            condition=lambda res: res.status == "successful" or res.status == "failed",
-            interval_seconds=polling_interval_ms / 1000,
-            timeout_seconds=polling_timeout_ms / 1000 if polling_timeout_ms else None,
-        )
-
-    def create_and_poll(
-        self,
-        *,
-        file_id: str,
-        chunking_strategy: Literal["page"] | NotGiven = NOT_GIVEN,
-        element_types: Optional[List[str]] | NotGiven = NOT_GIVEN,
-        return_format: Literal["html", "markdown", "plain"] | NotGiven = NOT_GIVEN,
-        poll_interval_ms: int | NotGiven = NOT_GIVEN,
-        poll_timeout_ms: float | NotGiven = NOT_GIVEN,
-    ) -> Union[FailedJob, SuccessfulParsingJob]:
-        """
-        Create a parse job and wait for it to complete.
-
-        Args:
-            file_id: The ID of the file to parse
-            chunking_strategy: The strategy to use for chunking the content
-            element_types: The elements to extract from the document
-            return_format: The format of the returned content
-            poll_interval_ms: The interval between polls in milliseconds
-            poll_timeout_ms: The maximum time to poll for in milliseconds
-
-        Returns:
-            The parse job object once it reaches a terminal state
-        """
-        response = self.create(
-            file_id=file_id,
-            chunking_strategy=chunking_strategy,
-            element_types=element_types,
-            return_format=return_format,
-        )
-
-        return self.poll(
-            response.id,
-            poll_interval_ms=poll_interval_ms,
-            poll_timeout_ms=poll_timeout_ms,
-        )
-
 
 class AsyncParseResource(AsyncAPIResource):
     @cached_property
@@ -342,71 +275,6 @@ class AsyncParseResource(AsyncAPIResource):
                     Any, ParseRetrieveJobResponse
                 ),  # Union types cannot be passed in as arguments in the type system
             ),
-        )
-
-    async def poll(
-        self,
-        job_id: str,
-        *,
-        poll_interval_ms: int | NotGiven = NOT_GIVEN,
-        poll_timeout_ms: float | NotGiven = NOT_GIVEN,
-    ) -> ParseRetrieveResponse:
-        """
-        Poll for a parse job's status until it reaches a terminal state.
-
-        Args:
-            job_id: The ID of the parse job to poll
-            poll_interval_ms: The interval between polls in milliseconds
-            poll_timeout_ms: The maximum time to poll for in milliseconds
-
-        Returns:
-            The parse job object once it reaches a terminal state
-        """
-        polling_interval_ms = poll_interval_ms or 500
-        polling_timeout_ms = poll_timeout_ms or None
-
-        return await polling.poll_async(
-            fn=functools.partial(self.retrieve, job_id),
-            condition=lambda res: res.status == "successful" or res.status == "failed",
-            interval_seconds=polling_interval_ms / 1000,
-            timeout_seconds=polling_timeout_ms / 1000 if polling_timeout_ms else None,
-        )
-
-    async def create_and_poll(
-        self,
-        *,
-        file_id: str,
-        chunking_strategy: Literal["page"] | NotGiven = NOT_GIVEN,
-        element_types: Optional[List[str]] | NotGiven = NOT_GIVEN,
-        return_format: Literal["html", "markdown", "plain"] | NotGiven = NOT_GIVEN,
-        poll_interval_ms: int | NotGiven = NOT_GIVEN,
-        poll_timeout_ms: float | NotGiven = NOT_GIVEN,
-    ) -> Union[FailedJob, SuccessfulParsingJob]:
-        """
-        Create a parse job and wait for it to complete.
-
-        Args:
-            file_id: The ID of the file to parse
-            chunking_strategy: The strategy to use for chunking the content
-            element_types: The elements to extract from the document
-            return_format: The format of the returned content
-            poll_interval_ms: The interval between polls in milliseconds
-            poll_timeout_ms: The maximum time to poll for in milliseconds
-
-        Returns:
-            The parse job object once it reaches a terminal state
-        """
-        response = await self.create(
-            file_id=file_id,
-            chunking_strategy=chunking_strategy,
-            element_types=element_types,
-            return_format=return_format,
-        )
-
-        return await self.poll(
-            response.id,
-            poll_interval_ms=poll_interval_ms,
-            poll_timeout_ms=poll_timeout_ms,
         )
 
 

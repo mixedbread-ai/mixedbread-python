@@ -2,12 +2,11 @@
 
 from __future__ import annotations
 
-import functools
+from typing import Optional
 
 import httpx
 
-from ...lib import polling
-from ..._types import NOT_GIVEN, Body, Query, Headers, NotGiven, FileTypes
+from ..._types import NOT_GIVEN, Body, Query, Headers, NotGiven
 from ..._utils import (
     maybe_transform,
     async_maybe_transform,
@@ -24,7 +23,7 @@ from ..._base_client import make_request_options
 from ...types.vector_stores import file_list_params, file_create_params
 from ...types.vector_stores.vector_store_file import VectorStoreFile
 from ...types.vector_stores.file_list_response import FileListResponse
-from ...types.vector_stores.vector_store_file_deleted import VectorStoreFileDeleted
+from ...types.vector_stores.file_delete_response import FileDeleteResponse
 
 __all__ = ["FilesResource", "AsyncFilesResource"]
 
@@ -54,7 +53,7 @@ class FilesResource(SyncAPIResource):
         vector_store_id: str,
         *,
         file_id: str,
-        metadata: object,
+        metadata: Optional[object] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -205,7 +204,7 @@ class FilesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> VectorStoreFileDeleted:
+    ) -> FileDeleteResponse:
         """
         Delete a file from a vector store.
 
@@ -232,100 +231,7 @@ class FilesResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=VectorStoreFileDeleted,
-        )
-
-    def poll(
-        self,
-        file_id: str,
-        *,
-        vector_store_id: str,
-        poll_interval_ms: int | NotGiven = NOT_GIVEN,
-        poll_timeout_ms: float | NotGiven = NOT_GIVEN,
-    ) -> VectorStoreFile:
-        """
-        Poll for a file's status until it reaches a terminal state.
-
-        Args:
-            file_id: The ID of the file to poll
-            vector_store_id: The ID of the vector store
-            poll_interval_ms: The interval between polls in milliseconds
-            poll_timeout_ms: The maximum time to poll for in milliseconds
-
-        Returns:
-            The file object once it reaches a terminal state
-        """
-        polling_interval_ms = poll_interval_ms or 500
-        polling_timeout_ms = poll_timeout_ms or None
-
-        return polling.poll(
-            fn=functools.partial(self.retrieve, file_id, vector_store_id=vector_store_id),
-            condition=lambda res: res.status == "successful" or res.status == "failed",
-            interval_seconds=polling_interval_ms / 1000,
-            timeout_seconds=polling_timeout_ms / 1000 if polling_timeout_ms else None,
-        )
-
-    def create_and_poll(
-        self,
-        file_id: str,
-        *,
-        vector_store_id: str,
-        metadata: object,
-        poll_interval_ms: int | NotGiven = NOT_GIVEN,
-        poll_timeout_ms: float | NotGiven = NOT_GIVEN,
-    ) -> VectorStoreFile:
-        """
-        Attach a file to the given vector store and wait for it to be processed.
-
-        Args:
-            file_id: The ID of the file to poll
-            vector_store_id: The ID of the vector store
-            metadata: The metadata to attach to the file
-            poll_interval_ms: The interval between polls in milliseconds
-            poll_timeout_ms: The maximum time to poll for in milliseconds
-        Returns:
-            The file object once it reaches a terminal state
-        """
-        self.create(vector_store_id=vector_store_id, file_id=file_id, metadata=metadata)
-
-        return self.poll(
-            file_id,
-            vector_store_id=vector_store_id,
-            poll_interval_ms=poll_interval_ms,
-            poll_timeout_ms=poll_timeout_ms,
-        )
-
-    def upload(
-        self,
-        *,
-        vector_store_id: str,
-        file: FileTypes,
-        metadata: object,
-    ) -> VectorStoreFile:
-        """Upload a file to the `files` API and then attach it to the given vector store.
-
-        Note the file will be asynchronously processed (you can use the alternative
-        polling helper method to wait for processing to complete).
-        """
-        file_obj = self._client.files.create(file=file)
-        return self.create(vector_store_id=vector_store_id, file_id=file_obj.id, metadata=metadata)
-
-    def upload_and_poll(
-        self,
-        *,
-        vector_store_id: str,
-        file: FileTypes,
-        metadata: object,
-        poll_interval_ms: int | NotGiven = NOT_GIVEN,
-    ) -> VectorStoreFile:
-        """Add a file to a vector store and poll until processing is complete."""
-        file_obj = self._client.files.create(file=file)
-
-        return self.create_and_poll(
-            vector_store_id=vector_store_id,
-            file_id=file_obj.id,
-            metadata=metadata,
-            poll_interval_ms=poll_interval_ms,
+            cast_to=FileDeleteResponse,
         )
 
 
@@ -354,7 +260,7 @@ class AsyncFilesResource(AsyncAPIResource):
         vector_store_id: str,
         *,
         file_id: str,
-        metadata: object,
+        metadata: Optional[object] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -505,7 +411,7 @@ class AsyncFilesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> VectorStoreFileDeleted:
+    ) -> FileDeleteResponse:
         """
         Delete a file from a vector store.
 
@@ -532,100 +438,7 @@ class AsyncFilesResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=VectorStoreFileDeleted,
-        )
-
-    async def poll(
-        self,
-        file_id: str,
-        *,
-        vector_store_id: str,
-        poll_interval_ms: int | NotGiven = NOT_GIVEN,
-        poll_timeout_ms: float | NotGiven = NOT_GIVEN,
-    ) -> VectorStoreFileObject:
-        """
-        Poll for a file's status until it reaches a terminal state.
-
-        Args:
-            file_id: The ID of the file to poll
-            vector_store_id: The ID of the vector store
-            poll_interval_ms: The interval between polls in milliseconds
-            poll_timeout_ms: The maximum time to poll for in milliseconds
-
-        Returns:
-            The file object once it reaches a terminal state
-        """
-        polling_interval_ms = poll_interval_ms or 500
-        polling_timeout_ms = poll_timeout_ms or None
-
-        return await polling.poll_async(
-            fn=functools.partial(self.retrieve, file_id, vector_store_id=vector_store_id),
-            condition=lambda res: res.status == "successful" or res.status == "failed",
-            interval_seconds=polling_interval_ms / 1000,
-            timeout_seconds=polling_timeout_ms / 1000 if polling_timeout_ms else None,
-        )
-
-    async def create_and_poll(
-        self,
-        file_id: str,
-        *,
-        vector_store_id: str,
-        metadata: object,
-        poll_interval_ms: int | NotGiven = NOT_GIVEN,
-        poll_timeout_ms: float | NotGiven = NOT_GIVEN,
-    ) -> VectorStoreFileObject:
-        """
-        Attach a file to the given vector store and wait for it to be processed.
-
-        Args:
-            file_id: The ID of the file to poll
-            vector_store_id: The ID of the vector store
-            metadata: The metadata to attach to the file
-            poll_interval_ms: The interval between polls in milliseconds
-            poll_timeout_ms: The maximum time to poll for in milliseconds
-        Returns:
-            The file object once it reaches a terminal state
-        """
-        await self.create(vector_store_id=vector_store_id, file_id=file_id, metadata=metadata)
-
-        return await self.poll(
-            file_id,
-            vector_store_id=vector_store_id,
-            poll_interval_ms=poll_interval_ms,
-            poll_timeout_ms=poll_timeout_ms,
-        )
-
-    async def upload(
-        self,
-        *,
-        vector_store_id: str,
-        file: FileTypes,
-        metadata: object,
-    ) -> VectorStoreFileObject:
-        """Upload a file to the `files` API and then attach it to the given vector store.
-
-        Note the file will be asynchronously processed (you can use the alternative
-        polling helper method to wait for processing to complete).
-        """
-        file_obj = await self._client.files.create(file=file)
-        return await self.create(vector_store_id=vector_store_id, file_id=file_obj.id, metadata=metadata)
-
-    async def upload_and_poll(
-        self,
-        *,
-        vector_store_id: str,
-        file: FileTypes,
-        metadata: object,
-        poll_interval_ms: int | NotGiven = NOT_GIVEN,
-    ) -> VectorStoreFileObject:
-        """Add a file to a vector store and poll until processing is complete."""
-        file_obj = await self._client.files.create(file=file)
-
-        return await self.create_and_poll(
-            vector_store_id=vector_store_id,
-            file_id=file_obj.id,
-            metadata=metadata,
-            poll_interval_ms=poll_interval_ms,
+            cast_to=FileDeleteResponse,
         )
 
 

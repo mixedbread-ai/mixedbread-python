@@ -176,9 +176,16 @@ class FilesResource(SyncAPIResource):
         """
         if not file_id:
             raise ValueError(f"Expected a non-empty value for `file_id` but received {file_id!r}")
-        return self._put(
+        body = deepcopy_minimal({"file": file})
+        files = extract_files(cast(Mapping[str, object], body), paths=[["file"]])
+        # It should be noted that the actual Content-Type header that will be
+        # sent to the server will contain a `boundary` parameter, e.g.
+        # multipart/form-data; boundary=---abc--
+        extra_headers = {"Content-Type": "multipart/form-data", **(extra_headers or {})}
+        return self._post(
             f"/v1/files/{file_id}",
-            body=maybe_transform({"file": file}, file_update_params.FileUpdateParams),
+            body=maybe_transform(body, file_update_params.FileUpdateParams),
+            files=files,
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -449,9 +456,16 @@ class AsyncFilesResource(AsyncAPIResource):
         """
         if not file_id:
             raise ValueError(f"Expected a non-empty value for `file_id` but received {file_id!r}")
-        return await self._put(
+        body = deepcopy_minimal({"file": file})
+        files = extract_files(cast(Mapping[str, object], body), paths=[["file"]])
+        # It should be noted that the actual Content-Type header that will be
+        # sent to the server will contain a `boundary` parameter, e.g.
+        # multipart/form-data; boundary=---abc--
+        extra_headers = {"Content-Type": "multipart/form-data", **(extra_headers or {})}
+        return await self._post(
             f"/v1/files/{file_id}",
-            body=await async_maybe_transform({"file": file}, file_update_params.FileUpdateParams),
+            body=await async_maybe_transform(body, file_update_params.FileUpdateParams),
+            files=files,
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
