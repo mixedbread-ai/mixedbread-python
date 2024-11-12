@@ -72,7 +72,6 @@ def poll(
         time.sleep(wait_time)
 
 
-@staticmethod
 async def poll_async(
     fn: Callable[[], Awaitable[T]],
     condition: Callable[[T], bool],
