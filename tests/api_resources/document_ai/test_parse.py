@@ -29,7 +29,7 @@ class TestParse:
         parse = client.document_ai.parse.create_job(
             file_id="file_id",
             chunking_strategy="page",
-            element_types=["string", "string", "string"],
+            element_types=["string"],
             return_format="html",
         )
         assert_matches_type(ParseCreateJobResponse, parse, path=["response"])
@@ -112,7 +112,7 @@ class TestAsyncParse:
         parse = await async_client.document_ai.parse.create_job(
             file_id="file_id",
             chunking_strategy="page",
-            element_types=["string", "string", "string"],
+            element_types=["string"],
             return_format="html",
         )
         assert_matches_type(ParseCreateJobResponse, parse, path=["response"])

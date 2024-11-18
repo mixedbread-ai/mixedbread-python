@@ -220,7 +220,7 @@ class TestVectorStores:
     def test_method_search(self, client: Mixedbread) -> None:
         vector_store = client.vector_stores.search(
             query="query",
-            vector_store_ids=["string", "string", "string"],
+            vector_store_ids=["string"],
         )
         assert_matches_type(SearchResponse, vector_store, path=["response"])
 
@@ -228,7 +228,7 @@ class TestVectorStores:
     def test_method_search_with_all_params(self, client: Mixedbread) -> None:
         vector_store = client.vector_stores.search(
             query="query",
-            vector_store_ids=["string", "string", "string"],
+            vector_store_ids=["string"],
             after=0,
             filter={
                 "and": {
@@ -238,34 +238,14 @@ class TestVectorStores:
                             "key": "price",
                             "operator": "eq",
                             "value": {},
-                        },
-                        {
-                            "key": "price",
-                            "operator": "eq",
-                            "value": {},
-                        },
-                        {
-                            "key": "price",
-                            "operator": "eq",
-                            "value": {},
-                        },
+                        }
                     ],
                     "or": [
                         {
                             "key": "price",
                             "operator": "eq",
                             "value": {},
-                        },
-                        {
-                            "key": "price",
-                            "operator": "eq",
-                            "value": {},
-                        },
-                        {
-                            "key": "price",
-                            "operator": "eq",
-                            "value": {},
-                        },
+                        }
                     ],
                 },
                 "not": {
@@ -274,17 +254,7 @@ class TestVectorStores:
                             "key": "price",
                             "operator": "eq",
                             "value": {},
-                        },
-                        {
-                            "key": "price",
-                            "operator": "eq",
-                            "value": {},
-                        },
-                        {
-                            "key": "price",
-                            "operator": "eq",
-                            "value": {},
-                        },
+                        }
                     ],
                     "not": {},
                     "or": [
@@ -292,17 +262,7 @@ class TestVectorStores:
                             "key": "price",
                             "operator": "eq",
                             "value": {},
-                        },
-                        {
-                            "key": "price",
-                            "operator": "eq",
-                            "value": {},
-                        },
-                        {
-                            "key": "price",
-                            "operator": "eq",
-                            "value": {},
-                        },
+                        }
                     ],
                 },
                 "or": {
@@ -311,34 +271,14 @@ class TestVectorStores:
                             "key": "price",
                             "operator": "eq",
                             "value": {},
-                        },
-                        {
-                            "key": "price",
-                            "operator": "eq",
-                            "value": {},
-                        },
-                        {
-                            "key": "price",
-                            "operator": "eq",
-                            "value": {},
-                        },
+                        }
                     ],
                     "not": [
                         {
                             "key": "price",
                             "operator": "eq",
                             "value": {},
-                        },
-                        {
-                            "key": "price",
-                            "operator": "eq",
-                            "value": {},
-                        },
-                        {
-                            "key": "price",
-                            "operator": "eq",
-                            "value": {},
-                        },
+                        }
                     ],
                     "or": {},
                 },
@@ -356,7 +296,7 @@ class TestVectorStores:
     def test_raw_response_search(self, client: Mixedbread) -> None:
         response = client.vector_stores.with_raw_response.search(
             query="query",
-            vector_store_ids=["string", "string", "string"],
+            vector_store_ids=["string"],
         )
 
         assert response.is_closed is True
@@ -368,7 +308,7 @@ class TestVectorStores:
     def test_streaming_response_search(self, client: Mixedbread) -> None:
         with client.vector_stores.with_streaming_response.search(
             query="query",
-            vector_store_ids=["string", "string", "string"],
+            vector_store_ids=["string"],
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -579,7 +519,7 @@ class TestAsyncVectorStores:
     async def test_method_search(self, async_client: AsyncMixedbread) -> None:
         vector_store = await async_client.vector_stores.search(
             query="query",
-            vector_store_ids=["string", "string", "string"],
+            vector_store_ids=["string"],
         )
         assert_matches_type(SearchResponse, vector_store, path=["response"])
 
@@ -587,7 +527,7 @@ class TestAsyncVectorStores:
     async def test_method_search_with_all_params(self, async_client: AsyncMixedbread) -> None:
         vector_store = await async_client.vector_stores.search(
             query="query",
-            vector_store_ids=["string", "string", "string"],
+            vector_store_ids=["string"],
             after=0,
             filter={
                 "and": {
@@ -597,34 +537,14 @@ class TestAsyncVectorStores:
                             "key": "price",
                             "operator": "eq",
                             "value": {},
-                        },
-                        {
-                            "key": "price",
-                            "operator": "eq",
-                            "value": {},
-                        },
-                        {
-                            "key": "price",
-                            "operator": "eq",
-                            "value": {},
-                        },
+                        }
                     ],
                     "or": [
                         {
                             "key": "price",
                             "operator": "eq",
                             "value": {},
-                        },
-                        {
-                            "key": "price",
-                            "operator": "eq",
-                            "value": {},
-                        },
-                        {
-                            "key": "price",
-                            "operator": "eq",
-                            "value": {},
-                        },
+                        }
                     ],
                 },
                 "not": {
@@ -633,17 +553,7 @@ class TestAsyncVectorStores:
                             "key": "price",
                             "operator": "eq",
                             "value": {},
-                        },
-                        {
-                            "key": "price",
-                            "operator": "eq",
-                            "value": {},
-                        },
-                        {
-                            "key": "price",
-                            "operator": "eq",
-                            "value": {},
-                        },
+                        }
                     ],
                     "not": {},
                     "or": [
@@ -651,17 +561,7 @@ class TestAsyncVectorStores:
                             "key": "price",
                             "operator": "eq",
                             "value": {},
-                        },
-                        {
-                            "key": "price",
-                            "operator": "eq",
-                            "value": {},
-                        },
-                        {
-                            "key": "price",
-                            "operator": "eq",
-                            "value": {},
-                        },
+                        }
                     ],
                 },
                 "or": {
@@ -670,34 +570,14 @@ class TestAsyncVectorStores:
                             "key": "price",
                             "operator": "eq",
                             "value": {},
-                        },
-                        {
-                            "key": "price",
-                            "operator": "eq",
-                            "value": {},
-                        },
-                        {
-                            "key": "price",
-                            "operator": "eq",
-                            "value": {},
-                        },
+                        }
                     ],
                     "not": [
                         {
                             "key": "price",
                             "operator": "eq",
                             "value": {},
-                        },
-                        {
-                            "key": "price",
-                            "operator": "eq",
-                            "value": {},
-                        },
-                        {
-                            "key": "price",
-                            "operator": "eq",
-                            "value": {},
-                        },
+                        }
                     ],
                     "or": {},
                 },
@@ -715,7 +595,7 @@ class TestAsyncVectorStores:
     async def test_raw_response_search(self, async_client: AsyncMixedbread) -> None:
         response = await async_client.vector_stores.with_raw_response.search(
             query="query",
-            vector_store_ids=["string", "string", "string"],
+            vector_store_ids=["string"],
         )
 
         assert response.is_closed is True
@@ -727,7 +607,7 @@ class TestAsyncVectorStores:
     async def test_streaming_response_search(self, async_client: AsyncMixedbread) -> None:
         async with async_client.vector_stores.with_streaming_response.search(
             query="query",
-            vector_store_ids=["string", "string", "string"],
+            vector_store_ids=["string"],
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
