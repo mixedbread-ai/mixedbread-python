@@ -171,11 +171,13 @@ Note that requests that time out are [retried twice by default](#retries).
 
 We use the standard library [`logging`](https://docs.python.org/3/library/logging.html) module.
 
-You can enable logging by setting the environment variable `MIXEDBREAD_LOG` to `debug`.
+You can enable logging by setting the environment variable `MIXEDBREAD_LOG` to `info`.
 
 ```shell
-$ export MIXEDBREAD_LOG=debug
+$ export MIXEDBREAD_LOG=info
 ```
+
+Or to `debug` for more verbose logging.
 
 ### How to tell whether `None` means `null` or missing
 
