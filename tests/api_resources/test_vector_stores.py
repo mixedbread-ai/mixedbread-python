@@ -231,57 +231,27 @@ class TestVectorStores:
             vector_store_ids=["string"],
             after=0,
             filter={
-                "and": {
-                    "and": {},
-                    "not": [
-                        {
-                            "key": "price",
-                            "operator": "eq",
-                            "value": {},
-                        }
-                    ],
-                    "or": [
-                        {
-                            "key": "price",
-                            "operator": "eq",
-                            "value": {},
-                        }
-                    ],
-                },
-                "not": {
-                    "and": [
-                        {
-                            "key": "price",
-                            "operator": "eq",
-                            "value": {},
-                        }
-                    ],
-                    "not": {},
-                    "or": [
-                        {
-                            "key": "price",
-                            "operator": "eq",
-                            "value": {},
-                        }
-                    ],
-                },
-                "or": {
-                    "and": [
-                        {
-                            "key": "price",
-                            "operator": "eq",
-                            "value": {},
-                        }
-                    ],
-                    "not": [
-                        {
-                            "key": "price",
-                            "operator": "eq",
-                            "value": {},
-                        }
-                    ],
-                    "or": {},
-                },
+                "and": [
+                    {
+                        "key": "price",
+                        "operator": "eq",
+                        "value": {},
+                    }
+                ],
+                "not": [
+                    {
+                        "key": "price",
+                        "operator": "eq",
+                        "value": {},
+                    }
+                ],
+                "or": [
+                    {
+                        "key": "price",
+                        "operator": "eq",
+                        "value": {},
+                    }
+                ],
             },
             limit=0,
             options={
@@ -530,57 +500,27 @@ class TestAsyncVectorStores:
             vector_store_ids=["string"],
             after=0,
             filter={
-                "and": {
-                    "and": {},
-                    "not": [
-                        {
-                            "key": "price",
-                            "operator": "eq",
-                            "value": {},
-                        }
-                    ],
-                    "or": [
-                        {
-                            "key": "price",
-                            "operator": "eq",
-                            "value": {},
-                        }
-                    ],
-                },
-                "not": {
-                    "and": [
-                        {
-                            "key": "price",
-                            "operator": "eq",
-                            "value": {},
-                        }
-                    ],
-                    "not": {},
-                    "or": [
-                        {
-                            "key": "price",
-                            "operator": "eq",
-                            "value": {},
-                        }
-                    ],
-                },
-                "or": {
-                    "and": [
-                        {
-                            "key": "price",
-                            "operator": "eq",
-                            "value": {},
-                        }
-                    ],
-                    "not": [
-                        {
-                            "key": "price",
-                            "operator": "eq",
-                            "value": {},
-                        }
-                    ],
-                    "or": {},
-                },
+                "and": [
+                    {
+                        "key": "price",
+                        "operator": "eq",
+                        "value": {},
+                    }
+                ],
+                "not": [
+                    {
+                        "key": "price",
+                        "operator": "eq",
+                        "value": {},
+                    }
+                ],
+                "or": [
+                    {
+                        "key": "price",
+                        "operator": "eq",
+                        "value": {},
+                    }
+                ],
             },
             limit=0,
             options={
