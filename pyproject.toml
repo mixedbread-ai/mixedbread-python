@@ -34,8 +34,8 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/juliuslipp/mixedbread-python"
-Repository = "https://github.com/juliuslipp/mixedbread-python"
+Homepage = "https://github.com/mixedbread-ai/mixedbread-python"
+Repository = "https://github.com/mixedbread-ai/mixedbread-python"
 
 
 
@@ -122,7 +122,7 @@ path = "README.md"
 [[tool.hatch.metadata.hooks.fancy-pypi-readme.substitutions]]
 # replace relative links with absolute links
 pattern = '\[(.+?)\]\(((?!https?://)\S+?)\)'
-replacement = '[\1](https://github.com/juliuslipp/mixedbread-python/tree/main/\g<2>)'
+replacement = '[\1](https://github.com/mixedbread-ai/mixedbread-python/tree/main/\g<2>)'
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
