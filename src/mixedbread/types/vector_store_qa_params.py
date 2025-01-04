@@ -6,7 +6,7 @@ from typing import List, Union, Iterable, Optional
 from typing_extensions import Literal, Required, TypeAlias, TypedDict
 
 __all__ = [
-    "VectorStoreQuestionAnsweringParams",
+    "VectorStoreQaParams",
     "Filters",
     "FiltersFilter",
     "FiltersFilterAll",
@@ -27,12 +27,11 @@ __all__ = [
     "FiltersUnionMember2Condition",
     "Pagination",
     "QaOptions",
-    "QaOptionsPrompts",
     "SearchOptions",
 ]
 
 
-class VectorStoreQuestionAnsweringParams(TypedDict, total=False):
+class VectorStoreQaParams(TypedDict, total=False):
     vector_store_ids: Required[List[str]]
     """IDs of vector stores to search"""
 
@@ -199,26 +198,9 @@ class Pagination(TypedDict, total=False):
     """Cursor from which to start returning items"""
 
 
-class QaOptionsPrompts(TypedDict, total=False):
-    citation_prompt: Optional[str]
-    """Citation prompt"""
-
-    system_prompt: Optional[str]
-    """System prompt"""
-
-    user_prompt: Optional[str]
-    """User prompt"""
-
-
 class QaOptions(TypedDict, total=False):
     cite: bool
     """Whether to use citations"""
-
-    prompts: QaOptionsPrompts
-    """Prompts used for question answering"""
-
-    return_sources: bool
-    """Whether to return sources"""
 
 
 class SearchOptions(TypedDict, total=False):
