@@ -36,9 +36,9 @@ from ..._response import (
 )
 from ..._base_client import make_request_options
 from ...types.vector_store import VectorStore
+from ...types.search_response import SearchResponse
 from ...types.vector_store_list_response import VectorStoreListResponse
 from ...types.vector_store_delete_response import VectorStoreDeleteResponse
-from ...types.vector_store_search_response import VectorStoreSearchResponse
 
 __all__ = ["VectorStoresResource", "AsyncVectorStoresResource"]
 
@@ -395,7 +395,7 @@ class VectorStoresResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> VectorStoreSearchResponse:
+    ) -> SearchResponse:
         """
         Perform a search based on the provided query.
 
@@ -438,7 +438,7 @@ class VectorStoresResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=VectorStoreSearchResponse,
+            cast_to=SearchResponse,
         )
 
 
@@ -794,7 +794,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> VectorStoreSearchResponse:
+    ) -> SearchResponse:
         """
         Perform a search based on the provided query.
 
@@ -837,7 +837,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=VectorStoreSearchResponse,
+            cast_to=SearchResponse,
         )
 
 

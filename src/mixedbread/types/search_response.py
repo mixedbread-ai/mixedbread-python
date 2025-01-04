@@ -7,7 +7,7 @@ from typing_extensions import Literal, TypeAlias
 from .._models import BaseModel
 
 __all__ = [
-    "VectorStoreSearchResponse",
+    "SearchResponse",
     "Data",
     "DataChunk",
     "DataChunkValue",
@@ -93,8 +93,9 @@ class Pagination(BaseModel):
     """Total number of items available"""
 
 
-class VectorStoreSearchResponse(BaseModel):
+class SearchResponse(BaseModel):
     data: List[Data]
+    """The list of scored vector store files"""
 
     pagination: Pagination
     """Pagination model that includes total count of items."""

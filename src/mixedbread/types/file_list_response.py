@@ -22,6 +22,7 @@ class Pagination(BaseModel):
 
 class FileListResponse(BaseModel):
     data: List[FileObject]
+    """The list of files"""
 
     pagination: Pagination
     """Pagination model that includes total count of items."""

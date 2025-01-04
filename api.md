@@ -21,13 +21,13 @@ Methods:
 Types:
 
 ```python
-from mixedbread.types.document_ai.parse import JobCreateResponse, JobRetrieveResponse
+from mixedbread.types.document_ai.parse import ParsingJob
 ```
 
 Methods:
 
-- <code title="post /v1/document-ai/parse">client.document_ai.parse.jobs.<a href="./src/mixedbread/resources/document_ai/parse/jobs.py">create</a>(\*\*<a href="src/mixedbread/types/document_ai/parse/job_create_params.py">params</a>) -> <a href="./src/mixedbread/types/document_ai/parse/job_create_response.py">JobCreateResponse</a></code>
-- <code title="get /v1/document-ai/parse/{job_id}">client.document_ai.parse.jobs.<a href="./src/mixedbread/resources/document_ai/parse/jobs.py">retrieve</a>(job_id) -> <a href="./src/mixedbread/types/document_ai/parse/job_retrieve_response.py">JobRetrieveResponse</a></code>
+- <code title="post /v1/document-ai/parse">client.document_ai.parse.jobs.<a href="./src/mixedbread/resources/document_ai/parse/jobs.py">create</a>(\*\*<a href="src/mixedbread/types/document_ai/parse/job_create_params.py">params</a>) -> <a href="./src/mixedbread/types/document_ai/parse/parsing_job.py">ParsingJob</a></code>
+- <code title="get /v1/document-ai/parse/{job_id}">client.document_ai.parse.jobs.<a href="./src/mixedbread/resources/document_ai/parse/jobs.py">retrieve</a>(job_id) -> <a href="./src/mixedbread/types/document_ai/parse/parsing_job.py">ParsingJob</a></code>
 
 # Embeddings
 
@@ -77,11 +77,11 @@ Types:
 ```python
 from mixedbread.types import (
     SearchParams,
+    SearchResponse,
     VectorStore,
     VectorStoreListResponse,
     VectorStoreDeleteResponse,
     VectorStoreQaResponse,
-    VectorStoreSearchResponse,
 )
 ```
 
@@ -93,7 +93,7 @@ Methods:
 - <code title="get /v1/vector_stores">client.vector_stores.<a href="./src/mixedbread/resources/vector_stores/vector_stores.py">list</a>(\*\*<a href="src/mixedbread/types/vector_store_list_params.py">params</a>) -> <a href="./src/mixedbread/types/vector_store_list_response.py">VectorStoreListResponse</a></code>
 - <code title="delete /v1/vector_stores/{vector_store_id}">client.vector_stores.<a href="./src/mixedbread/resources/vector_stores/vector_stores.py">delete</a>(vector_store_id) -> <a href="./src/mixedbread/types/vector_store_delete_response.py">VectorStoreDeleteResponse</a></code>
 - <code title="post /v1/vector_stores/question-answering">client.vector_stores.<a href="./src/mixedbread/resources/vector_stores/vector_stores.py">qa</a>(\*\*<a href="src/mixedbread/types/vector_store_qa_params.py">params</a>) -> <a href="./src/mixedbread/types/vector_store_qa_response.py">object</a></code>
-- <code title="post /v1/vector_stores/search">client.vector_stores.<a href="./src/mixedbread/resources/vector_stores/vector_stores.py">search</a>(\*\*<a href="src/mixedbread/types/vector_store_search_params.py">params</a>) -> <a href="./src/mixedbread/types/vector_store_search_response.py">VectorStoreSearchResponse</a></code>
+- <code title="post /v1/vector_stores/search">client.vector_stores.<a href="./src/mixedbread/resources/vector_stores/vector_stores.py">search</a>(\*\*<a href="src/mixedbread/types/vector_store_search_params.py">params</a>) -> <a href="./src/mixedbread/types/search_response.py">SearchResponse</a></code>
 
 ## Files
 
