@@ -334,7 +334,7 @@ class Mixedbread(SyncAPIClient):
     def rerank(
         self,
         *,
-        input: List[Union[str, object]],
+        input: object,
         query: str,
         model: str | NotGiven = NOT_GIVEN,
         rank_fields: Optional[List[str]] | NotGiven = NOT_GIVEN,
@@ -355,8 +355,6 @@ class Mixedbread(SyncAPIClient):
         Returns: RerankingCreateResponse: The reranked documents for the input query.
 
         Args:
-          input: The input documents to rerank.
-
           query: The query to rerank the documents.
 
           model: The model to use for reranking documents.
@@ -692,7 +690,7 @@ class AsyncMixedbread(AsyncAPIClient):
     async def rerank(
         self,
         *,
-        input: List[Union[str, object]],
+        input: object,
         query: str,
         model: str | NotGiven = NOT_GIVEN,
         rank_fields: Optional[List[str]] | NotGiven = NOT_GIVEN,
@@ -713,8 +711,6 @@ class AsyncMixedbread(AsyncAPIClient):
         Returns: RerankingCreateResponse: The reranked documents for the input query.
 
         Args:
-          input: The input documents to rerank.
-
           query: The query to rerank the documents.
 
           model: The model to use for reranking documents.

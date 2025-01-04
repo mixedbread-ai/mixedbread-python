@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import List, Union, Optional
+from typing import List, Optional
 
 import httpx
 
@@ -49,7 +49,7 @@ class RerankingsResource(SyncAPIResource):
     def create(
         self,
         *,
-        input: List[Union[str, object]],
+        input: object,
         query: str,
         model: str | NotGiven = NOT_GIVEN,
         rank_fields: Optional[List[str]] | NotGiven = NOT_GIVEN,
@@ -70,8 +70,6 @@ class RerankingsResource(SyncAPIResource):
         Returns: RerankingCreateResponse: The reranked documents for the input query.
 
         Args:
-          input: The input documents to rerank.
-
           query: The query to rerank the documents.
 
           model: The model to use for reranking documents.
@@ -133,7 +131,7 @@ class AsyncRerankingsResource(AsyncAPIResource):
     async def create(
         self,
         *,
-        input: List[Union[str, object]],
+        input: object,
         query: str,
         model: str | NotGiven = NOT_GIVEN,
         rank_fields: Optional[List[str]] | NotGiven = NOT_GIVEN,
@@ -154,8 +152,6 @@ class AsyncRerankingsResource(AsyncAPIResource):
         Returns: RerankingCreateResponse: The reranked documents for the input query.
 
         Args:
-          input: The input documents to rerank.
-
           query: The query to rerank the documents.
 
           model: The model to use for reranking documents.
