@@ -18,7 +18,19 @@ class Data(BaseModel):
     score: float
     """The score of the document."""
 
-    object: Optional[Literal["list", "embedding", "embedding_dict", "text_document", "file"]] = None
+    object: Optional[
+        Literal[
+            "list",
+            "job",
+            "embedding",
+            "embedding_dict",
+            "text_document",
+            "file",
+            "vector_store",
+            "vector_store.file",
+            "api_key",
+        ]
+    ] = None
     """The object type."""
 
 
@@ -49,5 +61,17 @@ class RerankResponse(BaseModel):
     usage: Usage
     """The usage of the model"""
 
-    object: Optional[Literal["list", "embedding", "embedding_dict", "text_document", "file"]] = None
+    object: Optional[
+        Literal[
+            "list",
+            "job",
+            "embedding",
+            "embedding_dict",
+            "text_document",
+            "file",
+            "vector_store",
+            "vector_store.file",
+            "api_key",
+        ]
+    ] = None
     """The object type of the response"""

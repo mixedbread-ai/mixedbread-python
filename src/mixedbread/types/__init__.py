@@ -2,20 +2,18 @@
 
 from __future__ import annotations
 
-from .job_status import JobStatus as JobStatus
 from .file_object import FileObject as FileObject
 from .file_deleted import FileDeleted as FileDeleted
 from .vector_store import VectorStore as VectorStore
+from .info_response import InfoResponse as InfoResponse
 from .embed_response import EmbedResponse as EmbedResponse
 from .rerank_response import RerankResponse as RerankResponse
 from .search_response import SearchResponse as SearchResponse
-from .status_response import StatusResponse as StatusResponse
 from .file_list_params import FileListParams as FileListParams
 from .file_create_params import FileCreateParams as FileCreateParams
 from .file_list_response import FileListResponse as FileListResponse
 from .file_update_params import FileUpdateParams as FileUpdateParams
 from .client_embed_params import ClientEmbedParams as ClientEmbedParams
-from .job_delete_response import JobDeleteResponse as JobDeleteResponse
 from .client_rerank_params import ClientRerankParams as ClientRerankParams
 from .embedding_create_params import EmbeddingCreateParams as EmbeddingCreateParams
 from .reranking_create_params import RerankingCreateParams as RerankingCreateParams
@@ -27,3 +25,6 @@ from .vector_store_list_response import VectorStoreListResponse as VectorStoreLi
 from .vector_store_search_params import VectorStoreSearchParams as VectorStoreSearchParams
 from .vector_store_update_params import VectorStoreUpdateParams as VectorStoreUpdateParams
 from .vector_store_delete_response import VectorStoreDeleteResponse as VectorStoreDeleteResponse
+from .vector_store_question_answering_params import (
+    VectorStoreQuestionAnsweringParams as VectorStoreQuestionAnsweringParams,
+)

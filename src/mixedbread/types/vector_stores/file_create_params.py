@@ -10,5 +10,7 @@ __all__ = ["FileCreateParams"]
 
 class FileCreateParams(TypedDict, total=False):
     file_id: Required[str]
+    """ID of the file to add"""
 
     metadata: Optional[object]
+    """Optional metadata for the file"""
