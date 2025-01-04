@@ -91,7 +91,7 @@ class TestClient:
     @parametrize
     def test_method_rerank(self, client: Mixedbread) -> None:
         client_ = client.rerank(
-            input={},
+            input=["Document 1", "Document 2"],
             query="What is mixedbread ai?",
         )
         assert_matches_type(RerankResponse, client_, path=["response"])
@@ -99,9 +99,9 @@ class TestClient:
     @parametrize
     def test_method_rerank_with_all_params(self, client: Mixedbread) -> None:
         client_ = client.rerank(
-            input={},
+            input=["Document 1", "Document 2"],
             query="What is mixedbread ai?",
-            model="mixedbread-ai/mxbai-rerank-large-v1",
+            model="x",
             rank_fields=["field1", "field2"],
             return_input=False,
             top_k=10,
@@ -111,7 +111,7 @@ class TestClient:
     @parametrize
     def test_raw_response_rerank(self, client: Mixedbread) -> None:
         response = client.with_raw_response.rerank(
-            input={},
+            input=["Document 1", "Document 2"],
             query="What is mixedbread ai?",
         )
 
@@ -123,7 +123,7 @@ class TestClient:
     @parametrize
     def test_streaming_response_rerank(self, client: Mixedbread) -> None:
         with client.with_streaming_response.rerank(
-            input={},
+            input=["Document 1", "Document 2"],
             query="What is mixedbread ai?",
         ) as response:
             assert not response.is_closed
@@ -212,7 +212,7 @@ class TestAsyncClient:
     @parametrize
     async def test_method_rerank(self, async_client: AsyncMixedbread) -> None:
         client = await async_client.rerank(
-            input={},
+            input=["Document 1", "Document 2"],
             query="What is mixedbread ai?",
         )
         assert_matches_type(RerankResponse, client, path=["response"])
@@ -220,9 +220,9 @@ class TestAsyncClient:
     @parametrize
     async def test_method_rerank_with_all_params(self, async_client: AsyncMixedbread) -> None:
         client = await async_client.rerank(
-            input={},
+            input=["Document 1", "Document 2"],
             query="What is mixedbread ai?",
-            model="mixedbread-ai/mxbai-rerank-large-v1",
+            model="x",
             rank_fields=["field1", "field2"],
             return_input=False,
             top_k=10,
@@ -232,7 +232,7 @@ class TestAsyncClient:
     @parametrize
     async def test_raw_response_rerank(self, async_client: AsyncMixedbread) -> None:
         response = await async_client.with_raw_response.rerank(
-            input={},
+            input=["Document 1", "Document 2"],
             query="What is mixedbread ai?",
         )
 
@@ -244,7 +244,7 @@ class TestAsyncClient:
     @parametrize
     async def test_streaming_response_rerank(self, async_client: AsyncMixedbread) -> None:
         async with async_client.with_streaming_response.rerank(
-            input={},
+            input=["Document 1", "Document 2"],
             query="What is mixedbread ai?",
         ) as response:
             assert not response.is_closed
