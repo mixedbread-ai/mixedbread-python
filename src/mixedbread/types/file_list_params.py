@@ -8,6 +8,8 @@ __all__ = ["FileListParams"]
 
 
 class FileListParams(TypedDict, total=False):
-    after: int
-
     limit: int
+    """Maximum number of items to return per page"""
+
+    offset: int
+    """Cursor from which to start returning items"""

@@ -72,6 +72,10 @@ class FilesResource(SyncAPIResource):
         Args:
           vector_store_id: The ID of the vector store
 
+          file_id: ID of the file to add
+
+          metadata: Optional metadata for the file
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -145,8 +149,8 @@ class FilesResource(SyncAPIResource):
         self,
         vector_store_id: str,
         *,
-        after: int | NotGiven = NOT_GIVEN,
         limit: int | NotGiven = NOT_GIVEN,
+        offset: int | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -164,6 +168,10 @@ class FilesResource(SyncAPIResource):
 
         Args:
           vector_store_id: The ID of the vector store
+
+          limit: Maximum number of items to return per page
+
+          offset: Cursor from which to start returning items
 
           extra_headers: Send extra headers
 
@@ -184,8 +192,8 @@ class FilesResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
-                        "after": after,
                         "limit": limit,
+                        "offset": offset,
                     },
                     file_list_params.FileListParams,
                 ),
@@ -214,6 +222,10 @@ class FilesResource(SyncAPIResource):
         Returns: VectorStoreFileDeleted: The deleted file
 
         Args:
+          vector_store_id: The ID of the vector store
+
+          file_id: The ID of the file to delete
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -278,6 +290,10 @@ class AsyncFilesResource(AsyncAPIResource):
 
         Args:
           vector_store_id: The ID of the vector store
+
+          file_id: ID of the file to add
+
+          metadata: Optional metadata for the file
 
           extra_headers: Send extra headers
 
@@ -352,8 +368,8 @@ class AsyncFilesResource(AsyncAPIResource):
         self,
         vector_store_id: str,
         *,
-        after: int | NotGiven = NOT_GIVEN,
         limit: int | NotGiven = NOT_GIVEN,
+        offset: int | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -371,6 +387,10 @@ class AsyncFilesResource(AsyncAPIResource):
 
         Args:
           vector_store_id: The ID of the vector store
+
+          limit: Maximum number of items to return per page
+
+          offset: Cursor from which to start returning items
 
           extra_headers: Send extra headers
 
@@ -391,8 +411,8 @@ class AsyncFilesResource(AsyncAPIResource):
                 timeout=timeout,
                 query=await async_maybe_transform(
                     {
-                        "after": after,
                         "limit": limit,
+                        "offset": offset,
                     },
                     file_list_params.FileListParams,
                 ),
@@ -421,6 +441,10 @@ class AsyncFilesResource(AsyncAPIResource):
         Returns: VectorStoreFileDeleted: The deleted file
 
         Args:
+          vector_store_id: The ID of the vector store
+
+          file_id: The ID of the file to delete
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request

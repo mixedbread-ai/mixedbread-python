@@ -53,7 +53,24 @@ class ParseResource(SyncAPIResource):
         *,
         file_id: str,
         chunking_strategy: Literal["page"] | NotGiven = NOT_GIVEN,
-        element_types: Optional[List[str]] | NotGiven = NOT_GIVEN,
+        element_types: Optional[
+            List[
+                Literal[
+                    "caption",
+                    "footnote",
+                    "formula",
+                    "list-item",
+                    "page-footer",
+                    "page-header",
+                    "picture",
+                    "section-header",
+                    "table",
+                    "text",
+                    "title",
+                ]
+            ]
+        ]
+        | NotGiven = NOT_GIVEN,
         return_format: Literal["html", "markdown", "plain"] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -178,7 +195,24 @@ class AsyncParseResource(AsyncAPIResource):
         *,
         file_id: str,
         chunking_strategy: Literal["page"] | NotGiven = NOT_GIVEN,
-        element_types: Optional[List[str]] | NotGiven = NOT_GIVEN,
+        element_types: Optional[
+            List[
+                Literal[
+                    "caption",
+                    "footnote",
+                    "formula",
+                    "list-item",
+                    "page-footer",
+                    "page-header",
+                    "picture",
+                    "section-header",
+                    "table",
+                    "text",
+                    "title",
+                ]
+            ]
+        ]
+        | NotGiven = NOT_GIVEN,
         return_format: Literal["html", "markdown", "plain"] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
