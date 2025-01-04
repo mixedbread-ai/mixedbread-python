@@ -2,20 +2,29 @@
 
 from __future__ import annotations
 
-from typing import Union, Optional
-from datetime import datetime
-from typing_extensions import Annotated, TypedDict
+from typing import Optional
+from typing_extensions import Literal, TypedDict
 
-from .._utils import PropertyInfo
-
-__all__ = ["VectorStoreUpdateParams"]
+__all__ = ["VectorStoreUpdateParams", "ExpiresAfter"]
 
 
 class VectorStoreUpdateParams(TypedDict, total=False):
     description: Optional[str]
+    """New description"""
 
-    expires_at: Annotated[Union[str, datetime, None], PropertyInfo(format="iso8601")]
+    expires_after: Optional[ExpiresAfter]
+    """Represents an expiration policy for a vector store."""
 
     metadata: Optional[object]
+    """Optional metadata key-value pairs"""
 
     name: Optional[str]
+    """New name for the vector store"""
+
+
+class ExpiresAfter(TypedDict, total=False):
+    anchor: Literal["last_used_at"]
+    """Anchor date for the expiration policy"""
+
+    days: int
+    """Number of days after which the vector store expires"""

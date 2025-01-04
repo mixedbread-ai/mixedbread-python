@@ -15,7 +15,23 @@ class ParseCreateJobParams(TypedDict, total=False):
     chunking_strategy: Literal["page"]
     """The strategy to use for chunking the content"""
 
-    element_types: Optional[List[str]]
+    element_types: Optional[
+        List[
+            Literal[
+                "caption",
+                "footnote",
+                "formula",
+                "list-item",
+                "page-footer",
+                "page-header",
+                "picture",
+                "section-header",
+                "table",
+                "text",
+                "title",
+            ]
+        ]
+    ]
     """The elements to extract from the document"""
 
     return_format: Literal["html", "markdown", "plain"]

@@ -3,10 +3,10 @@
 
 from .._models import BaseModel
 
-__all__ = ["StatusResponse"]
+__all__ = ["InfoResponse"]
 
 
-class StatusResponse(BaseModel):
+class InfoResponse(BaseModel):
     name: str
 
     version: str

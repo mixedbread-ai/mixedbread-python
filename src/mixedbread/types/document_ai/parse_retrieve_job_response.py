@@ -1,5 +1,6 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
+import builtins
 from typing import List, Union, Optional
 from datetime import datetime
 from typing_extensions import Literal, TypeAlias
@@ -30,10 +31,10 @@ class RunningJob(BaseModel):
     finished_at: Optional[datetime] = None
     """The finished time of the job"""
 
-    memory: Optional[object] = None
-    """Job memory"""
+    object: Optional[Literal["job"]] = None
+    """The type of the object"""
 
-    result: Optional[object] = None
+    result: Optional[builtins.object] = None
     """The result of the job"""
 
     status: Optional[Literal["pending", "running"]] = None
@@ -53,10 +54,10 @@ class FailedJob(BaseModel):
     finished_at: Optional[datetime] = None
     """The finished time of the job"""
 
-    memory: Optional[object] = None
-    """Job memory"""
+    object: Optional[Literal["job"]] = None
+    """The type of the object"""
 
-    result: Optional[object] = None
+    result: Optional[builtins.object] = None
     """The result of the job"""
 
     status: Optional[Literal["failed"]] = None
@@ -64,7 +65,7 @@ class FailedJob(BaseModel):
 
 
 class SuccessfulParsingJobResultChunkElement(BaseModel):
-    bbox: List[float]
+    bbox: List[object]
     """The bounding box coordinates [x1, y1, x2, y2]"""
 
     confidence: float
@@ -150,8 +151,8 @@ class SuccessfulParsingJob(BaseModel):
     finished_at: Optional[datetime] = None
     """The finished time of the job"""
 
-    memory: Optional[object] = None
-    """Job memory"""
+    object: Optional[Literal["job"]] = None
+    """The type of the object"""
 
     status: Optional[Literal["successful"]] = None
     """The status of the job"""

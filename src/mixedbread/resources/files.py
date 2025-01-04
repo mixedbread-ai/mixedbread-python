@@ -195,8 +195,8 @@ class FilesResource(SyncAPIResource):
     def list(
         self,
         *,
-        after: int | NotGiven = NOT_GIVEN,
         limit: int | NotGiven = NOT_GIVEN,
+        offset: int | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -212,6 +212,10 @@ class FilesResource(SyncAPIResource):
         Returns: A list of files belonging to the user.
 
         Args:
+          limit: Maximum number of items to return per page
+
+          offset: Cursor from which to start returning items
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -229,8 +233,8 @@ class FilesResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
-                        "after": after,
                         "limit": limit,
+                        "offset": offset,
                     },
                     file_list_params.FileListParams,
                 ),
@@ -475,8 +479,8 @@ class AsyncFilesResource(AsyncAPIResource):
     async def list(
         self,
         *,
-        after: int | NotGiven = NOT_GIVEN,
         limit: int | NotGiven = NOT_GIVEN,
+        offset: int | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -492,6 +496,10 @@ class AsyncFilesResource(AsyncAPIResource):
         Returns: A list of files belonging to the user.
 
         Args:
+          limit: Maximum number of items to return per page
+
+          offset: Cursor from which to start returning items
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -509,8 +517,8 @@ class AsyncFilesResource(AsyncAPIResource):
                 timeout=timeout,
                 query=await async_maybe_transform(
                     {
-                        "after": after,
                         "limit": limit,
+                        "offset": offset,
                     },
                     file_list_params.FileListParams,
                 ),

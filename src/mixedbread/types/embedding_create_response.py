@@ -36,9 +36,9 @@ class DataUnionMember1Embedding(BaseModel):
 
 class DataUnionMember1(BaseModel):
     embedding: DataUnionMember1Embedding
-    """The encoded embedding data by encoding format.
-
-    Returned, if more than one encoding format is used.
+    """
+    The encoded embedding data by encoding format.Returned, if more than one
+    encoding format is used.
     """
 
     index: int
@@ -81,5 +81,17 @@ class EmbeddingCreateResponse(BaseModel):
     usage: Usage
     """The usage of the model"""
 
-    object: Optional[Literal["list", "embedding", "embedding_dict", "text_document", "file"]] = None
+    object: Optional[
+        Literal[
+            "list",
+            "job",
+            "embedding",
+            "embedding_dict",
+            "text_document",
+            "file",
+            "vector_store",
+            "vector_store.file",
+            "api_key",
+        ]
+    ] = None
     """The object type of the response"""

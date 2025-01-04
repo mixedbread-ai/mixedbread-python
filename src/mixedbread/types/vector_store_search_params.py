@@ -7,167 +7,196 @@ from typing_extensions import Literal, Required, TypeAlias, TypedDict
 
 __all__ = [
     "VectorStoreSearchParams",
-    "Filter",
-    "FilterFilter",
-    "FilterFilterAndUnionMember0",
-    "FilterFilterAndUnionMember0Condition",
-    "FilterFilterNotUnionMember0",
-    "FilterFilterNotUnionMember0Condition",
-    "FilterFilterOrUnionMember0",
-    "FilterFilterOrUnionMember0Condition",
-    "FilterUnionMember1",
-    "FilterUnionMember1Condition",
-    "FilterUnionMember1Filter",
-    "FilterUnionMember1FilterAndUnionMember0",
-    "FilterUnionMember1FilterAndUnionMember0Condition",
-    "FilterUnionMember1FilterNotUnionMember0",
-    "FilterUnionMember1FilterNotUnionMember0Condition",
-    "FilterUnionMember1FilterOrUnionMember0",
-    "FilterUnionMember1FilterOrUnionMember0Condition",
-    "Options",
+    "Filters",
+    "FiltersFilter",
+    "FiltersFilterAll",
+    "FiltersFilterAllCondition",
+    "FiltersFilterAny",
+    "FiltersFilterAnyCondition",
+    "FiltersFilterNone",
+    "FiltersFilterNoneCondition",
+    "FiltersCondition",
+    "FiltersUnionMember2",
+    "FiltersUnionMember2Filter",
+    "FiltersUnionMember2FilterAll",
+    "FiltersUnionMember2FilterAllCondition",
+    "FiltersUnionMember2FilterAny",
+    "FiltersUnionMember2FilterAnyCondition",
+    "FiltersUnionMember2FilterNone",
+    "FiltersUnionMember2FilterNoneCondition",
+    "FiltersUnionMember2Condition",
+    "Pagination",
+    "SearchOptions",
 ]
 
 
 class VectorStoreSearchParams(TypedDict, total=False):
     query: Required[str]
+    """Search query text"""
 
     vector_store_ids: Required[List[str]]
+    """IDs of vector stores to search"""
 
-    after: int
+    filters: Optional[Filters]
+    """Filter or condition"""
 
-    filter: Optional[Filter]
+    pagination: Pagination
+    """Pagination options"""
+
+    search_options: SearchOptions
+    """Search configuration options"""
+
+
+class FiltersFilterAllCondition(TypedDict, total=False):
+    key: Required[str]
+    """The field to apply the condition on"""
+
+    operator: Required[Literal["eq", "not_eq", "gt", "gte", "lt", "lte", "in", "not_in", "like", "not_like"]]
+    """The operator for the condition"""
+
+    value: Required[object]
+    """The value to compare against"""
+
+
+FiltersFilterAll: TypeAlias = Union[FiltersFilterAllCondition, object]
+
+
+class FiltersFilterAnyCondition(TypedDict, total=False):
+    key: Required[str]
+    """The field to apply the condition on"""
+
+    operator: Required[Literal["eq", "not_eq", "gt", "gte", "lt", "lte", "in", "not_in", "like", "not_like"]]
+    """The operator for the condition"""
+
+    value: Required[object]
+    """The value to compare against"""
+
+
+FiltersFilterAny: TypeAlias = Union[FiltersFilterAnyCondition, object]
+
+
+class FiltersFilterNoneCondition(TypedDict, total=False):
+    key: Required[str]
+    """The field to apply the condition on"""
+
+    operator: Required[Literal["eq", "not_eq", "gt", "gte", "lt", "lte", "in", "not_in", "like", "not_like"]]
+    """The operator for the condition"""
+
+    value: Required[object]
+    """The value to compare against"""
+
+
+FiltersFilterNone: TypeAlias = Union[FiltersFilterNoneCondition, object]
+
+
+class FiltersFilter(TypedDict, total=False):
+    all: Optional[Iterable[FiltersFilterAll]]
     """List of conditions or filters to be ANDed together"""
 
+    any: Optional[Iterable[FiltersFilterAny]]
+    """List of conditions or filters to be ORed together"""
+
+    none: Optional[Iterable[FiltersFilterNone]]
+    """List of conditions or filters to be NOTed"""
+
+
+class FiltersCondition(TypedDict, total=False):
+    key: Required[str]
+    """The field to apply the condition on"""
+
+    operator: Required[Literal["eq", "not_eq", "gt", "gte", "lt", "lte", "in", "not_in", "like", "not_like"]]
+    """The operator for the condition"""
+
+    value: Required[object]
+    """The value to compare against"""
+
+
+class FiltersUnionMember2FilterAllCondition(TypedDict, total=False):
+    key: Required[str]
+    """The field to apply the condition on"""
+
+    operator: Required[Literal["eq", "not_eq", "gt", "gte", "lt", "lte", "in", "not_in", "like", "not_like"]]
+    """The operator for the condition"""
+
+    value: Required[object]
+    """The value to compare against"""
+
+
+FiltersUnionMember2FilterAll: TypeAlias = Union[FiltersUnionMember2FilterAllCondition, object]
+
+
+class FiltersUnionMember2FilterAnyCondition(TypedDict, total=False):
+    key: Required[str]
+    """The field to apply the condition on"""
+
+    operator: Required[Literal["eq", "not_eq", "gt", "gte", "lt", "lte", "in", "not_in", "like", "not_like"]]
+    """The operator for the condition"""
+
+    value: Required[object]
+    """The value to compare against"""
+
+
+FiltersUnionMember2FilterAny: TypeAlias = Union[FiltersUnionMember2FilterAnyCondition, object]
+
+
+class FiltersUnionMember2FilterNoneCondition(TypedDict, total=False):
+    key: Required[str]
+    """The field to apply the condition on"""
+
+    operator: Required[Literal["eq", "not_eq", "gt", "gte", "lt", "lte", "in", "not_in", "like", "not_like"]]
+    """The operator for the condition"""
+
+    value: Required[object]
+    """The value to compare against"""
+
+
+FiltersUnionMember2FilterNone: TypeAlias = Union[FiltersUnionMember2FilterNoneCondition, object]
+
+
+class FiltersUnionMember2Filter(TypedDict, total=False):
+    all: Optional[Iterable[FiltersUnionMember2FilterAll]]
+    """List of conditions or filters to be ANDed together"""
+
+    any: Optional[Iterable[FiltersUnionMember2FilterAny]]
+    """List of conditions or filters to be ORed together"""
+
+    none: Optional[Iterable[FiltersUnionMember2FilterNone]]
+    """List of conditions or filters to be NOTed"""
+
+
+class FiltersUnionMember2Condition(TypedDict, total=False):
+    key: Required[str]
+    """The field to apply the condition on"""
+
+    operator: Required[Literal["eq", "not_eq", "gt", "gte", "lt", "lte", "in", "not_in", "like", "not_like"]]
+    """The operator for the condition"""
+
+    value: Required[object]
+    """The value to compare against"""
+
+
+FiltersUnionMember2: TypeAlias = Union[FiltersUnionMember2Filter, FiltersUnionMember2Condition]
+
+Filters: TypeAlias = Union[FiltersFilter, FiltersCondition, Iterable[FiltersUnionMember2]]
+
+
+class Pagination(TypedDict, total=False):
     limit: int
+    """Maximum number of items to return per page"""
 
-    options: Optional[Options]
-
-
-class FilterFilterAndUnionMember0Condition(TypedDict, total=False):
-    key: Required[str]
-    """The field to apply the condition on"""
-
-    operator: Required[Literal["eq", "not_eq", "gt", "gte", "lt", "lte", "in", "not_in", "like", "not_like"]]
-    """The operator for the condition"""
-
-    value: Required[object]
-    """The value to compare against"""
+    offset: int
+    """Cursor from which to start returning items"""
 
 
-FilterFilterAndUnionMember0: TypeAlias = Union[FilterFilterAndUnionMember0Condition, object]
-
-
-class FilterFilterNotUnionMember0Condition(TypedDict, total=False):
-    key: Required[str]
-    """The field to apply the condition on"""
-
-    operator: Required[Literal["eq", "not_eq", "gt", "gte", "lt", "lte", "in", "not_in", "like", "not_like"]]
-    """The operator for the condition"""
-
-    value: Required[object]
-    """The value to compare against"""
-
-
-FilterFilterNotUnionMember0: TypeAlias = Union[FilterFilterNotUnionMember0Condition, object]
-
-
-class FilterFilterOrUnionMember0Condition(TypedDict, total=False):
-    key: Required[str]
-    """The field to apply the condition on"""
-
-    operator: Required[Literal["eq", "not_eq", "gt", "gte", "lt", "lte", "in", "not_in", "like", "not_like"]]
-    """The operator for the condition"""
-
-    value: Required[object]
-    """The value to compare against"""
-
-
-FilterFilterOrUnionMember0: TypeAlias = Union[FilterFilterOrUnionMember0Condition, object]
-
-
-class FilterFilter(TypedDict, total=False):
-    and_: Union[Iterable[FilterFilterAndUnionMember0], object]
-    """List of conditions or filters to be ANDed together"""
-
-    not_: Union[Iterable[FilterFilterNotUnionMember0], object]
-    """List of conditions or filters to be NOTed"""
-
-    or_: Union[Iterable[FilterFilterOrUnionMember0], object]
-    """List of conditions or filters to be ORed together"""
-
-
-class FilterUnionMember1Condition(TypedDict, total=False):
-    key: Required[str]
-    """The field to apply the condition on"""
-
-    operator: Required[Literal["eq", "not_eq", "gt", "gte", "lt", "lte", "in", "not_in", "like", "not_like"]]
-    """The operator for the condition"""
-
-    value: Required[object]
-    """The value to compare against"""
-
-
-class FilterUnionMember1FilterAndUnionMember0Condition(TypedDict, total=False):
-    key: Required[str]
-    """The field to apply the condition on"""
-
-    operator: Required[Literal["eq", "not_eq", "gt", "gte", "lt", "lte", "in", "not_in", "like", "not_like"]]
-    """The operator for the condition"""
-
-    value: Required[object]
-    """The value to compare against"""
-
-
-FilterUnionMember1FilterAndUnionMember0: TypeAlias = Union[FilterUnionMember1FilterAndUnionMember0Condition, object]
-
-
-class FilterUnionMember1FilterNotUnionMember0Condition(TypedDict, total=False):
-    key: Required[str]
-    """The field to apply the condition on"""
-
-    operator: Required[Literal["eq", "not_eq", "gt", "gte", "lt", "lte", "in", "not_in", "like", "not_like"]]
-    """The operator for the condition"""
-
-    value: Required[object]
-    """The value to compare against"""
-
-
-FilterUnionMember1FilterNotUnionMember0: TypeAlias = Union[FilterUnionMember1FilterNotUnionMember0Condition, object]
-
-
-class FilterUnionMember1FilterOrUnionMember0Condition(TypedDict, total=False):
-    key: Required[str]
-    """The field to apply the condition on"""
-
-    operator: Required[Literal["eq", "not_eq", "gt", "gte", "lt", "lte", "in", "not_in", "like", "not_like"]]
-    """The operator for the condition"""
-
-    value: Required[object]
-    """The value to compare against"""
-
-
-FilterUnionMember1FilterOrUnionMember0: TypeAlias = Union[FilterUnionMember1FilterOrUnionMember0Condition, object]
-
-
-class FilterUnionMember1Filter(TypedDict, total=False):
-    and_: Union[Iterable[FilterUnionMember1FilterAndUnionMember0], object]
-    """List of conditions or filters to be ANDed together"""
-
-    not_: Union[Iterable[FilterUnionMember1FilterNotUnionMember0], object]
-    """List of conditions or filters to be NOTed"""
-
-    or_: Union[Iterable[FilterUnionMember1FilterOrUnionMember0], object]
-    """List of conditions or filters to be ORed together"""
-
-
-FilterUnionMember1: TypeAlias = Union[FilterUnionMember1Condition, FilterUnionMember1Filter]
-
-Filter: TypeAlias = Union[FilterFilter, Iterable[FilterUnionMember1]]
-
-
-class Options(TypedDict, total=False):
-    min_score: float
-
+class SearchOptions(TypedDict, total=False):
     return_chunks: bool
+    """Whether to return matching text chunks"""
 
     return_metadata: bool
+    """Whether to return file metadata"""
+
+    rewrite_query: bool
+    """Whether to rewrite the query"""
+
+    score_threshold: float
+    """Minimum similarity score threshold"""

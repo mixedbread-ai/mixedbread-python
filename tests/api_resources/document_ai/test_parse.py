@@ -29,7 +29,7 @@ class TestParse:
         parse = client.document_ai.parse.create_job(
             file_id="file_id",
             chunking_strategy="page",
-            element_types=["string"],
+            element_types=["caption"],
             return_format="html",
         )
         assert_matches_type(ParseCreateJobResponse, parse, path=["response"])
@@ -61,14 +61,14 @@ class TestParse:
     @parametrize
     def test_method_retrieve_job(self, client: Mixedbread) -> None:
         parse = client.document_ai.parse.retrieve_job(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            "job_id",
         )
         assert_matches_type(ParseRetrieveJobResponse, parse, path=["response"])
 
     @parametrize
     def test_raw_response_retrieve_job(self, client: Mixedbread) -> None:
         response = client.document_ai.parse.with_raw_response.retrieve_job(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            "job_id",
         )
 
         assert response.is_closed is True
@@ -79,7 +79,7 @@ class TestParse:
     @parametrize
     def test_streaming_response_retrieve_job(self, client: Mixedbread) -> None:
         with client.document_ai.parse.with_streaming_response.retrieve_job(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            "job_id",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -112,7 +112,7 @@ class TestAsyncParse:
         parse = await async_client.document_ai.parse.create_job(
             file_id="file_id",
             chunking_strategy="page",
-            element_types=["string"],
+            element_types=["caption"],
             return_format="html",
         )
         assert_matches_type(ParseCreateJobResponse, parse, path=["response"])
@@ -144,14 +144,14 @@ class TestAsyncParse:
     @parametrize
     async def test_method_retrieve_job(self, async_client: AsyncMixedbread) -> None:
         parse = await async_client.document_ai.parse.retrieve_job(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            "job_id",
         )
         assert_matches_type(ParseRetrieveJobResponse, parse, path=["response"])
 
     @parametrize
     async def test_raw_response_retrieve_job(self, async_client: AsyncMixedbread) -> None:
         response = await async_client.document_ai.parse.with_raw_response.retrieve_job(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            "job_id",
         )
 
         assert response.is_closed is True
@@ -162,7 +162,7 @@ class TestAsyncParse:
     @parametrize
     async def test_streaming_response_retrieve_job(self, async_client: AsyncMixedbread) -> None:
         async with async_client.document_ai.parse.with_streaming_response.retrieve_job(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            "job_id",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"

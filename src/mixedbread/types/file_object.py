@@ -9,22 +9,22 @@ __all__ = ["FileObject"]
 
 class FileObject(BaseModel):
     id: str
-    """Unique identifier for the record"""
+    """Unique identifier for the file"""
+
+    bytes: int
+    """Size of the file in bytes"""
 
     created_at: datetime
-    """Timestamp of record creation"""
+    """Timestamp when the file was created"""
+
+    filename: str
+    """Name of the file including extension"""
 
     mime_type: str
     """MIME type of the file"""
 
-    name: str
-    """Name of the file"""
-
-    size: int
-    """Size of the file in bytes"""
-
     updated_at: datetime
-    """Timestamp of last record update"""
+    """Timestamp when the file was last updated"""
 
     version: int
     """Version of the file"""

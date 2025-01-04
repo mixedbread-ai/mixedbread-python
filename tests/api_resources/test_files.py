@@ -63,14 +63,14 @@ class TestFiles:
     @parametrize
     def test_method_retrieve(self, client: Mixedbread) -> None:
         file = client.files.retrieve(
-            "file_id",
+            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(FileObject, file, path=["response"])
 
     @parametrize
     def test_raw_response_retrieve(self, client: Mixedbread) -> None:
         response = client.files.with_raw_response.retrieve(
-            "file_id",
+            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
 
         assert response.is_closed is True
@@ -81,7 +81,7 @@ class TestFiles:
     @parametrize
     def test_streaming_response_retrieve(self, client: Mixedbread) -> None:
         with client.files.with_streaming_response.retrieve(
-            "file_id",
+            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -101,7 +101,7 @@ class TestFiles:
     @parametrize
     def test_method_update(self, client: Mixedbread) -> None:
         file = client.files.update(
-            file_id="file_id",
+            file_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             file=b"raw file contents",
         )
         assert_matches_type(FileObject, file, path=["response"])
@@ -109,7 +109,7 @@ class TestFiles:
     @parametrize
     def test_raw_response_update(self, client: Mixedbread) -> None:
         response = client.files.with_raw_response.update(
-            file_id="file_id",
+            file_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             file=b"raw file contents",
         )
 
@@ -121,7 +121,7 @@ class TestFiles:
     @parametrize
     def test_streaming_response_update(self, client: Mixedbread) -> None:
         with client.files.with_streaming_response.update(
-            file_id="file_id",
+            file_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             file=b"raw file contents",
         ) as response:
             assert not response.is_closed
@@ -148,8 +148,8 @@ class TestFiles:
     @parametrize
     def test_method_list_with_all_params(self, client: Mixedbread) -> None:
         file = client.files.list(
-            after=0,
             limit=0,
+            offset=0,
         )
         assert_matches_type(FileListResponse, file, path=["response"])
 
@@ -176,14 +176,14 @@ class TestFiles:
     @parametrize
     def test_method_delete(self, client: Mixedbread) -> None:
         file = client.files.delete(
-            "file_id",
+            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(FileDeleted, file, path=["response"])
 
     @parametrize
     def test_raw_response_delete(self, client: Mixedbread) -> None:
         response = client.files.with_raw_response.delete(
-            "file_id",
+            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
 
         assert response.is_closed is True
@@ -194,7 +194,7 @@ class TestFiles:
     @parametrize
     def test_streaming_response_delete(self, client: Mixedbread) -> None:
         with client.files.with_streaming_response.delete(
-            "file_id",
+            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -214,9 +214,11 @@ class TestFiles:
     @parametrize
     @pytest.mark.respx(base_url=base_url)
     def test_method_content(self, client: Mixedbread, respx_mock: MockRouter) -> None:
-        respx_mock.get("/v1/files/file_id/content").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
+        respx_mock.get("/v1/files/182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e/content").mock(
+            return_value=httpx.Response(200, json={"foo": "bar"})
+        )
         file = client.files.content(
-            "file_id",
+            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert file.is_closed
         assert file.json() == {"foo": "bar"}
@@ -226,10 +228,12 @@ class TestFiles:
     @parametrize
     @pytest.mark.respx(base_url=base_url)
     def test_raw_response_content(self, client: Mixedbread, respx_mock: MockRouter) -> None:
-        respx_mock.get("/v1/files/file_id/content").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
+        respx_mock.get("/v1/files/182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e/content").mock(
+            return_value=httpx.Response(200, json={"foo": "bar"})
+        )
 
         file = client.files.with_raw_response.content(
-            "file_id",
+            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
 
         assert file.is_closed is True
@@ -240,9 +244,11 @@ class TestFiles:
     @parametrize
     @pytest.mark.respx(base_url=base_url)
     def test_streaming_response_content(self, client: Mixedbread, respx_mock: MockRouter) -> None:
-        respx_mock.get("/v1/files/file_id/content").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
+        respx_mock.get("/v1/files/182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e/content").mock(
+            return_value=httpx.Response(200, json={"foo": "bar"})
+        )
         with client.files.with_streaming_response.content(
-            "file_id",
+            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         ) as file:
             assert not file.is_closed
             assert file.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -299,14 +305,14 @@ class TestAsyncFiles:
     @parametrize
     async def test_method_retrieve(self, async_client: AsyncMixedbread) -> None:
         file = await async_client.files.retrieve(
-            "file_id",
+            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(FileObject, file, path=["response"])
 
     @parametrize
     async def test_raw_response_retrieve(self, async_client: AsyncMixedbread) -> None:
         response = await async_client.files.with_raw_response.retrieve(
-            "file_id",
+            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
 
         assert response.is_closed is True
@@ -317,7 +323,7 @@ class TestAsyncFiles:
     @parametrize
     async def test_streaming_response_retrieve(self, async_client: AsyncMixedbread) -> None:
         async with async_client.files.with_streaming_response.retrieve(
-            "file_id",
+            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -337,7 +343,7 @@ class TestAsyncFiles:
     @parametrize
     async def test_method_update(self, async_client: AsyncMixedbread) -> None:
         file = await async_client.files.update(
-            file_id="file_id",
+            file_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             file=b"raw file contents",
         )
         assert_matches_type(FileObject, file, path=["response"])
@@ -345,7 +351,7 @@ class TestAsyncFiles:
     @parametrize
     async def test_raw_response_update(self, async_client: AsyncMixedbread) -> None:
         response = await async_client.files.with_raw_response.update(
-            file_id="file_id",
+            file_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             file=b"raw file contents",
         )
 
@@ -357,7 +363,7 @@ class TestAsyncFiles:
     @parametrize
     async def test_streaming_response_update(self, async_client: AsyncMixedbread) -> None:
         async with async_client.files.with_streaming_response.update(
-            file_id="file_id",
+            file_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             file=b"raw file contents",
         ) as response:
             assert not response.is_closed
@@ -384,8 +390,8 @@ class TestAsyncFiles:
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncMixedbread) -> None:
         file = await async_client.files.list(
-            after=0,
             limit=0,
+            offset=0,
         )
         assert_matches_type(FileListResponse, file, path=["response"])
 
@@ -412,14 +418,14 @@ class TestAsyncFiles:
     @parametrize
     async def test_method_delete(self, async_client: AsyncMixedbread) -> None:
         file = await async_client.files.delete(
-            "file_id",
+            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(FileDeleted, file, path=["response"])
 
     @parametrize
     async def test_raw_response_delete(self, async_client: AsyncMixedbread) -> None:
         response = await async_client.files.with_raw_response.delete(
-            "file_id",
+            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
 
         assert response.is_closed is True
@@ -430,7 +436,7 @@ class TestAsyncFiles:
     @parametrize
     async def test_streaming_response_delete(self, async_client: AsyncMixedbread) -> None:
         async with async_client.files.with_streaming_response.delete(
-            "file_id",
+            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -450,9 +456,11 @@ class TestAsyncFiles:
     @parametrize
     @pytest.mark.respx(base_url=base_url)
     async def test_method_content(self, async_client: AsyncMixedbread, respx_mock: MockRouter) -> None:
-        respx_mock.get("/v1/files/file_id/content").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
+        respx_mock.get("/v1/files/182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e/content").mock(
+            return_value=httpx.Response(200, json={"foo": "bar"})
+        )
         file = await async_client.files.content(
-            "file_id",
+            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert file.is_closed
         assert await file.json() == {"foo": "bar"}
@@ -462,10 +470,12 @@ class TestAsyncFiles:
     @parametrize
     @pytest.mark.respx(base_url=base_url)
     async def test_raw_response_content(self, async_client: AsyncMixedbread, respx_mock: MockRouter) -> None:
-        respx_mock.get("/v1/files/file_id/content").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
+        respx_mock.get("/v1/files/182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e/content").mock(
+            return_value=httpx.Response(200, json={"foo": "bar"})
+        )
 
         file = await async_client.files.with_raw_response.content(
-            "file_id",
+            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
 
         assert file.is_closed is True
@@ -476,9 +486,11 @@ class TestAsyncFiles:
     @parametrize
     @pytest.mark.respx(base_url=base_url)
     async def test_streaming_response_content(self, async_client: AsyncMixedbread, respx_mock: MockRouter) -> None:
-        respx_mock.get("/v1/files/file_id/content").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
+        respx_mock.get("/v1/files/182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e/content").mock(
+            return_value=httpx.Response(200, json={"foo": "bar"})
+        )
         async with async_client.files.with_streaming_response.content(
-            "file_id",
+            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         ) as file:
             assert not file.is_closed
             assert file.http_request.headers.get("X-Stainless-Lang") == "python"
