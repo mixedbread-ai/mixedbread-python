@@ -22,6 +22,7 @@ class Pagination(BaseModel):
 
 class FileListResponse(BaseModel):
     data: List[VectorStoreFile]
+    """The list of vector store files"""
 
     pagination: Pagination
     """Pagination model that includes total count of items."""
