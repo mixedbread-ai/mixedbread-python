@@ -11,9 +11,9 @@ from mixedbread import Mixedbread, AsyncMixedbread
 from tests.utils import assert_matches_type
 from mixedbread.types import (
     VectorStore,
-    SearchResponse,
     VectorStoreListResponse,
     VectorStoreDeleteResponse,
+    VectorStoreSearchResponse,
 )
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
@@ -223,15 +223,15 @@ class TestVectorStores:
             )
 
     @parametrize
-    def test_method_question_answering(self, client: Mixedbread) -> None:
-        vector_store = client.vector_stores.question_answering(
+    def test_method_qa(self, client: Mixedbread) -> None:
+        vector_store = client.vector_stores.qa(
             vector_store_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
         )
         assert_matches_type(object, vector_store, path=["response"])
 
     @parametrize
-    def test_method_question_answering_with_all_params(self, client: Mixedbread) -> None:
-        vector_store = client.vector_stores.question_answering(
+    def test_method_qa_with_all_params(self, client: Mixedbread) -> None:
+        vector_store = client.vector_stores.qa(
             vector_store_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
             filters={
                 "all": [
@@ -260,15 +260,7 @@ class TestVectorStores:
                 "limit": 0,
                 "offset": 0,
             },
-            qa_options={
-                "cite": True,
-                "prompts": {
-                    "citation_prompt": "x",
-                    "system_prompt": "x",
-                    "user_prompt": "x",
-                },
-                "return_sources": True,
-            },
+            qa_options={"cite": True},
             query="x",
             search_options={
                 "return_chunks": True,
@@ -281,8 +273,8 @@ class TestVectorStores:
         assert_matches_type(object, vector_store, path=["response"])
 
     @parametrize
-    def test_raw_response_question_answering(self, client: Mixedbread) -> None:
-        response = client.vector_stores.with_raw_response.question_answering(
+    def test_raw_response_qa(self, client: Mixedbread) -> None:
+        response = client.vector_stores.with_raw_response.qa(
             vector_store_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
         )
 
@@ -292,8 +284,8 @@ class TestVectorStores:
         assert_matches_type(object, vector_store, path=["response"])
 
     @parametrize
-    def test_streaming_response_question_answering(self, client: Mixedbread) -> None:
-        with client.vector_stores.with_streaming_response.question_answering(
+    def test_streaming_response_qa(self, client: Mixedbread) -> None:
+        with client.vector_stores.with_streaming_response.qa(
             vector_store_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
         ) as response:
             assert not response.is_closed
@@ -310,7 +302,7 @@ class TestVectorStores:
             query="how to configure SSL",
             vector_store_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
         )
-        assert_matches_type(SearchResponse, vector_store, path=["response"])
+        assert_matches_type(VectorStoreSearchResponse, vector_store, path=["response"])
 
     @parametrize
     def test_method_search_with_all_params(self, client: Mixedbread) -> None:
@@ -351,7 +343,7 @@ class TestVectorStores:
                 "score_threshold": 0,
             },
         )
-        assert_matches_type(SearchResponse, vector_store, path=["response"])
+        assert_matches_type(VectorStoreSearchResponse, vector_store, path=["response"])
 
     @parametrize
     def test_raw_response_search(self, client: Mixedbread) -> None:
@@ -363,7 +355,7 @@ class TestVectorStores:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         vector_store = response.parse()
-        assert_matches_type(SearchResponse, vector_store, path=["response"])
+        assert_matches_type(VectorStoreSearchResponse, vector_store, path=["response"])
 
     @parametrize
     def test_streaming_response_search(self, client: Mixedbread) -> None:
@@ -375,7 +367,7 @@ class TestVectorStores:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             vector_store = response.parse()
-            assert_matches_type(SearchResponse, vector_store, path=["response"])
+            assert_matches_type(VectorStoreSearchResponse, vector_store, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -584,15 +576,15 @@ class TestAsyncVectorStores:
             )
 
     @parametrize
-    async def test_method_question_answering(self, async_client: AsyncMixedbread) -> None:
-        vector_store = await async_client.vector_stores.question_answering(
+    async def test_method_qa(self, async_client: AsyncMixedbread) -> None:
+        vector_store = await async_client.vector_stores.qa(
             vector_store_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
         )
         assert_matches_type(object, vector_store, path=["response"])
 
     @parametrize
-    async def test_method_question_answering_with_all_params(self, async_client: AsyncMixedbread) -> None:
-        vector_store = await async_client.vector_stores.question_answering(
+    async def test_method_qa_with_all_params(self, async_client: AsyncMixedbread) -> None:
+        vector_store = await async_client.vector_stores.qa(
             vector_store_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
             filters={
                 "all": [
@@ -621,15 +613,7 @@ class TestAsyncVectorStores:
                 "limit": 0,
                 "offset": 0,
             },
-            qa_options={
-                "cite": True,
-                "prompts": {
-                    "citation_prompt": "x",
-                    "system_prompt": "x",
-                    "user_prompt": "x",
-                },
-                "return_sources": True,
-            },
+            qa_options={"cite": True},
             query="x",
             search_options={
                 "return_chunks": True,
@@ -642,8 +626,8 @@ class TestAsyncVectorStores:
         assert_matches_type(object, vector_store, path=["response"])
 
     @parametrize
-    async def test_raw_response_question_answering(self, async_client: AsyncMixedbread) -> None:
-        response = await async_client.vector_stores.with_raw_response.question_answering(
+    async def test_raw_response_qa(self, async_client: AsyncMixedbread) -> None:
+        response = await async_client.vector_stores.with_raw_response.qa(
             vector_store_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
         )
 
@@ -653,8 +637,8 @@ class TestAsyncVectorStores:
         assert_matches_type(object, vector_store, path=["response"])
 
     @parametrize
-    async def test_streaming_response_question_answering(self, async_client: AsyncMixedbread) -> None:
-        async with async_client.vector_stores.with_streaming_response.question_answering(
+    async def test_streaming_response_qa(self, async_client: AsyncMixedbread) -> None:
+        async with async_client.vector_stores.with_streaming_response.qa(
             vector_store_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
         ) as response:
             assert not response.is_closed
@@ -671,7 +655,7 @@ class TestAsyncVectorStores:
             query="how to configure SSL",
             vector_store_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
         )
-        assert_matches_type(SearchResponse, vector_store, path=["response"])
+        assert_matches_type(VectorStoreSearchResponse, vector_store, path=["response"])
 
     @parametrize
     async def test_method_search_with_all_params(self, async_client: AsyncMixedbread) -> None:
@@ -712,7 +696,7 @@ class TestAsyncVectorStores:
                 "score_threshold": 0,
             },
         )
-        assert_matches_type(SearchResponse, vector_store, path=["response"])
+        assert_matches_type(VectorStoreSearchResponse, vector_store, path=["response"])
 
     @parametrize
     async def test_raw_response_search(self, async_client: AsyncMixedbread) -> None:
@@ -724,7 +708,7 @@ class TestAsyncVectorStores:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         vector_store = await response.parse()
-        assert_matches_type(SearchResponse, vector_store, path=["response"])
+        assert_matches_type(VectorStoreSearchResponse, vector_store, path=["response"])
 
     @parametrize
     async def test_streaming_response_search(self, async_client: AsyncMixedbread) -> None:
@@ -736,6 +720,6 @@ class TestAsyncVectorStores:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             vector_store = await response.parse()
-            assert_matches_type(SearchResponse, vector_store, path=["response"])
+            assert_matches_type(VectorStoreSearchResponse, vector_store, path=["response"])
 
         assert cast(Any, response.is_closed) is True

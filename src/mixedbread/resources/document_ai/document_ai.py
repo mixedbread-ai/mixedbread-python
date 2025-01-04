@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
-from .parse import (
+from ..._compat import cached_property
+from ..._resource import SyncAPIResource, AsyncAPIResource
+from .parse.parse import (
     ParseResource,
     AsyncParseResource,
     ParseResourceWithRawResponse,
@@ -10,8 +12,6 @@ from .parse import (
     ParseResourceWithStreamingResponse,
     AsyncParseResourceWithStreamingResponse,
 )
-from ..._compat import cached_property
-from ..._resource import SyncAPIResource, AsyncAPIResource
 
 __all__ = ["DocumentAIResource", "AsyncDocumentAIResource"]
 
