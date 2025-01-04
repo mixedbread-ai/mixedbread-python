@@ -37,7 +37,7 @@ class FilesResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return the
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/juliuslipp/mixedbread-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/mixedbread-ai/mixedbread-python#accessing-raw-response-data-eg-headers
         """
         return FilesResourceWithRawResponse(self)
 
@@ -46,7 +46,7 @@ class FilesResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/juliuslipp/mixedbread-python#with_streaming_response
+        For more information, see https://www.github.com/mixedbread-ai/mixedbread-python#with_streaming_response
         """
         return FilesResourceWithStreamingResponse(self)
 
@@ -73,6 +73,10 @@ class FilesResource(SyncAPIResource):
 
         Args:
           vector_store_id: The ID of the vector store
+
+          file_id: ID of the file to add
+
+          metadata: Optional metadata for the file
 
           extra_headers: Send extra headers
 
@@ -147,8 +151,8 @@ class FilesResource(SyncAPIResource):
         self,
         vector_store_id: str,
         *,
-        after: int | NotGiven = NOT_GIVEN,
         limit: int | NotGiven = NOT_GIVEN,
+        offset: int | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -166,6 +170,10 @@ class FilesResource(SyncAPIResource):
 
         Args:
           vector_store_id: The ID of the vector store
+
+          limit: Maximum number of items to return per page
+
+          offset: Cursor from which to start returning items
 
           extra_headers: Send extra headers
 
@@ -186,8 +194,8 @@ class FilesResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
-                        "after": after,
                         "limit": limit,
+                        "offset": offset,
                     },
                     file_list_params.FileListParams,
                 ),
@@ -216,6 +224,10 @@ class FilesResource(SyncAPIResource):
         Returns: VectorStoreFileDeleted: The deleted file
 
         Args:
+          vector_store_id: The ID of the vector store
+
+          file_id: The ID of the file to delete
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -330,7 +342,7 @@ class AsyncFilesResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return the
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/juliuslipp/mixedbread-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/mixedbread-ai/mixedbread-python#accessing-raw-response-data-eg-headers
         """
         return AsyncFilesResourceWithRawResponse(self)
 
@@ -339,7 +351,7 @@ class AsyncFilesResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/juliuslipp/mixedbread-python#with_streaming_response
+        For more information, see https://www.github.com/mixedbread-ai/mixedbread-python#with_streaming_response
         """
         return AsyncFilesResourceWithStreamingResponse(self)
 
@@ -366,6 +378,10 @@ class AsyncFilesResource(AsyncAPIResource):
 
         Args:
           vector_store_id: The ID of the vector store
+
+          file_id: ID of the file to add
+
+          metadata: Optional metadata for the file
 
           extra_headers: Send extra headers
 
@@ -440,8 +456,8 @@ class AsyncFilesResource(AsyncAPIResource):
         self,
         vector_store_id: str,
         *,
-        after: int | NotGiven = NOT_GIVEN,
         limit: int | NotGiven = NOT_GIVEN,
+        offset: int | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -459,6 +475,10 @@ class AsyncFilesResource(AsyncAPIResource):
 
         Args:
           vector_store_id: The ID of the vector store
+
+          limit: Maximum number of items to return per page
+
+          offset: Cursor from which to start returning items
 
           extra_headers: Send extra headers
 
@@ -479,8 +499,8 @@ class AsyncFilesResource(AsyncAPIResource):
                 timeout=timeout,
                 query=await async_maybe_transform(
                     {
-                        "after": after,
                         "limit": limit,
+                        "offset": offset,
                     },
                     file_list_params.FileListParams,
                 ),
@@ -509,6 +529,10 @@ class AsyncFilesResource(AsyncAPIResource):
         Returns: VectorStoreFileDeleted: The deleted file
 
         Args:
+          vector_store_id: The ID of the vector store
+
+          file_id: The ID of the file to delete
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request

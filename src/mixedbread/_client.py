@@ -36,7 +36,7 @@ from ._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from .resources import jobs, files, embeddings, rerankings
+from .resources import files, embeddings, rerankings
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import APIStatusError, MixedbreadError
 from ._base_client import (
@@ -45,10 +45,11 @@ from ._base_client import (
     AsyncAPIClient,
     make_request_options,
 )
+from .resources.chat import chat
+from .types.info_response import InfoResponse
 from .types.embed_response import EmbedResponse
 from .resources.document_ai import document_ai
 from .types.rerank_response import RerankResponse
-from .types.status_response import StatusResponse
 from .resources.vector_stores import vector_stores
 
 __all__ = [
@@ -74,8 +75,8 @@ class Mixedbread(SyncAPIClient):
     embeddings: embeddings.EmbeddingsResource
     rerankings: rerankings.RerankingsResource
     files: files.FilesResource
-    jobs: jobs.JobsResource
     vector_stores: vector_stores.VectorStoresResource
+    chat: chat.ChatResource
     with_raw_response: MixedbreadWithRawResponse
     with_streaming_response: MixedbreadWithStreamedResponse
 
@@ -161,8 +162,8 @@ class Mixedbread(SyncAPIClient):
         self.embeddings = embeddings.EmbeddingsResource(self)
         self.rerankings = rerankings.RerankingsResource(self)
         self.files = files.FilesResource(self)
-        self.jobs = jobs.JobsResource(self)
         self.vector_stores = vector_stores.VectorStoresResource(self)
+        self.chat = chat.ChatResource(self)
         self.with_raw_response = MixedbreadWithRawResponse(self)
         self.with_streaming_response = MixedbreadWithStreamedResponse(self)
 
@@ -307,6 +308,29 @@ class Mixedbread(SyncAPIClient):
             cast_to=EmbedResponse,
         )
 
+    def info(
+        self,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> InfoResponse:
+        """
+        Returns service information, including name and version.
+
+        Returns: InfoResponse: A response containing the service name and version.
+        """
+        return self.get(
+            "/",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=InfoResponse,
+        )
+
     def rerank(
         self,
         *,
@@ -368,32 +392,6 @@ class Mixedbread(SyncAPIClient):
             cast_to=RerankResponse,
         )
 
-    def status(
-        self,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> StatusResponse:
-        """
-        Perform a base search to check the service status and configuration.
-
-        Args: state: The application state.
-
-        Returns: dict: A dictionary containing the service status and public
-        configuration details.
-        """
-        return self.get(
-            "/",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=StatusResponse,
-        )
-
     @override
     def _make_status_error(
         self,
@@ -433,8 +431,8 @@ class AsyncMixedbread(AsyncAPIClient):
     embeddings: embeddings.AsyncEmbeddingsResource
     rerankings: rerankings.AsyncRerankingsResource
     files: files.AsyncFilesResource
-    jobs: jobs.AsyncJobsResource
     vector_stores: vector_stores.AsyncVectorStoresResource
+    chat: chat.AsyncChatResource
     with_raw_response: AsyncMixedbreadWithRawResponse
     with_streaming_response: AsyncMixedbreadWithStreamedResponse
 
@@ -520,8 +518,8 @@ class AsyncMixedbread(AsyncAPIClient):
         self.embeddings = embeddings.AsyncEmbeddingsResource(self)
         self.rerankings = rerankings.AsyncRerankingsResource(self)
         self.files = files.AsyncFilesResource(self)
-        self.jobs = jobs.AsyncJobsResource(self)
         self.vector_stores = vector_stores.AsyncVectorStoresResource(self)
+        self.chat = chat.AsyncChatResource(self)
         self.with_raw_response = AsyncMixedbreadWithRawResponse(self)
         self.with_streaming_response = AsyncMixedbreadWithStreamedResponse(self)
 
@@ -666,6 +664,29 @@ class AsyncMixedbread(AsyncAPIClient):
             cast_to=EmbedResponse,
         )
 
+    async def info(
+        self,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> InfoResponse:
+        """
+        Returns service information, including name and version.
+
+        Returns: InfoResponse: A response containing the service name and version.
+        """
+        return await self.get(
+            "/",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=InfoResponse,
+        )
+
     async def rerank(
         self,
         *,
@@ -727,32 +748,6 @@ class AsyncMixedbread(AsyncAPIClient):
             cast_to=RerankResponse,
         )
 
-    async def status(
-        self,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> StatusResponse:
-        """
-        Perform a base search to check the service status and configuration.
-
-        Args: state: The application state.
-
-        Returns: dict: A dictionary containing the service status and public
-        configuration details.
-        """
-        return await self.get(
-            "/",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=StatusResponse,
-        )
-
     @override
     def _make_status_error(
         self,
@@ -793,17 +788,17 @@ class MixedbreadWithRawResponse:
         self.embeddings = embeddings.EmbeddingsResourceWithRawResponse(client.embeddings)
         self.rerankings = rerankings.RerankingsResourceWithRawResponse(client.rerankings)
         self.files = files.FilesResourceWithRawResponse(client.files)
-        self.jobs = jobs.JobsResourceWithRawResponse(client.jobs)
         self.vector_stores = vector_stores.VectorStoresResourceWithRawResponse(client.vector_stores)
+        self.chat = chat.ChatResourceWithRawResponse(client.chat)
 
         self.embed = to_raw_response_wrapper(
             client.embed,
         )
+        self.info = to_raw_response_wrapper(
+            client.info,
+        )
         self.rerank = to_raw_response_wrapper(
             client.rerank,
-        )
-        self.status = to_raw_response_wrapper(
-            client.status,
         )
 
 
@@ -813,17 +808,17 @@ class AsyncMixedbreadWithRawResponse:
         self.embeddings = embeddings.AsyncEmbeddingsResourceWithRawResponse(client.embeddings)
         self.rerankings = rerankings.AsyncRerankingsResourceWithRawResponse(client.rerankings)
         self.files = files.AsyncFilesResourceWithRawResponse(client.files)
-        self.jobs = jobs.AsyncJobsResourceWithRawResponse(client.jobs)
         self.vector_stores = vector_stores.AsyncVectorStoresResourceWithRawResponse(client.vector_stores)
+        self.chat = chat.AsyncChatResourceWithRawResponse(client.chat)
 
         self.embed = async_to_raw_response_wrapper(
             client.embed,
         )
+        self.info = async_to_raw_response_wrapper(
+            client.info,
+        )
         self.rerank = async_to_raw_response_wrapper(
             client.rerank,
-        )
-        self.status = async_to_raw_response_wrapper(
-            client.status,
         )
 
 
@@ -833,17 +828,17 @@ class MixedbreadWithStreamedResponse:
         self.embeddings = embeddings.EmbeddingsResourceWithStreamingResponse(client.embeddings)
         self.rerankings = rerankings.RerankingsResourceWithStreamingResponse(client.rerankings)
         self.files = files.FilesResourceWithStreamingResponse(client.files)
-        self.jobs = jobs.JobsResourceWithStreamingResponse(client.jobs)
         self.vector_stores = vector_stores.VectorStoresResourceWithStreamingResponse(client.vector_stores)
+        self.chat = chat.ChatResourceWithStreamingResponse(client.chat)
 
         self.embed = to_streamed_response_wrapper(
             client.embed,
         )
+        self.info = to_streamed_response_wrapper(
+            client.info,
+        )
         self.rerank = to_streamed_response_wrapper(
             client.rerank,
-        )
-        self.status = to_streamed_response_wrapper(
-            client.status,
         )
 
 
@@ -853,17 +848,17 @@ class AsyncMixedbreadWithStreamedResponse:
         self.embeddings = embeddings.AsyncEmbeddingsResourceWithStreamingResponse(client.embeddings)
         self.rerankings = rerankings.AsyncRerankingsResourceWithStreamingResponse(client.rerankings)
         self.files = files.AsyncFilesResourceWithStreamingResponse(client.files)
-        self.jobs = jobs.AsyncJobsResourceWithStreamingResponse(client.jobs)
         self.vector_stores = vector_stores.AsyncVectorStoresResourceWithStreamingResponse(client.vector_stores)
+        self.chat = chat.AsyncChatResourceWithStreamingResponse(client.chat)
 
         self.embed = async_to_streamed_response_wrapper(
             client.embed,
         )
+        self.info = async_to_streamed_response_wrapper(
+            client.info,
+        )
         self.rerank = async_to_streamed_response_wrapper(
             client.rerank,
-        )
-        self.status = async_to_streamed_response_wrapper(
-            client.status,
         )
 
 

@@ -8,6 +8,14 @@ from .parse import (
     ParseResourceWithStreamingResponse,
     AsyncParseResourceWithStreamingResponse,
 )
+from .extract import (
+    ExtractResource,
+    AsyncExtractResource,
+    ExtractResourceWithRawResponse,
+    AsyncExtractResourceWithRawResponse,
+    ExtractResourceWithStreamingResponse,
+    AsyncExtractResourceWithStreamingResponse,
+)
 from .document_ai import (
     DocumentAIResource,
     AsyncDocumentAIResource,
@@ -24,6 +32,12 @@ __all__ = [
     "AsyncParseResourceWithRawResponse",
     "ParseResourceWithStreamingResponse",
     "AsyncParseResourceWithStreamingResponse",
+    "ExtractResource",
+    "AsyncExtractResource",
+    "ExtractResourceWithRawResponse",
+    "AsyncExtractResourceWithRawResponse",
+    "ExtractResourceWithStreamingResponse",
+    "AsyncExtractResourceWithStreamingResponse",
     "DocumentAIResource",
     "AsyncDocumentAIResource",
     "DocumentAIResourceWithRawResponse",

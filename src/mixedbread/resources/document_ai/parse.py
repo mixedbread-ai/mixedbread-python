@@ -37,7 +37,7 @@ class ParseResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return the
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/juliuslipp/mixedbread-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/mixedbread-ai/mixedbread-python#accessing-raw-response-data-eg-headers
         """
         return ParseResourceWithRawResponse(self)
 
@@ -46,7 +46,7 @@ class ParseResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/juliuslipp/mixedbread-python#with_streaming_response
+        For more information, see https://www.github.com/mixedbread-ai/mixedbread-python#with_streaming_response
         """
         return ParseResourceWithStreamingResponse(self)
 
@@ -55,7 +55,24 @@ class ParseResource(SyncAPIResource):
         *,
         file_id: str,
         chunking_strategy: Literal["page"] | NotGiven = NOT_GIVEN,
-        element_types: Optional[List[str]] | NotGiven = NOT_GIVEN,
+        element_types: Optional[
+            List[
+                Literal[
+                    "caption",
+                    "footnote",
+                    "formula",
+                    "list-item",
+                    "page-footer",
+                    "page-header",
+                    "picture",
+                    "section-header",
+                    "table",
+                    "text",
+                    "title",
+                ]
+            ]
+        ]
+        | NotGiven = NOT_GIVEN,
         return_format: Literal["html", "markdown", "plain"] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -221,7 +238,7 @@ class AsyncParseResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return the
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/juliuslipp/mixedbread-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/mixedbread-ai/mixedbread-python#accessing-raw-response-data-eg-headers
         """
         return AsyncParseResourceWithRawResponse(self)
 
@@ -230,7 +247,7 @@ class AsyncParseResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/juliuslipp/mixedbread-python#with_streaming_response
+        For more information, see https://www.github.com/mixedbread-ai/mixedbread-python#with_streaming_response
         """
         return AsyncParseResourceWithStreamingResponse(self)
 
@@ -239,7 +256,24 @@ class AsyncParseResource(AsyncAPIResource):
         *,
         file_id: str,
         chunking_strategy: Literal["page"] | NotGiven = NOT_GIVEN,
-        element_types: Optional[List[str]] | NotGiven = NOT_GIVEN,
+        element_types: Optional[
+            List[
+                Literal[
+                    "caption",
+                    "footnote",
+                    "formula",
+                    "list-item",
+                    "page-footer",
+                    "page-header",
+                    "picture",
+                    "section-header",
+                    "table",
+                    "text",
+                    "title",
+                ]
+            ]
+        ]
+        | NotGiven = NOT_GIVEN,
         return_format: Literal["html", "markdown", "plain"] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
