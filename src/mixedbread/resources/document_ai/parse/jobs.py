@@ -8,49 +8,49 @@ from typing_extensions import Literal
 
 import httpx
 
-from ..._types import NOT_GIVEN, Body, Query, Headers, NotGiven
-from ..._utils import (
+from ...._types import NOT_GIVEN, Body, Query, Headers, NotGiven
+from ...._utils import (
     maybe_transform,
     async_maybe_transform,
 )
-from ..._compat import cached_property
-from ..._resource import SyncAPIResource, AsyncAPIResource
-from ..._response import (
+from ...._compat import cached_property
+from ...._resource import SyncAPIResource, AsyncAPIResource
+from ...._response import (
     to_raw_response_wrapper,
     to_streamed_response_wrapper,
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ..._base_client import make_request_options
-from ...lib import polling
-from ...types.document_ai import parse_create_job_params
-from ...types.document_ai.parse_create_job_response import ParseCreateJobResponse
-from ...types.document_ai.parse_retrieve_job_response import ParseRetrieveJobResponse, FailedJob, SuccessfulParsingJob
+from ...._base_client import make_request_options
+from ....types.document_ai.parse import job_create_params
+from ....types.document_ai.parse.job_create_response import JobCreateResponse
+from ....types.document_ai.parse.job_retrieve_response import JobRetrieveResponse
+from ....lib import polling
 
-__all__ = ["ParseResource", "AsyncParseResource"]
+__all__ = ["JobsResource", "AsyncJobsResource"]
 
 
-class ParseResource(SyncAPIResource):
+class JobsResource(SyncAPIResource):
     @cached_property
-    def with_raw_response(self) -> ParseResourceWithRawResponse:
+    def with_raw_response(self) -> JobsResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return the
         the raw response object instead of the parsed content.
 
         For more information, see https://www.github.com/mixedbread-ai/mixedbread-python#accessing-raw-response-data-eg-headers
         """
-        return ParseResourceWithRawResponse(self)
+        return JobsResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> ParseResourceWithStreamingResponse:
+    def with_streaming_response(self) -> JobsResourceWithStreamingResponse:
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
         For more information, see https://www.github.com/mixedbread-ai/mixedbread-python#with_streaming_response
         """
-        return ParseResourceWithStreamingResponse(self)
+        return JobsResourceWithStreamingResponse(self)
 
-    def create_job(
+    def create(
         self,
         *,
         file_id: str,
@@ -80,7 +80,7 @@ class ParseResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ParseCreateJobResponse:
+    ) -> JobCreateResponse:
         """
         Start a parse job for the provided file.
 
@@ -106,7 +106,7 @@ class ParseResource(SyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return cast(
-            ParseCreateJobResponse,
+            JobCreateResponse,
             self._post(
                 "/v1/document-ai/parse",
                 body=maybe_transform(
@@ -116,18 +116,16 @@ class ParseResource(SyncAPIResource):
                         "element_types": element_types,
                         "return_format": return_format,
                     },
-                    parse_create_job_params.ParseCreateJobParams,
+                    job_create_params.JobCreateParams,
                 ),
                 options=make_request_options(
                     extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
                 ),
-                cast_to=cast(
-                    Any, ParseCreateJobResponse
-                ),  # Union types cannot be passed in as arguments in the type system
+                cast_to=cast(Any, JobCreateResponse),  # Union types cannot be passed in as arguments in the type system
             ),
         )
 
-    def retrieve_job(
+    def retrieve(
         self,
         job_id: str,
         *,
@@ -137,7 +135,7 @@ class ParseResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ParseRetrieveJobResponse:
+    ) -> JobRetrieveResponse:
         """
         Get detailed information about a specific parse job.
 
@@ -159,99 +157,40 @@ class ParseResource(SyncAPIResource):
         if not job_id:
             raise ValueError(f"Expected a non-empty value for `job_id` but received {job_id!r}")
         return cast(
-            ParseRetrieveJobResponse,
+            JobRetrieveResponse,
             self._get(
                 f"/v1/document-ai/parse/{job_id}",
                 options=make_request_options(
                     extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
                 ),
                 cast_to=cast(
-                    Any, ParseRetrieveJobResponse
+                    Any, JobRetrieveResponse
                 ),  # Union types cannot be passed in as arguments in the type system
             ),
         )
 
-    def poll(
-            self,
-            job_id: str,
-            *,
-            poll_interval_ms: int | NotGiven = NOT_GIVEN,
-            poll_timeout_ms: float | NotGiven = NOT_GIVEN,
-    ) -> ParseRetrieveJobResponse:
-        """
-        Poll for a parse job's status until it reaches a terminal state.
-        Args:
-            job_id: The ID of the parse job to poll
-            poll_interval_ms: The interval between polls in milliseconds
-            poll_timeout_ms: The maximum time to poll for in milliseconds
-        Returns:
-            The parse job object once it reaches a terminal state
-        """
-        polling_interval_ms = poll_interval_ms or 500
-        polling_timeout_ms = poll_timeout_ms or None
-        return polling.poll(
-            fn=functools.partial(self.retrieve_job, job_id),
-            condition=lambda res: res.status == "successful" or res.status == "failed",
-            interval_seconds=polling_interval_ms / 1000,
-            timeout_seconds=polling_timeout_ms / 1000 if polling_timeout_ms else None,
-        )
 
-    def create_and_poll(
-            self,
-            *,
-            file_id: str,
-            chunking_strategy: Literal["page"] | NotGiven = NOT_GIVEN,
-            element_types: Optional[List[str]] | NotGiven = NOT_GIVEN,
-            return_format: Literal["html", "markdown", "plain"] | NotGiven = NOT_GIVEN,
-            poll_interval_ms: int | NotGiven = NOT_GIVEN,
-            poll_timeout_ms: float | NotGiven = NOT_GIVEN,
-    ) -> Union[FailedJob, SuccessfulParsingJob]:
-        """
-        Create a parse job and wait for it to complete.
-        Args:
-            file_id: The ID of the file to parse
-            chunking_strategy: The strategy to use for chunking the content
-            element_types: The elements to extract from the document
-            return_format: The format of the returned content
-            poll_interval_ms: The interval between polls in milliseconds
-            poll_timeout_ms: The maximum time to poll for in milliseconds
-        Returns:
-            The parse job object once it reaches a terminal state
-        """
-        response = self.create_job(
-            file_id=file_id,
-            chunking_strategy=chunking_strategy,
-            element_types=element_types,
-            return_format=return_format,
-        )
-        return self.poll(
-            response.id,
-            poll_interval_ms=poll_interval_ms,
-            poll_timeout_ms=poll_timeout_ms,
-        )
-
-
-class AsyncParseResource(AsyncAPIResource):
+class AsyncJobsResource(AsyncAPIResource):
     @cached_property
-    def with_raw_response(self) -> AsyncParseResourceWithRawResponse:
+    def with_raw_response(self) -> AsyncJobsResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return the
         the raw response object instead of the parsed content.
 
         For more information, see https://www.github.com/mixedbread-ai/mixedbread-python#accessing-raw-response-data-eg-headers
         """
-        return AsyncParseResourceWithRawResponse(self)
+        return AsyncJobsResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> AsyncParseResourceWithStreamingResponse:
+    def with_streaming_response(self) -> AsyncJobsResourceWithStreamingResponse:
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
         For more information, see https://www.github.com/mixedbread-ai/mixedbread-python#with_streaming_response
         """
-        return AsyncParseResourceWithStreamingResponse(self)
+        return AsyncJobsResourceWithStreamingResponse(self)
 
-    async def create_job(
+    async def create(
         self,
         *,
         file_id: str,
@@ -281,7 +220,7 @@ class AsyncParseResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ParseCreateJobResponse:
+    ) -> JobCreateResponse:
         """
         Start a parse job for the provided file.
 
@@ -307,7 +246,7 @@ class AsyncParseResource(AsyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return cast(
-            ParseCreateJobResponse,
+            JobCreateResponse,
             await self._post(
                 "/v1/document-ai/parse",
                 body=await async_maybe_transform(
@@ -317,18 +256,16 @@ class AsyncParseResource(AsyncAPIResource):
                         "element_types": element_types,
                         "return_format": return_format,
                     },
-                    parse_create_job_params.ParseCreateJobParams,
+                    job_create_params.JobCreateParams,
                 ),
                 options=make_request_options(
                     extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
                 ),
-                cast_to=cast(
-                    Any, ParseCreateJobResponse
-                ),  # Union types cannot be passed in as arguments in the type system
+                cast_to=cast(Any, JobCreateResponse),  # Union types cannot be passed in as arguments in the type system
             ),
         )
 
-    async def retrieve_job(
+    async def retrieve(
         self,
         job_id: str,
         *,
@@ -338,7 +275,7 @@ class AsyncParseResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ParseRetrieveJobResponse:
+    ) -> JobRetrieveResponse:
         """
         Get detailed information about a specific parse job.
 
@@ -360,121 +297,62 @@ class AsyncParseResource(AsyncAPIResource):
         if not job_id:
             raise ValueError(f"Expected a non-empty value for `job_id` but received {job_id!r}")
         return cast(
-            ParseRetrieveJobResponse,
+            JobRetrieveResponse,
             await self._get(
                 f"/v1/document-ai/parse/{job_id}",
                 options=make_request_options(
                     extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
                 ),
                 cast_to=cast(
-                    Any, ParseRetrieveJobResponse
+                    Any, JobRetrieveResponse
                 ),  # Union types cannot be passed in as arguments in the type system
             ),
         )
 
-    async def poll(
-            self,
-            job_id: str,
-            *,
-            poll_interval_ms: int | NotGiven = NOT_GIVEN,
-            poll_timeout_ms: float | NotGiven = NOT_GIVEN,
-    ) -> ParseRetrieveJobResponse:
-        """
-        Poll for a parse job's status until it reaches a terminal state.
-        Args:
-            job_id: The ID of the parse job to poll
-            poll_interval_ms: The interval between polls in milliseconds
-            poll_timeout_ms: The maximum time to poll for in milliseconds
-        Returns:
-            The parse job object once it reaches a terminal state
-        """
-        polling_interval_ms = poll_interval_ms or 500
-        polling_timeout_ms = poll_timeout_ms or None
-        return await polling.poll_async(
-            fn=functools.partial(self.retrieve_job, job_id),
-            condition=lambda res: res.status == "successful" or res.status == "failed",
-            interval_seconds=polling_interval_ms / 1000,
-            timeout_seconds=polling_timeout_ms / 1000 if polling_timeout_ms else None,
-        )
 
-    async def create_and_poll(
-            self,
-            *,
-            file_id: str,
-            chunking_strategy: Literal["page"] | NotGiven = NOT_GIVEN,
-            element_types: Optional[List[str]] | NotGiven = NOT_GIVEN,
-            return_format: Literal["html", "markdown", "plain"] | NotGiven = NOT_GIVEN,
-            poll_interval_ms: int | NotGiven = NOT_GIVEN,
-            poll_timeout_ms: float | NotGiven = NOT_GIVEN,
-    ) -> Union[FailedJob, SuccessfulParsingJob]:
-        """
-        Create a parse job and wait for it to complete.
-        Args:
-            file_id: The ID of the file to parse
-            chunking_strategy: The strategy to use for chunking the content
-            element_types: The elements to extract from the document
-            return_format: The format of the returned content
-            poll_interval_ms: The interval between polls in milliseconds
-            poll_timeout_ms: The maximum time to poll for in milliseconds
-        Returns:
-            The parse job object once it reaches a terminal state
-        """
-        response = await self.create_job(
-            file_id=file_id,
-            chunking_strategy=chunking_strategy,
-            element_types=element_types,
-            return_format=return_format,
+class JobsResourceWithRawResponse:
+    def __init__(self, jobs: JobsResource) -> None:
+        self._jobs = jobs
+
+        self.create = to_raw_response_wrapper(
+            jobs.create,
         )
-        return await self.poll(
-            response.id,
-            poll_interval_ms=poll_interval_ms,
-            poll_timeout_ms=poll_timeout_ms,
+        self.retrieve = to_raw_response_wrapper(
+            jobs.retrieve,
         )
 
 
-class ParseResourceWithRawResponse:
-    def __init__(self, parse: ParseResource) -> None:
-        self._parse = parse
+class AsyncJobsResourceWithRawResponse:
+    def __init__(self, jobs: AsyncJobsResource) -> None:
+        self._jobs = jobs
 
-        self.create_job = to_raw_response_wrapper(
-            parse.create_job,
+        self.create = async_to_raw_response_wrapper(
+            jobs.create,
         )
-        self.retrieve_job = to_raw_response_wrapper(
-            parse.retrieve_job,
-        )
-
-
-class AsyncParseResourceWithRawResponse:
-    def __init__(self, parse: AsyncParseResource) -> None:
-        self._parse = parse
-
-        self.create_job = async_to_raw_response_wrapper(
-            parse.create_job,
-        )
-        self.retrieve_job = async_to_raw_response_wrapper(
-            parse.retrieve_job,
+        self.retrieve = async_to_raw_response_wrapper(
+            jobs.retrieve,
         )
 
 
-class ParseResourceWithStreamingResponse:
-    def __init__(self, parse: ParseResource) -> None:
-        self._parse = parse
+class JobsResourceWithStreamingResponse:
+    def __init__(self, jobs: JobsResource) -> None:
+        self._jobs = jobs
 
-        self.create_job = to_streamed_response_wrapper(
-            parse.create_job,
+        self.create = to_streamed_response_wrapper(
+            jobs.create,
         )
-        self.retrieve_job = to_streamed_response_wrapper(
-            parse.retrieve_job,
+        self.retrieve = to_streamed_response_wrapper(
+            jobs.retrieve,
         )
 
 
-class AsyncParseResourceWithStreamingResponse:
-    def __init__(self, parse: AsyncParseResource) -> None:
-        self._parse = parse
+class AsyncJobsResourceWithStreamingResponse:
+    def __init__(self, jobs: AsyncJobsResource) -> None:
+        self._jobs = jobs
 
-        self.create_job = async_to_streamed_response_wrapper(
-            parse.create_job,
+        self.create = async_to_streamed_response_wrapper(
+            jobs.create,
         )
-        self.retrieve_job = async_to_streamed_response_wrapper(
-            parse.retrieve_job,
+        self.retrieve = async_to_streamed_response_wrapper(
+            jobs.retrieve,
         )

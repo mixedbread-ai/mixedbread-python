@@ -15,11 +15,11 @@ from .files import (
     AsyncFilesResourceWithStreamingResponse,
 )
 from ...types import (
+    vector_store_qa_params,
     vector_store_list_params,
     vector_store_create_params,
     vector_store_search_params,
     vector_store_update_params,
-    vector_store_question_answering_params,
 )
 from ..._types import NOT_GIVEN, Body, Query, Headers, NotGiven
 from ..._utils import (
@@ -36,9 +36,9 @@ from ..._response import (
 )
 from ..._base_client import make_request_options
 from ...types.vector_store import VectorStore
-from ...types.search_response import SearchResponse
 from ...types.vector_store_list_response import VectorStoreListResponse
 from ...types.vector_store_delete_response import VectorStoreDeleteResponse
+from ...types.vector_store_search_response import VectorStoreSearchResponse
 
 __all__ = ["VectorStoresResource", "AsyncVectorStoresResource"]
 
@@ -317,15 +317,15 @@ class VectorStoresResource(SyncAPIResource):
             cast_to=VectorStoreDeleteResponse,
         )
 
-    def question_answering(
+    def qa(
         self,
         *,
         vector_store_ids: List[str],
-        filters: Optional[vector_store_question_answering_params.Filters] | NotGiven = NOT_GIVEN,
-        pagination: vector_store_question_answering_params.Pagination | NotGiven = NOT_GIVEN,
-        qa_options: vector_store_question_answering_params.QaOptions | NotGiven = NOT_GIVEN,
+        filters: Optional[vector_store_qa_params.Filters] | NotGiven = NOT_GIVEN,
+        pagination: vector_store_qa_params.Pagination | NotGiven = NOT_GIVEN,
+        qa_options: vector_store_qa_params.QaOptions | NotGiven = NOT_GIVEN,
         query: str | NotGiven = NOT_GIVEN,
-        search_options: vector_store_question_answering_params.SearchOptions | NotGiven = NOT_GIVEN,
+        search_options: vector_store_qa_params.SearchOptions | NotGiven = NOT_GIVEN,
         stream: bool | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -373,7 +373,7 @@ class VectorStoresResource(SyncAPIResource):
                     "search_options": search_options,
                     "stream": stream,
                 },
-                vector_store_question_answering_params.VectorStoreQuestionAnsweringParams,
+                vector_store_qa_params.VectorStoreQaParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
@@ -395,7 +395,7 @@ class VectorStoresResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> SearchResponse:
+    ) -> VectorStoreSearchResponse:
         """
         Perform a search based on the provided query.
 
@@ -438,7 +438,7 @@ class VectorStoresResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=SearchResponse,
+            cast_to=VectorStoreSearchResponse,
         )
 
 
@@ -716,15 +716,15 @@ class AsyncVectorStoresResource(AsyncAPIResource):
             cast_to=VectorStoreDeleteResponse,
         )
 
-    async def question_answering(
+    async def qa(
         self,
         *,
         vector_store_ids: List[str],
-        filters: Optional[vector_store_question_answering_params.Filters] | NotGiven = NOT_GIVEN,
-        pagination: vector_store_question_answering_params.Pagination | NotGiven = NOT_GIVEN,
-        qa_options: vector_store_question_answering_params.QaOptions | NotGiven = NOT_GIVEN,
+        filters: Optional[vector_store_qa_params.Filters] | NotGiven = NOT_GIVEN,
+        pagination: vector_store_qa_params.Pagination | NotGiven = NOT_GIVEN,
+        qa_options: vector_store_qa_params.QaOptions | NotGiven = NOT_GIVEN,
         query: str | NotGiven = NOT_GIVEN,
-        search_options: vector_store_question_answering_params.SearchOptions | NotGiven = NOT_GIVEN,
+        search_options: vector_store_qa_params.SearchOptions | NotGiven = NOT_GIVEN,
         stream: bool | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -772,7 +772,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
                     "search_options": search_options,
                     "stream": stream,
                 },
-                vector_store_question_answering_params.VectorStoreQuestionAnsweringParams,
+                vector_store_qa_params.VectorStoreQaParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
@@ -794,7 +794,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> SearchResponse:
+    ) -> VectorStoreSearchResponse:
         """
         Perform a search based on the provided query.
 
@@ -837,7 +837,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=SearchResponse,
+            cast_to=VectorStoreSearchResponse,
         )
 
 
@@ -860,8 +860,8 @@ class VectorStoresResourceWithRawResponse:
         self.delete = to_raw_response_wrapper(
             vector_stores.delete,
         )
-        self.question_answering = to_raw_response_wrapper(
-            vector_stores.question_answering,
+        self.qa = to_raw_response_wrapper(
+            vector_stores.qa,
         )
         self.search = to_raw_response_wrapper(
             vector_stores.search,
@@ -891,8 +891,8 @@ class AsyncVectorStoresResourceWithRawResponse:
         self.delete = async_to_raw_response_wrapper(
             vector_stores.delete,
         )
-        self.question_answering = async_to_raw_response_wrapper(
-            vector_stores.question_answering,
+        self.qa = async_to_raw_response_wrapper(
+            vector_stores.qa,
         )
         self.search = async_to_raw_response_wrapper(
             vector_stores.search,
@@ -922,8 +922,8 @@ class VectorStoresResourceWithStreamingResponse:
         self.delete = to_streamed_response_wrapper(
             vector_stores.delete,
         )
-        self.question_answering = to_streamed_response_wrapper(
-            vector_stores.question_answering,
+        self.qa = to_streamed_response_wrapper(
+            vector_stores.qa,
         )
         self.search = to_streamed_response_wrapper(
             vector_stores.search,
@@ -953,8 +953,8 @@ class AsyncVectorStoresResourceWithStreamingResponse:
         self.delete = async_to_streamed_response_wrapper(
             vector_stores.delete,
         )
-        self.question_answering = async_to_streamed_response_wrapper(
-            vector_stores.question_answering,
+        self.qa = async_to_streamed_response_wrapper(
+            vector_stores.qa,
         )
         self.search = async_to_streamed_response_wrapper(
             vector_stores.search,
