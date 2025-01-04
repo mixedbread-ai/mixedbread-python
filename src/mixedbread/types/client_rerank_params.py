@@ -2,15 +2,14 @@
 
 from __future__ import annotations
 
-from typing import List, Union, Optional
+from typing import List, Optional
 from typing_extensions import Required, TypedDict
 
 __all__ = ["ClientRerankParams"]
 
 
 class ClientRerankParams(TypedDict, total=False):
-    input: Required[List[Union[str, object]]]
-    """The input documents to rerank."""
+    input: Required[object]
 
     query: Required[str]
     """The query to rerank the documents."""
