@@ -27,42 +27,6 @@ Methods:
 - <code title="post /v1/document-ai/parse">client.document_ai.parse.<a href="./src/mixedbread/resources/document_ai/parse.py">create_job</a>(\*\*<a href="src/mixedbread/types/document_ai/parse_create_job_params.py">params</a>) -> <a href="./src/mixedbread/types/document_ai/parse_create_job_response.py">ParseCreateJobResponse</a></code>
 - <code title="get /v1/document-ai/parse/{job_id}">client.document_ai.parse.<a href="./src/mixedbread/resources/document_ai/parse.py">retrieve_job</a>(job_id) -> <a href="./src/mixedbread/types/document_ai/parse_retrieve_job_response.py">ParseRetrieveJobResponse</a></code>
 
-## Extract
-
-Types:
-
-```python
-from mixedbread.types.document_ai import (
-    Result,
-    ExtractCreateJobResponse,
-    ExtractRetrieveJobResponse,
-)
-```
-
-Methods:
-
-- <code title="post /v1/document-ai/extract/content">client.document_ai.extract.<a href="./src/mixedbread/resources/document_ai/extract/extract.py">content</a>(\*\*<a href="src/mixedbread/types/document_ai/extract_content_params.py">params</a>) -> <a href="./src/mixedbread/types/document_ai/result.py">Result</a></code>
-- <code title="post /v1/document-ai/extract">client.document_ai.extract.<a href="./src/mixedbread/resources/document_ai/extract/extract.py">create_job</a>(\*\*<a href="src/mixedbread/types/document_ai/extract_create_job_params.py">params</a>) -> <a href="./src/mixedbread/types/document_ai/extract_create_job_response.py">ExtractCreateJobResponse</a></code>
-- <code title="get /v1/document-ai/extract/{job_id}">client.document_ai.extract.<a href="./src/mixedbread/resources/document_ai/extract/extract.py">retrieve_job</a>(job_id) -> <a href="./src/mixedbread/types/document_ai/extract_retrieve_job_response.py">ExtractRetrieveJobResponse</a></code>
-
-### Schema
-
-Types:
-
-```python
-from mixedbread.types.document_ai.extract import (
-    CreatedJsonSchema,
-    EnhancedJsonSchema,
-    ValidatedJsonSchema,
-)
-```
-
-Methods:
-
-- <code title="post /v1/document-ai/extract/schema">client.document_ai.extract.schema.<a href="./src/mixedbread/resources/document_ai/extract/schema.py">create</a>(\*\*<a href="src/mixedbread/types/document_ai/extract/schema_create_params.py">params</a>) -> <a href="./src/mixedbread/types/document_ai/extract/created_json_schema.py">CreatedJsonSchema</a></code>
-- <code title="post /v1/document-ai/extract/schema/enhance">client.document_ai.extract.schema.<a href="./src/mixedbread/resources/document_ai/extract/schema.py">enhance</a>(\*\*<a href="src/mixedbread/types/document_ai/extract/schema_enhance_params.py">params</a>) -> <a href="./src/mixedbread/types/document_ai/extract/enhanced_json_schema.py">EnhancedJsonSchema</a></code>
-- <code title="post /v1/document-ai/extract/schema/validate">client.document_ai.extract.schema.<a href="./src/mixedbread/resources/document_ai/extract/schema.py">validate</a>(\*\*<a href="src/mixedbread/types/document_ai/extract/schema_validate_params.py">params</a>) -> <a href="./src/mixedbread/types/document_ai/extract/validated_json_schema.py">ValidatedJsonSchema</a></code>
-
 # Embeddings
 
 Types:
