@@ -12,14 +12,6 @@ from .parse import (
 )
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
-from .extract.extract import (
-    ExtractResource,
-    AsyncExtractResource,
-    ExtractResourceWithRawResponse,
-    AsyncExtractResourceWithRawResponse,
-    ExtractResourceWithStreamingResponse,
-    AsyncExtractResourceWithStreamingResponse,
-)
 
 __all__ = ["DocumentAIResource", "AsyncDocumentAIResource"]
 
@@ -28,10 +20,6 @@ class DocumentAIResource(SyncAPIResource):
     @cached_property
     def parse(self) -> ParseResource:
         return ParseResource(self._client)
-
-    @cached_property
-    def extract(self) -> ExtractResource:
-        return ExtractResource(self._client)
 
     @cached_property
     def with_raw_response(self) -> DocumentAIResourceWithRawResponse:
@@ -57,10 +45,6 @@ class AsyncDocumentAIResource(AsyncAPIResource):
     @cached_property
     def parse(self) -> AsyncParseResource:
         return AsyncParseResource(self._client)
-
-    @cached_property
-    def extract(self) -> AsyncExtractResource:
-        return AsyncExtractResource(self._client)
 
     @cached_property
     def with_raw_response(self) -> AsyncDocumentAIResourceWithRawResponse:
@@ -90,10 +74,6 @@ class DocumentAIResourceWithRawResponse:
     def parse(self) -> ParseResourceWithRawResponse:
         return ParseResourceWithRawResponse(self._document_ai.parse)
 
-    @cached_property
-    def extract(self) -> ExtractResourceWithRawResponse:
-        return ExtractResourceWithRawResponse(self._document_ai.extract)
-
 
 class AsyncDocumentAIResourceWithRawResponse:
     def __init__(self, document_ai: AsyncDocumentAIResource) -> None:
@@ -102,10 +82,6 @@ class AsyncDocumentAIResourceWithRawResponse:
     @cached_property
     def parse(self) -> AsyncParseResourceWithRawResponse:
         return AsyncParseResourceWithRawResponse(self._document_ai.parse)
-
-    @cached_property
-    def extract(self) -> AsyncExtractResourceWithRawResponse:
-        return AsyncExtractResourceWithRawResponse(self._document_ai.extract)
 
 
 class DocumentAIResourceWithStreamingResponse:
@@ -116,10 +92,6 @@ class DocumentAIResourceWithStreamingResponse:
     def parse(self) -> ParseResourceWithStreamingResponse:
         return ParseResourceWithStreamingResponse(self._document_ai.parse)
 
-    @cached_property
-    def extract(self) -> ExtractResourceWithStreamingResponse:
-        return ExtractResourceWithStreamingResponse(self._document_ai.extract)
-
 
 class AsyncDocumentAIResourceWithStreamingResponse:
     def __init__(self, document_ai: AsyncDocumentAIResource) -> None:
@@ -128,7 +100,3 @@ class AsyncDocumentAIResourceWithStreamingResponse:
     @cached_property
     def parse(self) -> AsyncParseResourceWithStreamingResponse:
         return AsyncParseResourceWithStreamingResponse(self._document_ai.parse)
-
-    @cached_property
-    def extract(self) -> AsyncExtractResourceWithStreamingResponse:
-        return AsyncExtractResourceWithStreamingResponse(self._document_ai.extract)
