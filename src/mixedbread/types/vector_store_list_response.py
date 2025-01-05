@@ -1,15 +1,15 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import List, Optional
+from typing import Optional
 from datetime import datetime
 from typing_extensions import Literal
 
 from .._models import BaseModel
 
-__all__ = ["VectorStoreListResponse", "Data", "DataExpiresAfter", "DataFileCounts", "Pagination"]
+__all__ = ["VectorStoreListResponse", "ExpiresAfter", "FileCounts"]
 
 
-class DataExpiresAfter(BaseModel):
+class ExpiresAfter(BaseModel):
     anchor: Optional[Literal["last_used_at"]] = None
     """Anchor date for the expiration policy"""
 
@@ -17,7 +17,7 @@ class DataExpiresAfter(BaseModel):
     """Number of days after which the vector store expires"""
 
 
-class DataFileCounts(BaseModel):
+class FileCounts(BaseModel):
     canceled: Optional[int] = None
     """Number of files whose processing was canceled"""
 
@@ -34,7 +34,7 @@ class DataFileCounts(BaseModel):
     """Total number of files"""
 
 
-class Data(BaseModel):
+class VectorStoreListResponse(BaseModel):
     id: str
     """Unique identifier for the vector store"""
 
@@ -50,13 +50,13 @@ class Data(BaseModel):
     description: Optional[str] = None
     """Detailed description of the vector store's purpose and contents"""
 
-    expires_after: Optional[DataExpiresAfter] = None
+    expires_after: Optional[ExpiresAfter] = None
     """Represents an expiration policy for a vector store."""
 
     expires_at: Optional[datetime] = None
     """Optional expiration timestamp for the vector store"""
 
-    file_counts: Optional[DataFileCounts] = None
+    file_counts: Optional[FileCounts] = None
     """Counts of files in different states"""
 
     last_active_at: Optional[datetime] = None
@@ -67,25 +67,3 @@ class Data(BaseModel):
 
     object: Optional[Literal["vector_store"]] = None
     """Type of the object"""
-
-
-class Pagination(BaseModel):
-    limit: Optional[int] = None
-    """Maximum number of items to return per page"""
-
-    offset: Optional[int] = None
-    """Offset of the first item to return"""
-
-    total: Optional[int] = None
-    """Total number of items available"""
-
-
-class VectorStoreListResponse(BaseModel):
-    data: List[Data]
-    """The list of vector stores"""
-
-    pagination: Pagination
-    """Pagination model that includes total count of items."""
-
-    object: Optional[Literal["list"]] = None
-    """The object type of the response"""
