@@ -43,6 +43,7 @@ from ._base_client import (
     make_request_options,
 )
 from .types.info_response import InfoResponse
+from .resources.document_ai import document_ai
 from .resources.vector_stores import vector_stores
 
 __all__ = [
@@ -64,6 +65,7 @@ ENVIRONMENTS: Dict[str, str] = {
 
 
 class Mixedbread(SyncAPIClient):
+    document_ai: document_ai.DocumentAIResource
     embeddings: embeddings.EmbeddingsResource
     reranking: reranking.RerankingResource
     files: files.FilesResource
@@ -149,6 +151,7 @@ class Mixedbread(SyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
+        self.document_ai = document_ai.DocumentAIResource(self)
         self.embeddings = embeddings.EmbeddingsResource(self)
         self.reranking = reranking.RerankingResource(self)
         self.files = files.FilesResource(self)
@@ -287,6 +290,7 @@ class Mixedbread(SyncAPIClient):
 
 
 class AsyncMixedbread(AsyncAPIClient):
+    document_ai: document_ai.AsyncDocumentAIResource
     embeddings: embeddings.AsyncEmbeddingsResource
     reranking: reranking.AsyncRerankingResource
     files: files.AsyncFilesResource
@@ -372,6 +376,7 @@ class AsyncMixedbread(AsyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
+        self.document_ai = document_ai.AsyncDocumentAIResource(self)
         self.embeddings = embeddings.AsyncEmbeddingsResource(self)
         self.reranking = reranking.AsyncRerankingResource(self)
         self.files = files.AsyncFilesResource(self)
@@ -511,6 +516,7 @@ class AsyncMixedbread(AsyncAPIClient):
 
 class MixedbreadWithRawResponse:
     def __init__(self, client: Mixedbread) -> None:
+        self.document_ai = document_ai.DocumentAIResourceWithRawResponse(client.document_ai)
         self.embeddings = embeddings.EmbeddingsResourceWithRawResponse(client.embeddings)
         self.reranking = reranking.RerankingResourceWithRawResponse(client.reranking)
         self.files = files.FilesResourceWithRawResponse(client.files)
@@ -523,6 +529,7 @@ class MixedbreadWithRawResponse:
 
 class AsyncMixedbreadWithRawResponse:
     def __init__(self, client: AsyncMixedbread) -> None:
+        self.document_ai = document_ai.AsyncDocumentAIResourceWithRawResponse(client.document_ai)
         self.embeddings = embeddings.AsyncEmbeddingsResourceWithRawResponse(client.embeddings)
         self.reranking = reranking.AsyncRerankingResourceWithRawResponse(client.reranking)
         self.files = files.AsyncFilesResourceWithRawResponse(client.files)
@@ -535,6 +542,7 @@ class AsyncMixedbreadWithRawResponse:
 
 class MixedbreadWithStreamedResponse:
     def __init__(self, client: Mixedbread) -> None:
+        self.document_ai = document_ai.DocumentAIResourceWithStreamingResponse(client.document_ai)
         self.embeddings = embeddings.EmbeddingsResourceWithStreamingResponse(client.embeddings)
         self.reranking = reranking.RerankingResourceWithStreamingResponse(client.reranking)
         self.files = files.FilesResourceWithStreamingResponse(client.files)
@@ -547,6 +555,7 @@ class MixedbreadWithStreamedResponse:
 
 class AsyncMixedbreadWithStreamedResponse:
     def __init__(self, client: AsyncMixedbread) -> None:
+        self.document_ai = document_ai.AsyncDocumentAIResourceWithStreamingResponse(client.document_ai)
         self.embeddings = embeddings.AsyncEmbeddingsResourceWithStreamingResponse(client.embeddings)
         self.reranking = reranking.AsyncRerankingResourceWithStreamingResponse(client.reranking)
         self.files = files.AsyncFilesResourceWithStreamingResponse(client.files)

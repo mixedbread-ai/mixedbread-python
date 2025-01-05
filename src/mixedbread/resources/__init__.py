@@ -24,6 +24,14 @@ from .embeddings import (
     EmbeddingsResourceWithStreamingResponse,
     AsyncEmbeddingsResourceWithStreamingResponse,
 )
+from .document_ai import (
+    DocumentAIResource,
+    AsyncDocumentAIResource,
+    DocumentAIResourceWithRawResponse,
+    AsyncDocumentAIResourceWithRawResponse,
+    DocumentAIResourceWithStreamingResponse,
+    AsyncDocumentAIResourceWithStreamingResponse,
+)
 from .vector_stores import (
     VectorStoresResource,
     AsyncVectorStoresResource,
@@ -34,6 +42,12 @@ from .vector_stores import (
 )
 
 __all__ = [
+    "DocumentAIResource",
+    "AsyncDocumentAIResource",
+    "DocumentAIResourceWithRawResponse",
+    "AsyncDocumentAIResourceWithRawResponse",
+    "DocumentAIResourceWithStreamingResponse",
+    "AsyncDocumentAIResourceWithStreamingResponse",
     "EmbeddingsResource",
     "AsyncEmbeddingsResource",
     "EmbeddingsResourceWithRawResponse",
