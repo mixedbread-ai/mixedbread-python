@@ -5,11 +5,19 @@ from __future__ import annotations
 import os
 from typing import Any, cast
 
+import httpx
 import pytest
+from respx import MockRouter
 
 from mixedbread import Mixedbread, AsyncMixedbread
 from tests.utils import assert_matches_type
 from mixedbread.types import FileObject, FileDeleteResponse
+from mixedbread._response import (
+    BinaryAPIResponse,
+    AsyncBinaryAPIResponse,
+    StreamedBinaryAPIResponse,
+    AsyncStreamedBinaryAPIResponse,
+)
 from mixedbread.pagination import SyncPage, AsyncPage
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
@@ -200,6 +208,62 @@ class TestFiles:
                 "",
             )
 
+    @parametrize
+    @pytest.mark.respx(base_url=base_url)
+    def test_method_content(self, client: Mixedbread, respx_mock: MockRouter) -> None:
+        respx_mock.get("/v1/files/182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e/content").mock(
+            return_value=httpx.Response(200, json={"foo": "bar"})
+        )
+        file = client.files.content(
+            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+        assert file.is_closed
+        assert file.json() == {"foo": "bar"}
+        assert cast(Any, file.is_closed) is True
+        assert isinstance(file, BinaryAPIResponse)
+
+    @parametrize
+    @pytest.mark.respx(base_url=base_url)
+    def test_raw_response_content(self, client: Mixedbread, respx_mock: MockRouter) -> None:
+        respx_mock.get("/v1/files/182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e/content").mock(
+            return_value=httpx.Response(200, json={"foo": "bar"})
+        )
+
+        file = client.files.with_raw_response.content(
+            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+
+        assert file.is_closed is True
+        assert file.http_request.headers.get("X-Stainless-Lang") == "python"
+        assert file.json() == {"foo": "bar"}
+        assert isinstance(file, BinaryAPIResponse)
+
+    @parametrize
+    @pytest.mark.respx(base_url=base_url)
+    def test_streaming_response_content(self, client: Mixedbread, respx_mock: MockRouter) -> None:
+        respx_mock.get("/v1/files/182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e/content").mock(
+            return_value=httpx.Response(200, json={"foo": "bar"})
+        )
+        with client.files.with_streaming_response.content(
+            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        ) as file:
+            assert not file.is_closed
+            assert file.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            assert file.json() == {"foo": "bar"}
+            assert cast(Any, file.is_closed) is True
+            assert isinstance(file, StreamedBinaryAPIResponse)
+
+        assert cast(Any, file.is_closed) is True
+
+    @parametrize
+    @pytest.mark.respx(base_url=base_url)
+    def test_path_params_content(self, client: Mixedbread) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `file_id` but received ''"):
+            client.files.with_raw_response.content(
+                "",
+            )
+
 
 class TestAsyncFiles:
     parametrize = pytest.mark.parametrize("async_client", [False, True], indirect=True, ids=["loose", "strict"])
@@ -383,5 +447,61 @@ class TestAsyncFiles:
     async def test_path_params_delete(self, async_client: AsyncMixedbread) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `file_id` but received ''"):
             await async_client.files.with_raw_response.delete(
+                "",
+            )
+
+    @parametrize
+    @pytest.mark.respx(base_url=base_url)
+    async def test_method_content(self, async_client: AsyncMixedbread, respx_mock: MockRouter) -> None:
+        respx_mock.get("/v1/files/182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e/content").mock(
+            return_value=httpx.Response(200, json={"foo": "bar"})
+        )
+        file = await async_client.files.content(
+            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+        assert file.is_closed
+        assert await file.json() == {"foo": "bar"}
+        assert cast(Any, file.is_closed) is True
+        assert isinstance(file, AsyncBinaryAPIResponse)
+
+    @parametrize
+    @pytest.mark.respx(base_url=base_url)
+    async def test_raw_response_content(self, async_client: AsyncMixedbread, respx_mock: MockRouter) -> None:
+        respx_mock.get("/v1/files/182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e/content").mock(
+            return_value=httpx.Response(200, json={"foo": "bar"})
+        )
+
+        file = await async_client.files.with_raw_response.content(
+            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+
+        assert file.is_closed is True
+        assert file.http_request.headers.get("X-Stainless-Lang") == "python"
+        assert await file.json() == {"foo": "bar"}
+        assert isinstance(file, AsyncBinaryAPIResponse)
+
+    @parametrize
+    @pytest.mark.respx(base_url=base_url)
+    async def test_streaming_response_content(self, async_client: AsyncMixedbread, respx_mock: MockRouter) -> None:
+        respx_mock.get("/v1/files/182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e/content").mock(
+            return_value=httpx.Response(200, json={"foo": "bar"})
+        )
+        async with async_client.files.with_streaming_response.content(
+            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        ) as file:
+            assert not file.is_closed
+            assert file.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            assert await file.json() == {"foo": "bar"}
+            assert cast(Any, file.is_closed) is True
+            assert isinstance(file, AsyncStreamedBinaryAPIResponse)
+
+        assert cast(Any, file.is_closed) is True
+
+    @parametrize
+    @pytest.mark.respx(base_url=base_url)
+    async def test_path_params_content(self, async_client: AsyncMixedbread) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `file_id` but received ''"):
+            await async_client.files.with_raw_response.content(
                 "",
             )
