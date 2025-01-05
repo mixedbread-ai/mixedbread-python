@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 
-from typing import Any, List, Optional, cast
+import functools
+from typing import Any, List, Optional, cast, Union
 from typing_extensions import Literal
 
 import httpx
@@ -24,6 +25,7 @@ from ...._base_client import make_request_options
 from ....types.document_ai.parse import job_create_params
 from ....types.document_ai.parse.job_create_response import JobCreateResponse
 from ....types.document_ai.parse.job_retrieve_response import JobRetrieveResponse
+from ....lib import polling
 
 __all__ = ["JobsResource", "AsyncJobsResource"]
 
