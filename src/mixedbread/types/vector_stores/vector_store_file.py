@@ -6,10 +6,10 @@ from typing_extensions import Literal
 
 from ..._models import BaseModel
 
-__all__ = ["FileRetrieveResponse"]
+__all__ = ["VectorStoreFile"]
 
 
-class FileRetrieveResponse(BaseModel):
+class VectorStoreFile(BaseModel):
     id: str
     """Unique identifier for the file"""
 

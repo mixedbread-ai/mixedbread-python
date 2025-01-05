@@ -5,36 +5,13 @@ from datetime import datetime
 from typing_extensions import Literal
 
 from .._models import BaseModel
+from .file_counts import FileCounts
+from .expires_after import ExpiresAfter
 
-__all__ = ["VectorStoreListResponse", "ExpiresAfter", "FileCounts"]
-
-
-class ExpiresAfter(BaseModel):
-    anchor: Optional[Literal["last_used_at"]] = None
-    """Anchor date for the expiration policy"""
-
-    days: Optional[int] = None
-    """Number of days after which the vector store expires"""
+__all__ = ["VectorStore"]
 
 
-class FileCounts(BaseModel):
-    canceled: Optional[int] = None
-    """Number of files whose processing was canceled"""
-
-    failed: Optional[int] = None
-    """Number of files that failed processing"""
-
-    in_progress: Optional[int] = None
-    """Number of files currently being processed"""
-
-    successful: Optional[int] = None
-    """Number of successfully processed files"""
-
-    total: Optional[int] = None
-    """Total number of files"""
-
-
-class VectorStoreListResponse(BaseModel):
+class VectorStore(BaseModel):
     id: str
     """Unique identifier for the vector store"""
 
