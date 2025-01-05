@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-alpha.7 (2025-01-05)
+
+Full Changelog: [v0.1.0-alpha.6...v0.1.0-alpha.7](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.1.0-alpha.6...v0.1.0-alpha.7)
+
+### Features
+
+* add parsing polling ([9d1e846](https://github.com/mixedbread-ai/mixedbread-python/commit/9d1e8461a96b046d53ccab82a163fdb209c46c6f))
+
 ## 0.1.0-alpha.6 (2025-01-05)
 
 Full Changelog: [v0.1.0-alpha.5...v0.1.0-alpha.6](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.1.0-alpha.5...v0.1.0-alpha.6)
