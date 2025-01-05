@@ -17,7 +17,6 @@ from .files import (
 from ...types import (
     vector_store_list_params,
     vector_store_create_params,
-    vector_store_search_params,
     vector_store_update_params,
 )
 from ..._types import NOT_GIVEN, Body, Query, Headers, NotGiven
@@ -38,7 +37,6 @@ from ..._base_client import AsyncPaginator, make_request_options
 from ...types.vector_store import VectorStore
 from ...types.expires_after_param import ExpiresAfterParam
 from ...types.vector_store_delete_response import VectorStoreDeleteResponse
-from ...types.vector_store_search_response import VectorStoreSearchResponse
 
 __all__ = ["VectorStoresResource", "AsyncVectorStoresResource"]
 
@@ -318,63 +316,6 @@ class VectorStoresResource(SyncAPIResource):
             cast_to=VectorStoreDeleteResponse,
         )
 
-    def search(
-        self,
-        *,
-        query: str,
-        vector_store_ids: List[str],
-        pagination: vector_store_search_params.Pagination | NotGiven = NOT_GIVEN,
-        search_options: vector_store_search_params.SearchOptions | NotGiven = NOT_GIVEN,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> VectorStoreSearchResponse:
-        """
-        Perform a search based on the provided query.
-
-        Args: search_params: VectorStoreSearchParams object containing the search
-        parameters.
-
-        Returns: VectorStoreSearchResponse: The response containing the search results
-        and pagination details.
-
-        Args:
-          query: Search query text
-
-          vector_store_ids: IDs of vector stores to search
-
-          pagination: Pagination options
-
-          search_options: Search configuration options
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return self._post(
-            "/v1/vector_stores/search",
-            body=maybe_transform(
-                {
-                    "query": query,
-                    "vector_store_ids": vector_store_ids,
-                    "pagination": pagination,
-                    "search_options": search_options,
-                },
-                vector_store_search_params.VectorStoreSearchParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=VectorStoreSearchResponse,
-        )
-
 
 class AsyncVectorStoresResource(AsyncAPIResource):
     @cached_property
@@ -651,63 +592,6 @@ class AsyncVectorStoresResource(AsyncAPIResource):
             cast_to=VectorStoreDeleteResponse,
         )
 
-    async def search(
-        self,
-        *,
-        query: str,
-        vector_store_ids: List[str],
-        pagination: vector_store_search_params.Pagination | NotGiven = NOT_GIVEN,
-        search_options: vector_store_search_params.SearchOptions | NotGiven = NOT_GIVEN,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> VectorStoreSearchResponse:
-        """
-        Perform a search based on the provided query.
-
-        Args: search_params: VectorStoreSearchParams object containing the search
-        parameters.
-
-        Returns: VectorStoreSearchResponse: The response containing the search results
-        and pagination details.
-
-        Args:
-          query: Search query text
-
-          vector_store_ids: IDs of vector stores to search
-
-          pagination: Pagination options
-
-          search_options: Search configuration options
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return await self._post(
-            "/v1/vector_stores/search",
-            body=await async_maybe_transform(
-                {
-                    "query": query,
-                    "vector_store_ids": vector_store_ids,
-                    "pagination": pagination,
-                    "search_options": search_options,
-                },
-                vector_store_search_params.VectorStoreSearchParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=VectorStoreSearchResponse,
-        )
-
 
 class VectorStoresResourceWithRawResponse:
     def __init__(self, vector_stores: VectorStoresResource) -> None:
@@ -727,9 +611,6 @@ class VectorStoresResourceWithRawResponse:
         )
         self.delete = to_raw_response_wrapper(
             vector_stores.delete,
-        )
-        self.search = to_raw_response_wrapper(
-            vector_stores.search,
         )
 
     @cached_property
@@ -756,9 +637,6 @@ class AsyncVectorStoresResourceWithRawResponse:
         self.delete = async_to_raw_response_wrapper(
             vector_stores.delete,
         )
-        self.search = async_to_raw_response_wrapper(
-            vector_stores.search,
-        )
 
     @cached_property
     def files(self) -> AsyncFilesResourceWithRawResponse:
@@ -784,9 +662,6 @@ class VectorStoresResourceWithStreamingResponse:
         self.delete = to_streamed_response_wrapper(
             vector_stores.delete,
         )
-        self.search = to_streamed_response_wrapper(
-            vector_stores.search,
-        )
 
     @cached_property
     def files(self) -> FilesResourceWithStreamingResponse:
@@ -811,9 +686,6 @@ class AsyncVectorStoresResourceWithStreamingResponse:
         )
         self.delete = async_to_streamed_response_wrapper(
             vector_stores.delete,
-        )
-        self.search = async_to_streamed_response_wrapper(
-            vector_stores.search,
         )
 
     @cached_property
