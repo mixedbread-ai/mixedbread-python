@@ -2,29 +2,29 @@
 
 from __future__ import annotations
 
+import functools
 from typing import List, Optional
 from typing_extensions import Literal
-import functools
 
 import httpx
 
-from ...._types import NOT_GIVEN, Body, Query, Headers, NotGiven, FileTypes
-from ...._utils import (
+from ...lib import polling
+from ..._types import NOT_GIVEN, Body, Query, Headers, NotGiven, FileTypes
+from ..._utils import (
     maybe_transform,
     async_maybe_transform,
 )
-from ...._compat import cached_property
-from ...._resource import SyncAPIResource, AsyncAPIResource
-from ...._response import (
+from ..._compat import cached_property
+from ..._resource import SyncAPIResource, AsyncAPIResource
+from ..._response import (
     to_raw_response_wrapper,
     to_streamed_response_wrapper,
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ...._base_client import make_request_options
-from ....lib import polling
-from ....types.document_ai.parse import job_create_params
-from ....types.document_ai.parse.parsing_job import ParsingJob
+from ..._base_client import make_request_options
+from ...types.parsing import job_create_params
+from ...types.parsing.parsing_job import ParsingJob
 
 __all__ = ["JobsResource", "AsyncJobsResource"]
 
@@ -83,9 +83,9 @@ class JobsResource(SyncAPIResource):
         """
         Start a parse job for the provided file.
 
-        Args: params: ParseJobCreateParams The parameters for creating a parse job.
+        Args: params: The parameters for creating a parse job.
 
-        Returns: ParsingJob: The created parse job.
+        Returns: The created parsing job.
 
         Args:
           file_id: The ID of the file to parse
@@ -105,7 +105,7 @@ class JobsResource(SyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return self._post(
-            "/v1/document-ai/parse",
+            "/v1/parsing/jobs",
             body=maybe_transform(
                 {
                     "file_id": file_id,
@@ -137,7 +137,7 @@ class JobsResource(SyncAPIResource):
 
         Args: job_id: The ID of the parse job.
 
-        Returns: ParsingJob: Detailed information about the parse job.
+        Returns: Detailed information about the parse job.
 
         Args:
           job_id: The ID of the parse job to retrieve
@@ -153,7 +153,7 @@ class JobsResource(SyncAPIResource):
         if not job_id:
             raise ValueError(f"Expected a non-empty value for `job_id` but received {job_id!r}")
         return self._get(
-            f"/v1/document-ai/parse/{job_id}",
+            f"/v1/parsing/jobs/{job_id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -364,9 +364,9 @@ class AsyncJobsResource(AsyncAPIResource):
         """
         Start a parse job for the provided file.
 
-        Args: params: ParseJobCreateParams The parameters for creating a parse job.
+        Args: params: The parameters for creating a parse job.
 
-        Returns: ParsingJob: The created parse job.
+        Returns: The created parsing job.
 
         Args:
           file_id: The ID of the file to parse
@@ -386,7 +386,7 @@ class AsyncJobsResource(AsyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return await self._post(
-            "/v1/document-ai/parse",
+            "/v1/parsing/jobs",
             body=await async_maybe_transform(
                 {
                     "file_id": file_id,
@@ -418,7 +418,7 @@ class AsyncJobsResource(AsyncAPIResource):
 
         Args: job_id: The ID of the parse job.
 
-        Returns: ParsingJob: Detailed information about the parse job.
+        Returns: Detailed information about the parse job.
 
         Args:
           job_id: The ID of the parse job to retrieve
@@ -434,7 +434,7 @@ class AsyncJobsResource(AsyncAPIResource):
         if not job_id:
             raise ValueError(f"Expected a non-empty value for `job_id` but received {job_id!r}")
         return await self._get(
-            f"/v1/document-ai/parse/{job_id}",
+            f"/v1/parsing/jobs/{job_id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
