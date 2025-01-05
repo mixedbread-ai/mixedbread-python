@@ -42,6 +42,7 @@ from ._base_client import (
     AsyncAPIClient,
     make_request_options,
 )
+from .resources.parsing import parsing
 from .types.info_response import InfoResponse
 from .resources.vector_stores import vector_stores
 
@@ -66,6 +67,7 @@ ENVIRONMENTS: Dict[str, str] = {
 class Mixedbread(SyncAPIClient):
     embeddings: embeddings.EmbeddingsResource
     reranking: reranking.RerankingResource
+    parsing: parsing.ParsingResource
     files: files.FilesResource
     vector_stores: vector_stores.VectorStoresResource
     with_raw_response: MixedbreadWithRawResponse
@@ -151,6 +153,7 @@ class Mixedbread(SyncAPIClient):
 
         self.embeddings = embeddings.EmbeddingsResource(self)
         self.reranking = reranking.RerankingResource(self)
+        self.parsing = parsing.ParsingResource(self)
         self.files = files.FilesResource(self)
         self.vector_stores = vector_stores.VectorStoresResource(self)
         self.with_raw_response = MixedbreadWithRawResponse(self)
@@ -289,6 +292,7 @@ class Mixedbread(SyncAPIClient):
 class AsyncMixedbread(AsyncAPIClient):
     embeddings: embeddings.AsyncEmbeddingsResource
     reranking: reranking.AsyncRerankingResource
+    parsing: parsing.AsyncParsingResource
     files: files.AsyncFilesResource
     vector_stores: vector_stores.AsyncVectorStoresResource
     with_raw_response: AsyncMixedbreadWithRawResponse
@@ -374,6 +378,7 @@ class AsyncMixedbread(AsyncAPIClient):
 
         self.embeddings = embeddings.AsyncEmbeddingsResource(self)
         self.reranking = reranking.AsyncRerankingResource(self)
+        self.parsing = parsing.AsyncParsingResource(self)
         self.files = files.AsyncFilesResource(self)
         self.vector_stores = vector_stores.AsyncVectorStoresResource(self)
         self.with_raw_response = AsyncMixedbreadWithRawResponse(self)
@@ -513,6 +518,7 @@ class MixedbreadWithRawResponse:
     def __init__(self, client: Mixedbread) -> None:
         self.embeddings = embeddings.EmbeddingsResourceWithRawResponse(client.embeddings)
         self.reranking = reranking.RerankingResourceWithRawResponse(client.reranking)
+        self.parsing = parsing.ParsingResourceWithRawResponse(client.parsing)
         self.files = files.FilesResourceWithRawResponse(client.files)
         self.vector_stores = vector_stores.VectorStoresResourceWithRawResponse(client.vector_stores)
 
@@ -525,6 +531,7 @@ class AsyncMixedbreadWithRawResponse:
     def __init__(self, client: AsyncMixedbread) -> None:
         self.embeddings = embeddings.AsyncEmbeddingsResourceWithRawResponse(client.embeddings)
         self.reranking = reranking.AsyncRerankingResourceWithRawResponse(client.reranking)
+        self.parsing = parsing.AsyncParsingResourceWithRawResponse(client.parsing)
         self.files = files.AsyncFilesResourceWithRawResponse(client.files)
         self.vector_stores = vector_stores.AsyncVectorStoresResourceWithRawResponse(client.vector_stores)
 
@@ -537,6 +544,7 @@ class MixedbreadWithStreamedResponse:
     def __init__(self, client: Mixedbread) -> None:
         self.embeddings = embeddings.EmbeddingsResourceWithStreamingResponse(client.embeddings)
         self.reranking = reranking.RerankingResourceWithStreamingResponse(client.reranking)
+        self.parsing = parsing.ParsingResourceWithStreamingResponse(client.parsing)
         self.files = files.FilesResourceWithStreamingResponse(client.files)
         self.vector_stores = vector_stores.VectorStoresResourceWithStreamingResponse(client.vector_stores)
 
@@ -549,6 +557,7 @@ class AsyncMixedbreadWithStreamedResponse:
     def __init__(self, client: AsyncMixedbread) -> None:
         self.embeddings = embeddings.AsyncEmbeddingsResourceWithStreamingResponse(client.embeddings)
         self.reranking = reranking.AsyncRerankingResourceWithStreamingResponse(client.reranking)
+        self.parsing = parsing.AsyncParsingResourceWithStreamingResponse(client.parsing)
         self.files = files.AsyncFilesResourceWithStreamingResponse(client.files)
         self.vector_stores = vector_stores.AsyncVectorStoresResourceWithStreamingResponse(client.vector_stores)
 
