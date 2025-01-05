@@ -22,6 +22,7 @@ class Pagination(BaseModel):
 
 class VectorStoreListResponse(BaseModel):
     data: List[VectorStore]
+    """The list of vector stores"""
 
     pagination: Pagination
     """Pagination model that includes total count of items."""
