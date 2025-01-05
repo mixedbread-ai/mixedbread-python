@@ -4,10 +4,10 @@ from datetime import datetime
 
 from .._models import BaseModel
 
-__all__ = ["FileObject"]
+__all__ = ["FileCreateResponse"]
 
 
-class FileObject(BaseModel):
+class FileCreateResponse(BaseModel):
     id: str
     """Unique identifier for the file"""
 

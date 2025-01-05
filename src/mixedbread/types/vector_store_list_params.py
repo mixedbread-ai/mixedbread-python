@@ -12,4 +12,4 @@ class VectorStoreListParams(TypedDict, total=False):
     """Maximum number of items to return per page"""
 
     offset: int
-    """Cursor from which to start returning items"""
+    """Offset of the first item to return"""
