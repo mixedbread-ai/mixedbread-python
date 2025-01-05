@@ -22,8 +22,7 @@ from ...._response import (
 )
 from ...._base_client import make_request_options
 from ....types.document_ai.parse import job_create_params
-from ....types.document_ai.parse.job_create_response import JobCreateResponse
-from ....types.document_ai.parse.job_retrieve_response import JobRetrieveResponse
+from ....types.document_ai.parse.parsing_job import ParsingJob
 
 __all__ = ["JobsResource", "AsyncJobsResource"]
 
@@ -78,7 +77,7 @@ class JobsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> JobCreateResponse:
+    ) -> ParsingJob:
         """
         Start a parse job for the provided file.
 
@@ -117,7 +116,7 @@ class JobsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=JobCreateResponse,
+            cast_to=ParsingJob,
         )
 
     def retrieve(
@@ -130,7 +129,7 @@ class JobsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> JobRetrieveResponse:
+    ) -> ParsingJob:
         """
         Get detailed information about a specific parse job.
 
@@ -156,7 +155,7 @@ class JobsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=JobRetrieveResponse,
+            cast_to=ParsingJob,
         )
 
 
@@ -210,7 +209,7 @@ class AsyncJobsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> JobCreateResponse:
+    ) -> ParsingJob:
         """
         Start a parse job for the provided file.
 
@@ -249,7 +248,7 @@ class AsyncJobsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=JobCreateResponse,
+            cast_to=ParsingJob,
         )
 
     async def retrieve(
@@ -262,7 +261,7 @@ class AsyncJobsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> JobRetrieveResponse:
+    ) -> ParsingJob:
         """
         Get detailed information about a specific parse job.
 
@@ -288,7 +287,7 @@ class AsyncJobsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=JobRetrieveResponse,
+            cast_to=ParsingJob,
         )
 
 

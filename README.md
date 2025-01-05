@@ -27,9 +27,11 @@ pip install git+ssh://git@github.com/mixedbread-ai/mixedbread-python.git
 The full API of this library can be found in [api.md](api.md).
 
 ```python
+import os
 from mixedbread import Mixedbread
 
 client = Mixedbread(
+    api_key=os.environ.get("MXBAI_API_KEY"),  # This is the default and can be omitted
     # defaults to "production".
     environment="local",
 )
@@ -48,10 +50,12 @@ so that your API Key is not stored in source control.
 Simply import `AsyncMixedbread` instead of `Mixedbread` and use `await` with each API call:
 
 ```python
+import os
 import asyncio
 from mixedbread import AsyncMixedbread
 
 client = AsyncMixedbread(
+    api_key=os.environ.get("MXBAI_API_KEY"),  # This is the default and can be omitted
     # defaults to "production".
     environment="local",
 )

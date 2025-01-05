@@ -2,6 +2,5 @@
 
 from __future__ import annotations
 
+from .parsing_job import ParsingJob as ParsingJob
 from .job_create_params import JobCreateParams as JobCreateParams
-from .job_create_response import JobCreateResponse as JobCreateResponse
-from .job_retrieve_response import JobRetrieveResponse as JobRetrieveResponse

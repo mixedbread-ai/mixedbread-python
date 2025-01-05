@@ -24,10 +24,8 @@ from ...pagination import SyncPage, AsyncPage
 from ..._base_client import AsyncPaginator, make_request_options
 from ...lib import polling
 from ...types.vector_stores import file_list_params, file_create_params
-from ...types.vector_stores.file_list_response import FileListResponse
-from ...types.vector_stores.file_create_response import FileCreateResponse
+from ...types.vector_stores.vector_store_file import VectorStoreFile
 from ...types.vector_stores.file_delete_response import FileDeleteResponse
-from ...types.vector_stores.file_retrieve_response import FileRetrieveResponse
 
 __all__ = ["FilesResource", "AsyncFilesResource"]
 
@@ -64,7 +62,7 @@ class FilesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> FileCreateResponse:
+    ) -> VectorStoreFile:
         """
         Upload a new file to a vector store for indexing.
 
@@ -102,7 +100,7 @@ class FilesResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=FileCreateResponse,
+            cast_to=VectorStoreFile,
         )
 
     def retrieve(
@@ -116,7 +114,7 @@ class FilesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> FileRetrieveResponse:
+    ) -> VectorStoreFile:
         """
         Get details of a specific file in a vector store.
 
@@ -146,7 +144,7 @@ class FilesResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=FileRetrieveResponse,
+            cast_to=VectorStoreFile,
         )
 
     def list(
@@ -161,7 +159,7 @@ class FilesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> SyncPage[FileListResponse]:
+    ) -> SyncPage[VectorStoreFile]:
         """
         List files indexed in a vector store with pagination.
 
@@ -189,7 +187,7 @@ class FilesResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `vector_store_id` but received {vector_store_id!r}")
         return self._get_api_list(
             f"/v1/vector_stores/{vector_store_id}/files",
-            page=SyncPage[FileListResponse],
+            page=SyncPage[VectorStoreFile],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -203,7 +201,7 @@ class FilesResource(SyncAPIResource):
                     file_list_params.FileListParams,
                 ),
             ),
-            model=FileListResponse,
+            model=VectorStoreFile,
         )
 
     def delete(
@@ -370,7 +368,7 @@ class AsyncFilesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> FileCreateResponse:
+    ) -> VectorStoreFile:
         """
         Upload a new file to a vector store for indexing.
 
@@ -408,7 +406,7 @@ class AsyncFilesResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=FileCreateResponse,
+            cast_to=VectorStoreFile,
         )
 
     async def retrieve(
@@ -422,7 +420,7 @@ class AsyncFilesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> FileRetrieveResponse:
+    ) -> VectorStoreFile:
         """
         Get details of a specific file in a vector store.
 
@@ -452,7 +450,7 @@ class AsyncFilesResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=FileRetrieveResponse,
+            cast_to=VectorStoreFile,
         )
 
     def list(
@@ -467,7 +465,7 @@ class AsyncFilesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> AsyncPaginator[FileListResponse, AsyncPage[FileListResponse]]:
+    ) -> AsyncPaginator[VectorStoreFile, AsyncPage[VectorStoreFile]]:
         """
         List files indexed in a vector store with pagination.
 
@@ -495,7 +493,7 @@ class AsyncFilesResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `vector_store_id` but received {vector_store_id!r}")
         return self._get_api_list(
             f"/v1/vector_stores/{vector_store_id}/files",
-            page=AsyncPage[FileListResponse],
+            page=AsyncPage[VectorStoreFile],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -509,7 +507,7 @@ class AsyncFilesResource(AsyncAPIResource):
                     file_list_params.FileListParams,
                 ),
             ),
-            model=FileListResponse,
+            model=VectorStoreFile,
         )
 
     async def delete(
