@@ -8,13 +8,13 @@ from .jobs import (
     JobsResourceWithStreamingResponse,
     AsyncJobsResourceWithStreamingResponse,
 )
-from .parsing import (
-    ParsingResource,
-    AsyncParsingResource,
-    ParsingResourceWithRawResponse,
-    AsyncParsingResourceWithRawResponse,
-    ParsingResourceWithStreamingResponse,
-    AsyncParsingResourceWithStreamingResponse,
+from .parse import (
+    ParseResource,
+    AsyncParseResource,
+    ParseResourceWithRawResponse,
+    AsyncParseResourceWithRawResponse,
+    ParseResourceWithStreamingResponse,
+    AsyncParseResourceWithStreamingResponse,
 )
 
 __all__ = [
@@ -24,10 +24,10 @@ __all__ = [
     "AsyncJobsResourceWithRawResponse",
     "JobsResourceWithStreamingResponse",
     "AsyncJobsResourceWithStreamingResponse",
-    "ParsingResource",
-    "AsyncParsingResource",
-    "ParsingResourceWithRawResponse",
-    "AsyncParsingResourceWithRawResponse",
-    "ParsingResourceWithStreamingResponse",
-    "AsyncParsingResourceWithStreamingResponse",
+    "ParseResource",
+    "AsyncParseResource",
+    "ParseResourceWithRawResponse",
+    "AsyncParseResourceWithRawResponse",
+    "ParseResourceWithStreamingResponse",
+    "AsyncParseResourceWithStreamingResponse",
 ]
