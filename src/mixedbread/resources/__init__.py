@@ -1,13 +1,5 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from .chat import (
-    ChatResource,
-    AsyncChatResource,
-    ChatResourceWithRawResponse,
-    AsyncChatResourceWithRawResponse,
-    ChatResourceWithStreamingResponse,
-    AsyncChatResourceWithStreamingResponse,
-)
 from .files import (
     FilesResource,
     AsyncFilesResource,
@@ -16,6 +8,14 @@ from .files import (
     FilesResourceWithStreamingResponse,
     AsyncFilesResourceWithStreamingResponse,
 )
+from .reranking import (
+    RerankingResource,
+    AsyncRerankingResource,
+    RerankingResourceWithRawResponse,
+    AsyncRerankingResourceWithRawResponse,
+    RerankingResourceWithStreamingResponse,
+    AsyncRerankingResourceWithStreamingResponse,
+)
 from .embeddings import (
     EmbeddingsResource,
     AsyncEmbeddingsResource,
@@ -23,14 +23,6 @@ from .embeddings import (
     AsyncEmbeddingsResourceWithRawResponse,
     EmbeddingsResourceWithStreamingResponse,
     AsyncEmbeddingsResourceWithStreamingResponse,
-)
-from .rerankings import (
-    RerankingsResource,
-    AsyncRerankingsResource,
-    RerankingsResourceWithRawResponse,
-    AsyncRerankingsResourceWithRawResponse,
-    RerankingsResourceWithStreamingResponse,
-    AsyncRerankingsResourceWithStreamingResponse,
 )
 from .document_ai import (
     DocumentAIResource,
@@ -62,12 +54,12 @@ __all__ = [
     "AsyncEmbeddingsResourceWithRawResponse",
     "EmbeddingsResourceWithStreamingResponse",
     "AsyncEmbeddingsResourceWithStreamingResponse",
-    "RerankingsResource",
-    "AsyncRerankingsResource",
-    "RerankingsResourceWithRawResponse",
-    "AsyncRerankingsResourceWithRawResponse",
-    "RerankingsResourceWithStreamingResponse",
-    "AsyncRerankingsResourceWithStreamingResponse",
+    "RerankingResource",
+    "AsyncRerankingResource",
+    "RerankingResourceWithRawResponse",
+    "AsyncRerankingResourceWithRawResponse",
+    "RerankingResourceWithStreamingResponse",
+    "AsyncRerankingResourceWithStreamingResponse",
     "FilesResource",
     "AsyncFilesResource",
     "FilesResourceWithRawResponse",
@@ -80,10 +72,4 @@ __all__ = [
     "AsyncVectorStoresResourceWithRawResponse",
     "VectorStoresResourceWithStreamingResponse",
     "AsyncVectorStoresResourceWithStreamingResponse",
-    "ChatResource",
-    "AsyncChatResource",
-    "ChatResourceWithRawResponse",
-    "AsyncChatResourceWithRawResponse",
-    "ChatResourceWithStreamingResponse",
-    "AsyncChatResourceWithStreamingResponse",
 ]
