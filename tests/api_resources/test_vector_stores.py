@@ -13,6 +13,7 @@ from mixedbread.types import (
     VectorStoreListResponse,
     VectorStoreCreateResponse,
     VectorStoreDeleteResponse,
+    VectorStoreSearchResponse,
     VectorStoreUpdateResponse,
     VectorStoreRetrieveResponse,
 )
@@ -224,6 +225,81 @@ class TestVectorStores:
                 "",
             )
 
+    @parametrize
+    def test_method_search(self, client: Mixedbread) -> None:
+        vector_store = client.vector_stores.search(
+            query="how to configure SSL",
+            vector_store_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
+        )
+        assert_matches_type(VectorStoreSearchResponse, vector_store, path=["response"])
+
+    @parametrize
+    def test_method_search_with_all_params(self, client: Mixedbread) -> None:
+        vector_store = client.vector_stores.search(
+            query="how to configure SSL",
+            vector_store_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
+            filters={
+                "all": [
+                    {
+                        "key": "price",
+                        "operator": "eq",
+                        "value": {},
+                    }
+                ],
+                "any": [
+                    {
+                        "key": "price",
+                        "operator": "eq",
+                        "value": {},
+                    }
+                ],
+                "none": [
+                    {
+                        "key": "price",
+                        "operator": "eq",
+                        "value": {},
+                    }
+                ],
+            },
+            pagination={
+                "limit": 0,
+                "offset": 0,
+            },
+            search_options={
+                "return_chunks": True,
+                "return_metadata": True,
+                "rewrite_query": True,
+                "score_threshold": 0,
+            },
+        )
+        assert_matches_type(VectorStoreSearchResponse, vector_store, path=["response"])
+
+    @parametrize
+    def test_raw_response_search(self, client: Mixedbread) -> None:
+        response = client.vector_stores.with_raw_response.search(
+            query="how to configure SSL",
+            vector_store_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        vector_store = response.parse()
+        assert_matches_type(VectorStoreSearchResponse, vector_store, path=["response"])
+
+    @parametrize
+    def test_streaming_response_search(self, client: Mixedbread) -> None:
+        with client.vector_stores.with_streaming_response.search(
+            query="how to configure SSL",
+            vector_store_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            vector_store = response.parse()
+            assert_matches_type(VectorStoreSearchResponse, vector_store, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
 
 class TestAsyncVectorStores:
     parametrize = pytest.mark.parametrize("async_client", [False, True], indirect=True, ids=["loose", "strict"])
@@ -427,3 +503,78 @@ class TestAsyncVectorStores:
             await async_client.vector_stores.with_raw_response.delete(
                 "",
             )
+
+    @parametrize
+    async def test_method_search(self, async_client: AsyncMixedbread) -> None:
+        vector_store = await async_client.vector_stores.search(
+            query="how to configure SSL",
+            vector_store_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
+        )
+        assert_matches_type(VectorStoreSearchResponse, vector_store, path=["response"])
+
+    @parametrize
+    async def test_method_search_with_all_params(self, async_client: AsyncMixedbread) -> None:
+        vector_store = await async_client.vector_stores.search(
+            query="how to configure SSL",
+            vector_store_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
+            filters={
+                "all": [
+                    {
+                        "key": "price",
+                        "operator": "eq",
+                        "value": {},
+                    }
+                ],
+                "any": [
+                    {
+                        "key": "price",
+                        "operator": "eq",
+                        "value": {},
+                    }
+                ],
+                "none": [
+                    {
+                        "key": "price",
+                        "operator": "eq",
+                        "value": {},
+                    }
+                ],
+            },
+            pagination={
+                "limit": 0,
+                "offset": 0,
+            },
+            search_options={
+                "return_chunks": True,
+                "return_metadata": True,
+                "rewrite_query": True,
+                "score_threshold": 0,
+            },
+        )
+        assert_matches_type(VectorStoreSearchResponse, vector_store, path=["response"])
+
+    @parametrize
+    async def test_raw_response_search(self, async_client: AsyncMixedbread) -> None:
+        response = await async_client.vector_stores.with_raw_response.search(
+            query="how to configure SSL",
+            vector_store_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        vector_store = await response.parse()
+        assert_matches_type(VectorStoreSearchResponse, vector_store, path=["response"])
+
+    @parametrize
+    async def test_streaming_response_search(self, async_client: AsyncMixedbread) -> None:
+        async with async_client.vector_stores.with_streaming_response.search(
+            query="how to configure SSL",
+            vector_store_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            vector_store = await response.parse()
+            assert_matches_type(VectorStoreSearchResponse, vector_store, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
