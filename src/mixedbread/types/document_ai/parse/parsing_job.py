@@ -6,7 +6,7 @@ from typing_extensions import Literal
 
 from ...._models import BaseModel
 
-__all__ = ["JobCreateResponse", "Result", "ResultChunk", "ResultChunkElement"]
+__all__ = ["ParsingJob", "Result", "ResultChunk", "ResultChunkElement"]
 
 
 class ResultChunkElement(BaseModel):
@@ -80,7 +80,7 @@ class Result(BaseModel):
     """The format of the returned content"""
 
 
-class JobCreateResponse(BaseModel):
+class ParsingJob(BaseModel):
     id: str
     """The ID of the job"""
 

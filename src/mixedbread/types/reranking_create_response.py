@@ -10,7 +10,6 @@ __all__ = ["RerankingCreateResponse", "Data", "Usage"]
 
 class Data(BaseModel):
     index: int
-    """The index of the document."""
 
     input: Optional[object] = None
     """The input document."""
