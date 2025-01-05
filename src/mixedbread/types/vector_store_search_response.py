@@ -87,7 +87,7 @@ class Pagination(BaseModel):
     """Maximum number of items to return per page"""
 
     offset: Optional[int] = None
-    """Cursor from which to start returning items"""
+    """Offset of the first item to return"""
 
     total: Optional[int] = None
     """Total number of items available"""
@@ -95,6 +95,7 @@ class Pagination(BaseModel):
 
 class VectorStoreSearchResponse(BaseModel):
     data: List[Data]
+    """The list of scored vector store files"""
 
     pagination: Pagination
     """Pagination model that includes total count of items."""

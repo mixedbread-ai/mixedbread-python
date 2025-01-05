@@ -2,9 +2,6 @@
 
 from __future__ import annotations
 
-from .file_object import FileObject as FileObject
-from .file_deleted import FileDeleted as FileDeleted
-from .vector_store import VectorStore as VectorStore
 from .info_response import InfoResponse as InfoResponse
 from .embed_response import EmbedResponse as EmbedResponse
 from .rerank_response import RerankResponse as RerankResponse
@@ -14,6 +11,10 @@ from .file_list_response import FileListResponse as FileListResponse
 from .file_update_params import FileUpdateParams as FileUpdateParams
 from .client_embed_params import ClientEmbedParams as ClientEmbedParams
 from .client_rerank_params import ClientRerankParams as ClientRerankParams
+from .file_create_response import FileCreateResponse as FileCreateResponse
+from .file_delete_response import FileDeleteResponse as FileDeleteResponse
+from .file_update_response import FileUpdateResponse as FileUpdateResponse
+from .file_retrieve_response import FileRetrieveResponse as FileRetrieveResponse
 from .vector_store_qa_params import VectorStoreQaParams as VectorStoreQaParams
 from .embedding_create_params import EmbeddingCreateParams as EmbeddingCreateParams
 from .reranking_create_params import RerankingCreateParams as RerankingCreateParams
@@ -24,5 +25,8 @@ from .vector_store_create_params import VectorStoreCreateParams as VectorStoreCr
 from .vector_store_list_response import VectorStoreListResponse as VectorStoreListResponse
 from .vector_store_search_params import VectorStoreSearchParams as VectorStoreSearchParams
 from .vector_store_update_params import VectorStoreUpdateParams as VectorStoreUpdateParams
+from .vector_store_create_response import VectorStoreCreateResponse as VectorStoreCreateResponse
 from .vector_store_delete_response import VectorStoreDeleteResponse as VectorStoreDeleteResponse
 from .vector_store_search_response import VectorStoreSearchResponse as VectorStoreSearchResponse
+from .vector_store_update_response import VectorStoreUpdateResponse as VectorStoreUpdateResponse
+from .vector_store_retrieve_response import VectorStoreRetrieveResponse as VectorStoreRetrieveResponse

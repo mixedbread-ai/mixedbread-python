@@ -66,7 +66,7 @@ __all__ = [
 
 ENVIRONMENTS: Dict[str, str] = {
     "production": "https://api.mixedbread.ai",
-    "environment_1": "http://127.0.0.1:8000",
+    "local": "http://127.0.0.1:8000",
 }
 
 
@@ -83,13 +83,13 @@ class Mixedbread(SyncAPIClient):
     # client options
     api_key: str
 
-    _environment: Literal["production", "environment_1"] | NotGiven
+    _environment: Literal["production", "local"] | NotGiven
 
     def __init__(
         self,
         *,
         api_key: str | None = None,
-        environment: Literal["production", "environment_1"] | NotGiven = NOT_GIVEN,
+        environment: Literal["production", "local"] | NotGiven = NOT_GIVEN,
         base_url: str | httpx.URL | None | NotGiven = NOT_GIVEN,
         timeout: Union[float, Timeout, None, NotGiven] = NOT_GIVEN,
         max_retries: int = DEFAULT_MAX_RETRIES,
@@ -191,7 +191,7 @@ class Mixedbread(SyncAPIClient):
         self,
         *,
         api_key: str | None = None,
-        environment: Literal["production", "environment_1"] | None = None,
+        environment: Literal["production", "local"] | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = NOT_GIVEN,
         http_client: httpx.Client | None = None,
@@ -334,7 +334,7 @@ class Mixedbread(SyncAPIClient):
     def rerank(
         self,
         *,
-        input: object,
+        input: List[Union[str, object]],
         query: str,
         model: str | NotGiven = NOT_GIVEN,
         rank_fields: Optional[List[str]] | NotGiven = NOT_GIVEN,
@@ -355,6 +355,8 @@ class Mixedbread(SyncAPIClient):
         Returns: RerankingCreateResponse: The reranked documents for the input query.
 
         Args:
+          input: The input documents to rerank.
+
           query: The query to rerank the documents.
 
           model: The model to use for reranking documents.
@@ -439,13 +441,13 @@ class AsyncMixedbread(AsyncAPIClient):
     # client options
     api_key: str
 
-    _environment: Literal["production", "environment_1"] | NotGiven
+    _environment: Literal["production", "local"] | NotGiven
 
     def __init__(
         self,
         *,
         api_key: str | None = None,
-        environment: Literal["production", "environment_1"] | NotGiven = NOT_GIVEN,
+        environment: Literal["production", "local"] | NotGiven = NOT_GIVEN,
         base_url: str | httpx.URL | None | NotGiven = NOT_GIVEN,
         timeout: Union[float, Timeout, None, NotGiven] = NOT_GIVEN,
         max_retries: int = DEFAULT_MAX_RETRIES,
@@ -547,7 +549,7 @@ class AsyncMixedbread(AsyncAPIClient):
         self,
         *,
         api_key: str | None = None,
-        environment: Literal["production", "environment_1"] | None = None,
+        environment: Literal["production", "local"] | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = NOT_GIVEN,
         http_client: httpx.AsyncClient | None = None,
@@ -690,7 +692,7 @@ class AsyncMixedbread(AsyncAPIClient):
     async def rerank(
         self,
         *,
-        input: object,
+        input: List[Union[str, object]],
         query: str,
         model: str | NotGiven = NOT_GIVEN,
         rank_fields: Optional[List[str]] | NotGiven = NOT_GIVEN,
@@ -711,6 +713,8 @@ class AsyncMixedbread(AsyncAPIClient):
         Returns: RerankingCreateResponse: The reranked documents for the input query.
 
         Args:
+          input: The input documents to rerank.
+
           query: The query to rerank the documents.
 
           model: The model to use for reranking documents.

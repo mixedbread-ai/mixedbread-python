@@ -31,7 +31,7 @@ from mixedbread import Mixedbread
 
 client = Mixedbread(
     # defaults to "production".
-    environment="environment_1",
+    environment="local",
 )
 
 vector_store = client.vector_stores.create()
@@ -53,7 +53,7 @@ from mixedbread import AsyncMixedbread
 
 client = AsyncMixedbread(
     # defaults to "production".
-    environment="environment_1",
+    environment="local",
 )
 
 

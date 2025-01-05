@@ -2,8 +2,7 @@
 
 from __future__ import annotations
 
-import functools
-from typing import Any, List, Optional, cast, Union
+from typing import List, Optional
 from typing_extensions import Literal
 
 import httpx
@@ -25,7 +24,6 @@ from ...._base_client import make_request_options
 from ....types.document_ai.parse import job_create_params
 from ....types.document_ai.parse.job_create_response import JobCreateResponse
 from ....types.document_ai.parse.job_retrieve_response import JobRetrieveResponse
-from ....lib import polling
 
 __all__ = ["JobsResource", "AsyncJobsResource"]
 
@@ -105,24 +103,21 @@ class JobsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return cast(
-            JobCreateResponse,
-            self._post(
-                "/v1/document-ai/parse",
-                body=maybe_transform(
-                    {
-                        "file_id": file_id,
-                        "chunking_strategy": chunking_strategy,
-                        "element_types": element_types,
-                        "return_format": return_format,
-                    },
-                    job_create_params.JobCreateParams,
-                ),
-                options=make_request_options(
-                    extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-                ),
-                cast_to=cast(Any, JobCreateResponse),  # Union types cannot be passed in as arguments in the type system
+        return self._post(
+            "/v1/document-ai/parse",
+            body=maybe_transform(
+                {
+                    "file_id": file_id,
+                    "chunking_strategy": chunking_strategy,
+                    "element_types": element_types,
+                    "return_format": return_format,
+                },
+                job_create_params.JobCreateParams,
             ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=JobCreateResponse,
         )
 
     def retrieve(
@@ -156,17 +151,12 @@ class JobsResource(SyncAPIResource):
         """
         if not job_id:
             raise ValueError(f"Expected a non-empty value for `job_id` but received {job_id!r}")
-        return cast(
-            JobRetrieveResponse,
-            self._get(
-                f"/v1/document-ai/parse/{job_id}",
-                options=make_request_options(
-                    extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-                ),
-                cast_to=cast(
-                    Any, JobRetrieveResponse
-                ),  # Union types cannot be passed in as arguments in the type system
+        return self._get(
+            f"/v1/document-ai/parse/{job_id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
+            cast_to=JobRetrieveResponse,
         )
 
 
@@ -245,24 +235,21 @@ class AsyncJobsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return cast(
-            JobCreateResponse,
-            await self._post(
-                "/v1/document-ai/parse",
-                body=await async_maybe_transform(
-                    {
-                        "file_id": file_id,
-                        "chunking_strategy": chunking_strategy,
-                        "element_types": element_types,
-                        "return_format": return_format,
-                    },
-                    job_create_params.JobCreateParams,
-                ),
-                options=make_request_options(
-                    extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-                ),
-                cast_to=cast(Any, JobCreateResponse),  # Union types cannot be passed in as arguments in the type system
+        return await self._post(
+            "/v1/document-ai/parse",
+            body=await async_maybe_transform(
+                {
+                    "file_id": file_id,
+                    "chunking_strategy": chunking_strategy,
+                    "element_types": element_types,
+                    "return_format": return_format,
+                },
+                job_create_params.JobCreateParams,
             ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=JobCreateResponse,
         )
 
     async def retrieve(
@@ -296,17 +283,12 @@ class AsyncJobsResource(AsyncAPIResource):
         """
         if not job_id:
             raise ValueError(f"Expected a non-empty value for `job_id` but received {job_id!r}")
-        return cast(
-            JobRetrieveResponse,
-            await self._get(
-                f"/v1/document-ai/parse/{job_id}",
-                options=make_request_options(
-                    extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-                ),
-                cast_to=cast(
-                    Any, JobRetrieveResponse
-                ),  # Union types cannot be passed in as arguments in the type system
+        return await self._get(
+            f"/v1/document-ai/parse/{job_id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
+            cast_to=JobRetrieveResponse,
         )
 
 

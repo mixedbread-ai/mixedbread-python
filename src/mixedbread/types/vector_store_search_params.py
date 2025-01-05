@@ -8,23 +8,23 @@ from typing_extensions import Literal, Required, TypeAlias, TypedDict
 __all__ = [
     "VectorStoreSearchParams",
     "Filters",
-    "FiltersFilter",
-    "FiltersFilterAll",
-    "FiltersFilterAllCondition",
-    "FiltersFilterAny",
-    "FiltersFilterAnyCondition",
-    "FiltersFilterNone",
-    "FiltersFilterNoneCondition",
-    "FiltersCondition",
+    "FiltersSearchFilter",
+    "FiltersSearchFilterAll",
+    "FiltersSearchFilterAllSearchFilterCondition",
+    "FiltersSearchFilterAny",
+    "FiltersSearchFilterAnySearchFilterCondition",
+    "FiltersSearchFilterNone",
+    "FiltersSearchFilterNoneSearchFilterCondition",
+    "FiltersSearchFilterCondition",
     "FiltersUnionMember2",
-    "FiltersUnionMember2Filter",
-    "FiltersUnionMember2FilterAll",
-    "FiltersUnionMember2FilterAllCondition",
-    "FiltersUnionMember2FilterAny",
-    "FiltersUnionMember2FilterAnyCondition",
-    "FiltersUnionMember2FilterNone",
-    "FiltersUnionMember2FilterNoneCondition",
-    "FiltersUnionMember2Condition",
+    "FiltersUnionMember2SearchFilter",
+    "FiltersUnionMember2SearchFilterAll",
+    "FiltersUnionMember2SearchFilterAllSearchFilterCondition",
+    "FiltersUnionMember2SearchFilterAny",
+    "FiltersUnionMember2SearchFilterAnySearchFilterCondition",
+    "FiltersUnionMember2SearchFilterNone",
+    "FiltersUnionMember2SearchFilterNoneSearchFilterCondition",
+    "FiltersUnionMember2SearchFilterCondition",
     "Pagination",
     "SearchOptions",
 ]
@@ -47,7 +47,7 @@ class VectorStoreSearchParams(TypedDict, total=False):
     """Search configuration options"""
 
 
-class FiltersFilterAllCondition(TypedDict, total=False):
+class FiltersSearchFilterAllSearchFilterCondition(TypedDict, total=False):
     key: Required[str]
     """The field to apply the condition on"""
 
@@ -58,10 +58,10 @@ class FiltersFilterAllCondition(TypedDict, total=False):
     """The value to compare against"""
 
 
-FiltersFilterAll: TypeAlias = Union[FiltersFilterAllCondition, object]
+FiltersSearchFilterAll: TypeAlias = Union[FiltersSearchFilterAllSearchFilterCondition, object]
 
 
-class FiltersFilterAnyCondition(TypedDict, total=False):
+class FiltersSearchFilterAnySearchFilterCondition(TypedDict, total=False):
     key: Required[str]
     """The field to apply the condition on"""
 
@@ -72,10 +72,10 @@ class FiltersFilterAnyCondition(TypedDict, total=False):
     """The value to compare against"""
 
 
-FiltersFilterAny: TypeAlias = Union[FiltersFilterAnyCondition, object]
+FiltersSearchFilterAny: TypeAlias = Union[FiltersSearchFilterAnySearchFilterCondition, object]
 
 
-class FiltersFilterNoneCondition(TypedDict, total=False):
+class FiltersSearchFilterNoneSearchFilterCondition(TypedDict, total=False):
     key: Required[str]
     """The field to apply the condition on"""
 
@@ -86,21 +86,21 @@ class FiltersFilterNoneCondition(TypedDict, total=False):
     """The value to compare against"""
 
 
-FiltersFilterNone: TypeAlias = Union[FiltersFilterNoneCondition, object]
+FiltersSearchFilterNone: TypeAlias = Union[FiltersSearchFilterNoneSearchFilterCondition, object]
 
 
-class FiltersFilter(TypedDict, total=False):
-    all: Optional[Iterable[FiltersFilterAll]]
+class FiltersSearchFilter(TypedDict, total=False):
+    all: Optional[Iterable[FiltersSearchFilterAll]]
     """List of conditions or filters to be ANDed together"""
 
-    any: Optional[Iterable[FiltersFilterAny]]
+    any: Optional[Iterable[FiltersSearchFilterAny]]
     """List of conditions or filters to be ORed together"""
 
-    none: Optional[Iterable[FiltersFilterNone]]
+    none: Optional[Iterable[FiltersSearchFilterNone]]
     """List of conditions or filters to be NOTed"""
 
 
-class FiltersCondition(TypedDict, total=False):
+class FiltersSearchFilterCondition(TypedDict, total=False):
     key: Required[str]
     """The field to apply the condition on"""
 
@@ -111,7 +111,7 @@ class FiltersCondition(TypedDict, total=False):
     """The value to compare against"""
 
 
-class FiltersUnionMember2FilterAllCondition(TypedDict, total=False):
+class FiltersUnionMember2SearchFilterAllSearchFilterCondition(TypedDict, total=False):
     key: Required[str]
     """The field to apply the condition on"""
 
@@ -122,10 +122,10 @@ class FiltersUnionMember2FilterAllCondition(TypedDict, total=False):
     """The value to compare against"""
 
 
-FiltersUnionMember2FilterAll: TypeAlias = Union[FiltersUnionMember2FilterAllCondition, object]
+FiltersUnionMember2SearchFilterAll: TypeAlias = Union[FiltersUnionMember2SearchFilterAllSearchFilterCondition, object]
 
 
-class FiltersUnionMember2FilterAnyCondition(TypedDict, total=False):
+class FiltersUnionMember2SearchFilterAnySearchFilterCondition(TypedDict, total=False):
     key: Required[str]
     """The field to apply the condition on"""
 
@@ -136,10 +136,10 @@ class FiltersUnionMember2FilterAnyCondition(TypedDict, total=False):
     """The value to compare against"""
 
 
-FiltersUnionMember2FilterAny: TypeAlias = Union[FiltersUnionMember2FilterAnyCondition, object]
+FiltersUnionMember2SearchFilterAny: TypeAlias = Union[FiltersUnionMember2SearchFilterAnySearchFilterCondition, object]
 
 
-class FiltersUnionMember2FilterNoneCondition(TypedDict, total=False):
+class FiltersUnionMember2SearchFilterNoneSearchFilterCondition(TypedDict, total=False):
     key: Required[str]
     """The field to apply the condition on"""
 
@@ -150,21 +150,21 @@ class FiltersUnionMember2FilterNoneCondition(TypedDict, total=False):
     """The value to compare against"""
 
 
-FiltersUnionMember2FilterNone: TypeAlias = Union[FiltersUnionMember2FilterNoneCondition, object]
+FiltersUnionMember2SearchFilterNone: TypeAlias = Union[FiltersUnionMember2SearchFilterNoneSearchFilterCondition, object]
 
 
-class FiltersUnionMember2Filter(TypedDict, total=False):
-    all: Optional[Iterable[FiltersUnionMember2FilterAll]]
+class FiltersUnionMember2SearchFilter(TypedDict, total=False):
+    all: Optional[Iterable[FiltersUnionMember2SearchFilterAll]]
     """List of conditions or filters to be ANDed together"""
 
-    any: Optional[Iterable[FiltersUnionMember2FilterAny]]
+    any: Optional[Iterable[FiltersUnionMember2SearchFilterAny]]
     """List of conditions or filters to be ORed together"""
 
-    none: Optional[Iterable[FiltersUnionMember2FilterNone]]
+    none: Optional[Iterable[FiltersUnionMember2SearchFilterNone]]
     """List of conditions or filters to be NOTed"""
 
 
-class FiltersUnionMember2Condition(TypedDict, total=False):
+class FiltersUnionMember2SearchFilterCondition(TypedDict, total=False):
     key: Required[str]
     """The field to apply the condition on"""
 
@@ -175,9 +175,9 @@ class FiltersUnionMember2Condition(TypedDict, total=False):
     """The value to compare against"""
 
 
-FiltersUnionMember2: TypeAlias = Union[FiltersUnionMember2Filter, FiltersUnionMember2Condition]
+FiltersUnionMember2: TypeAlias = Union[FiltersUnionMember2SearchFilter, FiltersUnionMember2SearchFilterCondition]
 
-Filters: TypeAlias = Union[FiltersFilter, FiltersCondition, Iterable[FiltersUnionMember2]]
+Filters: TypeAlias = Union[FiltersSearchFilter, FiltersSearchFilterCondition, Iterable[FiltersUnionMember2]]
 
 
 class Pagination(TypedDict, total=False):
@@ -185,7 +185,7 @@ class Pagination(TypedDict, total=False):
     """Maximum number of items to return per page"""
 
     offset: int
-    """Cursor from which to start returning items"""
+    """Offset of the first item to return"""
 
 
 class SearchOptions(TypedDict, total=False):
