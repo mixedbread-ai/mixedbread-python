@@ -24,7 +24,7 @@ from mixedbread import Mixedbread, AsyncMixedbread, APIResponseValidationError
 from mixedbread._types import Omit
 from mixedbread._models import BaseModel, FinalRequestOptions
 from mixedbread._constants import RAW_RESPONSE_HEADER
-from mixedbread._exceptions import APIStatusError, APITimeoutError, APIResponseValidationError
+from mixedbread._exceptions import APIStatusError, APITimeoutError, MixedbreadError, APIResponseValidationError
 from mixedbread._base_client import (
     DEFAULT_TIMEOUT,
     HTTPX_DEFAULT_TIMEOUT,
@@ -332,6 +332,16 @@ class TestMixedbread:
         request = client2._build_request(FinalRequestOptions(method="get", url="/foo"))
         assert request.headers.get("x-foo") == "stainless"
         assert request.headers.get("x-stainless-lang") == "my-overriding-header"
+
+    def test_validate_headers(self) -> None:
+        client = Mixedbread(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
+        assert request.headers.get("Authorization") == f"Bearer {api_key}"
+
+        with pytest.raises(MixedbreadError):
+            with update_env(**{"MXBAI_API_KEY": Omit()}):
+                client2 = Mixedbread(base_url=base_url, api_key=None, _strict_response_validation=True)
+            _ = client2
 
     def test_default_query_option(self) -> None:
         client = Mixedbread(
@@ -1102,6 +1112,16 @@ class TestAsyncMixedbread:
         request = client2._build_request(FinalRequestOptions(method="get", url="/foo"))
         assert request.headers.get("x-foo") == "stainless"
         assert request.headers.get("x-stainless-lang") == "my-overriding-header"
+
+    def test_validate_headers(self) -> None:
+        client = AsyncMixedbread(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
+        assert request.headers.get("Authorization") == f"Bearer {api_key}"
+
+        with pytest.raises(MixedbreadError):
+            with update_env(**{"MXBAI_API_KEY": Omit()}):
+                client2 = AsyncMixedbread(base_url=base_url, api_key=None, _strict_response_validation=True)
+            _ = client2
 
     def test_default_query_option(self) -> None:
         client = AsyncMixedbread(

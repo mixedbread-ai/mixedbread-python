@@ -32,11 +32,8 @@ from .._response import (
 )
 from ..pagination import SyncPage, AsyncPage
 from .._base_client import AsyncPaginator, make_request_options
-from ..types.file_list_response import FileListResponse
-from ..types.file_create_response import FileCreateResponse
+from ..types.file_object import FileObject
 from ..types.file_delete_response import FileDeleteResponse
-from ..types.file_update_response import FileUpdateResponse
-from ..types.file_retrieve_response import FileRetrieveResponse
 
 __all__ = ["FilesResource", "AsyncFilesResource"]
 
@@ -71,7 +68,7 @@ class FilesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> FileCreateResponse:
+    ) -> FileObject:
         """
         Upload a new file.
 
@@ -103,7 +100,7 @@ class FilesResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=FileCreateResponse,
+            cast_to=FileObject,
         )
 
     def retrieve(
@@ -116,7 +113,7 @@ class FilesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> FileRetrieveResponse:
+    ) -> FileObject:
         """
         Retrieve details of a specific file by its ID.
 
@@ -142,7 +139,7 @@ class FilesResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=FileRetrieveResponse,
+            cast_to=FileObject,
         )
 
     def update(
@@ -156,7 +153,7 @@ class FilesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> FileUpdateResponse:
+    ) -> FileObject:
         """
         Update the details of a specific file.
 
@@ -192,7 +189,7 @@ class FilesResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=FileUpdateResponse,
+            cast_to=FileObject,
         )
 
     def list(
@@ -206,7 +203,7 @@ class FilesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> SyncPage[FileListResponse]:
+    ) -> SyncPage[FileObject]:
         """
         List all files for the authenticated user.
 
@@ -229,7 +226,7 @@ class FilesResource(SyncAPIResource):
         """
         return self._get_api_list(
             "/v1/files",
-            page=SyncPage[FileListResponse],
+            page=SyncPage[FileObject],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -243,7 +240,7 @@ class FilesResource(SyncAPIResource):
                     file_list_params.FileListParams,
                 ),
             ),
-            model=FileListResponse,
+            model=FileObject,
         )
 
     def delete(
@@ -356,7 +353,7 @@ class AsyncFilesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> FileCreateResponse:
+    ) -> FileObject:
         """
         Upload a new file.
 
@@ -388,7 +385,7 @@ class AsyncFilesResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=FileCreateResponse,
+            cast_to=FileObject,
         )
 
     async def retrieve(
@@ -401,7 +398,7 @@ class AsyncFilesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> FileRetrieveResponse:
+    ) -> FileObject:
         """
         Retrieve details of a specific file by its ID.
 
@@ -427,7 +424,7 @@ class AsyncFilesResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=FileRetrieveResponse,
+            cast_to=FileObject,
         )
 
     async def update(
@@ -441,7 +438,7 @@ class AsyncFilesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> FileUpdateResponse:
+    ) -> FileObject:
         """
         Update the details of a specific file.
 
@@ -477,7 +474,7 @@ class AsyncFilesResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=FileUpdateResponse,
+            cast_to=FileObject,
         )
 
     def list(
@@ -491,7 +488,7 @@ class AsyncFilesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> AsyncPaginator[FileListResponse, AsyncPage[FileListResponse]]:
+    ) -> AsyncPaginator[FileObject, AsyncPage[FileObject]]:
         """
         List all files for the authenticated user.
 
@@ -514,7 +511,7 @@ class AsyncFilesResource(AsyncAPIResource):
         """
         return self._get_api_list(
             "/v1/files",
-            page=AsyncPage[FileListResponse],
+            page=AsyncPage[FileObject],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -528,7 +525,7 @@ class AsyncFilesResource(AsyncAPIResource):
                     file_list_params.FileListParams,
                 ),
             ),
-            model=FileListResponse,
+            model=FileObject,
         )
 
     async def delete(
