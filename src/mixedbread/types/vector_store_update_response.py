@@ -6,7 +6,7 @@ from typing_extensions import Literal
 
 from .._models import BaseModel
 
-__all__ = ["VectorStore", "ExpiresAfter", "FileCounts"]
+__all__ = ["VectorStoreUpdateResponse", "ExpiresAfter", "FileCounts"]
 
 
 class ExpiresAfter(BaseModel):
@@ -34,7 +34,7 @@ class FileCounts(BaseModel):
     """Total number of files"""
 
 
-class VectorStore(BaseModel):
+class VectorStoreUpdateResponse(BaseModel):
     id: str
     """Unique identifier for the vector store"""
 
