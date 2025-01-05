@@ -32,16 +32,12 @@ from mixedbread import Mixedbread
 client = Mixedbread(
     # defaults to "production".
     environment="local",
+    api_key="My API Key",
 )
 
 vector_store = client.vector_stores.create()
 print(vector_store.id)
 ```
-
-While you can provide an `api_key` keyword argument,
-we recommend using [python-dotenv](https://pypi.org/project/python-dotenv/)
-to add `MXBAI_API_KEY="My API Key"` to your `.env` file
-so that your API Key is not stored in source control.
 
 ## Async usage
 
@@ -54,6 +50,7 @@ from mixedbread import AsyncMixedbread
 client = AsyncMixedbread(
     # defaults to "production".
     environment="local",
+    api_key="My API Key",
 )
 
 
@@ -85,7 +82,9 @@ This library provides auto-paginating iterators with each list response, so you 
 ```python
 from mixedbread import Mixedbread
 
-client = Mixedbread()
+client = Mixedbread(
+    api_key="My API Key",
+)
 
 all_vector_stores = []
 # Automatically fetches more pages as needed.
@@ -101,7 +100,9 @@ Or, asynchronously:
 import asyncio
 from mixedbread import AsyncMixedbread
 
-client = AsyncMixedbread()
+client = AsyncMixedbread(
+    api_key="My API Key",
+)
 
 
 async def main() -> None:
@@ -154,7 +155,9 @@ All errors inherit from `mixedbread.APIError`.
 import mixedbread
 from mixedbread import Mixedbread
 
-client = Mixedbread()
+client = Mixedbread(
+    api_key="My API Key",
+)
 
 try:
     client.vector_stores.create()
@@ -197,6 +200,7 @@ from mixedbread import Mixedbread
 client = Mixedbread(
     # default is 2
     max_retries=0,
+    api_key="My API Key",
 )
 
 # Or, configure per-request:
@@ -215,11 +219,13 @@ from mixedbread import Mixedbread
 client = Mixedbread(
     # 20 seconds (default is 1 minute)
     timeout=20.0,
+    api_key="My API Key",
 )
 
 # More granular control:
 client = Mixedbread(
     timeout=httpx.Timeout(60.0, read=5.0, write=10.0, connect=2.0),
+    api_key="My API Key",
 )
 
 # Override per-request:
@@ -263,7 +269,9 @@ The "raw" Response object can be accessed by prefixing `.with_raw_response.` to 
 ```py
 from mixedbread import Mixedbread
 
-client = Mixedbread()
+client = Mixedbread(
+    api_key="My API Key",
+)
 response = client.vector_stores.with_raw_response.create()
 print(response.headers.get('X-My-Header'))
 
@@ -345,6 +353,7 @@ client = Mixedbread(
         proxy="http://my.test.proxy.example.com",
         transport=httpx.HTTPTransport(local_address="0.0.0.0"),
     ),
+    api_key="My API Key",
 )
 ```
 
@@ -361,7 +370,9 @@ By default the library closes underlying HTTP connections whenever the client is
 ```py
 from mixedbread import Mixedbread
 
-with Mixedbread() as client:
+with Mixedbread(
+    api_key="My API Key",
+) as client:
   # make requests here
   ...
 
