@@ -4,10 +4,11 @@ from __future__ import annotations
 
 from typing import List, Optional
 from typing_extensions import Literal
+import functools
 
 import httpx
 
-from ...._types import NOT_GIVEN, Body, Query, Headers, NotGiven
+from ...._types import NOT_GIVEN, Body, Query, Headers, NotGiven, FileTypes
 from ...._utils import (
     maybe_transform,
     async_maybe_transform,
@@ -21,6 +22,7 @@ from ...._response import (
     async_to_streamed_response_wrapper,
 )
 from ...._base_client import make_request_options
+from ....lib import polling
 from ....types.document_ai.parse import job_create_params
 from ....types.document_ai.parse.parsing_job import ParsingJob
 
@@ -158,6 +160,155 @@ class JobsResource(SyncAPIResource):
             cast_to=ParsingJob,
         )
 
+    def poll(
+        self,
+        job_id: str,
+        *,
+        poll_interval_ms: int | NotGiven = NOT_GIVEN,
+        poll_timeout_ms: float | NotGiven = NOT_GIVEN,
+    ) -> ParsingJob:
+        """
+        Poll for a job's status until it reaches a terminal state.
+        Args:
+            job_id: The ID of the job to poll
+            poll_interval_ms: The interval between polls in milliseconds
+            poll_timeout_ms: The maximum time to poll for in milliseconds
+        Returns:
+            The job object once it reaches a terminal state
+        """
+        polling_interval_ms = poll_interval_ms or 500
+        polling_timeout_ms = poll_timeout_ms or None
+        return polling.poll(
+            fn=functools.partial(self.retrieve, job_id),
+            condition=lambda res: res.status == "successful" or res.status == "failed",
+            interval_seconds=polling_interval_ms / 1000,
+            timeout_seconds=polling_timeout_ms / 1000 if polling_timeout_ms else None,
+        )
+
+    def create_and_poll(
+        self,
+        *,
+        file_id: str,
+        chunking_strategy: Literal["page"] | NotGiven = NOT_GIVEN,
+        element_types: Optional[
+            List[
+                Literal[
+                    "caption",
+                    "footnote",
+                    "formula",
+                    "list-item",
+                    "page-footer",
+                    "page-header",
+                    "picture",
+                    "section-header",
+                    "table",
+                    "text",
+                    "title",
+                ]
+            ]
+        ]
+        | NotGiven = NOT_GIVEN,
+        return_format: Literal["html", "markdown", "plain"] | NotGiven = NOT_GIVEN,
+        poll_interval_ms: int | NotGiven = NOT_GIVEN,
+        poll_timeout_ms: float | NotGiven = NOT_GIVEN,
+    ) -> ParsingJob:
+        """
+        Create a parsing job and wait for it to complete.
+        Args:
+            file_id: The ID of the file to parse
+            chunking_strategy: The strategy to use for chunking the content
+            element_types: The elements to extract from the document
+            return_format: The format of the returned content
+            poll_interval_ms: The interval between polls in milliseconds
+            poll_timeout_ms: The maximum time to poll for in milliseconds
+        Returns:
+            The job object once it reaches a terminal state
+        """
+        job = self.create(
+            file_id=file_id,
+            chunking_strategy=chunking_strategy,
+            element_types=element_types,
+            return_format=return_format,
+        )
+        return self.poll(
+            job.id,
+            poll_interval_ms=poll_interval_ms,
+            poll_timeout_ms=poll_timeout_ms,
+        )
+
+    def upload(
+        self,
+        *,
+        file: FileTypes,
+        chunking_strategy: Literal["page"] | NotGiven = NOT_GIVEN,
+        element_types: Optional[
+            List[
+                Literal[
+                    "caption",
+                    "footnote",
+                    "formula",
+                    "list-item",
+                    "page-footer",
+                    "page-header",
+                    "picture",
+                    "section-header",
+                    "table",
+                    "text",
+                    "title",
+                ]
+            ]
+        ]
+        | NotGiven = NOT_GIVEN,
+        return_format: Literal["html", "markdown", "plain"] | NotGiven = NOT_GIVEN,
+    ) -> ParsingJob:
+        """Upload a file to the `files` API and then create a parsing job for it.
+        Note the job will be asynchronously processed (you can use the alternative
+        polling helper method to wait for processing to complete).
+        """
+        file_obj = self._client.files.create(file=file)
+        return self.create(
+            file_id=file_obj.id,
+            chunking_strategy=chunking_strategy,
+            element_types=element_types,
+            return_format=return_format,
+        )
+
+    def upload_and_poll(
+        self,
+        *,
+        file: FileTypes,
+        chunking_strategy: Literal["page"] | NotGiven = NOT_GIVEN,
+        element_types: Optional[
+            List[
+                Literal[
+                    "caption",
+                    "footnote",
+                    "formula",
+                    "list-item",
+                    "page-footer",
+                    "page-header",
+                    "picture",
+                    "section-header",
+                    "table",
+                    "text",
+                    "title",
+                ]
+            ]
+        ]
+        | NotGiven = NOT_GIVEN,
+        return_format: Literal["html", "markdown", "plain"] | NotGiven = NOT_GIVEN,
+        poll_interval_ms: int | NotGiven = NOT_GIVEN,
+    ) -> ParsingJob:
+        """Upload a file and create a parsing job, then poll until processing is complete."""
+        file_obj = self._client.files.create(file=file)
+        return self.create_and_poll(
+            file_id=file_obj.id,
+            chunking_strategy=chunking_strategy,
+            element_types=element_types,
+            return_format=return_format,
+            poll_interval_ms=poll_interval_ms,
+        )
+
 
 class AsyncJobsResource(AsyncAPIResource):
     @cached_property
@@ -288,6 +439,155 @@ class AsyncJobsResource(AsyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=ParsingJob,
+        )
+
+    async def poll(
+        self,
+        job_id: str,
+        *,
+        poll_interval_ms: int | NotGiven = NOT_GIVEN,
+        poll_timeout_ms: float | NotGiven = NOT_GIVEN,
+    ) -> ParsingJob:
+        """
+        Poll for a job's status until it reaches a terminal state.
+        Args:
+            job_id: The ID of the job to poll
+            poll_interval_ms: The interval between polls in milliseconds
+            poll_timeout_ms: The maximum time to poll for in milliseconds
+        Returns:
+            The job object once it reaches a terminal state
+        """
+        polling_interval_ms = poll_interval_ms or 500
+        polling_timeout_ms = poll_timeout_ms or None
+        return await polling.poll_async(
+            fn=functools.partial(self.retrieve, job_id),
+            condition=lambda res: res.status == "successful" or res.status == "failed" or res.status == "canceled",
+            interval_seconds=polling_interval_ms / 1000,
+            timeout_seconds=polling_timeout_ms / 1000 if polling_timeout_ms else None,
+        )
+
+    async def create_and_poll(
+        self,
+        *,
+        file_id: str,
+        chunking_strategy: Literal["page"] | NotGiven = NOT_GIVEN,
+        element_types: Optional[
+            List[
+                Literal[
+                    "caption",
+                    "footnote",
+                    "formula",
+                    "list-item",
+                    "page-footer",
+                    "page-header",
+                    "picture",
+                    "section-header",
+                    "table",
+                    "text",
+                    "title",
+                ]
+            ]
+        ]
+        | NotGiven = NOT_GIVEN,
+        return_format: Literal["html", "markdown", "plain"] | NotGiven = NOT_GIVEN,
+        poll_interval_ms: int | NotGiven = NOT_GIVEN,
+        poll_timeout_ms: float | NotGiven = NOT_GIVEN,
+    ) -> ParsingJob:
+        """
+        Create a parsing job and wait for it to complete.
+        Args:
+            file_id: The ID of the file to parse
+            chunking_strategy: The strategy to use for chunking the content
+            element_types: The elements to extract from the document
+            return_format: The format of the returned content
+            poll_interval_ms: The interval between polls in milliseconds
+            poll_timeout_ms: The maximum time to poll for in milliseconds
+        Returns:
+            The job object once it reaches a terminal state
+        """
+        job = await self.create(
+            file_id=file_id,
+            chunking_strategy=chunking_strategy,
+            element_types=element_types,
+            return_format=return_format,
+        )
+        return await self.poll(
+            job.id,
+            poll_interval_ms=poll_interval_ms,
+            poll_timeout_ms=poll_timeout_ms,
+        )
+
+    async def upload(
+        self,
+        *,
+        file: FileTypes,
+        chunking_strategy: Literal["page"] | NotGiven = NOT_GIVEN,
+        element_types: Optional[
+            List[
+                Literal[
+                    "caption",
+                    "footnote",
+                    "formula",
+                    "list-item",
+                    "page-footer",
+                    "page-header",
+                    "picture",
+                    "section-header",
+                    "table",
+                    "text",
+                    "title",
+                ]
+            ]
+        ]
+        | NotGiven = NOT_GIVEN,
+        return_format: Literal["html", "markdown", "plain"] | NotGiven = NOT_GIVEN,
+    ) -> ParsingJob:
+        """Upload a file to the `files` API and then create a parsing job for it.
+        Note the job will be asynchronously processed (you can use the alternative
+        polling helper method to wait for processing to complete).
+        """
+        file_obj = await self._client.files.create(file=file)
+        return await self.create(
+            file_id=file_obj.id,
+            chunking_strategy=chunking_strategy,
+            element_types=element_types,
+            return_format=return_format,
+        )
+
+    async def upload_and_poll(
+        self,
+        *,
+        file: FileTypes,
+        chunking_strategy: Literal["page"] | NotGiven = NOT_GIVEN,
+        element_types: Optional[
+            List[
+                Literal[
+                    "caption",
+                    "footnote",
+                    "formula",
+                    "list-item",
+                    "page-footer",
+                    "page-header",
+                    "picture",
+                    "section-header",
+                    "table",
+                    "text",
+                    "title",
+                ]
+            ]
+        ]
+        | NotGiven = NOT_GIVEN,
+        return_format: Literal["html", "markdown", "plain"] | NotGiven = NOT_GIVEN,
+        poll_interval_ms: int | NotGiven = NOT_GIVEN,
+    ) -> ParsingJob:
+        """Upload a file and create a parsing job, then poll until processing is complete."""
+        file_obj = await self._client.files.create(file=file)
+        return await self.create_and_poll(
+            file_id=file_obj.id,
+            chunking_strategy=chunking_strategy,
+            element_types=element_types,
+            return_format=return_format,
+            poll_interval_ms=poll_interval_ms,
         )
 
 
