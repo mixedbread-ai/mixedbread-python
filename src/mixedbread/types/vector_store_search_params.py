@@ -38,7 +38,7 @@ class VectorStoreSearchParams(TypedDict, total=False):
     """IDs of vector stores to search"""
 
     filters: Optional[Filters]
-    """Filter or condition"""
+    """Optional filter conditions"""
 
     pagination: Pagination
     """Pagination options"""

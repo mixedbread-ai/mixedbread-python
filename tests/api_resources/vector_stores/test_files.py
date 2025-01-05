@@ -9,6 +9,7 @@ import pytest
 
 from mixedbread import Mixedbread, AsyncMixedbread
 from tests.utils import assert_matches_type
+from mixedbread.pagination import SyncPage, AsyncPage
 from mixedbread.types.vector_stores import (
     FileListResponse,
     FileCreateResponse,
@@ -126,7 +127,7 @@ class TestFiles:
         file = client.vector_stores.files.list(
             vector_store_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(FileListResponse, file, path=["response"])
+        assert_matches_type(SyncPage[FileListResponse], file, path=["response"])
 
     @parametrize
     def test_method_list_with_all_params(self, client: Mixedbread) -> None:
@@ -135,7 +136,7 @@ class TestFiles:
             limit=0,
             offset=0,
         )
-        assert_matches_type(FileListResponse, file, path=["response"])
+        assert_matches_type(SyncPage[FileListResponse], file, path=["response"])
 
     @parametrize
     def test_raw_response_list(self, client: Mixedbread) -> None:
@@ -146,7 +147,7 @@ class TestFiles:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         file = response.parse()
-        assert_matches_type(FileListResponse, file, path=["response"])
+        assert_matches_type(SyncPage[FileListResponse], file, path=["response"])
 
     @parametrize
     def test_streaming_response_list(self, client: Mixedbread) -> None:
@@ -157,7 +158,7 @@ class TestFiles:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             file = response.parse()
-            assert_matches_type(FileListResponse, file, path=["response"])
+            assert_matches_type(SyncPage[FileListResponse], file, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -324,7 +325,7 @@ class TestAsyncFiles:
         file = await async_client.vector_stores.files.list(
             vector_store_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(FileListResponse, file, path=["response"])
+        assert_matches_type(AsyncPage[FileListResponse], file, path=["response"])
 
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncMixedbread) -> None:
@@ -333,7 +334,7 @@ class TestAsyncFiles:
             limit=0,
             offset=0,
         )
-        assert_matches_type(FileListResponse, file, path=["response"])
+        assert_matches_type(AsyncPage[FileListResponse], file, path=["response"])
 
     @parametrize
     async def test_raw_response_list(self, async_client: AsyncMixedbread) -> None:
@@ -344,7 +345,7 @@ class TestAsyncFiles:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         file = await response.parse()
-        assert_matches_type(FileListResponse, file, path=["response"])
+        assert_matches_type(AsyncPage[FileListResponse], file, path=["response"])
 
     @parametrize
     async def test_streaming_response_list(self, async_client: AsyncMixedbread) -> None:
@@ -355,7 +356,7 @@ class TestAsyncFiles:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             file = await response.parse()
-            assert_matches_type(FileListResponse, file, path=["response"])
+            assert_matches_type(AsyncPage[FileListResponse], file, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
