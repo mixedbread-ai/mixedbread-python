@@ -8,6 +8,14 @@ from .files import (
     FilesResourceWithStreamingResponse,
     AsyncFilesResourceWithStreamingResponse,
 )
+from .parsing import (
+    ParsingResource,
+    AsyncParsingResource,
+    ParsingResourceWithRawResponse,
+    AsyncParsingResourceWithRawResponse,
+    ParsingResourceWithStreamingResponse,
+    AsyncParsingResourceWithStreamingResponse,
+)
 from .reranking import (
     RerankingResource,
     AsyncRerankingResource,
@@ -60,6 +68,12 @@ __all__ = [
     "AsyncRerankingResourceWithRawResponse",
     "RerankingResourceWithStreamingResponse",
     "AsyncRerankingResourceWithStreamingResponse",
+    "ParsingResource",
+    "AsyncParsingResource",
+    "ParsingResourceWithRawResponse",
+    "AsyncParsingResourceWithRawResponse",
+    "ParsingResourceWithStreamingResponse",
+    "AsyncParsingResourceWithStreamingResponse",
     "FilesResource",
     "AsyncFilesResource",
     "FilesResourceWithRawResponse",

@@ -10,93 +10,93 @@ from .jobs import (
     JobsResourceWithStreamingResponse,
     AsyncJobsResourceWithStreamingResponse,
 )
-from ...._compat import cached_property
-from ...._resource import SyncAPIResource, AsyncAPIResource
+from ..._compat import cached_property
+from ..._resource import SyncAPIResource, AsyncAPIResource
 
-__all__ = ["ParseResource", "AsyncParseResource"]
+__all__ = ["ParsingResource", "AsyncParsingResource"]
 
 
-class ParseResource(SyncAPIResource):
+class ParsingResource(SyncAPIResource):
     @cached_property
     def jobs(self) -> JobsResource:
         return JobsResource(self._client)
 
     @cached_property
-    def with_raw_response(self) -> ParseResourceWithRawResponse:
+    def with_raw_response(self) -> ParsingResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return the
         the raw response object instead of the parsed content.
 
         For more information, see https://www.github.com/mixedbread-ai/mixedbread-python#accessing-raw-response-data-eg-headers
         """
-        return ParseResourceWithRawResponse(self)
+        return ParsingResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> ParseResourceWithStreamingResponse:
+    def with_streaming_response(self) -> ParsingResourceWithStreamingResponse:
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
         For more information, see https://www.github.com/mixedbread-ai/mixedbread-python#with_streaming_response
         """
-        return ParseResourceWithStreamingResponse(self)
+        return ParsingResourceWithStreamingResponse(self)
 
 
-class AsyncParseResource(AsyncAPIResource):
+class AsyncParsingResource(AsyncAPIResource):
     @cached_property
     def jobs(self) -> AsyncJobsResource:
         return AsyncJobsResource(self._client)
 
     @cached_property
-    def with_raw_response(self) -> AsyncParseResourceWithRawResponse:
+    def with_raw_response(self) -> AsyncParsingResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return the
         the raw response object instead of the parsed content.
 
         For more information, see https://www.github.com/mixedbread-ai/mixedbread-python#accessing-raw-response-data-eg-headers
         """
-        return AsyncParseResourceWithRawResponse(self)
+        return AsyncParsingResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> AsyncParseResourceWithStreamingResponse:
+    def with_streaming_response(self) -> AsyncParsingResourceWithStreamingResponse:
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
         For more information, see https://www.github.com/mixedbread-ai/mixedbread-python#with_streaming_response
         """
-        return AsyncParseResourceWithStreamingResponse(self)
+        return AsyncParsingResourceWithStreamingResponse(self)
 
 
-class ParseResourceWithRawResponse:
-    def __init__(self, parse: ParseResource) -> None:
-        self._parse = parse
+class ParsingResourceWithRawResponse:
+    def __init__(self, parsing: ParsingResource) -> None:
+        self._parsing = parsing
 
     @cached_property
     def jobs(self) -> JobsResourceWithRawResponse:
-        return JobsResourceWithRawResponse(self._parse.jobs)
+        return JobsResourceWithRawResponse(self._parsing.jobs)
 
 
-class AsyncParseResourceWithRawResponse:
-    def __init__(self, parse: AsyncParseResource) -> None:
-        self._parse = parse
+class AsyncParsingResourceWithRawResponse:
+    def __init__(self, parsing: AsyncParsingResource) -> None:
+        self._parsing = parsing
 
     @cached_property
     def jobs(self) -> AsyncJobsResourceWithRawResponse:
-        return AsyncJobsResourceWithRawResponse(self._parse.jobs)
+        return AsyncJobsResourceWithRawResponse(self._parsing.jobs)
 
 
-class ParseResourceWithStreamingResponse:
-    def __init__(self, parse: ParseResource) -> None:
-        self._parse = parse
+class ParsingResourceWithStreamingResponse:
+    def __init__(self, parsing: ParsingResource) -> None:
+        self._parsing = parsing
 
     @cached_property
     def jobs(self) -> JobsResourceWithStreamingResponse:
-        return JobsResourceWithStreamingResponse(self._parse.jobs)
+        return JobsResourceWithStreamingResponse(self._parsing.jobs)
 
 
-class AsyncParseResourceWithStreamingResponse:
-    def __init__(self, parse: AsyncParseResource) -> None:
-        self._parse = parse
+class AsyncParsingResourceWithStreamingResponse:
+    def __init__(self, parsing: AsyncParsingResource) -> None:
+        self._parsing = parsing
 
     @cached_property
     def jobs(self) -> AsyncJobsResourceWithStreamingResponse:
-        return AsyncJobsResourceWithStreamingResponse(self._parse.jobs)
+        return AsyncJobsResourceWithStreamingResponse(self._parsing.jobs)

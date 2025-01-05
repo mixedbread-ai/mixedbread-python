@@ -51,6 +51,21 @@ Methods:
 
 - <code title="post /v1/reranking">client.reranking.<a href="./src/mixedbread/resources/reranking.py">create</a>(\*\*<a href="src/mixedbread/types/reranking_create_params.py">params</a>) -> <a href="./src/mixedbread/types/reranking_create_response.py">RerankingCreateResponse</a></code>
 
+# Parsing
+
+## Jobs
+
+Types:
+
+```python
+from mixedbread.types.parsing import ParsingJob
+```
+
+Methods:
+
+- <code title="post /v1/parsing/jobs">client.parsing.jobs.<a href="./src/mixedbread/resources/parsing/jobs.py">create</a>(\*\*<a href="src/mixedbread/types/parsing/job_create_params.py">params</a>) -> <a href="./src/mixedbread/types/parsing/parsing_job.py">ParsingJob</a></code>
+- <code title="get /v1/parsing/jobs/{job_id}">client.parsing.jobs.<a href="./src/mixedbread/resources/parsing/jobs.py">retrieve</a>(job_id) -> <a href="./src/mixedbread/types/parsing/parsing_job.py">ParsingJob</a></code>
+
 # Files
 
 Types:
