@@ -20,7 +20,7 @@ class VectorStoreCreateParams(TypedDict, total=False):
     file_ids: Optional[List[str]]
     """Optional list of file IDs"""
 
-    metadata: Optional[object]
+    metadata: object
     """Optional metadata key-value pairs"""
 
     name: Optional[str]
