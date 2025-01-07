@@ -30,7 +30,7 @@ from .._response import (
     async_to_custom_raw_response_wrapper,
     async_to_custom_streamed_response_wrapper,
 )
-from ..pagination import SyncPage, AsyncPage
+from ..pagination import SyncLimitOffset, AsyncLimitOffset
 from .._base_client import AsyncPaginator, make_request_options
 from ..types.file_object import FileObject
 from ..types.file_delete_response import FileDeleteResponse
@@ -203,7 +203,7 @@ class FilesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> SyncPage[FileObject]:
+    ) -> SyncLimitOffset[FileObject]:
         """
         List all files for the authenticated user.
 
@@ -226,7 +226,7 @@ class FilesResource(SyncAPIResource):
         """
         return self._get_api_list(
             "/v1/files",
-            page=SyncPage[FileObject],
+            page=SyncLimitOffset[FileObject],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -488,7 +488,7 @@ class AsyncFilesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> AsyncPaginator[FileObject, AsyncPage[FileObject]]:
+    ) -> AsyncPaginator[FileObject, AsyncLimitOffset[FileObject]]:
         """
         List all files for the authenticated user.
 
@@ -511,7 +511,7 @@ class AsyncFilesResource(AsyncAPIResource):
         """
         return self._get_api_list(
             "/v1/files",
-            page=AsyncPage[FileObject],
+            page=AsyncLimitOffset[FileObject],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
