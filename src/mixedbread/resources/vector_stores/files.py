@@ -20,7 +20,7 @@ from ..._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ...pagination import SyncPage, AsyncPage
+from ...pagination import SyncLimitOffset, AsyncLimitOffset
 from ..._base_client import AsyncPaginator, make_request_options
 from ...lib import polling
 from ...types.vector_stores import file_list_params, file_create_params
@@ -159,7 +159,7 @@ class FilesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> SyncPage[VectorStoreFile]:
+    ) -> SyncLimitOffset[VectorStoreFile]:
         """
         List files indexed in a vector store with pagination.
 
@@ -187,7 +187,7 @@ class FilesResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `vector_store_id` but received {vector_store_id!r}")
         return self._get_api_list(
             f"/v1/vector_stores/{vector_store_id}/files",
-            page=SyncPage[VectorStoreFile],
+            page=SyncLimitOffset[VectorStoreFile],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -465,7 +465,7 @@ class AsyncFilesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> AsyncPaginator[VectorStoreFile, AsyncPage[VectorStoreFile]]:
+    ) -> AsyncPaginator[VectorStoreFile, AsyncLimitOffset[VectorStoreFile]]:
         """
         List files indexed in a vector store with pagination.
 
@@ -493,7 +493,7 @@ class AsyncFilesResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `vector_store_id` but received {vector_store_id!r}")
         return self._get_api_list(
             f"/v1/vector_stores/{vector_store_id}/files",
-            page=AsyncPage[VectorStoreFile],
+            page=AsyncLimitOffset[VectorStoreFile],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
