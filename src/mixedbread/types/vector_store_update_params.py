@@ -17,7 +17,7 @@ class VectorStoreUpdateParams(TypedDict, total=False):
     expires_after: Optional[ExpiresAfterParam]
     """Represents an expiration policy for a vector store."""
 
-    metadata: Optional[object]
+    metadata: object
     """Optional metadata key-value pairs"""
 
     name: Optional[str]
