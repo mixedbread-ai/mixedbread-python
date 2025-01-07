@@ -33,7 +33,7 @@ from ..._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ...pagination import SyncPage, AsyncPage
+from ...pagination import SyncLimitOffset, AsyncLimitOffset
 from ..._base_client import AsyncPaginator, make_request_options
 from ...types.vector_store import VectorStore
 from ...types.expires_after_param import ExpiresAfterParam
@@ -239,7 +239,7 @@ class VectorStoresResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> SyncPage[VectorStore]:
+    ) -> SyncLimitOffset[VectorStore]:
         """
         List all vector stores.
 
@@ -262,7 +262,7 @@ class VectorStoresResource(SyncAPIResource):
         """
         return self._get_api_list(
             "/v1/vector_stores",
-            page=SyncPage[VectorStore],
+            page=SyncLimitOffset[VectorStore],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -572,7 +572,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> AsyncPaginator[VectorStore, AsyncPage[VectorStore]]:
+    ) -> AsyncPaginator[VectorStore, AsyncLimitOffset[VectorStore]]:
         """
         List all vector stores.
 
@@ -595,7 +595,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         """
         return self._get_api_list(
             "/v1/vector_stores",
-            page=AsyncPage[VectorStore],
+            page=AsyncLimitOffset[VectorStore],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
