@@ -12,7 +12,7 @@ _T = TypeVar("_T")
 
 
 class PagePagination(BaseModel):
-    offset: Optional[int] = None
+    count: Optional[int] = None
 
     total: Optional[int] = None
 
@@ -30,15 +30,15 @@ class SyncPage(BaseSyncPage[_T], BasePage[_T], Generic[_T]):
 
     @override
     def next_page_info(self) -> Optional[PageInfo]:
-        offset = None
+        count = None
         if self.pagination is not None:
-            if self.pagination.offset is not None:
-                offset = self.pagination.offset
-        if offset is None:
+            if self.pagination.count is not None:
+                count = self.pagination.count
+        if count is None:
             return None
 
         length = len(self._get_page_items())
-        current_count = offset + length
+        current_count = count + length
 
         total = None
         if self.pagination is not None:
@@ -66,15 +66,15 @@ class AsyncPage(BaseAsyncPage[_T], BasePage[_T], Generic[_T]):
 
     @override
     def next_page_info(self) -> Optional[PageInfo]:
-        offset = None
+        count = None
         if self.pagination is not None:
-            if self.pagination.offset is not None:
-                offset = self.pagination.offset
-        if offset is None:
+            if self.pagination.count is not None:
+                count = self.pagination.count
+        if count is None:
             return None
 
         length = len(self._get_page_items())
-        current_count = offset + length
+        current_count = count + length
 
         total = None
         if self.pagination is not None:

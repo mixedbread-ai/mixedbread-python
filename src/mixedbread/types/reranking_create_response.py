@@ -11,7 +11,7 @@ __all__ = ["RerankingCreateResponse", "Data", "Usage"]
 class Data(BaseModel):
     index: int
 
-    input: object
+    input: Optional[object] = None
     """The input document."""
 
     score: float

@@ -73,7 +73,7 @@ class VectorStoresResource(SyncAPIResource):
         description: Optional[str] | NotGiven = NOT_GIVEN,
         expires_after: Optional[ExpiresAfterParam] | NotGiven = NOT_GIVEN,
         file_ids: Optional[List[str]] | NotGiven = NOT_GIVEN,
-        metadata: object | NotGiven = NOT_GIVEN,
+        metadata: Optional[object] | NotGiven = NOT_GIVEN,
         name: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -172,7 +172,7 @@ class VectorStoresResource(SyncAPIResource):
         *,
         description: Optional[str] | NotGiven = NOT_GIVEN,
         expires_after: Optional[ExpiresAfterParam] | NotGiven = NOT_GIVEN,
-        metadata: object | NotGiven = NOT_GIVEN,
+        metadata: Optional[object] | NotGiven = NOT_GIVEN,
         name: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -406,7 +406,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         description: Optional[str] | NotGiven = NOT_GIVEN,
         expires_after: Optional[ExpiresAfterParam] | NotGiven = NOT_GIVEN,
         file_ids: Optional[List[str]] | NotGiven = NOT_GIVEN,
-        metadata: object | NotGiven = NOT_GIVEN,
+        metadata: Optional[object] | NotGiven = NOT_GIVEN,
         name: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -505,7 +505,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         *,
         description: Optional[str] | NotGiven = NOT_GIVEN,
         expires_after: Optional[ExpiresAfterParam] | NotGiven = NOT_GIVEN,
-        metadata: object | NotGiven = NOT_GIVEN,
+        metadata: Optional[object] | NotGiven = NOT_GIVEN,
         name: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
