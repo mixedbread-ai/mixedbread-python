@@ -6,20 +6,20 @@ from typing_extensions import override
 from ._models import BaseModel
 from ._base_client import BasePage, PageInfo, BaseSyncPage, BaseAsyncPage
 
-__all__ = ["PagePagination", "SyncPage", "AsyncPage"]
+__all__ = ["LimitOffsetPagination", "SyncLimitOffset", "AsyncLimitOffset"]
 
 _T = TypeVar("_T")
 
 
-class PagePagination(BaseModel):
+class LimitOffsetPagination(BaseModel):
     offset: Optional[int] = None
 
     total: Optional[int] = None
 
 
-class SyncPage(BaseSyncPage[_T], BasePage[_T], Generic[_T]):
+class SyncLimitOffset(BaseSyncPage[_T], BasePage[_T], Generic[_T]):
     data: List[_T]
-    pagination: Optional[PagePagination] = None
+    pagination: Optional[LimitOffsetPagination] = None
 
     @override
     def _get_page_items(self) -> List[_T]:
@@ -53,9 +53,9 @@ class SyncPage(BaseSyncPage[_T], BasePage[_T], Generic[_T]):
         return None
 
 
-class AsyncPage(BaseAsyncPage[_T], BasePage[_T], Generic[_T]):
+class AsyncLimitOffset(BaseAsyncPage[_T], BasePage[_T], Generic[_T]):
     data: List[_T]
-    pagination: Optional[PagePagination] = None
+    pagination: Optional[LimitOffsetPagination] = None
 
     @override
     def _get_page_items(self) -> List[_T]:
