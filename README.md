@@ -137,7 +137,7 @@ Or just work directly with the returned data:
 first_page = await client.vector_stores.list()
 
 print(
-    f"the current start offset for this page: {first_page.pagination.count}"
+    f"the current start offset for this page: {first_page.pagination.offset}"
 )  # => "the current start offset for this page: 1"
 for vector_store in first_page.data:
     print(vector_store.id)
