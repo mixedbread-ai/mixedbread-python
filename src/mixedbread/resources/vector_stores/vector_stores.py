@@ -323,8 +323,9 @@ class VectorStoresResource(SyncAPIResource):
         *,
         query: str,
         vector_store_ids: List[str],
-        pagination: vector_store_search_params.Pagination | NotGiven = NOT_GIVEN,
+        filters: Optional[vector_store_search_params.Filters] | NotGiven = NOT_GIVEN,
         search_options: vector_store_search_params.SearchOptions | NotGiven = NOT_GIVEN,
+        top_k: int | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -333,22 +334,32 @@ class VectorStoresResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> VectorStoreSearchResponse:
         """
-        Perform a search based on the provided query.
+        Perform semantic search across vector store chunks.
 
-        Args: search_params: VectorStoreSearchParams object containing the search
-        parameters.
+        This endpoint searches through vector store chunks using semantic similarity
+        matching. It supports complex search queries with filters and returns
+        relevance-scored results.
 
-        Returns: VectorStoreSearchResponse: The response containing the search results
-        and pagination details.
+        Args: search_params: Search configuration including: - query text or
+        embeddings - metadata filters - pagination parameters - sorting preferences
+        \\__state: API state dependency \\__ctx: Service context dependency
+
+        Returns: VectorStoreSearchChunkResponse containing: - List of matched chunks
+        with relevance scores - Pagination details including total result count
+
+        Raises: HTTPException (400): If search parameters are invalid HTTPException
+        (404): If no vector stores are found to search
 
         Args:
           query: Search query text
 
           vector_store_ids: IDs of vector stores to search
 
-          pagination: Pagination options
+          filters: Optional filter conditions
 
           search_options: Search configuration options
+
+          top_k: Number of results to return
 
           extra_headers: Send extra headers
 
@@ -364,8 +375,9 @@ class VectorStoresResource(SyncAPIResource):
                 {
                     "query": query,
                     "vector_store_ids": vector_store_ids,
-                    "pagination": pagination,
+                    "filters": filters,
                     "search_options": search_options,
+                    "top_k": top_k,
                 },
                 vector_store_search_params.VectorStoreSearchParams,
             ),
@@ -656,8 +668,9 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         *,
         query: str,
         vector_store_ids: List[str],
-        pagination: vector_store_search_params.Pagination | NotGiven = NOT_GIVEN,
+        filters: Optional[vector_store_search_params.Filters] | NotGiven = NOT_GIVEN,
         search_options: vector_store_search_params.SearchOptions | NotGiven = NOT_GIVEN,
+        top_k: int | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -666,22 +679,32 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> VectorStoreSearchResponse:
         """
-        Perform a search based on the provided query.
+        Perform semantic search across vector store chunks.
 
-        Args: search_params: VectorStoreSearchParams object containing the search
-        parameters.
+        This endpoint searches through vector store chunks using semantic similarity
+        matching. It supports complex search queries with filters and returns
+        relevance-scored results.
 
-        Returns: VectorStoreSearchResponse: The response containing the search results
-        and pagination details.
+        Args: search_params: Search configuration including: - query text or
+        embeddings - metadata filters - pagination parameters - sorting preferences
+        \\__state: API state dependency \\__ctx: Service context dependency
+
+        Returns: VectorStoreSearchChunkResponse containing: - List of matched chunks
+        with relevance scores - Pagination details including total result count
+
+        Raises: HTTPException (400): If search parameters are invalid HTTPException
+        (404): If no vector stores are found to search
 
         Args:
           query: Search query text
 
           vector_store_ids: IDs of vector stores to search
 
-          pagination: Pagination options
+          filters: Optional filter conditions
 
           search_options: Search configuration options
+
+          top_k: Number of results to return
 
           extra_headers: Send extra headers
 
@@ -697,8 +720,9 @@ class AsyncVectorStoresResource(AsyncAPIResource):
                 {
                     "query": query,
                     "vector_store_ids": vector_store_ids,
-                    "pagination": pagination,
+                    "filters": filters,
                     "search_options": search_options,
+                    "top_k": top_k,
                 },
                 vector_store_search_params.VectorStoreSearchParams,
             ),
