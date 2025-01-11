@@ -6,46 +6,50 @@ from typing import Mapping, cast
 
 import httpx
 
-from ..types import file_list_params, file_create_params, file_update_params
-from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven, FileTypes
-from .._utils import (
+from ...types import file_list_params, file_create_params, file_update_params
+from .content import (
+    ContentResource,
+    AsyncContentResource,
+    ContentResourceWithRawResponse,
+    AsyncContentResourceWithRawResponse,
+    ContentResourceWithStreamingResponse,
+    AsyncContentResourceWithStreamingResponse,
+)
+from ..._types import NOT_GIVEN, Body, Query, Headers, NotGiven, FileTypes
+from ..._utils import (
     extract_files,
     maybe_transform,
     deepcopy_minimal,
     async_maybe_transform,
 )
-from .._compat import cached_property
-from .._resource import SyncAPIResource, AsyncAPIResource
-from .._response import (
-    BinaryAPIResponse,
-    AsyncBinaryAPIResponse,
-    StreamedBinaryAPIResponse,
-    AsyncStreamedBinaryAPIResponse,
+from ..._compat import cached_property
+from ..._resource import SyncAPIResource, AsyncAPIResource
+from ..._response import (
     to_raw_response_wrapper,
     to_streamed_response_wrapper,
     async_to_raw_response_wrapper,
-    to_custom_raw_response_wrapper,
     async_to_streamed_response_wrapper,
-    to_custom_streamed_response_wrapper,
-    async_to_custom_raw_response_wrapper,
-    async_to_custom_streamed_response_wrapper,
 )
-from ..pagination import SyncLimitOffset, AsyncLimitOffset
-from .._base_client import AsyncPaginator, make_request_options
-from ..types.file_object import FileObject
-from ..types.file_delete_response import FileDeleteResponse
+from ..._base_client import make_request_options
+from ...types.file_object import FileObject
+from ...types.file_deleted import FileDeleted
+from ...types.file_list_response import FileListResponse
 
 __all__ = ["FilesResource", "AsyncFilesResource"]
 
 
 class FilesResource(SyncAPIResource):
     @cached_property
+    def content(self) -> ContentResource:
+        return ContentResource(self._client)
+
+    @cached_property
     def with_raw_response(self) -> FilesResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return the
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/mixedbread-ai/mixedbread-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/mixedbread-python#accessing-raw-response-data-eg-headers
         """
         return FilesResourceWithRawResponse(self)
 
@@ -54,7 +58,7 @@ class FilesResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/mixedbread-ai/mixedbread-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/mixedbread-python#with_streaming_response
         """
         return FilesResourceWithStreamingResponse(self)
 
@@ -203,7 +207,7 @@ class FilesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> SyncLimitOffset[FileObject]:
+    ) -> FileListResponse:
         """
         List all files for the authenticated user.
 
@@ -224,9 +228,8 @@ class FilesResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return self._get_api_list(
+        return self._get(
             "/v1/files",
-            page=SyncLimitOffset[FileObject],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -240,7 +243,7 @@ class FilesResource(SyncAPIResource):
                     file_list_params.FileListParams,
                 ),
             ),
-            model=FileObject,
+            cast_to=FileListResponse,
         )
 
     def delete(
@@ -253,7 +256,7 @@ class FilesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> FileDeleteResponse:
+    ) -> FileDeleted:
         """
         Delete a specific file by its ID.
 
@@ -279,58 +282,22 @@ class FilesResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=FileDeleteResponse,
-        )
-
-    def content(
-        self,
-        file_id: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> BinaryAPIResponse:
-        """
-        Download a specific file by its ID.
-
-        Args: file_id: The ID of the file to download.
-
-        Returns: FileStreamResponse: The response containing the file to be downloaded.
-
-        Args:
-          file_id: The ID of the file to download
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not file_id:
-            raise ValueError(f"Expected a non-empty value for `file_id` but received {file_id!r}")
-        extra_headers = {"Accept": "application/octet-stream", **(extra_headers or {})}
-        return self._get(
-            f"/v1/files/{file_id}/content",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=BinaryAPIResponse,
+            cast_to=FileDeleted,
         )
 
 
 class AsyncFilesResource(AsyncAPIResource):
+    @cached_property
+    def content(self) -> AsyncContentResource:
+        return AsyncContentResource(self._client)
+
     @cached_property
     def with_raw_response(self) -> AsyncFilesResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return the
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/mixedbread-ai/mixedbread-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/mixedbread-python#accessing-raw-response-data-eg-headers
         """
         return AsyncFilesResourceWithRawResponse(self)
 
@@ -339,7 +306,7 @@ class AsyncFilesResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/mixedbread-ai/mixedbread-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/mixedbread-python#with_streaming_response
         """
         return AsyncFilesResourceWithStreamingResponse(self)
 
@@ -477,7 +444,7 @@ class AsyncFilesResource(AsyncAPIResource):
             cast_to=FileObject,
         )
 
-    def list(
+    async def list(
         self,
         *,
         limit: int | NotGiven = NOT_GIVEN,
@@ -488,7 +455,7 @@ class AsyncFilesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> AsyncPaginator[FileObject, AsyncLimitOffset[FileObject]]:
+    ) -> FileListResponse:
         """
         List all files for the authenticated user.
 
@@ -509,15 +476,14 @@ class AsyncFilesResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return self._get_api_list(
+        return await self._get(
             "/v1/files",
-            page=AsyncLimitOffset[FileObject],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=maybe_transform(
+                query=await async_maybe_transform(
                     {
                         "limit": limit,
                         "offset": offset,
@@ -525,7 +491,7 @@ class AsyncFilesResource(AsyncAPIResource):
                     file_list_params.FileListParams,
                 ),
             ),
-            model=FileObject,
+            cast_to=FileListResponse,
         )
 
     async def delete(
@@ -538,7 +504,7 @@ class AsyncFilesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> FileDeleteResponse:
+    ) -> FileDeleted:
         """
         Delete a specific file by its ID.
 
@@ -564,47 +530,7 @@ class AsyncFilesResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=FileDeleteResponse,
-        )
-
-    async def content(
-        self,
-        file_id: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> AsyncBinaryAPIResponse:
-        """
-        Download a specific file by its ID.
-
-        Args: file_id: The ID of the file to download.
-
-        Returns: FileStreamResponse: The response containing the file to be downloaded.
-
-        Args:
-          file_id: The ID of the file to download
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not file_id:
-            raise ValueError(f"Expected a non-empty value for `file_id` but received {file_id!r}")
-        extra_headers = {"Accept": "application/octet-stream", **(extra_headers or {})}
-        return await self._get(
-            f"/v1/files/{file_id}/content",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=AsyncBinaryAPIResponse,
+            cast_to=FileDeleted,
         )
 
 
@@ -627,10 +553,10 @@ class FilesResourceWithRawResponse:
         self.delete = to_raw_response_wrapper(
             files.delete,
         )
-        self.content = to_custom_raw_response_wrapper(
-            files.content,
-            BinaryAPIResponse,
-        )
+
+    @cached_property
+    def content(self) -> ContentResourceWithRawResponse:
+        return ContentResourceWithRawResponse(self._files.content)
 
 
 class AsyncFilesResourceWithRawResponse:
@@ -652,10 +578,10 @@ class AsyncFilesResourceWithRawResponse:
         self.delete = async_to_raw_response_wrapper(
             files.delete,
         )
-        self.content = async_to_custom_raw_response_wrapper(
-            files.content,
-            AsyncBinaryAPIResponse,
-        )
+
+    @cached_property
+    def content(self) -> AsyncContentResourceWithRawResponse:
+        return AsyncContentResourceWithRawResponse(self._files.content)
 
 
 class FilesResourceWithStreamingResponse:
@@ -677,10 +603,10 @@ class FilesResourceWithStreamingResponse:
         self.delete = to_streamed_response_wrapper(
             files.delete,
         )
-        self.content = to_custom_streamed_response_wrapper(
-            files.content,
-            StreamedBinaryAPIResponse,
-        )
+
+    @cached_property
+    def content(self) -> ContentResourceWithStreamingResponse:
+        return ContentResourceWithStreamingResponse(self._files.content)
 
 
 class AsyncFilesResourceWithStreamingResponse:
@@ -702,7 +628,7 @@ class AsyncFilesResourceWithStreamingResponse:
         self.delete = async_to_streamed_response_wrapper(
             files.delete,
         )
-        self.content = async_to_custom_streamed_response_wrapper(
-            files.content,
-            AsyncStreamedBinaryAPIResponse,
-        )
+
+    @cached_property
+    def content(self) -> AsyncContentResourceWithStreamingResponse:
+        return AsyncContentResourceWithStreamingResponse(self._files.content)

@@ -10,13 +10,13 @@ It is generated with [Stainless](https://www.stainlessapi.com/).
 
 ## Documentation
 
-The REST API documentation can be found on [mixedbread.ai](https://mixedbread.ai/docs). The full API of this library can be found in [api.md](api.md).
+The REST API documentation can be found on [docs.mixedbread.com](https://docs.mixedbread.com). The full API of this library can be found in [api.md](api.md).
 
 ## Installation
 
 ```sh
-# install from the production repo
-pip install git+ssh://git@github.com/mixedbread-ai/mixedbread-python.git
+# install from this staging repo
+pip install git+ssh://git@github.com/stainless-sdks/mixedbread-python.git
 ```
 
 > [!NOTE]
@@ -27,22 +27,22 @@ pip install git+ssh://git@github.com/mixedbread-ai/mixedbread-python.git
 The full API of this library can be found in [api.md](api.md).
 
 ```python
-import os
 from mixedbread import Mixedbread
 
 client = Mixedbread(
-    api_key=os.environ.get("MXBAI_API_KEY"),  # This is the default and can be omitted
     # defaults to "production".
-    environment="local",
+    environment="environment_1",
 )
 
-vector_store = client.vector_stores.create()
-print(vector_store.id)
+file_object = client.files.create(
+    file=b"raw file contents",
+)
+print(file_object.id)
 ```
 
 While you can provide an `api_key` keyword argument,
 we recommend using [python-dotenv](https://pypi.org/project/python-dotenv/)
-to add `MXBAI_API_KEY="My API Key"` to your `.env` file
+to add `API_KEY="My API Key"` to your `.env` file
 so that your API Key is not stored in source control.
 
 ## Async usage
@@ -50,20 +50,20 @@ so that your API Key is not stored in source control.
 Simply import `AsyncMixedbread` instead of `Mixedbread` and use `await` with each API call:
 
 ```python
-import os
 import asyncio
 from mixedbread import AsyncMixedbread
 
 client = AsyncMixedbread(
-    api_key=os.environ.get("MXBAI_API_KEY"),  # This is the default and can be omitted
     # defaults to "production".
-    environment="local",
+    environment="environment_1",
 )
 
 
 async def main() -> None:
-    vector_store = await client.vector_stores.create()
-    print(vector_store.id)
+    file_object = await client.files.create(
+        file=b"raw file contents",
+    )
+    print(file_object.id)
 
 
 asyncio.run(main())
@@ -79,71 +79,6 @@ Nested request parameters are [TypedDicts](https://docs.python.org/3/library/typ
 - Converting to a dictionary, `model.to_dict()`
 
 Typed requests and responses provide autocomplete and documentation within your editor. If you would like to see type errors in VS Code to help catch bugs earlier, set `python.analysis.typeCheckingMode` to `basic`.
-
-## Pagination
-
-List methods in the Mixedbread API are paginated.
-
-This library provides auto-paginating iterators with each list response, so you do not have to request successive pages manually:
-
-```python
-from mixedbread import Mixedbread
-
-client = Mixedbread()
-
-all_vector_stores = []
-# Automatically fetches more pages as needed.
-for vector_store in client.vector_stores.list():
-    # Do something with vector_store here
-    all_vector_stores.append(vector_store)
-print(all_vector_stores)
-```
-
-Or, asynchronously:
-
-```python
-import asyncio
-from mixedbread import AsyncMixedbread
-
-client = AsyncMixedbread()
-
-
-async def main() -> None:
-    all_vector_stores = []
-    # Iterate through items across all pages, issuing requests as needed.
-    async for vector_store in client.vector_stores.list():
-        all_vector_stores.append(vector_store)
-    print(all_vector_stores)
-
-
-asyncio.run(main())
-```
-
-Alternatively, you can use the `.has_next_page()`, `.next_page_info()`, or `.get_next_page()` methods for more granular control working with pages:
-
-```python
-first_page = await client.vector_stores.list()
-if first_page.has_next_page():
-    print(f"will fetch next page using these details: {first_page.next_page_info()}")
-    next_page = await first_page.get_next_page()
-    print(f"number of items we just fetched: {len(next_page.data)}")
-
-# Remove `await` for non-async usage.
-```
-
-Or just work directly with the returned data:
-
-```python
-first_page = await client.vector_stores.list()
-
-print(
-    f"the current start offset for this page: {first_page.pagination.offset}"
-)  # => "the current start offset for this page: 1"
-for vector_store in first_page.data:
-    print(vector_store.id)
-
-# Remove `await` for non-async usage.
-```
 
 ## Handling errors
 
@@ -161,7 +96,9 @@ from mixedbread import Mixedbread
 client = Mixedbread()
 
 try:
-    client.vector_stores.create()
+    client.files.create(
+        file=b"raw file contents",
+    )
 except mixedbread.APIConnectionError as e:
     print("The server could not be reached")
     print(e.__cause__)  # an underlying Exception, likely raised within httpx.
@@ -204,7 +141,9 @@ client = Mixedbread(
 )
 
 # Or, configure per-request:
-client.with_options(max_retries=5).vector_stores.create()
+client.with_options(max_retries=5).files.create(
+    file=b"raw file contents",
+)
 ```
 
 ### Timeouts
@@ -227,7 +166,9 @@ client = Mixedbread(
 )
 
 # Override per-request:
-client.with_options(timeout=5.0).vector_stores.create()
+client.with_options(timeout=5.0).files.create(
+    file=b"raw file contents",
+)
 ```
 
 On timeout, an `APITimeoutError` is thrown.
@@ -268,16 +209,18 @@ The "raw" Response object can be accessed by prefixing `.with_raw_response.` to 
 from mixedbread import Mixedbread
 
 client = Mixedbread()
-response = client.vector_stores.with_raw_response.create()
+response = client.files.with_raw_response.create(
+    file=b'raw file contents',
+)
 print(response.headers.get('X-My-Header'))
 
-vector_store = response.parse()  # get the object that `vector_stores.create()` would have returned
-print(vector_store.id)
+file = response.parse()  # get the object that `files.create()` would have returned
+print(file.id)
 ```
 
-These methods return an [`APIResponse`](https://github.com/mixedbread-ai/mixedbread-python/tree/main/src/mixedbread/_response.py) object.
+These methods return an [`APIResponse`](https://github.com/stainless-sdks/mixedbread-python/tree/main/src/mixedbread/_response.py) object.
 
-The async client returns an [`AsyncAPIResponse`](https://github.com/mixedbread-ai/mixedbread-python/tree/main/src/mixedbread/_response.py) with the same structure, the only difference being `await`able methods for reading the response content.
+The async client returns an [`AsyncAPIResponse`](https://github.com/stainless-sdks/mixedbread-python/tree/main/src/mixedbread/_response.py) with the same structure, the only difference being `await`able methods for reading the response content.
 
 #### `.with_streaming_response`
 
@@ -286,7 +229,9 @@ The above interface eagerly reads the full response body when you make the reque
 To stream the response body, use `.with_streaming_response` instead, which requires a context manager and only reads the response body once you call `.read()`, `.text()`, `.json()`, `.iter_bytes()`, `.iter_text()`, `.iter_lines()` or `.parse()`. In the async client, these are async methods.
 
 ```python
-with client.vector_stores.with_streaming_response.create() as response:
+with client.files.with_streaming_response.create(
+    file=b"raw file contents",
+) as response:
     print(response.headers.get("X-My-Header"))
 
     for line in response.iter_lines():
@@ -381,7 +326,7 @@ This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) con
 
 We take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.
 
-We are keen for your feedback; please open an [issue](https://www.github.com/mixedbread-ai/mixedbread-python/issues) with questions, bugs, or suggestions.
+We are keen for your feedback; please open an [issue](https://www.github.com/stainless-sdks/mixedbread-python/issues) with questions, bugs, or suggestions.
 
 ### Determining the installed version
 

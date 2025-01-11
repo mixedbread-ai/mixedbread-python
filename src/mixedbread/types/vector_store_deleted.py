@@ -3,17 +3,17 @@
 from typing import Optional
 from typing_extensions import Literal
 
-from ..._models import BaseModel
+from .._models import BaseModel
 
-__all__ = ["FileDeleteResponse"]
+__all__ = ["VectorStoreDeleted"]
 
 
-class FileDeleteResponse(BaseModel):
+class VectorStoreDeleted(BaseModel):
     id: str
-    """ID of the deleted file"""
+    """ID of the deleted vector store"""
 
-    deleted: Optional[bool] = None
+    deleted: bool
     """Whether the deletion was successful"""
 
-    object: Optional[Literal["vector_store.file"]] = None
+    object: Optional[Literal["vector_store"]] = None
     """Type of the deleted object"""

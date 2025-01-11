@@ -12,10 +12,7 @@ from . import _exceptions
 from ._qs import Querystring
 from ._types import (
     NOT_GIVEN,
-    Body,
     Omit,
-    Query,
-    Headers,
     Timeout,
     NotGiven,
     Transport,
@@ -27,23 +24,17 @@ from ._utils import (
     get_async_library,
 )
 from ._version import __version__
-from ._response import (
-    to_raw_response_wrapper,
-    to_streamed_response_wrapper,
-    async_to_raw_response_wrapper,
-    async_to_streamed_response_wrapper,
-)
-from .resources import files, reranking, embeddings
+from .resources import reranking, embeddings, completions, service_info
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import APIStatusError, MixedbreadError
 from ._base_client import (
     DEFAULT_MAX_RETRIES,
     SyncAPIClient,
     AsyncAPIClient,
-    make_request_options,
 )
+from .resources.files import files
 from .resources.parsing import parsing
-from .types.info_response import InfoResponse
+from .resources.extractions import extractions
 from .resources.vector_stores import vector_stores
 
 __all__ = [
@@ -60,29 +51,32 @@ __all__ = [
 
 ENVIRONMENTS: Dict[str, str] = {
     "production": "https://api.mixedbread.ai",
-    "local": "http://127.0.0.1:8000",
+    "environment_1": "http://127.0.0.1:8000",
 }
 
 
 class Mixedbread(SyncAPIClient):
+    service_info: service_info.ServiceInfoResource
+    files: files.FilesResource
+    completions: completions.CompletionsResource
+    vector_stores: vector_stores.VectorStoresResource
+    parsing: parsing.ParsingResource
+    extractions: extractions.ExtractionsResource
     embeddings: embeddings.EmbeddingsResource
     reranking: reranking.RerankingResource
-    parsing: parsing.ParsingResource
-    files: files.FilesResource
-    vector_stores: vector_stores.VectorStoresResource
     with_raw_response: MixedbreadWithRawResponse
     with_streaming_response: MixedbreadWithStreamedResponse
 
     # client options
     api_key: str
 
-    _environment: Literal["production", "local"] | NotGiven
+    _environment: Literal["production", "environment_1"] | NotGiven
 
     def __init__(
         self,
         *,
         api_key: str | None = None,
-        environment: Literal["production", "local"] | NotGiven = NOT_GIVEN,
+        environment: Literal["production", "environment_1"] | NotGiven = NOT_GIVEN,
         base_url: str | httpx.URL | None | NotGiven = NOT_GIVEN,
         timeout: Union[float, Timeout, None, NotGiven] = NOT_GIVEN,
         max_retries: int = DEFAULT_MAX_RETRIES,
@@ -104,13 +98,13 @@ class Mixedbread(SyncAPIClient):
     ) -> None:
         """Construct a new synchronous mixedbread client instance.
 
-        This automatically infers the `api_key` argument from the `MXBAI_API_KEY` environment variable if it is not provided.
+        This automatically infers the `api_key` argument from the `API_KEY` environment variable if it is not provided.
         """
         if api_key is None:
-            api_key = os.environ.get("MXBAI_API_KEY")
+            api_key = os.environ.get("API_KEY")
         if api_key is None:
             raise MixedbreadError(
-                "The api_key client option must be set either by passing api_key to the client or by setting the MXBAI_API_KEY environment variable"
+                "The api_key client option must be set either by passing api_key to the client or by setting the API_KEY environment variable"
             )
         self.api_key = api_key
 
@@ -151,11 +145,14 @@ class Mixedbread(SyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
+        self.service_info = service_info.ServiceInfoResource(self)
+        self.files = files.FilesResource(self)
+        self.completions = completions.CompletionsResource(self)
+        self.vector_stores = vector_stores.VectorStoresResource(self)
+        self.parsing = parsing.ParsingResource(self)
+        self.extractions = extractions.ExtractionsResource(self)
         self.embeddings = embeddings.EmbeddingsResource(self)
         self.reranking = reranking.RerankingResource(self)
-        self.parsing = parsing.ParsingResource(self)
-        self.files = files.FilesResource(self)
-        self.vector_stores = vector_stores.VectorStoresResource(self)
         self.with_raw_response = MixedbreadWithRawResponse(self)
         self.with_streaming_response = MixedbreadWithStreamedResponse(self)
 
@@ -183,7 +180,7 @@ class Mixedbread(SyncAPIClient):
         self,
         *,
         api_key: str | None = None,
-        environment: Literal["production", "local"] | None = None,
+        environment: Literal["production", "environment_1"] | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = NOT_GIVEN,
         http_client: httpx.Client | None = None,
@@ -231,29 +228,6 @@ class Mixedbread(SyncAPIClient):
     # Alias for `copy` for nicer inline usage, e.g.
     # client.with_options(timeout=10).foo.create(...)
     with_options = copy
-
-    def info(
-        self,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> InfoResponse:
-        """
-        Returns service information, including name and version.
-
-        Returns: InfoResponse: A response containing the service name and version.
-        """
-        return self.get(
-            "/",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=InfoResponse,
-        )
 
     @override
     def _make_status_error(
@@ -290,24 +264,27 @@ class Mixedbread(SyncAPIClient):
 
 
 class AsyncMixedbread(AsyncAPIClient):
+    service_info: service_info.AsyncServiceInfoResource
+    files: files.AsyncFilesResource
+    completions: completions.AsyncCompletionsResource
+    vector_stores: vector_stores.AsyncVectorStoresResource
+    parsing: parsing.AsyncParsingResource
+    extractions: extractions.AsyncExtractionsResource
     embeddings: embeddings.AsyncEmbeddingsResource
     reranking: reranking.AsyncRerankingResource
-    parsing: parsing.AsyncParsingResource
-    files: files.AsyncFilesResource
-    vector_stores: vector_stores.AsyncVectorStoresResource
     with_raw_response: AsyncMixedbreadWithRawResponse
     with_streaming_response: AsyncMixedbreadWithStreamedResponse
 
     # client options
     api_key: str
 
-    _environment: Literal["production", "local"] | NotGiven
+    _environment: Literal["production", "environment_1"] | NotGiven
 
     def __init__(
         self,
         *,
         api_key: str | None = None,
-        environment: Literal["production", "local"] | NotGiven = NOT_GIVEN,
+        environment: Literal["production", "environment_1"] | NotGiven = NOT_GIVEN,
         base_url: str | httpx.URL | None | NotGiven = NOT_GIVEN,
         timeout: Union[float, Timeout, None, NotGiven] = NOT_GIVEN,
         max_retries: int = DEFAULT_MAX_RETRIES,
@@ -329,13 +306,13 @@ class AsyncMixedbread(AsyncAPIClient):
     ) -> None:
         """Construct a new async mixedbread client instance.
 
-        This automatically infers the `api_key` argument from the `MXBAI_API_KEY` environment variable if it is not provided.
+        This automatically infers the `api_key` argument from the `API_KEY` environment variable if it is not provided.
         """
         if api_key is None:
-            api_key = os.environ.get("MXBAI_API_KEY")
+            api_key = os.environ.get("API_KEY")
         if api_key is None:
             raise MixedbreadError(
-                "The api_key client option must be set either by passing api_key to the client or by setting the MXBAI_API_KEY environment variable"
+                "The api_key client option must be set either by passing api_key to the client or by setting the API_KEY environment variable"
             )
         self.api_key = api_key
 
@@ -376,11 +353,14 @@ class AsyncMixedbread(AsyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
+        self.service_info = service_info.AsyncServiceInfoResource(self)
+        self.files = files.AsyncFilesResource(self)
+        self.completions = completions.AsyncCompletionsResource(self)
+        self.vector_stores = vector_stores.AsyncVectorStoresResource(self)
+        self.parsing = parsing.AsyncParsingResource(self)
+        self.extractions = extractions.AsyncExtractionsResource(self)
         self.embeddings = embeddings.AsyncEmbeddingsResource(self)
         self.reranking = reranking.AsyncRerankingResource(self)
-        self.parsing = parsing.AsyncParsingResource(self)
-        self.files = files.AsyncFilesResource(self)
-        self.vector_stores = vector_stores.AsyncVectorStoresResource(self)
         self.with_raw_response = AsyncMixedbreadWithRawResponse(self)
         self.with_streaming_response = AsyncMixedbreadWithStreamedResponse(self)
 
@@ -408,7 +388,7 @@ class AsyncMixedbread(AsyncAPIClient):
         self,
         *,
         api_key: str | None = None,
-        environment: Literal["production", "local"] | None = None,
+        environment: Literal["production", "environment_1"] | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = NOT_GIVEN,
         http_client: httpx.AsyncClient | None = None,
@@ -456,29 +436,6 @@ class AsyncMixedbread(AsyncAPIClient):
     # Alias for `copy` for nicer inline usage, e.g.
     # client.with_options(timeout=10).foo.create(...)
     with_options = copy
-
-    async def info(
-        self,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> InfoResponse:
-        """
-        Returns service information, including name and version.
-
-        Returns: InfoResponse: A response containing the service name and version.
-        """
-        return await self.get(
-            "/",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=InfoResponse,
-        )
 
     @override
     def _make_status_error(
@@ -516,54 +473,50 @@ class AsyncMixedbread(AsyncAPIClient):
 
 class MixedbreadWithRawResponse:
     def __init__(self, client: Mixedbread) -> None:
+        self.service_info = service_info.ServiceInfoResourceWithRawResponse(client.service_info)
+        self.files = files.FilesResourceWithRawResponse(client.files)
+        self.completions = completions.CompletionsResourceWithRawResponse(client.completions)
+        self.vector_stores = vector_stores.VectorStoresResourceWithRawResponse(client.vector_stores)
+        self.parsing = parsing.ParsingResourceWithRawResponse(client.parsing)
+        self.extractions = extractions.ExtractionsResourceWithRawResponse(client.extractions)
         self.embeddings = embeddings.EmbeddingsResourceWithRawResponse(client.embeddings)
         self.reranking = reranking.RerankingResourceWithRawResponse(client.reranking)
-        self.parsing = parsing.ParsingResourceWithRawResponse(client.parsing)
-        self.files = files.FilesResourceWithRawResponse(client.files)
-        self.vector_stores = vector_stores.VectorStoresResourceWithRawResponse(client.vector_stores)
-
-        self.info = to_raw_response_wrapper(
-            client.info,
-        )
 
 
 class AsyncMixedbreadWithRawResponse:
     def __init__(self, client: AsyncMixedbread) -> None:
+        self.service_info = service_info.AsyncServiceInfoResourceWithRawResponse(client.service_info)
+        self.files = files.AsyncFilesResourceWithRawResponse(client.files)
+        self.completions = completions.AsyncCompletionsResourceWithRawResponse(client.completions)
+        self.vector_stores = vector_stores.AsyncVectorStoresResourceWithRawResponse(client.vector_stores)
+        self.parsing = parsing.AsyncParsingResourceWithRawResponse(client.parsing)
+        self.extractions = extractions.AsyncExtractionsResourceWithRawResponse(client.extractions)
         self.embeddings = embeddings.AsyncEmbeddingsResourceWithRawResponse(client.embeddings)
         self.reranking = reranking.AsyncRerankingResourceWithRawResponse(client.reranking)
-        self.parsing = parsing.AsyncParsingResourceWithRawResponse(client.parsing)
-        self.files = files.AsyncFilesResourceWithRawResponse(client.files)
-        self.vector_stores = vector_stores.AsyncVectorStoresResourceWithRawResponse(client.vector_stores)
-
-        self.info = async_to_raw_response_wrapper(
-            client.info,
-        )
 
 
 class MixedbreadWithStreamedResponse:
     def __init__(self, client: Mixedbread) -> None:
+        self.service_info = service_info.ServiceInfoResourceWithStreamingResponse(client.service_info)
+        self.files = files.FilesResourceWithStreamingResponse(client.files)
+        self.completions = completions.CompletionsResourceWithStreamingResponse(client.completions)
+        self.vector_stores = vector_stores.VectorStoresResourceWithStreamingResponse(client.vector_stores)
+        self.parsing = parsing.ParsingResourceWithStreamingResponse(client.parsing)
+        self.extractions = extractions.ExtractionsResourceWithStreamingResponse(client.extractions)
         self.embeddings = embeddings.EmbeddingsResourceWithStreamingResponse(client.embeddings)
         self.reranking = reranking.RerankingResourceWithStreamingResponse(client.reranking)
-        self.parsing = parsing.ParsingResourceWithStreamingResponse(client.parsing)
-        self.files = files.FilesResourceWithStreamingResponse(client.files)
-        self.vector_stores = vector_stores.VectorStoresResourceWithStreamingResponse(client.vector_stores)
-
-        self.info = to_streamed_response_wrapper(
-            client.info,
-        )
 
 
 class AsyncMixedbreadWithStreamedResponse:
     def __init__(self, client: AsyncMixedbread) -> None:
+        self.service_info = service_info.AsyncServiceInfoResourceWithStreamingResponse(client.service_info)
+        self.files = files.AsyncFilesResourceWithStreamingResponse(client.files)
+        self.completions = completions.AsyncCompletionsResourceWithStreamingResponse(client.completions)
+        self.vector_stores = vector_stores.AsyncVectorStoresResourceWithStreamingResponse(client.vector_stores)
+        self.parsing = parsing.AsyncParsingResourceWithStreamingResponse(client.parsing)
+        self.extractions = extractions.AsyncExtractionsResourceWithStreamingResponse(client.extractions)
         self.embeddings = embeddings.AsyncEmbeddingsResourceWithStreamingResponse(client.embeddings)
         self.reranking = reranking.AsyncRerankingResourceWithStreamingResponse(client.reranking)
-        self.parsing = parsing.AsyncParsingResourceWithStreamingResponse(client.parsing)
-        self.files = files.AsyncFilesResourceWithStreamingResponse(client.files)
-        self.vector_stores = vector_stores.AsyncVectorStoresResourceWithStreamingResponse(client.vector_stores)
-
-        self.info = async_to_streamed_response_wrapper(
-            client.info,
-        )
 
 
 Client = Mixedbread

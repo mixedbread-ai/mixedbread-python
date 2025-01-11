@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import List, Optional
+
 import httpx
 
 from ..._types import NOT_GIVEN, Body, Query, Headers, NotGiven
@@ -17,11 +19,12 @@ from ..._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ...pagination import SyncLimitOffset, AsyncLimitOffset
-from ..._base_client import AsyncPaginator, make_request_options
-from ...types.vector_stores import file_list_params, file_create_params
+from ..._base_client import make_request_options
+from ...types.vector_stores import file_list_params, file_create_params, file_search_params
 from ...types.vector_stores.vector_store_file import VectorStoreFile
-from ...types.vector_stores.file_delete_response import FileDeleteResponse
+from ...types.vector_stores.file_list_response import FileListResponse
+from ...types.vector_stores.file_search_response import FileSearchResponse
+from ...types.vector_stores.vector_store_file_deleted import VectorStoreFileDeleted
 
 __all__ = ["FilesResource", "AsyncFilesResource"]
 
@@ -33,7 +36,7 @@ class FilesResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return the
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/mixedbread-ai/mixedbread-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/mixedbread-python#accessing-raw-response-data-eg-headers
         """
         return FilesResourceWithRawResponse(self)
 
@@ -42,7 +45,7 @@ class FilesResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/mixedbread-ai/mixedbread-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/mixedbread-python#with_streaming_response
         """
         return FilesResourceWithStreamingResponse(self)
 
@@ -155,7 +158,7 @@ class FilesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> SyncLimitOffset[VectorStoreFile]:
+    ) -> FileListResponse:
         """
         List files indexed in a vector store with pagination.
 
@@ -181,9 +184,8 @@ class FilesResource(SyncAPIResource):
         """
         if not vector_store_id:
             raise ValueError(f"Expected a non-empty value for `vector_store_id` but received {vector_store_id!r}")
-        return self._get_api_list(
+        return self._get(
             f"/v1/vector_stores/{vector_store_id}/files",
-            page=SyncLimitOffset[VectorStoreFile],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -197,7 +199,7 @@ class FilesResource(SyncAPIResource):
                     file_list_params.FileListParams,
                 ),
             ),
-            model=VectorStoreFile,
+            cast_to=FileListResponse,
         )
 
     def delete(
@@ -211,7 +213,7 @@ class FilesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> FileDeleteResponse:
+    ) -> VectorStoreFileDeleted:
         """
         Delete a file from a vector store.
 
@@ -242,7 +244,77 @@ class FilesResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=FileDeleteResponse,
+            cast_to=VectorStoreFileDeleted,
+        )
+
+    def search(
+        self,
+        *,
+        query: str,
+        vector_store_ids: List[str],
+        filters: Optional[file_search_params.Filters] | NotGiven = NOT_GIVEN,
+        search_options: file_search_params.SearchOptions | NotGiven = NOT_GIVEN,
+        top_k: int | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> FileSearchResponse:
+        """
+        Perform semantic search across complete vector store files.
+
+        This endpoint searches through vector store files using semantic similarity
+        matching. Unlike chunk search, it returns complete matching files rather than
+        individual chunks. Supports complex search queries with filters and returns
+        relevance-scored results.
+
+        Args: search_params: Search configuration including: - query text or
+        embeddings - metadata filters - pagination parameters - sorting preferences
+        \\__state: API state dependency \\__ctx: Service context dependency
+
+        Returns: VectorStoreSearchFileResponse containing: - List of matched files with
+        relevance scores - Pagination details including total result count
+
+        Raises: HTTPException (400): If search parameters are invalid HTTPException
+        (404): If no vector stores are found to search
+
+        Args:
+          query: Search query text
+
+          vector_store_ids: IDs of vector stores to search
+
+          filters: Optional filter conditions
+
+          search_options: Search configuration options
+
+          top_k: Number of results to return
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._post(
+            "/v1/vector_stores/files/search",
+            body=maybe_transform(
+                {
+                    "query": query,
+                    "vector_store_ids": vector_store_ids,
+                    "filters": filters,
+                    "search_options": search_options,
+                    "top_k": top_k,
+                },
+                file_search_params.FileSearchParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=FileSearchResponse,
         )
 
 
@@ -253,7 +325,7 @@ class AsyncFilesResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return the
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/mixedbread-ai/mixedbread-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/mixedbread-python#accessing-raw-response-data-eg-headers
         """
         return AsyncFilesResourceWithRawResponse(self)
 
@@ -262,7 +334,7 @@ class AsyncFilesResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/mixedbread-ai/mixedbread-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/mixedbread-python#with_streaming_response
         """
         return AsyncFilesResourceWithStreamingResponse(self)
 
@@ -363,7 +435,7 @@ class AsyncFilesResource(AsyncAPIResource):
             cast_to=VectorStoreFile,
         )
 
-    def list(
+    async def list(
         self,
         vector_store_id: str,
         *,
@@ -375,7 +447,7 @@ class AsyncFilesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> AsyncPaginator[VectorStoreFile, AsyncLimitOffset[VectorStoreFile]]:
+    ) -> FileListResponse:
         """
         List files indexed in a vector store with pagination.
 
@@ -401,15 +473,14 @@ class AsyncFilesResource(AsyncAPIResource):
         """
         if not vector_store_id:
             raise ValueError(f"Expected a non-empty value for `vector_store_id` but received {vector_store_id!r}")
-        return self._get_api_list(
+        return await self._get(
             f"/v1/vector_stores/{vector_store_id}/files",
-            page=AsyncLimitOffset[VectorStoreFile],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=maybe_transform(
+                query=await async_maybe_transform(
                     {
                         "limit": limit,
                         "offset": offset,
@@ -417,7 +488,7 @@ class AsyncFilesResource(AsyncAPIResource):
                     file_list_params.FileListParams,
                 ),
             ),
-            model=VectorStoreFile,
+            cast_to=FileListResponse,
         )
 
     async def delete(
@@ -431,7 +502,7 @@ class AsyncFilesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> FileDeleteResponse:
+    ) -> VectorStoreFileDeleted:
         """
         Delete a file from a vector store.
 
@@ -462,7 +533,77 @@ class AsyncFilesResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=FileDeleteResponse,
+            cast_to=VectorStoreFileDeleted,
+        )
+
+    async def search(
+        self,
+        *,
+        query: str,
+        vector_store_ids: List[str],
+        filters: Optional[file_search_params.Filters] | NotGiven = NOT_GIVEN,
+        search_options: file_search_params.SearchOptions | NotGiven = NOT_GIVEN,
+        top_k: int | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> FileSearchResponse:
+        """
+        Perform semantic search across complete vector store files.
+
+        This endpoint searches through vector store files using semantic similarity
+        matching. Unlike chunk search, it returns complete matching files rather than
+        individual chunks. Supports complex search queries with filters and returns
+        relevance-scored results.
+
+        Args: search_params: Search configuration including: - query text or
+        embeddings - metadata filters - pagination parameters - sorting preferences
+        \\__state: API state dependency \\__ctx: Service context dependency
+
+        Returns: VectorStoreSearchFileResponse containing: - List of matched files with
+        relevance scores - Pagination details including total result count
+
+        Raises: HTTPException (400): If search parameters are invalid HTTPException
+        (404): If no vector stores are found to search
+
+        Args:
+          query: Search query text
+
+          vector_store_ids: IDs of vector stores to search
+
+          filters: Optional filter conditions
+
+          search_options: Search configuration options
+
+          top_k: Number of results to return
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._post(
+            "/v1/vector_stores/files/search",
+            body=await async_maybe_transform(
+                {
+                    "query": query,
+                    "vector_store_ids": vector_store_ids,
+                    "filters": filters,
+                    "search_options": search_options,
+                    "top_k": top_k,
+                },
+                file_search_params.FileSearchParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=FileSearchResponse,
         )
 
 
@@ -482,6 +623,9 @@ class FilesResourceWithRawResponse:
         self.delete = to_raw_response_wrapper(
             files.delete,
         )
+        self.search = to_raw_response_wrapper(
+            files.search,
+        )
 
 
 class AsyncFilesResourceWithRawResponse:
@@ -499,6 +643,9 @@ class AsyncFilesResourceWithRawResponse:
         )
         self.delete = async_to_raw_response_wrapper(
             files.delete,
+        )
+        self.search = async_to_raw_response_wrapper(
+            files.search,
         )
 
 
@@ -518,6 +665,9 @@ class FilesResourceWithStreamingResponse:
         self.delete = to_streamed_response_wrapper(
             files.delete,
         )
+        self.search = to_streamed_response_wrapper(
+            files.search,
+        )
 
 
 class AsyncFilesResourceWithStreamingResponse:
@@ -535,4 +685,7 @@ class AsyncFilesResourceWithStreamingResponse:
         )
         self.delete = async_to_streamed_response_wrapper(
             files.delete,
+        )
+        self.search = async_to_streamed_response_wrapper(
+            files.search,
         )
