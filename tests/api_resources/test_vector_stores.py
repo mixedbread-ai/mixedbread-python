@@ -233,44 +233,6 @@ class TestVectorStores:
     def test_method_question_answering_with_all_params(self, client: Mixedbread) -> None:
         vector_store = client.vector_stores.question_answering(
             vector_store_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
-            filters={
-                "all": [
-                    {
-                        "key": "price",
-                        "operator": "eq",
-                        "value": "100",
-                    },
-                    {
-                        "key": "color",
-                        "operator": "eq",
-                        "value": "red",
-                    },
-                ],
-                "any": [
-                    {
-                        "key": "price",
-                        "operator": "eq",
-                        "value": "100",
-                    },
-                    {
-                        "key": "color",
-                        "operator": "eq",
-                        "value": "red",
-                    },
-                ],
-                "none": [
-                    {
-                        "key": "price",
-                        "operator": "eq",
-                        "value": "100",
-                    },
-                    {
-                        "key": "color",
-                        "operator": "eq",
-                        "value": "red",
-                    },
-                ],
-            },
             qa_options={"cite": True},
             query="x",
             search_options={
@@ -321,44 +283,6 @@ class TestVectorStores:
         vector_store = client.vector_stores.search(
             query="how to configure SSL",
             vector_store_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
-            filters={
-                "all": [
-                    {
-                        "key": "price",
-                        "operator": "eq",
-                        "value": "100",
-                    },
-                    {
-                        "key": "color",
-                        "operator": "eq",
-                        "value": "red",
-                    },
-                ],
-                "any": [
-                    {
-                        "key": "price",
-                        "operator": "eq",
-                        "value": "100",
-                    },
-                    {
-                        "key": "color",
-                        "operator": "eq",
-                        "value": "red",
-                    },
-                ],
-                "none": [
-                    {
-                        "key": "price",
-                        "operator": "eq",
-                        "value": "100",
-                    },
-                    {
-                        "key": "color",
-                        "operator": "eq",
-                        "value": "red",
-                    },
-                ],
-            },
             search_options={
                 "return_chunks": True,
                 "return_metadata": True,
@@ -610,44 +534,6 @@ class TestAsyncVectorStores:
     async def test_method_question_answering_with_all_params(self, async_client: AsyncMixedbread) -> None:
         vector_store = await async_client.vector_stores.question_answering(
             vector_store_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
-            filters={
-                "all": [
-                    {
-                        "key": "price",
-                        "operator": "eq",
-                        "value": "100",
-                    },
-                    {
-                        "key": "color",
-                        "operator": "eq",
-                        "value": "red",
-                    },
-                ],
-                "any": [
-                    {
-                        "key": "price",
-                        "operator": "eq",
-                        "value": "100",
-                    },
-                    {
-                        "key": "color",
-                        "operator": "eq",
-                        "value": "red",
-                    },
-                ],
-                "none": [
-                    {
-                        "key": "price",
-                        "operator": "eq",
-                        "value": "100",
-                    },
-                    {
-                        "key": "color",
-                        "operator": "eq",
-                        "value": "red",
-                    },
-                ],
-            },
             qa_options={"cite": True},
             query="x",
             search_options={
@@ -698,44 +584,6 @@ class TestAsyncVectorStores:
         vector_store = await async_client.vector_stores.search(
             query="how to configure SSL",
             vector_store_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
-            filters={
-                "all": [
-                    {
-                        "key": "price",
-                        "operator": "eq",
-                        "value": "100",
-                    },
-                    {
-                        "key": "color",
-                        "operator": "eq",
-                        "value": "red",
-                    },
-                ],
-                "any": [
-                    {
-                        "key": "price",
-                        "operator": "eq",
-                        "value": "100",
-                    },
-                    {
-                        "key": "color",
-                        "operator": "eq",
-                        "value": "red",
-                    },
-                ],
-                "none": [
-                    {
-                        "key": "price",
-                        "operator": "eq",
-                        "value": "100",
-                    },
-                    {
-                        "key": "color",
-                        "operator": "eq",
-                        "value": "red",
-                    },
-                ],
-            },
             search_options={
                 "return_chunks": True,
                 "return_metadata": True,

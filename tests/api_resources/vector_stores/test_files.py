@@ -229,44 +229,6 @@ class TestFiles:
         file = client.vector_stores.files.search(
             query="how to configure SSL",
             vector_store_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
-            filters={
-                "all": [
-                    {
-                        "key": "price",
-                        "operator": "eq",
-                        "value": "100",
-                    },
-                    {
-                        "key": "color",
-                        "operator": "eq",
-                        "value": "red",
-                    },
-                ],
-                "any": [
-                    {
-                        "key": "price",
-                        "operator": "eq",
-                        "value": "100",
-                    },
-                    {
-                        "key": "color",
-                        "operator": "eq",
-                        "value": "red",
-                    },
-                ],
-                "none": [
-                    {
-                        "key": "price",
-                        "operator": "eq",
-                        "value": "100",
-                    },
-                    {
-                        "key": "color",
-                        "operator": "eq",
-                        "value": "red",
-                    },
-                ],
-            },
             search_options={
                 "return_chunks": True,
                 "return_metadata": True,
@@ -514,44 +476,6 @@ class TestAsyncFiles:
         file = await async_client.vector_stores.files.search(
             query="how to configure SSL",
             vector_store_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
-            filters={
-                "all": [
-                    {
-                        "key": "price",
-                        "operator": "eq",
-                        "value": "100",
-                    },
-                    {
-                        "key": "color",
-                        "operator": "eq",
-                        "value": "red",
-                    },
-                ],
-                "any": [
-                    {
-                        "key": "price",
-                        "operator": "eq",
-                        "value": "100",
-                    },
-                    {
-                        "key": "color",
-                        "operator": "eq",
-                        "value": "red",
-                    },
-                ],
-                "none": [
-                    {
-                        "key": "price",
-                        "operator": "eq",
-                        "value": "100",
-                    },
-                    {
-                        "key": "color",
-                        "operator": "eq",
-                        "value": "red",
-                    },
-                ],
-            },
             search_options={
                 "return_chunks": True,
                 "return_metadata": True,
