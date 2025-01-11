@@ -235,9 +235,43 @@ class TestVectorStores:
         vector_store = client.vector_stores.search(
             query="how to configure SSL",
             vector_store_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
-            pagination={
-                "limit": 0,
-                "offset": 0,
+            filters={
+                "all": [
+                    {
+                        "key": "price",
+                        "operator": "eq",
+                        "value": "100",
+                    },
+                    {
+                        "key": "color",
+                        "operator": "eq",
+                        "value": "red",
+                    },
+                ],
+                "any": [
+                    {
+                        "key": "price",
+                        "operator": "eq",
+                        "value": "100",
+                    },
+                    {
+                        "key": "color",
+                        "operator": "eq",
+                        "value": "red",
+                    },
+                ],
+                "none": [
+                    {
+                        "key": "price",
+                        "operator": "eq",
+                        "value": "100",
+                    },
+                    {
+                        "key": "color",
+                        "operator": "eq",
+                        "value": "red",
+                    },
+                ],
             },
             search_options={
                 "return_chunks": True,
@@ -245,6 +279,7 @@ class TestVectorStores:
                 "rewrite_query": True,
                 "score_threshold": 0,
             },
+            top_k=1,
         )
         assert_matches_type(VectorStoreSearchResponse, vector_store, path=["response"])
 
@@ -491,9 +526,43 @@ class TestAsyncVectorStores:
         vector_store = await async_client.vector_stores.search(
             query="how to configure SSL",
             vector_store_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
-            pagination={
-                "limit": 0,
-                "offset": 0,
+            filters={
+                "all": [
+                    {
+                        "key": "price",
+                        "operator": "eq",
+                        "value": "100",
+                    },
+                    {
+                        "key": "color",
+                        "operator": "eq",
+                        "value": "red",
+                    },
+                ],
+                "any": [
+                    {
+                        "key": "price",
+                        "operator": "eq",
+                        "value": "100",
+                    },
+                    {
+                        "key": "color",
+                        "operator": "eq",
+                        "value": "red",
+                    },
+                ],
+                "none": [
+                    {
+                        "key": "price",
+                        "operator": "eq",
+                        "value": "100",
+                    },
+                    {
+                        "key": "color",
+                        "operator": "eq",
+                        "value": "red",
+                    },
+                ],
             },
             search_options={
                 "return_chunks": True,
@@ -501,6 +570,7 @@ class TestAsyncVectorStores:
                 "rewrite_query": True,
                 "score_threshold": 0,
             },
+            top_k=1,
         )
         assert_matches_type(VectorStoreSearchResponse, vector_store, path=["response"])
 

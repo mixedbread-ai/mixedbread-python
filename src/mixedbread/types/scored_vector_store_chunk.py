@@ -36,11 +36,20 @@ class ScoredVectorStoreChunk(BaseModel):
     file_id: str
     """file id"""
 
-    rank: int
-    """rank of the chunk in a file"""
+    position: int
+    """position of the chunk in a file"""
 
     score: float
     """score of the chunk"""
+
+    vector_store_id: str
+    """vector store id"""
+
+    content: Optional[str] = None
+    """content of the chunk"""
+
+    metadata: Optional[object] = None
+    """file metadata"""
 
     value: Optional[Value] = None
     """value of the chunk"""

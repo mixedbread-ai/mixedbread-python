@@ -14,7 +14,6 @@ from .expires_after_param import ExpiresAfterParam as ExpiresAfterParam
 from .file_delete_response import FileDeleteResponse as FileDeleteResponse
 from .embedding_create_params import EmbeddingCreateParams as EmbeddingCreateParams
 from .reranking_create_params import RerankingCreateParams as RerankingCreateParams
-from .scored_vector_store_file import ScoredVectorStoreFile as ScoredVectorStoreFile
 from .vector_store_list_params import VectorStoreListParams as VectorStoreListParams
 from .embedding_create_response import EmbeddingCreateResponse as EmbeddingCreateResponse
 from .reranking_create_response import RerankingCreateResponse as RerankingCreateResponse
