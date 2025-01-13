@@ -5,10 +5,10 @@ from typing_extensions import Literal
 
 from .._models import BaseModel
 
-__all__ = ["FileDeleted"]
+__all__ = ["FileDeleteResponse"]
 
 
-class FileDeleted(BaseModel):
+class FileDeleteResponse(BaseModel):
     id: str
     """The ID of the deleted file"""
 

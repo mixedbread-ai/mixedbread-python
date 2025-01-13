@@ -19,12 +19,12 @@ from ..._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ..._base_client import make_request_options
+from ...pagination import SyncLimitOffset, AsyncLimitOffset
+from ..._base_client import AsyncPaginator, make_request_options
 from ...types.vector_stores import file_list_params, file_create_params, file_search_params
 from ...types.vector_stores.vector_store_file import VectorStoreFile
-from ...types.vector_stores.file_list_response import FileListResponse
+from ...types.vector_stores.file_delete_response import FileDeleteResponse
 from ...types.vector_stores.file_search_response import FileSearchResponse
-from ...types.vector_stores.vector_store_file_deleted import VectorStoreFileDeleted
 
 __all__ = ["FilesResource", "AsyncFilesResource"]
 
@@ -36,7 +36,7 @@ class FilesResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return the
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/stainless-sdks/mixedbread-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/mixedbread-ai/mixedbread-python#accessing-raw-response-data-eg-headers
         """
         return FilesResourceWithRawResponse(self)
 
@@ -45,7 +45,7 @@ class FilesResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/stainless-sdks/mixedbread-python#with_streaming_response
+        For more information, see https://www.github.com/mixedbread-ai/mixedbread-python#with_streaming_response
         """
         return FilesResourceWithStreamingResponse(self)
 
@@ -158,7 +158,7 @@ class FilesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> FileListResponse:
+    ) -> SyncLimitOffset[VectorStoreFile]:
         """
         List files indexed in a vector store with pagination.
 
@@ -184,8 +184,9 @@ class FilesResource(SyncAPIResource):
         """
         if not vector_store_id:
             raise ValueError(f"Expected a non-empty value for `vector_store_id` but received {vector_store_id!r}")
-        return self._get(
+        return self._get_api_list(
             f"/v1/vector_stores/{vector_store_id}/files",
+            page=SyncLimitOffset[VectorStoreFile],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -199,7 +200,7 @@ class FilesResource(SyncAPIResource):
                     file_list_params.FileListParams,
                 ),
             ),
-            cast_to=FileListResponse,
+            model=VectorStoreFile,
         )
 
     def delete(
@@ -213,7 +214,7 @@ class FilesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> VectorStoreFileDeleted:
+    ) -> FileDeleteResponse:
         """
         Delete a file from a vector store.
 
@@ -244,7 +245,7 @@ class FilesResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=VectorStoreFileDeleted,
+            cast_to=FileDeleteResponse,
         )
 
     def search(
@@ -321,7 +322,7 @@ class AsyncFilesResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return the
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/stainless-sdks/mixedbread-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/mixedbread-ai/mixedbread-python#accessing-raw-response-data-eg-headers
         """
         return AsyncFilesResourceWithRawResponse(self)
 
@@ -330,7 +331,7 @@ class AsyncFilesResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/stainless-sdks/mixedbread-python#with_streaming_response
+        For more information, see https://www.github.com/mixedbread-ai/mixedbread-python#with_streaming_response
         """
         return AsyncFilesResourceWithStreamingResponse(self)
 
@@ -431,7 +432,7 @@ class AsyncFilesResource(AsyncAPIResource):
             cast_to=VectorStoreFile,
         )
 
-    async def list(
+    def list(
         self,
         vector_store_id: str,
         *,
@@ -443,7 +444,7 @@ class AsyncFilesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> FileListResponse:
+    ) -> AsyncPaginator[VectorStoreFile, AsyncLimitOffset[VectorStoreFile]]:
         """
         List files indexed in a vector store with pagination.
 
@@ -469,14 +470,15 @@ class AsyncFilesResource(AsyncAPIResource):
         """
         if not vector_store_id:
             raise ValueError(f"Expected a non-empty value for `vector_store_id` but received {vector_store_id!r}")
-        return await self._get(
+        return self._get_api_list(
             f"/v1/vector_stores/{vector_store_id}/files",
+            page=AsyncLimitOffset[VectorStoreFile],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=await async_maybe_transform(
+                query=maybe_transform(
                     {
                         "limit": limit,
                         "offset": offset,
@@ -484,7 +486,7 @@ class AsyncFilesResource(AsyncAPIResource):
                     file_list_params.FileListParams,
                 ),
             ),
-            cast_to=FileListResponse,
+            model=VectorStoreFile,
         )
 
     async def delete(
@@ -498,7 +500,7 @@ class AsyncFilesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> VectorStoreFileDeleted:
+    ) -> FileDeleteResponse:
         """
         Delete a file from a vector store.
 
@@ -529,7 +531,7 @@ class AsyncFilesResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=VectorStoreFileDeleted,
+            cast_to=FileDeleteResponse,
         )
 
     async def search(

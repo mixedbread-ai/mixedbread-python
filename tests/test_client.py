@@ -24,7 +24,7 @@ from mixedbread import Mixedbread, AsyncMixedbread, APIResponseValidationError
 from mixedbread._types import Omit
 from mixedbread._models import BaseModel, FinalRequestOptions
 from mixedbread._constants import RAW_RESPONSE_HEADER
-from mixedbread._exceptions import APIStatusError, APITimeoutError, APIResponseValidationError
+from mixedbread._exceptions import APIStatusError, APITimeoutError, MixedbreadError, APIResponseValidationError
 from mixedbread._base_client import (
     DEFAULT_TIMEOUT,
     HTTPX_DEFAULT_TIMEOUT,
@@ -332,6 +332,16 @@ class TestMixedbread:
         request = client2._build_request(FinalRequestOptions(method="get", url="/foo"))
         assert request.headers.get("x-foo") == "stainless"
         assert request.headers.get("x-stainless-lang") == "my-overriding-header"
+
+    def test_validate_headers(self) -> None:
+        client = Mixedbread(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
+        assert request.headers.get("Authorization") == f"Bearer {api_key}"
+
+        with pytest.raises(MixedbreadError):
+            with update_env(**{"MXBAI_API_KEY": Omit()}):
+                client2 = Mixedbread(base_url=base_url, api_key=None, _strict_response_validation=True)
+            _ = client2
 
     def test_default_query_option(self) -> None:
         client = Mixedbread(
@@ -719,12 +729,12 @@ class TestMixedbread:
     @mock.patch("mixedbread._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
-        respx_mock.post("/v1/files").mock(side_effect=httpx.TimeoutException("Test timeout error"))
+        respx_mock.post("/v1/vector_stores").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
             self.client.post(
-                "/v1/files",
-                body=cast(object, dict(file=b"raw file contents")),
+                "/v1/vector_stores",
+                body=cast(object, dict()),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
@@ -734,12 +744,12 @@ class TestMixedbread:
     @mock.patch("mixedbread._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
-        respx_mock.post("/v1/files").mock(return_value=httpx.Response(500))
+        respx_mock.post("/v1/vector_stores").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
             self.client.post(
-                "/v1/files",
-                body=cast(object, dict(file=b"raw file contents")),
+                "/v1/vector_stores",
+                body=cast(object, dict()),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
@@ -770,9 +780,9 @@ class TestMixedbread:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v1/files").mock(side_effect=retry_handler)
+        respx_mock.post("/v1/vector_stores").mock(side_effect=retry_handler)
 
-        response = client.files.with_raw_response.create(file=b"raw file contents")
+        response = client.vector_stores.with_raw_response.create()
 
         assert response.retries_taken == failures_before_success
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
@@ -794,11 +804,9 @@ class TestMixedbread:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v1/files").mock(side_effect=retry_handler)
+        respx_mock.post("/v1/vector_stores").mock(side_effect=retry_handler)
 
-        response = client.files.with_raw_response.create(
-            file=b"raw file contents", extra_headers={"x-stainless-retry-count": Omit()}
-        )
+        response = client.vector_stores.with_raw_response.create(extra_headers={"x-stainless-retry-count": Omit()})
 
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
 
@@ -819,11 +827,9 @@ class TestMixedbread:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v1/files").mock(side_effect=retry_handler)
+        respx_mock.post("/v1/vector_stores").mock(side_effect=retry_handler)
 
-        response = client.files.with_raw_response.create(
-            file=b"raw file contents", extra_headers={"x-stainless-retry-count": "42"}
-        )
+        response = client.vector_stores.with_raw_response.create(extra_headers={"x-stainless-retry-count": "42"})
 
         assert response.http_request.headers.get("x-stainless-retry-count") == "42"
 
@@ -1106,6 +1112,16 @@ class TestAsyncMixedbread:
         request = client2._build_request(FinalRequestOptions(method="get", url="/foo"))
         assert request.headers.get("x-foo") == "stainless"
         assert request.headers.get("x-stainless-lang") == "my-overriding-header"
+
+    def test_validate_headers(self) -> None:
+        client = AsyncMixedbread(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
+        assert request.headers.get("Authorization") == f"Bearer {api_key}"
+
+        with pytest.raises(MixedbreadError):
+            with update_env(**{"MXBAI_API_KEY": Omit()}):
+                client2 = AsyncMixedbread(base_url=base_url, api_key=None, _strict_response_validation=True)
+            _ = client2
 
     def test_default_query_option(self) -> None:
         client = AsyncMixedbread(
@@ -1499,12 +1515,12 @@ class TestAsyncMixedbread:
     @mock.patch("mixedbread._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     async def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
-        respx_mock.post("/v1/files").mock(side_effect=httpx.TimeoutException("Test timeout error"))
+        respx_mock.post("/v1/vector_stores").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
             await self.client.post(
-                "/v1/files",
-                body=cast(object, dict(file=b"raw file contents")),
+                "/v1/vector_stores",
+                body=cast(object, dict()),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
@@ -1514,12 +1530,12 @@ class TestAsyncMixedbread:
     @mock.patch("mixedbread._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     async def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
-        respx_mock.post("/v1/files").mock(return_value=httpx.Response(500))
+        respx_mock.post("/v1/vector_stores").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
             await self.client.post(
-                "/v1/files",
-                body=cast(object, dict(file=b"raw file contents")),
+                "/v1/vector_stores",
+                body=cast(object, dict()),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
@@ -1551,9 +1567,9 @@ class TestAsyncMixedbread:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v1/files").mock(side_effect=retry_handler)
+        respx_mock.post("/v1/vector_stores").mock(side_effect=retry_handler)
 
-        response = await client.files.with_raw_response.create(file=b"raw file contents")
+        response = await client.vector_stores.with_raw_response.create()
 
         assert response.retries_taken == failures_before_success
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
@@ -1576,10 +1592,10 @@ class TestAsyncMixedbread:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v1/files").mock(side_effect=retry_handler)
+        respx_mock.post("/v1/vector_stores").mock(side_effect=retry_handler)
 
-        response = await client.files.with_raw_response.create(
-            file=b"raw file contents", extra_headers={"x-stainless-retry-count": Omit()}
+        response = await client.vector_stores.with_raw_response.create(
+            extra_headers={"x-stainless-retry-count": Omit()}
         )
 
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
@@ -1602,11 +1618,9 @@ class TestAsyncMixedbread:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v1/files").mock(side_effect=retry_handler)
+        respx_mock.post("/v1/vector_stores").mock(side_effect=retry_handler)
 
-        response = await client.files.with_raw_response.create(
-            file=b"raw file contents", extra_headers={"x-stainless-retry-count": "42"}
-        )
+        response = await client.vector_stores.with_raw_response.create(extra_headers={"x-stainless-retry-count": "42"})
 
         assert response.http_request.headers.get("x-stainless-retry-count") == "42"
 
