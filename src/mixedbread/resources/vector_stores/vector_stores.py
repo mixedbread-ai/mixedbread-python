@@ -19,7 +19,6 @@ from ...types import (
     vector_store_create_params,
     vector_store_search_params,
     vector_store_update_params,
-    vector_store_question_answering_params,
 )
 from ..._types import NOT_GIVEN, Body, Query, Headers, NotGiven
 from ..._utils import (
@@ -34,10 +33,11 @@ from ..._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ..._base_client import make_request_options
+from ...pagination import SyncLimitOffset, AsyncLimitOffset
+from ..._base_client import AsyncPaginator, make_request_options
 from ...types.vector_store import VectorStore
-from ...types.vector_store_deleted import VectorStoreDeleted
-from ...types.vector_store_list_response import VectorStoreListResponse
+from ...types.expires_after_param import ExpiresAfterParam
+from ...types.vector_store_delete_response import VectorStoreDeleteResponse
 from ...types.vector_store_search_response import VectorStoreSearchResponse
 
 __all__ = ["VectorStoresResource", "AsyncVectorStoresResource"]
@@ -54,7 +54,7 @@ class VectorStoresResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return the
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/stainless-sdks/mixedbread-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/mixedbread-ai/mixedbread-python#accessing-raw-response-data-eg-headers
         """
         return VectorStoresResourceWithRawResponse(self)
 
@@ -63,7 +63,7 @@ class VectorStoresResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/stainless-sdks/mixedbread-python#with_streaming_response
+        For more information, see https://www.github.com/mixedbread-ai/mixedbread-python#with_streaming_response
         """
         return VectorStoresResourceWithStreamingResponse(self)
 
@@ -71,7 +71,7 @@ class VectorStoresResource(SyncAPIResource):
         self,
         *,
         description: Optional[str] | NotGiven = NOT_GIVEN,
-        expires_after: Optional[vector_store_create_params.ExpiresAfter] | NotGiven = NOT_GIVEN,
+        expires_after: Optional[ExpiresAfterParam] | NotGiven = NOT_GIVEN,
         file_ids: Optional[List[str]] | NotGiven = NOT_GIVEN,
         metadata: object | NotGiven = NOT_GIVEN,
         name: Optional[str] | NotGiven = NOT_GIVEN,
@@ -171,7 +171,7 @@ class VectorStoresResource(SyncAPIResource):
         vector_store_id: str,
         *,
         description: Optional[str] | NotGiven = NOT_GIVEN,
-        expires_after: Optional[vector_store_update_params.ExpiresAfter] | NotGiven = NOT_GIVEN,
+        expires_after: Optional[ExpiresAfterParam] | NotGiven = NOT_GIVEN,
         metadata: object | NotGiven = NOT_GIVEN,
         name: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -239,7 +239,7 @@ class VectorStoresResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> VectorStoreListResponse:
+    ) -> SyncLimitOffset[VectorStore]:
         """
         List all vector stores.
 
@@ -260,8 +260,9 @@ class VectorStoresResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return self._get(
+        return self._get_api_list(
             "/v1/vector_stores",
+            page=SyncLimitOffset[VectorStore],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -275,7 +276,7 @@ class VectorStoresResource(SyncAPIResource):
                     vector_store_list_params.VectorStoreListParams,
                 ),
             ),
-            cast_to=VectorStoreListResponse,
+            model=VectorStore,
         )
 
     def delete(
@@ -288,7 +289,7 @@ class VectorStoresResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> VectorStoreDeleted:
+    ) -> VectorStoreDeleteResponse:
         """
         Delete a vector store by ID.
 
@@ -314,67 +315,7 @@ class VectorStoresResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=VectorStoreDeleted,
-        )
-
-    def question_answering(
-        self,
-        *,
-        vector_store_ids: List[str],
-        qa_options: vector_store_question_answering_params.QaOptions | NotGiven = NOT_GIVEN,
-        query: str | NotGiven = NOT_GIVEN,
-        search_options: vector_store_question_answering_params.SearchOptions | NotGiven = NOT_GIVEN,
-        stream: bool | NotGiven = NOT_GIVEN,
-        top_k: int | NotGiven = NOT_GIVEN,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> object:
-        """
-        Question answering
-
-        Args:
-          vector_store_ids: IDs of vector stores to search
-
-          qa_options: Question answering configuration options
-
-          query: Question to answer. If not provided, the question will be extracted from the
-              passed messages.
-
-          search_options: Search configuration options
-
-          stream: Whether to stream the answer
-
-          top_k: Number of results to return
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return self._post(
-            "/v1/vector_stores/question-answering",
-            body=maybe_transform(
-                {
-                    "vector_store_ids": vector_store_ids,
-                    "qa_options": qa_options,
-                    "query": query,
-                    "search_options": search_options,
-                    "stream": stream,
-                    "top_k": top_k,
-                },
-                vector_store_question_answering_params.VectorStoreQuestionAnsweringParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=object,
+            cast_to=VectorStoreDeleteResponse,
         )
 
     def search(
@@ -454,7 +395,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return the
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/stainless-sdks/mixedbread-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/mixedbread-ai/mixedbread-python#accessing-raw-response-data-eg-headers
         """
         return AsyncVectorStoresResourceWithRawResponse(self)
 
@@ -463,7 +404,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/stainless-sdks/mixedbread-python#with_streaming_response
+        For more information, see https://www.github.com/mixedbread-ai/mixedbread-python#with_streaming_response
         """
         return AsyncVectorStoresResourceWithStreamingResponse(self)
 
@@ -471,7 +412,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         self,
         *,
         description: Optional[str] | NotGiven = NOT_GIVEN,
-        expires_after: Optional[vector_store_create_params.ExpiresAfter] | NotGiven = NOT_GIVEN,
+        expires_after: Optional[ExpiresAfterParam] | NotGiven = NOT_GIVEN,
         file_ids: Optional[List[str]] | NotGiven = NOT_GIVEN,
         metadata: object | NotGiven = NOT_GIVEN,
         name: Optional[str] | NotGiven = NOT_GIVEN,
@@ -571,7 +512,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         vector_store_id: str,
         *,
         description: Optional[str] | NotGiven = NOT_GIVEN,
-        expires_after: Optional[vector_store_update_params.ExpiresAfter] | NotGiven = NOT_GIVEN,
+        expires_after: Optional[ExpiresAfterParam] | NotGiven = NOT_GIVEN,
         metadata: object | NotGiven = NOT_GIVEN,
         name: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -628,7 +569,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
             cast_to=VectorStore,
         )
 
-    async def list(
+    def list(
         self,
         *,
         limit: int | NotGiven = NOT_GIVEN,
@@ -639,7 +580,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> VectorStoreListResponse:
+    ) -> AsyncPaginator[VectorStore, AsyncLimitOffset[VectorStore]]:
         """
         List all vector stores.
 
@@ -660,14 +601,15 @@ class AsyncVectorStoresResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return await self._get(
+        return self._get_api_list(
             "/v1/vector_stores",
+            page=AsyncLimitOffset[VectorStore],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=await async_maybe_transform(
+                query=maybe_transform(
                     {
                         "limit": limit,
                         "offset": offset,
@@ -675,7 +617,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
                     vector_store_list_params.VectorStoreListParams,
                 ),
             ),
-            cast_to=VectorStoreListResponse,
+            model=VectorStore,
         )
 
     async def delete(
@@ -688,7 +630,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> VectorStoreDeleted:
+    ) -> VectorStoreDeleteResponse:
         """
         Delete a vector store by ID.
 
@@ -714,67 +656,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=VectorStoreDeleted,
-        )
-
-    async def question_answering(
-        self,
-        *,
-        vector_store_ids: List[str],
-        qa_options: vector_store_question_answering_params.QaOptions | NotGiven = NOT_GIVEN,
-        query: str | NotGiven = NOT_GIVEN,
-        search_options: vector_store_question_answering_params.SearchOptions | NotGiven = NOT_GIVEN,
-        stream: bool | NotGiven = NOT_GIVEN,
-        top_k: int | NotGiven = NOT_GIVEN,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> object:
-        """
-        Question answering
-
-        Args:
-          vector_store_ids: IDs of vector stores to search
-
-          qa_options: Question answering configuration options
-
-          query: Question to answer. If not provided, the question will be extracted from the
-              passed messages.
-
-          search_options: Search configuration options
-
-          stream: Whether to stream the answer
-
-          top_k: Number of results to return
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return await self._post(
-            "/v1/vector_stores/question-answering",
-            body=await async_maybe_transform(
-                {
-                    "vector_store_ids": vector_store_ids,
-                    "qa_options": qa_options,
-                    "query": query,
-                    "search_options": search_options,
-                    "stream": stream,
-                    "top_k": top_k,
-                },
-                vector_store_question_answering_params.VectorStoreQuestionAnsweringParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=object,
+            cast_to=VectorStoreDeleteResponse,
         )
 
     async def search(
@@ -862,9 +744,6 @@ class VectorStoresResourceWithRawResponse:
         self.delete = to_raw_response_wrapper(
             vector_stores.delete,
         )
-        self.question_answering = to_raw_response_wrapper(
-            vector_stores.question_answering,
-        )
         self.search = to_raw_response_wrapper(
             vector_stores.search,
         )
@@ -892,9 +771,6 @@ class AsyncVectorStoresResourceWithRawResponse:
         )
         self.delete = async_to_raw_response_wrapper(
             vector_stores.delete,
-        )
-        self.question_answering = async_to_raw_response_wrapper(
-            vector_stores.question_answering,
         )
         self.search = async_to_raw_response_wrapper(
             vector_stores.search,
@@ -924,9 +800,6 @@ class VectorStoresResourceWithStreamingResponse:
         self.delete = to_streamed_response_wrapper(
             vector_stores.delete,
         )
-        self.question_answering = to_streamed_response_wrapper(
-            vector_stores.question_answering,
-        )
         self.search = to_streamed_response_wrapper(
             vector_stores.search,
         )
@@ -954,9 +827,6 @@ class AsyncVectorStoresResourceWithStreamingResponse:
         )
         self.delete = async_to_streamed_response_wrapper(
             vector_stores.delete,
-        )
-        self.question_answering = async_to_streamed_response_wrapper(
-            vector_stores.question_answering,
         )
         self.search = async_to_streamed_response_wrapper(
             vector_stores.search,

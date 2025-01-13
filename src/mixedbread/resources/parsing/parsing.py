@@ -27,7 +27,7 @@ class ParsingResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return the
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/stainless-sdks/mixedbread-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/mixedbread-ai/mixedbread-python#accessing-raw-response-data-eg-headers
         """
         return ParsingResourceWithRawResponse(self)
 
@@ -36,7 +36,7 @@ class ParsingResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/stainless-sdks/mixedbread-python#with_streaming_response
+        For more information, see https://www.github.com/mixedbread-ai/mixedbread-python#with_streaming_response
         """
         return ParsingResourceWithStreamingResponse(self)
 
@@ -52,7 +52,7 @@ class AsyncParsingResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return the
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/stainless-sdks/mixedbread-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/mixedbread-ai/mixedbread-python#accessing-raw-response-data-eg-headers
         """
         return AsyncParsingResourceWithRawResponse(self)
 
@@ -61,7 +61,7 @@ class AsyncParsingResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/stainless-sdks/mixedbread-python#with_streaming_response
+        For more information, see https://www.github.com/mixedbread-ai/mixedbread-python#with_streaming_response
         """
         return AsyncParsingResourceWithStreamingResponse(self)
 
