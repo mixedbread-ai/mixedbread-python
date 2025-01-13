@@ -321,6 +321,7 @@ class VectorStoresResource(SyncAPIResource):
         self,
         *,
         vector_store_ids: List[str],
+        filters: Optional[vector_store_question_answering_params.Filters] | NotGiven = NOT_GIVEN,
         qa_options: vector_store_question_answering_params.QaOptions | NotGiven = NOT_GIVEN,
         query: str | NotGiven = NOT_GIVEN,
         search_options: vector_store_question_answering_params.SearchOptions | NotGiven = NOT_GIVEN,
@@ -338,6 +339,8 @@ class VectorStoresResource(SyncAPIResource):
 
         Args:
           vector_store_ids: IDs of vector stores to search
+
+          filters: Optional filter conditions
 
           qa_options: Question answering configuration options
 
@@ -363,6 +366,7 @@ class VectorStoresResource(SyncAPIResource):
             body=maybe_transform(
                 {
                     "vector_store_ids": vector_store_ids,
+                    "filters": filters,
                     "qa_options": qa_options,
                     "query": query,
                     "search_options": search_options,
@@ -382,6 +386,7 @@ class VectorStoresResource(SyncAPIResource):
         *,
         query: str,
         vector_store_ids: List[str],
+        filters: Optional[vector_store_search_params.Filters] | NotGiven = NOT_GIVEN,
         search_options: vector_store_search_params.SearchOptions | NotGiven = NOT_GIVEN,
         top_k: int | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -413,6 +418,8 @@ class VectorStoresResource(SyncAPIResource):
 
           vector_store_ids: IDs of vector stores to search
 
+          filters: Optional filter conditions
+
           search_options: Search configuration options
 
           top_k: Number of results to return
@@ -431,6 +438,7 @@ class VectorStoresResource(SyncAPIResource):
                 {
                     "query": query,
                     "vector_store_ids": vector_store_ids,
+                    "filters": filters,
                     "search_options": search_options,
                     "top_k": top_k,
                 },
@@ -721,6 +729,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         self,
         *,
         vector_store_ids: List[str],
+        filters: Optional[vector_store_question_answering_params.Filters] | NotGiven = NOT_GIVEN,
         qa_options: vector_store_question_answering_params.QaOptions | NotGiven = NOT_GIVEN,
         query: str | NotGiven = NOT_GIVEN,
         search_options: vector_store_question_answering_params.SearchOptions | NotGiven = NOT_GIVEN,
@@ -738,6 +747,8 @@ class AsyncVectorStoresResource(AsyncAPIResource):
 
         Args:
           vector_store_ids: IDs of vector stores to search
+
+          filters: Optional filter conditions
 
           qa_options: Question answering configuration options
 
@@ -763,6 +774,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
             body=await async_maybe_transform(
                 {
                     "vector_store_ids": vector_store_ids,
+                    "filters": filters,
                     "qa_options": qa_options,
                     "query": query,
                     "search_options": search_options,
@@ -782,6 +794,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         *,
         query: str,
         vector_store_ids: List[str],
+        filters: Optional[vector_store_search_params.Filters] | NotGiven = NOT_GIVEN,
         search_options: vector_store_search_params.SearchOptions | NotGiven = NOT_GIVEN,
         top_k: int | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -813,6 +826,8 @@ class AsyncVectorStoresResource(AsyncAPIResource):
 
           vector_store_ids: IDs of vector stores to search
 
+          filters: Optional filter conditions
+
           search_options: Search configuration options
 
           top_k: Number of results to return
@@ -831,6 +846,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
                 {
                     "query": query,
                     "vector_store_ids": vector_store_ids,
+                    "filters": filters,
                     "search_options": search_options,
                     "top_k": top_k,
                 },

@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import List
+from typing import List, Optional
 
 import httpx
 
@@ -252,6 +252,7 @@ class FilesResource(SyncAPIResource):
         *,
         query: str,
         vector_store_ids: List[str],
+        filters: Optional[file_search_params.Filters] | NotGiven = NOT_GIVEN,
         search_options: file_search_params.SearchOptions | NotGiven = NOT_GIVEN,
         top_k: int | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -284,6 +285,8 @@ class FilesResource(SyncAPIResource):
 
           vector_store_ids: IDs of vector stores to search
 
+          filters: Optional filter conditions
+
           search_options: Search configuration options
 
           top_k: Number of results to return
@@ -302,6 +305,7 @@ class FilesResource(SyncAPIResource):
                 {
                     "query": query,
                     "vector_store_ids": vector_store_ids,
+                    "filters": filters,
                     "search_options": search_options,
                     "top_k": top_k,
                 },
@@ -537,6 +541,7 @@ class AsyncFilesResource(AsyncAPIResource):
         *,
         query: str,
         vector_store_ids: List[str],
+        filters: Optional[file_search_params.Filters] | NotGiven = NOT_GIVEN,
         search_options: file_search_params.SearchOptions | NotGiven = NOT_GIVEN,
         top_k: int | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -569,6 +574,8 @@ class AsyncFilesResource(AsyncAPIResource):
 
           vector_store_ids: IDs of vector stores to search
 
+          filters: Optional filter conditions
+
           search_options: Search configuration options
 
           top_k: Number of results to return
@@ -587,6 +594,7 @@ class AsyncFilesResource(AsyncAPIResource):
                 {
                     "query": query,
                     "vector_store_ids": vector_store_ids,
+                    "filters": filters,
                     "search_options": search_options,
                     "top_k": top_k,
                 },
