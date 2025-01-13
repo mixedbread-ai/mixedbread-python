@@ -1,7 +1,7 @@
 [project]
 name = "mixedbread"
 version = "0.1.0-alpha.12"
-description = "The official Python library for the mixedbread API"
+description = "The official Python library for the Mixedbread API"
 dynamic = ["readme"]
 license = "Apache-2.0"
 authors = [
