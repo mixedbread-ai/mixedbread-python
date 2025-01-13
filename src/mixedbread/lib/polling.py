@@ -13,7 +13,7 @@ def poll(
     timeout_seconds: Optional[float] = None,
     interval_seconds: Union[float, Callable[[T], float]] = 1.0,
     on_retry: Optional[Callable[[T, int], None]] = None,
-    error_handler: Optional[Callable[[Exception], None]] = None,
+    error_handler: Optional[Callable[[Exception], Optional[float]]] = None,
 ) -> T:
     """
     Polls an operation until a condition is met or timeout/max attempts are reached.
@@ -49,11 +49,18 @@ def poll(
             if on_retry:
                 on_retry(result, attempt)
 
+            if callable(interval_seconds):
+                wait_time = interval_seconds(result)
+            else:
+                wait_time = interval_seconds
+
         except Exception as e:
             if error_handler:
-                error_handler(e)
-            else:
-                raise
+                sleep_time = error_handler(e)
+                if sleep_time is not None:
+                    time.sleep(sleep_time)
+                    continue
+            raise
 
         if max_attempts and attempt >= max_attempts:
             raise RuntimeError(f"Maximum attempts ({max_attempts}) reached")
@@ -64,10 +71,6 @@ def poll(
                 raise TimeoutError(f"Timeout ({timeout_seconds}s) reached")
 
         # Calculate next interval
-        if callable(interval_seconds):
-            wait_time = interval_seconds(result)
-        else:
-            wait_time = interval_seconds
 
         time.sleep(wait_time)
 
@@ -80,7 +83,7 @@ async def poll_async(
     timeout_seconds: Optional[float] = None,
     interval_seconds: Union[float, Callable[[T], float]] = 1.0,
     on_retry: Optional[Callable[[T, int], None]] = None,
-    error_handler: Optional[Callable[[Exception], None]] = None,
+    error_handler: Optional[Callable[[Exception], Optional[float]]] = None,
 ) -> T:
     """
     Asynchronous version of poll method.
@@ -103,9 +106,11 @@ async def poll_async(
 
         except Exception as e:
             if error_handler:
-                error_handler(e)
-            else:
-                raise
+                sleep_time = error_handler(e)
+                if sleep_time is not None:
+                    await asyncio.sleep(sleep_time)
+                    continue
+            raise
 
         if max_attempts and attempt >= max_attempts:
             raise RuntimeError(f"Maximum attempts ({max_attempts}) reached")
