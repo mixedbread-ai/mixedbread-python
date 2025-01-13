@@ -102,7 +102,7 @@ class Mixedbread(SyncAPIClient):
         # part of our public interface in the future.
         _strict_response_validation: bool = False,
     ) -> None:
-        """Construct a new synchronous mixedbread client instance.
+        """Construct a new synchronous Mixedbread client instance.
 
         This automatically infers the `api_key` argument from the `MXBAI_API_KEY` environment variable if it is not provided.
         """
@@ -327,7 +327,7 @@ class AsyncMixedbread(AsyncAPIClient):
         # part of our public interface in the future.
         _strict_response_validation: bool = False,
     ) -> None:
-        """Construct a new async mixedbread client instance.
+        """Construct a new async Mixedbread client instance.
 
         This automatically infers the `api_key` argument from the `MXBAI_API_KEY` environment variable if it is not provided.
         """
