@@ -2,6 +2,7 @@
 
 from typing import List, Optional
 from datetime import datetime
+from typing_extensions import Literal
 
 from ..._models import BaseModel
 from ..scored_vector_store_chunk import ScoredVectorStoreChunk
@@ -31,5 +32,11 @@ class ScoredVectorStoreFile(BaseModel):
     chunks: Optional[List[ScoredVectorStoreChunk]] = None
     """chunks"""
 
+    last_error: Optional[object] = None
+    """last error"""
+
     metadata: Optional[object] = None
     """metadata"""
+
+    status: Optional[Literal["in_progress", "completed", "failed", "cancelled"]] = None
+    """status of the file"""

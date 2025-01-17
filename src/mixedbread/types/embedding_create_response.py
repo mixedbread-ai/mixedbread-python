@@ -74,6 +74,7 @@ class EmbeddingCreateResponse(BaseModel):
     object: Optional[
         Literal[
             "list",
+            "parsing_job",
             "job",
             "embedding",
             "embedding_dict",
