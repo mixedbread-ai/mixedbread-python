@@ -25,6 +25,7 @@ from ...pagination import SyncLimitOffset, AsyncLimitOffset
 from ..._base_client import AsyncPaginator, make_request_options
 from ...types.vector_stores import file_list_params, file_create_params, file_search_params
 from ...types.vector_stores.vector_store_file import VectorStoreFile
+from ...types.vector_store_search_options_param import VectorStoreSearchOptionsParam
 from ...types.vector_stores.file_delete_response import FileDeleteResponse
 from ...types.vector_stores.file_search_response import FileSearchResponse
 
@@ -255,7 +256,8 @@ class FilesResource(SyncAPIResource):
         *,
         query: str,
         vector_store_ids: List[str],
-        search_options: file_search_params.SearchOptions | NotGiven = NOT_GIVEN,
+        filters: Optional[file_search_params.Filters] | NotGiven = NOT_GIVEN,
+        search_options: VectorStoreSearchOptionsParam | NotGiven = NOT_GIVEN,
         top_k: int | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -287,6 +289,8 @@ class FilesResource(SyncAPIResource):
 
           vector_store_ids: IDs of vector stores to search
 
+          filters: Optional filter conditions
+
           search_options: Search configuration options
 
           top_k: Number of results to return
@@ -305,6 +309,7 @@ class FilesResource(SyncAPIResource):
                 {
                     "query": query,
                     "vector_store_ids": vector_store_ids,
+                    "filters": filters,
                     "search_options": search_options,
                     "top_k": top_k,
                 },
@@ -627,7 +632,8 @@ class AsyncFilesResource(AsyncAPIResource):
         *,
         query: str,
         vector_store_ids: List[str],
-        search_options: file_search_params.SearchOptions | NotGiven = NOT_GIVEN,
+        filters: Optional[file_search_params.Filters] | NotGiven = NOT_GIVEN,
+        search_options: VectorStoreSearchOptionsParam | NotGiven = NOT_GIVEN,
         top_k: int | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -659,6 +665,8 @@ class AsyncFilesResource(AsyncAPIResource):
 
           vector_store_ids: IDs of vector stores to search
 
+          filters: Optional filter conditions
+
           search_options: Search configuration options
 
           top_k: Number of results to return
@@ -677,6 +685,7 @@ class AsyncFilesResource(AsyncAPIResource):
                 {
                     "query": query,
                     "vector_store_ids": vector_store_ids,
+                    "filters": filters,
                     "search_options": search_options,
                     "top_k": top_k,
                 },

@@ -19,6 +19,7 @@ from ...types import (
     vector_store_create_params,
     vector_store_search_params,
     vector_store_update_params,
+    vector_store_question_answering_params,
 )
 from ..._types import NOT_GIVEN, Body, Query, Headers, NotGiven
 from ..._utils import (
@@ -39,6 +40,7 @@ from ...types.vector_store import VectorStore
 from ...types.expires_after_param import ExpiresAfterParam
 from ...types.vector_store_delete_response import VectorStoreDeleteResponse
 from ...types.vector_store_search_response import VectorStoreSearchResponse
+from ...types.vector_store_search_options_param import VectorStoreSearchOptionsParam
 
 __all__ = ["VectorStoresResource", "AsyncVectorStoresResource"]
 
@@ -318,12 +320,77 @@ class VectorStoresResource(SyncAPIResource):
             cast_to=VectorStoreDeleteResponse,
         )
 
+    def question_answering(
+        self,
+        *,
+        vector_store_ids: List[str],
+        filters: Optional[vector_store_question_answering_params.Filters] | NotGiven = NOT_GIVEN,
+        qa_options: vector_store_question_answering_params.QaOptions | NotGiven = NOT_GIVEN,
+        query: str | NotGiven = NOT_GIVEN,
+        search_options: VectorStoreSearchOptionsParam | NotGiven = NOT_GIVEN,
+        stream: bool | NotGiven = NOT_GIVEN,
+        top_k: int | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> object:
+        """
+        Question answering
+
+        Args:
+          vector_store_ids: IDs of vector stores to search
+
+          filters: Optional filter conditions
+
+          qa_options: Question answering configuration options
+
+          query: Question to answer. If not provided, the question will be extracted from the
+              passed messages.
+
+          search_options: Search configuration options
+
+          stream: Whether to stream the answer
+
+          top_k: Number of results to return
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._post(
+            "/v1/vector_stores/question-answering",
+            body=maybe_transform(
+                {
+                    "vector_store_ids": vector_store_ids,
+                    "filters": filters,
+                    "qa_options": qa_options,
+                    "query": query,
+                    "search_options": search_options,
+                    "stream": stream,
+                    "top_k": top_k,
+                },
+                vector_store_question_answering_params.VectorStoreQuestionAnsweringParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=object,
+        )
+
     def search(
         self,
         *,
         query: str,
         vector_store_ids: List[str],
-        search_options: vector_store_search_params.SearchOptions | NotGiven = NOT_GIVEN,
+        filters: Optional[vector_store_search_params.Filters] | NotGiven = NOT_GIVEN,
+        search_options: VectorStoreSearchOptionsParam | NotGiven = NOT_GIVEN,
         top_k: int | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -354,6 +421,8 @@ class VectorStoresResource(SyncAPIResource):
 
           vector_store_ids: IDs of vector stores to search
 
+          filters: Optional filter conditions
+
           search_options: Search configuration options
 
           top_k: Number of results to return
@@ -372,6 +441,7 @@ class VectorStoresResource(SyncAPIResource):
                 {
                     "query": query,
                     "vector_store_ids": vector_store_ids,
+                    "filters": filters,
                     "search_options": search_options,
                     "top_k": top_k,
                 },
@@ -659,12 +729,77 @@ class AsyncVectorStoresResource(AsyncAPIResource):
             cast_to=VectorStoreDeleteResponse,
         )
 
+    async def question_answering(
+        self,
+        *,
+        vector_store_ids: List[str],
+        filters: Optional[vector_store_question_answering_params.Filters] | NotGiven = NOT_GIVEN,
+        qa_options: vector_store_question_answering_params.QaOptions | NotGiven = NOT_GIVEN,
+        query: str | NotGiven = NOT_GIVEN,
+        search_options: VectorStoreSearchOptionsParam | NotGiven = NOT_GIVEN,
+        stream: bool | NotGiven = NOT_GIVEN,
+        top_k: int | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> object:
+        """
+        Question answering
+
+        Args:
+          vector_store_ids: IDs of vector stores to search
+
+          filters: Optional filter conditions
+
+          qa_options: Question answering configuration options
+
+          query: Question to answer. If not provided, the question will be extracted from the
+              passed messages.
+
+          search_options: Search configuration options
+
+          stream: Whether to stream the answer
+
+          top_k: Number of results to return
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._post(
+            "/v1/vector_stores/question-answering",
+            body=await async_maybe_transform(
+                {
+                    "vector_store_ids": vector_store_ids,
+                    "filters": filters,
+                    "qa_options": qa_options,
+                    "query": query,
+                    "search_options": search_options,
+                    "stream": stream,
+                    "top_k": top_k,
+                },
+                vector_store_question_answering_params.VectorStoreQuestionAnsweringParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=object,
+        )
+
     async def search(
         self,
         *,
         query: str,
         vector_store_ids: List[str],
-        search_options: vector_store_search_params.SearchOptions | NotGiven = NOT_GIVEN,
+        filters: Optional[vector_store_search_params.Filters] | NotGiven = NOT_GIVEN,
+        search_options: VectorStoreSearchOptionsParam | NotGiven = NOT_GIVEN,
         top_k: int | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -695,6 +830,8 @@ class AsyncVectorStoresResource(AsyncAPIResource):
 
           vector_store_ids: IDs of vector stores to search
 
+          filters: Optional filter conditions
+
           search_options: Search configuration options
 
           top_k: Number of results to return
@@ -713,6 +850,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
                 {
                     "query": query,
                     "vector_store_ids": vector_store_ids,
+                    "filters": filters,
                     "search_options": search_options,
                     "top_k": top_k,
                 },
@@ -744,6 +882,9 @@ class VectorStoresResourceWithRawResponse:
         self.delete = to_raw_response_wrapper(
             vector_stores.delete,
         )
+        self.question_answering = to_raw_response_wrapper(
+            vector_stores.question_answering,
+        )
         self.search = to_raw_response_wrapper(
             vector_stores.search,
         )
@@ -771,6 +912,9 @@ class AsyncVectorStoresResourceWithRawResponse:
         )
         self.delete = async_to_raw_response_wrapper(
             vector_stores.delete,
+        )
+        self.question_answering = async_to_raw_response_wrapper(
+            vector_stores.question_answering,
         )
         self.search = async_to_raw_response_wrapper(
             vector_stores.search,
@@ -800,6 +944,9 @@ class VectorStoresResourceWithStreamingResponse:
         self.delete = to_streamed_response_wrapper(
             vector_stores.delete,
         )
+        self.question_answering = to_streamed_response_wrapper(
+            vector_stores.question_answering,
+        )
         self.search = to_streamed_response_wrapper(
             vector_stores.search,
         )
@@ -827,6 +974,9 @@ class AsyncVectorStoresResourceWithStreamingResponse:
         )
         self.delete = async_to_streamed_response_wrapper(
             vector_stores.delete,
+        )
+        self.question_answering = async_to_streamed_response_wrapper(
+            vector_stores.question_answering,
         )
         self.search = async_to_streamed_response_wrapper(
             vector_stores.search,
