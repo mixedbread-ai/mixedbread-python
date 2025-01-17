@@ -32,6 +32,22 @@ from .embeddings import (
     EmbeddingsResourceWithStreamingResponse,
     AsyncEmbeddingsResourceWithStreamingResponse,
 )
+from .completions import (
+    CompletionsResource,
+    AsyncCompletionsResource,
+    CompletionsResourceWithRawResponse,
+    AsyncCompletionsResourceWithRawResponse,
+    CompletionsResourceWithStreamingResponse,
+    AsyncCompletionsResourceWithStreamingResponse,
+)
+from .extractions import (
+    ExtractionsResource,
+    AsyncExtractionsResource,
+    ExtractionsResourceWithRawResponse,
+    AsyncExtractionsResourceWithRawResponse,
+    ExtractionsResourceWithStreamingResponse,
+    AsyncExtractionsResourceWithStreamingResponse,
+)
 from .vector_stores import (
     VectorStoresResource,
     AsyncVectorStoresResource,
@@ -72,4 +88,16 @@ __all__ = [
     "AsyncVectorStoresResourceWithRawResponse",
     "VectorStoresResourceWithStreamingResponse",
     "AsyncVectorStoresResourceWithStreamingResponse",
+    "CompletionsResource",
+    "AsyncCompletionsResource",
+    "CompletionsResourceWithRawResponse",
+    "AsyncCompletionsResourceWithRawResponse",
+    "CompletionsResourceWithStreamingResponse",
+    "AsyncCompletionsResourceWithStreamingResponse",
+    "ExtractionsResource",
+    "AsyncExtractionsResource",
+    "ExtractionsResourceWithRawResponse",
+    "AsyncExtractionsResourceWithRawResponse",
+    "ExtractionsResourceWithStreamingResponse",
+    "AsyncExtractionsResourceWithStreamingResponse",
 ]
