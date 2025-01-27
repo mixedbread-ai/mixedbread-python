@@ -47,15 +47,15 @@ Methods:
 Types:
 
 ```python
-from mixedbread.types.parsing import ParsingJob
+from mixedbread.types.parsing import ParsingJob, JobListResponse, JobCancelResponse
 ```
 
 Methods:
 
 - <code title="post /v1/parsing/jobs">client.parsing.jobs.<a href="./src/mixedbread/resources/parsing/jobs.py">create</a>(\*\*<a href="src/mixedbread/types/parsing/job_create_params.py">params</a>) -> <a href="./src/mixedbread/types/parsing/parsing_job.py">ParsingJob</a></code>
 - <code title="get /v1/parsing/jobs/{job_id}">client.parsing.jobs.<a href="./src/mixedbread/resources/parsing/jobs.py">retrieve</a>(job_id) -> <a href="./src/mixedbread/types/parsing/parsing_job.py">ParsingJob</a></code>
-- <code title="get /v1/parsing/jobs">client.parsing.jobs.<a href="./src/mixedbread/resources/parsing/jobs.py">list</a>(\*\*<a href="src/mixedbread/types/parsing/job_list_params.py">params</a>) -> <a href="./src/mixedbread/types/parsing/parsing_job.py">SyncLimitOffset[ParsingJob]</a></code>
-- <code title="delete /v1/parsing/jobs/{job_id}">client.parsing.jobs.<a href="./src/mixedbread/resources/parsing/jobs.py">cancel</a>(job_id) -> <a href="./src/mixedbread/types/parsing/parsing_job.py">ParsingJob</a></code>
+- <code title="get /v1/parsing/jobs">client.parsing.jobs.<a href="./src/mixedbread/resources/parsing/jobs.py">list</a>(\*\*<a href="src/mixedbread/types/parsing/job_list_params.py">params</a>) -> <a href="./src/mixedbread/types/parsing/job_list_response.py">SyncLimitOffset[JobListResponse]</a></code>
+- <code title="delete /v1/parsing/jobs/{job_id}">client.parsing.jobs.<a href="./src/mixedbread/resources/parsing/jobs.py">cancel</a>(job_id) -> <a href="./src/mixedbread/types/parsing/job_cancel_response.py">JobCancelResponse</a></code>
 
 # Files
 

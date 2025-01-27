@@ -44,3 +44,6 @@ class VectorStore(BaseModel):
 
     object: Optional[Literal["vector_store"]] = None
     """Type of the object"""
+
+    status: Optional[Literal["expired", "in_progress", "completed"]] = None
+    """Processing status of the vector store"""
