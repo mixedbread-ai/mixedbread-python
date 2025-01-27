@@ -24,6 +24,8 @@ from ...pagination import SyncLimitOffset, AsyncLimitOffset
 from ..._base_client import AsyncPaginator, make_request_options
 from ...types.parsing import job_list_params, job_create_params
 from ...types.parsing.parsing_job import ParsingJob
+from ...types.parsing.job_list_response import JobListResponse
+from ...types.parsing.job_cancel_response import JobCancelResponse
 
 __all__ = ["JobsResource", "AsyncJobsResource"]
 
@@ -170,7 +172,7 @@ class JobsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> SyncLimitOffset[ParsingJob]:
+    ) -> SyncLimitOffset[JobListResponse]:
         """List parsing jobs with pagination.
 
         Args: limit: The number of items to return.
@@ -194,7 +196,7 @@ class JobsResource(SyncAPIResource):
         """
         return self._get_api_list(
             "/v1/parsing/jobs",
-            page=SyncLimitOffset[ParsingJob],
+            page=SyncLimitOffset[JobListResponse],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -208,7 +210,7 @@ class JobsResource(SyncAPIResource):
                     job_list_params.JobListParams,
                 ),
             ),
-            model=ParsingJob,
+            model=JobListResponse,
         )
 
     def cancel(
@@ -221,16 +223,16 @@ class JobsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ParsingJob:
+    ) -> JobCancelResponse:
         """
-        Cancel a specific parse job.
+        Delete a specific parse job.
 
-        Args: job_id: The ID of the parse job to cancel.
+        Args: job_id: The ID of the parse job to delete.
 
-        Returns: The cancelled parsing job.
+        Returns: The deleted parsing job.
 
         Args:
-          job_id: The ID of the parse job to cancel
+          job_id: The ID of the parse job to delete
 
           extra_headers: Send extra headers
 
@@ -247,7 +249,7 @@ class JobsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ParsingJob,
+            cast_to=JobCancelResponse,
         )
 
 
@@ -393,7 +395,7 @@ class AsyncJobsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> AsyncPaginator[ParsingJob, AsyncLimitOffset[ParsingJob]]:
+    ) -> AsyncPaginator[JobListResponse, AsyncLimitOffset[JobListResponse]]:
         """List parsing jobs with pagination.
 
         Args: limit: The number of items to return.
@@ -417,7 +419,7 @@ class AsyncJobsResource(AsyncAPIResource):
         """
         return self._get_api_list(
             "/v1/parsing/jobs",
-            page=AsyncLimitOffset[ParsingJob],
+            page=AsyncLimitOffset[JobListResponse],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -431,7 +433,7 @@ class AsyncJobsResource(AsyncAPIResource):
                     job_list_params.JobListParams,
                 ),
             ),
-            model=ParsingJob,
+            model=JobListResponse,
         )
 
     async def cancel(
@@ -444,16 +446,16 @@ class AsyncJobsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ParsingJob:
+    ) -> JobCancelResponse:
         """
-        Cancel a specific parse job.
+        Delete a specific parse job.
 
-        Args: job_id: The ID of the parse job to cancel.
+        Args: job_id: The ID of the parse job to delete.
 
-        Returns: The cancelled parsing job.
+        Returns: The deleted parsing job.
 
         Args:
-          job_id: The ID of the parse job to cancel
+          job_id: The ID of the parse job to delete
 
           extra_headers: Send extra headers
 
@@ -470,7 +472,7 @@ class AsyncJobsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ParsingJob,
+            cast_to=JobCancelResponse,
         )
 
 

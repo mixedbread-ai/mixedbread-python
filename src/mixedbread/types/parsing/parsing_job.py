@@ -84,13 +84,13 @@ class ParsingJob(BaseModel):
     id: str
     """The ID of the job"""
 
-    status: Literal["PENDING", "RUNNING", "CANCELLED", "FAILED", "SUCCESSFUL"]
+    status: Literal["pending", "in_progress", "cancelled", "completed", "failed"]
     """The status of the job"""
 
     created_at: Optional[datetime] = None
     """The creation time of the job"""
 
-    error: Optional[str] = None
+    error: Optional[object] = None
     """The error of the job"""
 
     finished_at: Optional[datetime] = None
