@@ -12,7 +12,10 @@ __all__ = ["ScoredVectorStoreFile"]
 
 class ScoredVectorStoreFile(BaseModel):
     id: str
-    """file id"""
+    """Unique identifier for the file"""
+
+    chunks: List[ScoredVectorStoreChunk]
+    """chunks"""
 
     created_at: datetime
     """Timestamp of vector store file creation"""
@@ -20,23 +23,23 @@ class ScoredVectorStoreFile(BaseModel):
     score: float
     """score of the file"""
 
-    usage_bytes: int
-    """usage in bytes"""
-
     vector_store_id: str
-    """vector store id"""
-
-    version: int
-    """version of the file"""
-
-    chunks: Optional[List[ScoredVectorStoreChunk]] = None
-    """chunks"""
+    """ID of the containing vector store"""
 
     last_error: Optional[object] = None
-    """last error"""
+    """Last error message if processing failed"""
 
     metadata: Optional[object] = None
-    """metadata"""
+    """Optional file metadata"""
 
-    status: Optional[Literal["in_progress", "completed", "failed", "cancelled"]] = None
-    """status of the file"""
+    object: Optional[Literal["vector_store.file"]] = None
+    """Type of the object"""
+
+    status: Optional[str] = None
+    """Processing status of the file"""
+
+    usage_bytes: Optional[int] = None
+    """Storage usage in bytes"""
+
+    version: Optional[int] = None
+    """Version number of the file"""

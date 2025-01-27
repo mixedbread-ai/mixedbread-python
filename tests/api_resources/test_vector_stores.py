@@ -32,7 +32,7 @@ class TestVectorStores:
         vector_store = client.vector_stores.create(
             description="Contains technical specifications and guides",
             expires_after={
-                "anchor": "last_used_at",
+                "anchor": "last_active_at",
                 "days": 0,
             },
             file_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
@@ -112,7 +112,7 @@ class TestVectorStores:
             vector_store_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             description="x",
             expires_after={
-                "anchor": "last_used_at",
+                "anchor": "last_active_at",
                 "days": 0,
             },
             metadata={},
@@ -409,7 +409,7 @@ class TestAsyncVectorStores:
         vector_store = await async_client.vector_stores.create(
             description="Contains technical specifications and guides",
             expires_after={
-                "anchor": "last_used_at",
+                "anchor": "last_active_at",
                 "days": 0,
             },
             file_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
@@ -489,7 +489,7 @@ class TestAsyncVectorStores:
             vector_store_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             description="x",
             expires_after={
-                "anchor": "last_used_at",
+                "anchor": "last_active_at",
                 "days": 0,
             },
             metadata={},

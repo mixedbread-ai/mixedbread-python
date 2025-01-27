@@ -8,7 +8,7 @@ __all__ = ["ExpiresAfterParam"]
 
 
 class ExpiresAfterParam(TypedDict, total=False):
-    anchor: Literal["last_used_at"]
+    anchor: Literal["last_active_at"]
     """Anchor date for the expiration policy"""
 
     days: int
