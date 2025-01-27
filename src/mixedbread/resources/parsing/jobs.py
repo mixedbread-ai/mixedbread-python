@@ -22,9 +22,12 @@ from ..._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ..._base_client import make_request_options
-from ...types.parsing import job_create_params
+from ...pagination import SyncLimitOffset, AsyncLimitOffset
+from ..._base_client import AsyncPaginator, make_request_options
+from ...types.parsing import job_list_params, job_create_params
 from ...types.parsing.parsing_job import ParsingJob
+from ...types.parsing.job_list_response import JobListResponse
+from ...types.parsing.job_cancel_response import JobCancelResponse
 
 __all__ = ["JobsResource", "AsyncJobsResource"]
 
@@ -33,7 +36,7 @@ class JobsResource(SyncAPIResource):
     @cached_property
     def with_raw_response(self) -> JobsResourceWithRawResponse:
         """
-        This property can be used as a prefix for any HTTP method call to return the
+        This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
         For more information, see https://www.github.com/mixedbread-ai/mixedbread-python#accessing-raw-response-data-eg-headers
@@ -160,6 +163,97 @@ class JobsResource(SyncAPIResource):
             cast_to=ParsingJob,
         )
 
+    def list(
+        self,
+        *,
+        limit: int | NotGiven = NOT_GIVEN,
+        offset: int | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> SyncLimitOffset[JobListResponse]:
+        """List parsing jobs with pagination.
+
+        Args: limit: The number of items to return.
+
+        offset: The number of items to skip.
+
+        Returns: List of parsing jobs with pagination.
+
+        Args:
+          limit: Maximum number of items to return per page
+
+          offset: Offset of the first item to return
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._get_api_list(
+            "/v1/parsing/jobs",
+            page=SyncLimitOffset[JobListResponse],
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "limit": limit,
+                        "offset": offset,
+                    },
+                    job_list_params.JobListParams,
+                ),
+            ),
+            model=JobListResponse,
+        )
+
+    def cancel(
+        self,
+        job_id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> JobCancelResponse:
+        """
+        Delete a specific parse job.
+
+        Args: job_id: The ID of the parse job to delete.
+
+        Returns: The deleted parsing job.
+
+        Args:
+          job_id: The ID of the parse job to delete
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not job_id:
+            raise ValueError(f"Expected a non-empty value for `job_id` but received {job_id!r}")
+        return self._delete(
+            f"/v1/parsing/jobs/{job_id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=JobCancelResponse,
+        )
+
     def poll(
         self,
         job_id: str,
@@ -180,7 +274,7 @@ class JobsResource(SyncAPIResource):
         polling_timeout_ms = poll_timeout_ms or None
         return polling.poll(
             fn=functools.partial(self.retrieve, job_id),
-            condition=lambda res: res.status == "successful" or res.status == "failed",
+            condition=lambda res: res.status == "SUCCESSFUL" or res.status == "FAILED",
             interval_seconds=polling_interval_ms / 1000,
             timeout_seconds=polling_timeout_ms / 1000 if polling_timeout_ms else None,
         )
@@ -314,7 +408,7 @@ class AsyncJobsResource(AsyncAPIResource):
     @cached_property
     def with_raw_response(self) -> AsyncJobsResourceWithRawResponse:
         """
-        This property can be used as a prefix for any HTTP method call to return the
+        This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
         For more information, see https://www.github.com/mixedbread-ai/mixedbread-python#accessing-raw-response-data-eg-headers
@@ -441,6 +535,97 @@ class AsyncJobsResource(AsyncAPIResource):
             cast_to=ParsingJob,
         )
 
+    def list(
+        self,
+        *,
+        limit: int | NotGiven = NOT_GIVEN,
+        offset: int | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> AsyncPaginator[JobListResponse, AsyncLimitOffset[JobListResponse]]:
+        """List parsing jobs with pagination.
+
+        Args: limit: The number of items to return.
+
+        offset: The number of items to skip.
+
+        Returns: List of parsing jobs with pagination.
+
+        Args:
+          limit: Maximum number of items to return per page
+
+          offset: Offset of the first item to return
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._get_api_list(
+            "/v1/parsing/jobs",
+            page=AsyncLimitOffset[JobListResponse],
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "limit": limit,
+                        "offset": offset,
+                    },
+                    job_list_params.JobListParams,
+                ),
+            ),
+            model=JobListResponse,
+        )
+
+    async def cancel(
+        self,
+        job_id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> JobCancelResponse:
+        """
+        Delete a specific parse job.
+
+        Args: job_id: The ID of the parse job to delete.
+
+        Returns: The deleted parsing job.
+
+        Args:
+          job_id: The ID of the parse job to delete
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not job_id:
+            raise ValueError(f"Expected a non-empty value for `job_id` but received {job_id!r}")
+        return await self._delete(
+            f"/v1/parsing/jobs/{job_id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=JobCancelResponse,
+        )
+
     async def poll(
         self,
         job_id: str,
@@ -461,7 +646,7 @@ class AsyncJobsResource(AsyncAPIResource):
         polling_timeout_ms = poll_timeout_ms or None
         return await polling.poll_async(
             fn=functools.partial(self.retrieve, job_id),
-            condition=lambda res: res.status == "successful" or res.status == "failed" or res.status == "canceled",
+            condition=lambda res: res.status == "SUCCESSFUL" or res.status == "FAILED" or res.status == "CANCELLED",
             interval_seconds=polling_interval_ms / 1000,
             timeout_seconds=polling_timeout_ms / 1000 if polling_timeout_ms else None,
         )
@@ -601,6 +786,12 @@ class JobsResourceWithRawResponse:
         self.retrieve = to_raw_response_wrapper(
             jobs.retrieve,
         )
+        self.list = to_raw_response_wrapper(
+            jobs.list,
+        )
+        self.cancel = to_raw_response_wrapper(
+            jobs.cancel,
+        )
 
 
 class AsyncJobsResourceWithRawResponse:
@@ -612,6 +803,12 @@ class AsyncJobsResourceWithRawResponse:
         )
         self.retrieve = async_to_raw_response_wrapper(
             jobs.retrieve,
+        )
+        self.list = async_to_raw_response_wrapper(
+            jobs.list,
+        )
+        self.cancel = async_to_raw_response_wrapper(
+            jobs.cancel,
         )
 
 
@@ -625,6 +822,12 @@ class JobsResourceWithStreamingResponse:
         self.retrieve = to_streamed_response_wrapper(
             jobs.retrieve,
         )
+        self.list = to_streamed_response_wrapper(
+            jobs.list,
+        )
+        self.cancel = to_streamed_response_wrapper(
+            jobs.cancel,
+        )
 
 
 class AsyncJobsResourceWithStreamingResponse:
@@ -636,4 +839,10 @@ class AsyncJobsResourceWithStreamingResponse:
         )
         self.retrieve = async_to_streamed_response_wrapper(
             jobs.retrieve,
+        )
+        self.list = async_to_streamed_response_wrapper(
+            jobs.list,
+        )
+        self.cancel = async_to_streamed_response_wrapper(
+            jobs.cancel,
         )

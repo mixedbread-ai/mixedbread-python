@@ -2,10 +2,13 @@
 
 from __future__ import annotations
 
-from typing import List
-from typing_extensions import Required, TypedDict
+from typing import List, Union, Iterable, Optional
+from typing_extensions import Required, TypeAlias, TypedDict
 
-__all__ = ["VectorStoreSearchParams", "SearchOptions"]
+from .vector_store_search_options_param import VectorStoreSearchOptionsParam
+from .shared_params.search_filter_condition import SearchFilterCondition
+
+__all__ = ["VectorStoreSearchParams", "Filters", "FiltersUnionMember2"]
 
 
 class VectorStoreSearchParams(TypedDict, total=False):
@@ -15,22 +18,18 @@ class VectorStoreSearchParams(TypedDict, total=False):
     vector_store_ids: Required[List[str]]
     """IDs of vector stores to search"""
 
-    search_options: SearchOptions
+    filters: Optional[Filters]
+    """Optional filter conditions"""
+
+    search_options: VectorStoreSearchOptionsParam
     """Search configuration options"""
 
     top_k: int
     """Number of results to return"""
 
 
-class SearchOptions(TypedDict, total=False):
-    return_chunks: bool
-    """Whether to return matching text chunks"""
+FiltersUnionMember2: TypeAlias = Union["SearchFilter", SearchFilterCondition]
 
-    return_metadata: bool
-    """Whether to return file metadata"""
+Filters: TypeAlias = Union["SearchFilter", SearchFilterCondition, Iterable[FiltersUnionMember2]]
 
-    rewrite_query: bool
-    """Whether to rewrite the query"""
-
-    score_threshold: float
-    """Minimum similarity score threshold"""
+from .shared_params.search_filter import SearchFilter

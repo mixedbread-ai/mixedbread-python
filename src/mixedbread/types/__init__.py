@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from .shared import SearchFilter as SearchFilter, SearchFilterCondition as SearchFilterCondition
 from .embedding import Embedding as Embedding
 from .file_counts import FileCounts as FileCounts
 from .file_object import FileObject as FileObject
@@ -24,3 +25,7 @@ from .vector_store_search_params import VectorStoreSearchParams as VectorStoreSe
 from .vector_store_update_params import VectorStoreUpdateParams as VectorStoreUpdateParams
 from .vector_store_delete_response import VectorStoreDeleteResponse as VectorStoreDeleteResponse
 from .vector_store_search_response import VectorStoreSearchResponse as VectorStoreSearchResponse
+from .vector_store_search_options_param import VectorStoreSearchOptionsParam as VectorStoreSearchOptionsParam
+from .vector_store_question_answering_params import (
+    VectorStoreQuestionAnsweringParams as VectorStoreQuestionAnsweringParams,
+)

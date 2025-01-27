@@ -1,7 +1,7 @@
 [project]
 name = "mixedbread"
-version = "0.1.0-alpha.12"
-description = "The official Python library for the mixedbread API"
+version = "0.1.0-alpha.13"
+description = "The official Python library for the Mixedbread API"
 dynamic = ["readme"]
 license = "Apache-2.0"
 authors = [
@@ -129,6 +129,7 @@ testpaths = ["tests"]
 addopts = "--tb=short"
 xfail_strict = true
 asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "session"
 filterwarnings = [
   "error"
 ]

@@ -20,6 +20,7 @@ class Data(BaseModel):
     object: Optional[
         Literal[
             "list",
+            "parsing_job",
             "job",
             "embedding",
             "embedding_dict",
@@ -63,6 +64,7 @@ class RerankingCreateResponse(BaseModel):
     object: Optional[
         Literal[
             "list",
+            "parsing_job",
             "job",
             "embedding",
             "embedding_dict",

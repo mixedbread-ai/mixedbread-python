@@ -84,20 +84,26 @@ class ParsingJob(BaseModel):
     id: str
     """The ID of the job"""
 
-    status: Literal["none", "running", "canceled", "successful", "failed", "resumable", "pending"]
+    status: Literal["pending", "in_progress", "cancelled", "completed", "failed"]
     """The status of the job"""
 
     created_at: Optional[datetime] = None
     """The creation time of the job"""
 
-    errors: Optional[List[str]] = None
-    """The errors of the job"""
+    error: Optional[object] = None
+    """The error of the job"""
 
     finished_at: Optional[datetime] = None
     """The finished time of the job"""
 
-    object: Optional[Literal["job"]] = None
+    object: Optional[Literal["parsing_job"]] = None
     """The type of the object"""
 
     result: Optional[Result] = None
     """Result of document parsing operation."""
+
+    started_at: Optional[datetime] = None
+    """The started time of the job"""
+
+    updated_at: Optional[datetime] = None
+    """The updated time of the job"""

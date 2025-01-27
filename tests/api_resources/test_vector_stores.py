@@ -32,7 +32,7 @@ class TestVectorStores:
         vector_store = client.vector_stores.create(
             description="Contains technical specifications and guides",
             expires_after={
-                "anchor": "last_used_at",
+                "anchor": "last_active_at",
                 "days": 0,
             },
             file_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
@@ -112,7 +112,7 @@ class TestVectorStores:
             vector_store_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             description="x",
             expires_after={
-                "anchor": "last_used_at",
+                "anchor": "last_active_at",
                 "days": 0,
             },
             metadata={},
@@ -223,6 +223,92 @@ class TestVectorStores:
             )
 
     @parametrize
+    def test_method_question_answering(self, client: Mixedbread) -> None:
+        vector_store = client.vector_stores.question_answering(
+            vector_store_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
+        )
+        assert_matches_type(object, vector_store, path=["response"])
+
+    @parametrize
+    def test_method_question_answering_with_all_params(self, client: Mixedbread) -> None:
+        vector_store = client.vector_stores.question_answering(
+            vector_store_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
+            filters={
+                "all": [
+                    {
+                        "key": "price",
+                        "operator": "eq",
+                        "value": "100",
+                    },
+                    {
+                        "key": "color",
+                        "operator": "eq",
+                        "value": "red",
+                    },
+                ],
+                "any": [
+                    {
+                        "key": "price",
+                        "operator": "eq",
+                        "value": "100",
+                    },
+                    {
+                        "key": "color",
+                        "operator": "eq",
+                        "value": "red",
+                    },
+                ],
+                "none": [
+                    {
+                        "key": "price",
+                        "operator": "eq",
+                        "value": "100",
+                    },
+                    {
+                        "key": "color",
+                        "operator": "eq",
+                        "value": "red",
+                    },
+                ],
+            },
+            qa_options={"cite": True},
+            query="x",
+            search_options={
+                "return_chunks": True,
+                "return_metadata": True,
+                "rewrite_query": True,
+                "score_threshold": 0,
+            },
+            stream=True,
+            top_k=1,
+        )
+        assert_matches_type(object, vector_store, path=["response"])
+
+    @parametrize
+    def test_raw_response_question_answering(self, client: Mixedbread) -> None:
+        response = client.vector_stores.with_raw_response.question_answering(
+            vector_store_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        vector_store = response.parse()
+        assert_matches_type(object, vector_store, path=["response"])
+
+    @parametrize
+    def test_streaming_response_question_answering(self, client: Mixedbread) -> None:
+        with client.vector_stores.with_streaming_response.question_answering(
+            vector_store_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            vector_store = response.parse()
+            assert_matches_type(object, vector_store, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
     def test_method_search(self, client: Mixedbread) -> None:
         vector_store = client.vector_stores.search(
             query="how to configure SSL",
@@ -235,6 +321,44 @@ class TestVectorStores:
         vector_store = client.vector_stores.search(
             query="how to configure SSL",
             vector_store_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
+            filters={
+                "all": [
+                    {
+                        "key": "price",
+                        "operator": "eq",
+                        "value": "100",
+                    },
+                    {
+                        "key": "color",
+                        "operator": "eq",
+                        "value": "red",
+                    },
+                ],
+                "any": [
+                    {
+                        "key": "price",
+                        "operator": "eq",
+                        "value": "100",
+                    },
+                    {
+                        "key": "color",
+                        "operator": "eq",
+                        "value": "red",
+                    },
+                ],
+                "none": [
+                    {
+                        "key": "price",
+                        "operator": "eq",
+                        "value": "100",
+                    },
+                    {
+                        "key": "color",
+                        "operator": "eq",
+                        "value": "red",
+                    },
+                ],
+            },
             search_options={
                 "return_chunks": True,
                 "return_metadata": True,
@@ -285,7 +409,7 @@ class TestAsyncVectorStores:
         vector_store = await async_client.vector_stores.create(
             description="Contains technical specifications and guides",
             expires_after={
-                "anchor": "last_used_at",
+                "anchor": "last_active_at",
                 "days": 0,
             },
             file_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
@@ -365,7 +489,7 @@ class TestAsyncVectorStores:
             vector_store_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             description="x",
             expires_after={
-                "anchor": "last_used_at",
+                "anchor": "last_active_at",
                 "days": 0,
             },
             metadata={},
@@ -476,6 +600,92 @@ class TestAsyncVectorStores:
             )
 
     @parametrize
+    async def test_method_question_answering(self, async_client: AsyncMixedbread) -> None:
+        vector_store = await async_client.vector_stores.question_answering(
+            vector_store_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
+        )
+        assert_matches_type(object, vector_store, path=["response"])
+
+    @parametrize
+    async def test_method_question_answering_with_all_params(self, async_client: AsyncMixedbread) -> None:
+        vector_store = await async_client.vector_stores.question_answering(
+            vector_store_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
+            filters={
+                "all": [
+                    {
+                        "key": "price",
+                        "operator": "eq",
+                        "value": "100",
+                    },
+                    {
+                        "key": "color",
+                        "operator": "eq",
+                        "value": "red",
+                    },
+                ],
+                "any": [
+                    {
+                        "key": "price",
+                        "operator": "eq",
+                        "value": "100",
+                    },
+                    {
+                        "key": "color",
+                        "operator": "eq",
+                        "value": "red",
+                    },
+                ],
+                "none": [
+                    {
+                        "key": "price",
+                        "operator": "eq",
+                        "value": "100",
+                    },
+                    {
+                        "key": "color",
+                        "operator": "eq",
+                        "value": "red",
+                    },
+                ],
+            },
+            qa_options={"cite": True},
+            query="x",
+            search_options={
+                "return_chunks": True,
+                "return_metadata": True,
+                "rewrite_query": True,
+                "score_threshold": 0,
+            },
+            stream=True,
+            top_k=1,
+        )
+        assert_matches_type(object, vector_store, path=["response"])
+
+    @parametrize
+    async def test_raw_response_question_answering(self, async_client: AsyncMixedbread) -> None:
+        response = await async_client.vector_stores.with_raw_response.question_answering(
+            vector_store_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        vector_store = await response.parse()
+        assert_matches_type(object, vector_store, path=["response"])
+
+    @parametrize
+    async def test_streaming_response_question_answering(self, async_client: AsyncMixedbread) -> None:
+        async with async_client.vector_stores.with_streaming_response.question_answering(
+            vector_store_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            vector_store = await response.parse()
+            assert_matches_type(object, vector_store, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
     async def test_method_search(self, async_client: AsyncMixedbread) -> None:
         vector_store = await async_client.vector_stores.search(
             query="how to configure SSL",
@@ -488,6 +698,44 @@ class TestAsyncVectorStores:
         vector_store = await async_client.vector_stores.search(
             query="how to configure SSL",
             vector_store_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
+            filters={
+                "all": [
+                    {
+                        "key": "price",
+                        "operator": "eq",
+                        "value": "100",
+                    },
+                    {
+                        "key": "color",
+                        "operator": "eq",
+                        "value": "red",
+                    },
+                ],
+                "any": [
+                    {
+                        "key": "price",
+                        "operator": "eq",
+                        "value": "100",
+                    },
+                    {
+                        "key": "color",
+                        "operator": "eq",
+                        "value": "red",
+                    },
+                ],
+                "none": [
+                    {
+                        "key": "price",
+                        "operator": "eq",
+                        "value": "100",
+                    },
+                    {
+                        "key": "color",
+                        "operator": "eq",
+                        "value": "red",
+                    },
+                ],
+            },
             search_options={
                 "return_chunks": True,
                 "return_metadata": True,

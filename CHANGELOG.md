@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.1.0-alpha.13 (2025-01-27)
+
+Full Changelog: [v0.1.0-alpha.12...v0.1.0-alpha.13](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.1.0-alpha.12...v0.1.0-alpha.13)
+
+### Features
+
+* **api:** update via SDK Studio ([#65](https://github.com/mixedbread-ai/mixedbread-python/issues/65)) ([cd92872](https://github.com/mixedbread-ai/mixedbread-python/commit/cd92872a9396d215a8bbafc3bfbd184e4a3ab429))
+* **api:** update via SDK Studio ([#67](https://github.com/mixedbread-ai/mixedbread-python/issues/67)) ([8187944](https://github.com/mixedbread-ai/mixedbread-python/commit/818794418c7370c0d548335bdb9281c11b2a5794))
+* **api:** update via SDK Studio ([#72](https://github.com/mixedbread-ai/mixedbread-python/issues/72)) ([8535a3a](https://github.com/mixedbread-ai/mixedbread-python/commit/8535a3a1423434482e7fe6b91653995c39839cec))
+
+
+### Chores
+
+* **internal:** codegen related update ([#66](https://github.com/mixedbread-ai/mixedbread-python/issues/66)) ([df284d3](https://github.com/mixedbread-ai/mixedbread-python/commit/df284d359787501edf6aa4bac56f7fc740ea2464))
+* **internal:** codegen related update ([#69](https://github.com/mixedbread-ai/mixedbread-python/issues/69)) ([645d6a2](https://github.com/mixedbread-ai/mixedbread-python/commit/645d6a29692ebad7ea123f7f35f7ceecdb86863c))
+* **internal:** codegen related update ([#70](https://github.com/mixedbread-ai/mixedbread-python/issues/70)) ([e167953](https://github.com/mixedbread-ai/mixedbread-python/commit/e1679530da659697a24e1cfb6f22818939662ff4))
+* **internal:** minor formatting changes ([#71](https://github.com/mixedbread-ai/mixedbread-python/issues/71)) ([38087e0](https://github.com/mixedbread-ai/mixedbread-python/commit/38087e083a753dbbb6e1ac2dac553481fedc7b9d))
+
 ## 0.1.0-alpha.12 (2025-01-13)
 
 Full Changelog: [v0.1.0-alpha.11...v0.1.0-alpha.12](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.1.0-alpha.11...v0.1.0-alpha.12)
