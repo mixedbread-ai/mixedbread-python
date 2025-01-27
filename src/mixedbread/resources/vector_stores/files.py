@@ -343,7 +343,7 @@ class FilesResource(SyncAPIResource):
         polling_timeout_ms = poll_timeout_ms or None
         return polling.poll(
             fn=functools.partial(self.retrieve, file_id, vector_store_id=vector_store_id),
-            condition=lambda res: res.status == "successful" or res.status == "failed",
+            condition=lambda res: res.status == "successful" or res.status == "failed" or res.status == "cancelled",
             interval_seconds=polling_interval_ms / 1000,
             timeout_seconds=polling_timeout_ms / 1000 if polling_timeout_ms else None,
         )
@@ -719,7 +719,7 @@ class AsyncFilesResource(AsyncAPIResource):
         polling_timeout_ms = poll_timeout_ms or None
         return await polling.poll_async(
             fn=functools.partial(self.retrieve, file_id, vector_store_id=vector_store_id),
-            condition=lambda res: res.status == "successful" or res.status == "failed",
+            condition=lambda res: res.status == "successful" or res.status == "failed" or res.status == "cancelled",
             interval_seconds=polling_interval_ms / 1000,
             timeout_seconds=polling_timeout_ms / 1000 if polling_timeout_ms else None,
         )
