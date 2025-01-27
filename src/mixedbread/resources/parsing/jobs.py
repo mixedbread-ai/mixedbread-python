@@ -313,7 +313,7 @@ class JobsResource(SyncAPIResource):
         polling_timeout_ms = poll_timeout_ms or None
         return polling.poll(
             fn=functools.partial(self.retrieve, job_id),
-            condition=lambda res: res.status == "SUCCESSFUL" or res.status == "FAILED",
+            condition=lambda res: res.status == "completed" or res.status == "failed" or res.status == "cancelled",
             interval_seconds=polling_interval_ms / 1000,
             timeout_seconds=polling_timeout_ms / 1000 if polling_timeout_ms else None,
         )
@@ -724,7 +724,7 @@ class AsyncJobsResource(AsyncAPIResource):
         polling_timeout_ms = poll_timeout_ms or None
         return await polling.poll_async(
             fn=functools.partial(self.retrieve, job_id),
-            condition=lambda res: res.status == "SUCCESSFUL" or res.status == "FAILED" or res.status == "CANCELLED",
+            condition=lambda res: res.status == "completed" or res.status == "failed" or res.status == "cancelled",
             interval_seconds=polling_interval_ms / 1000,
             timeout_seconds=polling_timeout_ms / 1000 if polling_timeout_ms else None,
         )
