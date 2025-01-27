@@ -25,7 +25,7 @@ from ..._base_client import AsyncPaginator, make_request_options
 from ...types.parsing import job_list_params, job_create_params
 from ...types.parsing.parsing_job import ParsingJob
 from ...types.parsing.job_list_response import JobListResponse
-from ...types.parsing.job_cancel_response import JobCancelResponse
+from ...types.parsing.job_delete_response import JobDeleteResponse
 
 __all__ = ["JobsResource", "AsyncJobsResource"]
 
@@ -213,7 +213,7 @@ class JobsResource(SyncAPIResource):
             model=JobListResponse,
         )
 
-    def cancel(
+    def delete(
         self,
         job_id: str,
         *,
@@ -223,7 +223,7 @@ class JobsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> JobCancelResponse:
+    ) -> JobDeleteResponse:
         """
         Delete a specific parse job.
 
@@ -249,7 +249,46 @@ class JobsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=JobCancelResponse,
+            cast_to=JobDeleteResponse,
+        )
+
+    def cancel(
+        self,
+        job_id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> ParsingJob:
+        """
+        Cancel a specific parse job.
+
+        Args: job_id: The ID of the parse job to cancel.
+
+        Returns: The cancelled parsing job.
+
+        Args:
+          job_id: The ID of the parse job to cancel
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not job_id:
+            raise ValueError(f"Expected a non-empty value for `job_id` but received {job_id!r}")
+        return self._patch(
+            f"/v1/parsing/jobs/{job_id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=ParsingJob,
         )
 
 
@@ -436,7 +475,7 @@ class AsyncJobsResource(AsyncAPIResource):
             model=JobListResponse,
         )
 
-    async def cancel(
+    async def delete(
         self,
         job_id: str,
         *,
@@ -446,7 +485,7 @@ class AsyncJobsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> JobCancelResponse:
+    ) -> JobDeleteResponse:
         """
         Delete a specific parse job.
 
@@ -472,7 +511,46 @@ class AsyncJobsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=JobCancelResponse,
+            cast_to=JobDeleteResponse,
+        )
+
+    async def cancel(
+        self,
+        job_id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> ParsingJob:
+        """
+        Cancel a specific parse job.
+
+        Args: job_id: The ID of the parse job to cancel.
+
+        Returns: The cancelled parsing job.
+
+        Args:
+          job_id: The ID of the parse job to cancel
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not job_id:
+            raise ValueError(f"Expected a non-empty value for `job_id` but received {job_id!r}")
+        return await self._patch(
+            f"/v1/parsing/jobs/{job_id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=ParsingJob,
         )
 
 
@@ -488,6 +566,9 @@ class JobsResourceWithRawResponse:
         )
         self.list = to_raw_response_wrapper(
             jobs.list,
+        )
+        self.delete = to_raw_response_wrapper(
+            jobs.delete,
         )
         self.cancel = to_raw_response_wrapper(
             jobs.cancel,
@@ -507,6 +588,9 @@ class AsyncJobsResourceWithRawResponse:
         self.list = async_to_raw_response_wrapper(
             jobs.list,
         )
+        self.delete = async_to_raw_response_wrapper(
+            jobs.delete,
+        )
         self.cancel = async_to_raw_response_wrapper(
             jobs.cancel,
         )
@@ -525,6 +609,9 @@ class JobsResourceWithStreamingResponse:
         self.list = to_streamed_response_wrapper(
             jobs.list,
         )
+        self.delete = to_streamed_response_wrapper(
+            jobs.delete,
+        )
         self.cancel = to_streamed_response_wrapper(
             jobs.cancel,
         )
@@ -542,6 +629,9 @@ class AsyncJobsResourceWithStreamingResponse:
         )
         self.list = async_to_streamed_response_wrapper(
             jobs.list,
+        )
+        self.delete = async_to_streamed_response_wrapper(
+            jobs.delete,
         )
         self.cancel = async_to_streamed_response_wrapper(
             jobs.cancel,

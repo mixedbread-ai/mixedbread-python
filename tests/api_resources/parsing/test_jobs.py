@@ -10,7 +10,7 @@ import pytest
 from mixedbread import Mixedbread, AsyncMixedbread
 from tests.utils import assert_matches_type
 from mixedbread.pagination import SyncLimitOffset, AsyncLimitOffset
-from mixedbread.types.parsing import ParsingJob, JobListResponse, JobCancelResponse
+from mixedbread.types.parsing import ParsingJob, JobListResponse, JobDeleteResponse
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -131,11 +131,49 @@ class TestJobs:
         assert cast(Any, response.is_closed) is True
 
     @parametrize
+    def test_method_delete(self, client: Mixedbread) -> None:
+        job = client.parsing.jobs.delete(
+            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+        assert_matches_type(JobDeleteResponse, job, path=["response"])
+
+    @parametrize
+    def test_raw_response_delete(self, client: Mixedbread) -> None:
+        response = client.parsing.jobs.with_raw_response.delete(
+            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        job = response.parse()
+        assert_matches_type(JobDeleteResponse, job, path=["response"])
+
+    @parametrize
+    def test_streaming_response_delete(self, client: Mixedbread) -> None:
+        with client.parsing.jobs.with_streaming_response.delete(
+            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            job = response.parse()
+            assert_matches_type(JobDeleteResponse, job, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    def test_path_params_delete(self, client: Mixedbread) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `job_id` but received ''"):
+            client.parsing.jobs.with_raw_response.delete(
+                "",
+            )
+
+    @parametrize
     def test_method_cancel(self, client: Mixedbread) -> None:
         job = client.parsing.jobs.cancel(
             "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(JobCancelResponse, job, path=["response"])
+        assert_matches_type(ParsingJob, job, path=["response"])
 
     @parametrize
     def test_raw_response_cancel(self, client: Mixedbread) -> None:
@@ -146,7 +184,7 @@ class TestJobs:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         job = response.parse()
-        assert_matches_type(JobCancelResponse, job, path=["response"])
+        assert_matches_type(ParsingJob, job, path=["response"])
 
     @parametrize
     def test_streaming_response_cancel(self, client: Mixedbread) -> None:
@@ -157,7 +195,7 @@ class TestJobs:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             job = response.parse()
-            assert_matches_type(JobCancelResponse, job, path=["response"])
+            assert_matches_type(ParsingJob, job, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -285,11 +323,49 @@ class TestAsyncJobs:
         assert cast(Any, response.is_closed) is True
 
     @parametrize
+    async def test_method_delete(self, async_client: AsyncMixedbread) -> None:
+        job = await async_client.parsing.jobs.delete(
+            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+        assert_matches_type(JobDeleteResponse, job, path=["response"])
+
+    @parametrize
+    async def test_raw_response_delete(self, async_client: AsyncMixedbread) -> None:
+        response = await async_client.parsing.jobs.with_raw_response.delete(
+            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        job = await response.parse()
+        assert_matches_type(JobDeleteResponse, job, path=["response"])
+
+    @parametrize
+    async def test_streaming_response_delete(self, async_client: AsyncMixedbread) -> None:
+        async with async_client.parsing.jobs.with_streaming_response.delete(
+            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            job = await response.parse()
+            assert_matches_type(JobDeleteResponse, job, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    async def test_path_params_delete(self, async_client: AsyncMixedbread) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `job_id` but received ''"):
+            await async_client.parsing.jobs.with_raw_response.delete(
+                "",
+            )
+
+    @parametrize
     async def test_method_cancel(self, async_client: AsyncMixedbread) -> None:
         job = await async_client.parsing.jobs.cancel(
             "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(JobCancelResponse, job, path=["response"])
+        assert_matches_type(ParsingJob, job, path=["response"])
 
     @parametrize
     async def test_raw_response_cancel(self, async_client: AsyncMixedbread) -> None:
@@ -300,7 +376,7 @@ class TestAsyncJobs:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         job = await response.parse()
-        assert_matches_type(JobCancelResponse, job, path=["response"])
+        assert_matches_type(ParsingJob, job, path=["response"])
 
     @parametrize
     async def test_streaming_response_cancel(self, async_client: AsyncMixedbread) -> None:
@@ -311,7 +387,7 @@ class TestAsyncJobs:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             job = await response.parse()
-            assert_matches_type(JobCancelResponse, job, path=["response"])
+            assert_matches_type(ParsingJob, job, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
