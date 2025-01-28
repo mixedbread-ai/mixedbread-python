@@ -16,38 +16,6 @@ from .parsing import (
     ParsingResourceWithStreamingResponse,
     AsyncParsingResourceWithStreamingResponse,
 )
-from .reranking import (
-    RerankingResource,
-    AsyncRerankingResource,
-    RerankingResourceWithRawResponse,
-    AsyncRerankingResourceWithRawResponse,
-    RerankingResourceWithStreamingResponse,
-    AsyncRerankingResourceWithStreamingResponse,
-)
-from .embeddings import (
-    EmbeddingsResource,
-    AsyncEmbeddingsResource,
-    EmbeddingsResourceWithRawResponse,
-    AsyncEmbeddingsResourceWithRawResponse,
-    EmbeddingsResourceWithStreamingResponse,
-    AsyncEmbeddingsResourceWithStreamingResponse,
-)
-from .completions import (
-    CompletionsResource,
-    AsyncCompletionsResource,
-    CompletionsResourceWithRawResponse,
-    AsyncCompletionsResourceWithRawResponse,
-    CompletionsResourceWithStreamingResponse,
-    AsyncCompletionsResourceWithStreamingResponse,
-)
-from .extractions import (
-    ExtractionsResource,
-    AsyncExtractionsResource,
-    ExtractionsResourceWithRawResponse,
-    AsyncExtractionsResourceWithRawResponse,
-    ExtractionsResourceWithStreamingResponse,
-    AsyncExtractionsResourceWithStreamingResponse,
-)
 from .vector_stores import (
     VectorStoresResource,
     AsyncVectorStoresResource,
@@ -58,18 +26,6 @@ from .vector_stores import (
 )
 
 __all__ = [
-    "EmbeddingsResource",
-    "AsyncEmbeddingsResource",
-    "EmbeddingsResourceWithRawResponse",
-    "AsyncEmbeddingsResourceWithRawResponse",
-    "EmbeddingsResourceWithStreamingResponse",
-    "AsyncEmbeddingsResourceWithStreamingResponse",
-    "RerankingResource",
-    "AsyncRerankingResource",
-    "RerankingResourceWithRawResponse",
-    "AsyncRerankingResourceWithRawResponse",
-    "RerankingResourceWithStreamingResponse",
-    "AsyncRerankingResourceWithStreamingResponse",
     "ParsingResource",
     "AsyncParsingResource",
     "ParsingResourceWithRawResponse",
@@ -88,16 +44,4 @@ __all__ = [
     "AsyncVectorStoresResourceWithRawResponse",
     "VectorStoresResourceWithStreamingResponse",
     "AsyncVectorStoresResourceWithStreamingResponse",
-    "CompletionsResource",
-    "AsyncCompletionsResource",
-    "CompletionsResourceWithRawResponse",
-    "AsyncCompletionsResourceWithRawResponse",
-    "CompletionsResourceWithStreamingResponse",
-    "AsyncCompletionsResourceWithStreamingResponse",
-    "ExtractionsResource",
-    "AsyncExtractionsResource",
-    "ExtractionsResourceWithRawResponse",
-    "AsyncExtractionsResourceWithRawResponse",
-    "ExtractionsResourceWithStreamingResponse",
-    "AsyncExtractionsResourceWithStreamingResponse",
 ]
