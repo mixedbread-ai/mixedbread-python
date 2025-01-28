@@ -33,7 +33,7 @@ from ._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from .resources import files, reranking, embeddings, completions
+from .resources import files
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import APIStatusError, MixedbreadError
 from ._base_client import (
@@ -44,7 +44,6 @@ from ._base_client import (
 )
 from .resources.parsing import parsing
 from .types.info_response import InfoResponse
-from .resources.extractions import extractions
 from .resources.vector_stores import vector_stores
 
 __all__ = [
@@ -66,13 +65,9 @@ ENVIRONMENTS: Dict[str, str] = {
 
 
 class Mixedbread(SyncAPIClient):
-    embeddings: embeddings.EmbeddingsResource
-    reranking: reranking.RerankingResource
     parsing: parsing.ParsingResource
     files: files.FilesResource
     vector_stores: vector_stores.VectorStoresResource
-    completions: completions.CompletionsResource
-    extractions: extractions.ExtractionsResource
     with_raw_response: MixedbreadWithRawResponse
     with_streaming_response: MixedbreadWithStreamedResponse
 
@@ -154,13 +149,9 @@ class Mixedbread(SyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.embeddings = embeddings.EmbeddingsResource(self)
-        self.reranking = reranking.RerankingResource(self)
         self.parsing = parsing.ParsingResource(self)
         self.files = files.FilesResource(self)
         self.vector_stores = vector_stores.VectorStoresResource(self)
-        self.completions = completions.CompletionsResource(self)
-        self.extractions = extractions.ExtractionsResource(self)
         self.with_raw_response = MixedbreadWithRawResponse(self)
         self.with_streaming_response = MixedbreadWithStreamedResponse(self)
 
@@ -295,13 +286,9 @@ class Mixedbread(SyncAPIClient):
 
 
 class AsyncMixedbread(AsyncAPIClient):
-    embeddings: embeddings.AsyncEmbeddingsResource
-    reranking: reranking.AsyncRerankingResource
     parsing: parsing.AsyncParsingResource
     files: files.AsyncFilesResource
     vector_stores: vector_stores.AsyncVectorStoresResource
-    completions: completions.AsyncCompletionsResource
-    extractions: extractions.AsyncExtractionsResource
     with_raw_response: AsyncMixedbreadWithRawResponse
     with_streaming_response: AsyncMixedbreadWithStreamedResponse
 
@@ -383,13 +370,9 @@ class AsyncMixedbread(AsyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.embeddings = embeddings.AsyncEmbeddingsResource(self)
-        self.reranking = reranking.AsyncRerankingResource(self)
         self.parsing = parsing.AsyncParsingResource(self)
         self.files = files.AsyncFilesResource(self)
         self.vector_stores = vector_stores.AsyncVectorStoresResource(self)
-        self.completions = completions.AsyncCompletionsResource(self)
-        self.extractions = extractions.AsyncExtractionsResource(self)
         self.with_raw_response = AsyncMixedbreadWithRawResponse(self)
         self.with_streaming_response = AsyncMixedbreadWithStreamedResponse(self)
 
@@ -525,13 +508,9 @@ class AsyncMixedbread(AsyncAPIClient):
 
 class MixedbreadWithRawResponse:
     def __init__(self, client: Mixedbread) -> None:
-        self.embeddings = embeddings.EmbeddingsResourceWithRawResponse(client.embeddings)
-        self.reranking = reranking.RerankingResourceWithRawResponse(client.reranking)
         self.parsing = parsing.ParsingResourceWithRawResponse(client.parsing)
         self.files = files.FilesResourceWithRawResponse(client.files)
         self.vector_stores = vector_stores.VectorStoresResourceWithRawResponse(client.vector_stores)
-        self.completions = completions.CompletionsResourceWithRawResponse(client.completions)
-        self.extractions = extractions.ExtractionsResourceWithRawResponse(client.extractions)
 
         self.info = to_raw_response_wrapper(
             client.info,
@@ -540,13 +519,9 @@ class MixedbreadWithRawResponse:
 
 class AsyncMixedbreadWithRawResponse:
     def __init__(self, client: AsyncMixedbread) -> None:
-        self.embeddings = embeddings.AsyncEmbeddingsResourceWithRawResponse(client.embeddings)
-        self.reranking = reranking.AsyncRerankingResourceWithRawResponse(client.reranking)
         self.parsing = parsing.AsyncParsingResourceWithRawResponse(client.parsing)
         self.files = files.AsyncFilesResourceWithRawResponse(client.files)
         self.vector_stores = vector_stores.AsyncVectorStoresResourceWithRawResponse(client.vector_stores)
-        self.completions = completions.AsyncCompletionsResourceWithRawResponse(client.completions)
-        self.extractions = extractions.AsyncExtractionsResourceWithRawResponse(client.extractions)
 
         self.info = async_to_raw_response_wrapper(
             client.info,
@@ -555,13 +530,9 @@ class AsyncMixedbreadWithRawResponse:
 
 class MixedbreadWithStreamedResponse:
     def __init__(self, client: Mixedbread) -> None:
-        self.embeddings = embeddings.EmbeddingsResourceWithStreamingResponse(client.embeddings)
-        self.reranking = reranking.RerankingResourceWithStreamingResponse(client.reranking)
         self.parsing = parsing.ParsingResourceWithStreamingResponse(client.parsing)
         self.files = files.FilesResourceWithStreamingResponse(client.files)
         self.vector_stores = vector_stores.VectorStoresResourceWithStreamingResponse(client.vector_stores)
-        self.completions = completions.CompletionsResourceWithStreamingResponse(client.completions)
-        self.extractions = extractions.ExtractionsResourceWithStreamingResponse(client.extractions)
 
         self.info = to_streamed_response_wrapper(
             client.info,
@@ -570,13 +541,9 @@ class MixedbreadWithStreamedResponse:
 
 class AsyncMixedbreadWithStreamedResponse:
     def __init__(self, client: AsyncMixedbread) -> None:
-        self.embeddings = embeddings.AsyncEmbeddingsResourceWithStreamingResponse(client.embeddings)
-        self.reranking = reranking.AsyncRerankingResourceWithStreamingResponse(client.reranking)
         self.parsing = parsing.AsyncParsingResourceWithStreamingResponse(client.parsing)
         self.files = files.AsyncFilesResourceWithStreamingResponse(client.files)
         self.vector_stores = vector_stores.AsyncVectorStoresResourceWithStreamingResponse(client.vector_stores)
-        self.completions = completions.AsyncCompletionsResourceWithStreamingResponse(client.completions)
-        self.extractions = extractions.AsyncExtractionsResourceWithStreamingResponse(client.extractions)
 
         self.info = async_to_streamed_response_wrapper(
             client.info,
