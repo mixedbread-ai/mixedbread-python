@@ -145,7 +145,7 @@ class TestFiles:
     @parametrize
     def test_method_list_with_all_params(self, client: Mixedbread) -> None:
         file = client.files.list(
-            limit=0,
+            limit=1000,
             offset=0,
         )
         assert_matches_type(SyncLimitOffset[FileObject], file, path=["response"])
@@ -387,7 +387,7 @@ class TestAsyncFiles:
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncMixedbread) -> None:
         file = await async_client.files.list(
-            limit=0,
+            limit=1000,
             offset=0,
         )
         assert_matches_type(AsyncLimitOffset[FileObject], file, path=["response"])
