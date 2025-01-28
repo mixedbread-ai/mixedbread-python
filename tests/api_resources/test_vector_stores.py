@@ -159,7 +159,7 @@ class TestVectorStores:
     @parametrize
     def test_method_list_with_all_params(self, client: Mixedbread) -> None:
         vector_store = client.vector_stores.list(
-            limit=0,
+            limit=1000,
             offset=0,
         )
         assert_matches_type(SyncLimitOffset[VectorStore], vector_store, path=["response"])
@@ -536,7 +536,7 @@ class TestAsyncVectorStores:
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncMixedbread) -> None:
         vector_store = await async_client.vector_stores.list(
-            limit=0,
+            limit=1000,
             offset=0,
         )
         assert_matches_type(AsyncLimitOffset[VectorStore], vector_store, path=["response"])

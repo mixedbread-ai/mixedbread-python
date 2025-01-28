@@ -132,7 +132,7 @@ class TestFiles:
     def test_method_list_with_all_params(self, client: Mixedbread) -> None:
         file = client.vector_stores.files.list(
             vector_store_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            limit=0,
+            limit=1000,
             offset=0,
         )
         assert_matches_type(SyncLimitOffset[VectorStoreFile], file, path=["response"])
@@ -417,7 +417,7 @@ class TestAsyncFiles:
     async def test_method_list_with_all_params(self, async_client: AsyncMixedbread) -> None:
         file = await async_client.vector_stores.files.list(
             vector_store_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            limit=0,
+            limit=1000,
             offset=0,
         )
         assert_matches_type(AsyncLimitOffset[VectorStoreFile], file, path=["response"])
