@@ -105,7 +105,7 @@ class TestJobs:
     @parametrize
     def test_method_list_with_all_params(self, client: Mixedbread) -> None:
         job = client.parsing.jobs.list(
-            limit=0,
+            limit=1000,
             offset=0,
         )
         assert_matches_type(SyncLimitOffset[JobListResponse], job, path=["response"])
@@ -297,7 +297,7 @@ class TestAsyncJobs:
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncMixedbread) -> None:
         job = await async_client.parsing.jobs.list(
-            limit=0,
+            limit=1000,
             offset=0,
         )
         assert_matches_type(AsyncLimitOffset[JobListResponse], job, path=["response"])
