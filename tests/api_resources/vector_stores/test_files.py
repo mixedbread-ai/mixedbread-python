@@ -35,7 +35,6 @@ class TestFiles:
         file = client.vector_stores.files.create(
             vector_store_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             file_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            experimental={"parsing_strategy": "fast"},
             metadata={},
         )
         assert_matches_type(VectorStoreFile, file, path=["response"])
@@ -321,7 +320,6 @@ class TestAsyncFiles:
         file = await async_client.vector_stores.files.create(
             vector_store_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             file_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            experimental={"parsing_strategy": "fast"},
             metadata={},
         )
         assert_matches_type(VectorStoreFile, file, path=["response"])
