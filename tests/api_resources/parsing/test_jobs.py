@@ -29,8 +29,8 @@ class TestJobs:
     def test_method_create_with_all_params(self, client: Mixedbread) -> None:
         job = client.parsing.jobs.create(
             file_id="file_id",
-            chunking_strategy="page",
             element_types=["caption"],
+            chunking_strategy="page",
             return_format="html",
         )
         assert_matches_type(ParsingJob, job, path=["response"])
@@ -221,8 +221,8 @@ class TestAsyncJobs:
     async def test_method_create_with_all_params(self, async_client: AsyncMixedbread) -> None:
         job = await async_client.parsing.jobs.create(
             file_id="file_id",
-            chunking_strategy="page",
             element_types=["caption"],
+            chunking_strategy="page",
             return_format="html",
         )
         assert_matches_type(ParsingJob, job, path=["response"])

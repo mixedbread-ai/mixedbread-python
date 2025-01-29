@@ -11,6 +11,9 @@ __all__ = ["VectorStoreUpdateParams"]
 
 
 class VectorStoreUpdateParams(TypedDict, total=False):
+    name: Optional[str]
+    """New name for the vector store"""
+
     description: Optional[str]
     """New description"""
 
@@ -19,6 +22,3 @@ class VectorStoreUpdateParams(TypedDict, total=False):
 
     metadata: object
     """Optional metadata key-value pairs"""
-
-    name: Optional[str]
-    """New name for the vector store"""
