@@ -72,11 +72,11 @@ class VectorStoresResource(SyncAPIResource):
     def create(
         self,
         *,
+        name: Optional[str] | NotGiven = NOT_GIVEN,
         description: Optional[str] | NotGiven = NOT_GIVEN,
         expires_after: Optional[ExpiresAfterParam] | NotGiven = NOT_GIVEN,
-        file_ids: Optional[List[str]] | NotGiven = NOT_GIVEN,
         metadata: object | NotGiven = NOT_GIVEN,
-        name: Optional[str] | NotGiven = NOT_GIVEN,
+        file_ids: Optional[List[str]] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -93,15 +93,15 @@ class VectorStoresResource(SyncAPIResource):
         Returns: VectorStore: The response containing the created vector store details.
 
         Args:
+          name: Name for the new vector store
+
           description: Description of the vector store
 
           expires_after: Represents an expiration policy for a vector store.
 
-          file_ids: Optional list of file IDs
-
           metadata: Optional metadata key-value pairs
 
-          name: Name for the new vector store
+          file_ids: Optional list of file IDs
 
           extra_headers: Send extra headers
 
@@ -115,11 +115,11 @@ class VectorStoresResource(SyncAPIResource):
             "/v1/vector_stores",
             body=maybe_transform(
                 {
+                    "name": name,
                     "description": description,
                     "expires_after": expires_after,
-                    "file_ids": file_ids,
                     "metadata": metadata,
-                    "name": name,
+                    "file_ids": file_ids,
                 },
                 vector_store_create_params.VectorStoreCreateParams,
             ),
@@ -172,10 +172,10 @@ class VectorStoresResource(SyncAPIResource):
         self,
         vector_store_id: str,
         *,
+        name: Optional[str] | NotGiven = NOT_GIVEN,
         description: Optional[str] | NotGiven = NOT_GIVEN,
         expires_after: Optional[ExpiresAfterParam] | NotGiven = NOT_GIVEN,
         metadata: object | NotGiven = NOT_GIVEN,
-        name: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -195,13 +195,13 @@ class VectorStoresResource(SyncAPIResource):
         Args:
           vector_store_id: The ID of the vector store
 
+          name: New name for the vector store
+
           description: New description
 
           expires_after: Represents an expiration policy for a vector store.
 
           metadata: Optional metadata key-value pairs
-
-          name: New name for the vector store
 
           extra_headers: Send extra headers
 
@@ -217,10 +217,10 @@ class VectorStoresResource(SyncAPIResource):
             f"/v1/vector_stores/{vector_store_id}",
             body=maybe_transform(
                 {
+                    "name": name,
                     "description": description,
                     "expires_after": expires_after,
                     "metadata": metadata,
-                    "name": name,
                 },
                 vector_store_update_params.VectorStoreUpdateParams,
             ),
@@ -323,13 +323,13 @@ class VectorStoresResource(SyncAPIResource):
     def question_answering(
         self,
         *,
-        vector_store_ids: List[str],
-        filters: Optional[vector_store_question_answering_params.Filters] | NotGiven = NOT_GIVEN,
-        qa_options: vector_store_question_answering_params.QaOptions | NotGiven = NOT_GIVEN,
         query: str | NotGiven = NOT_GIVEN,
+        vector_store_ids: List[str],
+        top_k: int | NotGiven = NOT_GIVEN,
+        filters: Optional[vector_store_question_answering_params.Filters] | NotGiven = NOT_GIVEN,
         search_options: VectorStoreSearchOptionsParam | NotGiven = NOT_GIVEN,
         stream: bool | NotGiven = NOT_GIVEN,
-        top_k: int | NotGiven = NOT_GIVEN,
+        qa_options: vector_store_question_answering_params.QaOptions | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -337,24 +337,25 @@ class VectorStoresResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> object:
-        """
-        Question answering
+        """Question answering
 
         Args:
+          query: Question to answer.
+
+        If not provided, the question will be extracted from the
+              passed messages.
+
           vector_store_ids: IDs of vector stores to search
 
+          top_k: Number of results to return
+
           filters: Optional filter conditions
-
-          qa_options: Question answering configuration options
-
-          query: Question to answer. If not provided, the question will be extracted from the
-              passed messages.
 
           search_options: Search configuration options
 
           stream: Whether to stream the answer
 
-          top_k: Number of results to return
+          qa_options: Question answering configuration options
 
           extra_headers: Send extra headers
 
@@ -368,13 +369,13 @@ class VectorStoresResource(SyncAPIResource):
             "/v1/vector_stores/question-answering",
             body=maybe_transform(
                 {
-                    "vector_store_ids": vector_store_ids,
-                    "filters": filters,
-                    "qa_options": qa_options,
                     "query": query,
+                    "vector_store_ids": vector_store_ids,
+                    "top_k": top_k,
+                    "filters": filters,
                     "search_options": search_options,
                     "stream": stream,
-                    "top_k": top_k,
+                    "qa_options": qa_options,
                 },
                 vector_store_question_answering_params.VectorStoreQuestionAnsweringParams,
             ),
@@ -389,9 +390,9 @@ class VectorStoresResource(SyncAPIResource):
         *,
         query: str,
         vector_store_ids: List[str],
+        top_k: int | NotGiven = NOT_GIVEN,
         filters: Optional[vector_store_search_params.Filters] | NotGiven = NOT_GIVEN,
         search_options: VectorStoreSearchOptionsParam | NotGiven = NOT_GIVEN,
-        top_k: int | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -421,11 +422,11 @@ class VectorStoresResource(SyncAPIResource):
 
           vector_store_ids: IDs of vector stores to search
 
+          top_k: Number of results to return
+
           filters: Optional filter conditions
 
           search_options: Search configuration options
-
-          top_k: Number of results to return
 
           extra_headers: Send extra headers
 
@@ -441,9 +442,9 @@ class VectorStoresResource(SyncAPIResource):
                 {
                     "query": query,
                     "vector_store_ids": vector_store_ids,
+                    "top_k": top_k,
                     "filters": filters,
                     "search_options": search_options,
-                    "top_k": top_k,
                 },
                 vector_store_search_params.VectorStoreSearchParams,
             ),
@@ -481,11 +482,11 @@ class AsyncVectorStoresResource(AsyncAPIResource):
     async def create(
         self,
         *,
+        name: Optional[str] | NotGiven = NOT_GIVEN,
         description: Optional[str] | NotGiven = NOT_GIVEN,
         expires_after: Optional[ExpiresAfterParam] | NotGiven = NOT_GIVEN,
-        file_ids: Optional[List[str]] | NotGiven = NOT_GIVEN,
         metadata: object | NotGiven = NOT_GIVEN,
-        name: Optional[str] | NotGiven = NOT_GIVEN,
+        file_ids: Optional[List[str]] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -502,15 +503,15 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         Returns: VectorStore: The response containing the created vector store details.
 
         Args:
+          name: Name for the new vector store
+
           description: Description of the vector store
 
           expires_after: Represents an expiration policy for a vector store.
 
-          file_ids: Optional list of file IDs
-
           metadata: Optional metadata key-value pairs
 
-          name: Name for the new vector store
+          file_ids: Optional list of file IDs
 
           extra_headers: Send extra headers
 
@@ -524,11 +525,11 @@ class AsyncVectorStoresResource(AsyncAPIResource):
             "/v1/vector_stores",
             body=await async_maybe_transform(
                 {
+                    "name": name,
                     "description": description,
                     "expires_after": expires_after,
-                    "file_ids": file_ids,
                     "metadata": metadata,
-                    "name": name,
+                    "file_ids": file_ids,
                 },
                 vector_store_create_params.VectorStoreCreateParams,
             ),
@@ -581,10 +582,10 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         self,
         vector_store_id: str,
         *,
+        name: Optional[str] | NotGiven = NOT_GIVEN,
         description: Optional[str] | NotGiven = NOT_GIVEN,
         expires_after: Optional[ExpiresAfterParam] | NotGiven = NOT_GIVEN,
         metadata: object | NotGiven = NOT_GIVEN,
-        name: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -604,13 +605,13 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         Args:
           vector_store_id: The ID of the vector store
 
+          name: New name for the vector store
+
           description: New description
 
           expires_after: Represents an expiration policy for a vector store.
 
           metadata: Optional metadata key-value pairs
-
-          name: New name for the vector store
 
           extra_headers: Send extra headers
 
@@ -626,10 +627,10 @@ class AsyncVectorStoresResource(AsyncAPIResource):
             f"/v1/vector_stores/{vector_store_id}",
             body=await async_maybe_transform(
                 {
+                    "name": name,
                     "description": description,
                     "expires_after": expires_after,
                     "metadata": metadata,
-                    "name": name,
                 },
                 vector_store_update_params.VectorStoreUpdateParams,
             ),
@@ -732,13 +733,13 @@ class AsyncVectorStoresResource(AsyncAPIResource):
     async def question_answering(
         self,
         *,
-        vector_store_ids: List[str],
-        filters: Optional[vector_store_question_answering_params.Filters] | NotGiven = NOT_GIVEN,
-        qa_options: vector_store_question_answering_params.QaOptions | NotGiven = NOT_GIVEN,
         query: str | NotGiven = NOT_GIVEN,
+        vector_store_ids: List[str],
+        top_k: int | NotGiven = NOT_GIVEN,
+        filters: Optional[vector_store_question_answering_params.Filters] | NotGiven = NOT_GIVEN,
         search_options: VectorStoreSearchOptionsParam | NotGiven = NOT_GIVEN,
         stream: bool | NotGiven = NOT_GIVEN,
-        top_k: int | NotGiven = NOT_GIVEN,
+        qa_options: vector_store_question_answering_params.QaOptions | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -746,24 +747,25 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> object:
-        """
-        Question answering
+        """Question answering
 
         Args:
+          query: Question to answer.
+
+        If not provided, the question will be extracted from the
+              passed messages.
+
           vector_store_ids: IDs of vector stores to search
 
+          top_k: Number of results to return
+
           filters: Optional filter conditions
-
-          qa_options: Question answering configuration options
-
-          query: Question to answer. If not provided, the question will be extracted from the
-              passed messages.
 
           search_options: Search configuration options
 
           stream: Whether to stream the answer
 
-          top_k: Number of results to return
+          qa_options: Question answering configuration options
 
           extra_headers: Send extra headers
 
@@ -777,13 +779,13 @@ class AsyncVectorStoresResource(AsyncAPIResource):
             "/v1/vector_stores/question-answering",
             body=await async_maybe_transform(
                 {
-                    "vector_store_ids": vector_store_ids,
-                    "filters": filters,
-                    "qa_options": qa_options,
                     "query": query,
+                    "vector_store_ids": vector_store_ids,
+                    "top_k": top_k,
+                    "filters": filters,
                     "search_options": search_options,
                     "stream": stream,
-                    "top_k": top_k,
+                    "qa_options": qa_options,
                 },
                 vector_store_question_answering_params.VectorStoreQuestionAnsweringParams,
             ),
@@ -798,9 +800,9 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         *,
         query: str,
         vector_store_ids: List[str],
+        top_k: int | NotGiven = NOT_GIVEN,
         filters: Optional[vector_store_search_params.Filters] | NotGiven = NOT_GIVEN,
         search_options: VectorStoreSearchOptionsParam | NotGiven = NOT_GIVEN,
-        top_k: int | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -830,11 +832,11 @@ class AsyncVectorStoresResource(AsyncAPIResource):
 
           vector_store_ids: IDs of vector stores to search
 
+          top_k: Number of results to return
+
           filters: Optional filter conditions
 
           search_options: Search configuration options
-
-          top_k: Number of results to return
 
           extra_headers: Send extra headers
 
@@ -850,9 +852,9 @@ class AsyncVectorStoresResource(AsyncAPIResource):
                 {
                     "query": query,
                     "vector_store_ids": vector_store_ids,
+                    "top_k": top_k,
                     "filters": filters,
                     "search_options": search_options,
-                    "top_k": top_k,
                 },
                 vector_store_search_params.VectorStoreSearchParams,
             ),

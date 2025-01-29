@@ -18,14 +18,14 @@ class FileSearchParams(TypedDict, total=False):
     vector_store_ids: Required[List[str]]
     """IDs of vector stores to search"""
 
+    top_k: int
+    """Number of results to return"""
+
     filters: Optional[Filters]
     """Optional filter conditions"""
 
     search_options: VectorStoreSearchOptionsParam
     """Search configuration options"""
-
-    top_k: int
-    """Number of results to return"""
 
 
 FiltersUnionMember2: TypeAlias = Union["SearchFilter", SearchFilterCondition]

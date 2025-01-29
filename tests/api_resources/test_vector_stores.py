@@ -30,14 +30,14 @@ class TestVectorStores:
     @parametrize
     def test_method_create_with_all_params(self, client: Mixedbread) -> None:
         vector_store = client.vector_stores.create(
+            name="Technical Documentation",
             description="Contains technical specifications and guides",
             expires_after={
                 "anchor": "last_active_at",
                 "days": 0,
             },
-            file_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
             metadata={},
-            name="Technical Documentation",
+            file_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
         )
         assert_matches_type(VectorStore, vector_store, path=["response"])
 
@@ -110,13 +110,13 @@ class TestVectorStores:
     def test_method_update_with_all_params(self, client: Mixedbread) -> None:
         vector_store = client.vector_stores.update(
             vector_store_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            name="x",
             description="x",
             expires_after={
                 "anchor": "last_active_at",
                 "days": 0,
             },
             metadata={},
-            name="x",
         )
         assert_matches_type(VectorStore, vector_store, path=["response"])
 
@@ -232,55 +232,55 @@ class TestVectorStores:
     @parametrize
     def test_method_question_answering_with_all_params(self, client: Mixedbread) -> None:
         vector_store = client.vector_stores.question_answering(
+            query="x",
             vector_store_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
+            top_k=1,
             filters={
                 "all": [
                     {
                         "key": "price",
-                        "operator": "eq",
                         "value": "100",
+                        "operator": "eq",
                     },
                     {
                         "key": "color",
-                        "operator": "eq",
                         "value": "red",
+                        "operator": "eq",
                     },
                 ],
                 "any": [
                     {
                         "key": "price",
-                        "operator": "eq",
                         "value": "100",
+                        "operator": "eq",
                     },
                     {
                         "key": "color",
-                        "operator": "eq",
                         "value": "red",
+                        "operator": "eq",
                     },
                 ],
                 "none": [
                     {
                         "key": "price",
-                        "operator": "eq",
                         "value": "100",
+                        "operator": "eq",
                     },
                     {
                         "key": "color",
-                        "operator": "eq",
                         "value": "red",
+                        "operator": "eq",
                     },
                 ],
             },
-            qa_options={"cite": True},
-            query="x",
             search_options={
-                "return_chunks": True,
                 "return_metadata": True,
-                "rewrite_query": True,
+                "return_chunks": True,
                 "score_threshold": 0,
+                "rewrite_query": True,
             },
             stream=True,
-            top_k=1,
+            qa_options={"cite": True},
         )
         assert_matches_type(object, vector_store, path=["response"])
 
@@ -321,51 +321,51 @@ class TestVectorStores:
         vector_store = client.vector_stores.search(
             query="how to configure SSL",
             vector_store_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
+            top_k=1,
             filters={
                 "all": [
                     {
                         "key": "price",
-                        "operator": "eq",
                         "value": "100",
+                        "operator": "eq",
                     },
                     {
                         "key": "color",
-                        "operator": "eq",
                         "value": "red",
+                        "operator": "eq",
                     },
                 ],
                 "any": [
                     {
                         "key": "price",
-                        "operator": "eq",
                         "value": "100",
+                        "operator": "eq",
                     },
                     {
                         "key": "color",
-                        "operator": "eq",
                         "value": "red",
+                        "operator": "eq",
                     },
                 ],
                 "none": [
                     {
                         "key": "price",
-                        "operator": "eq",
                         "value": "100",
+                        "operator": "eq",
                     },
                     {
                         "key": "color",
-                        "operator": "eq",
                         "value": "red",
+                        "operator": "eq",
                     },
                 ],
             },
             search_options={
-                "return_chunks": True,
                 "return_metadata": True,
-                "rewrite_query": True,
+                "return_chunks": True,
                 "score_threshold": 0,
+                "rewrite_query": True,
             },
-            top_k=1,
         )
         assert_matches_type(VectorStoreSearchResponse, vector_store, path=["response"])
 
@@ -407,14 +407,14 @@ class TestAsyncVectorStores:
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncMixedbread) -> None:
         vector_store = await async_client.vector_stores.create(
+            name="Technical Documentation",
             description="Contains technical specifications and guides",
             expires_after={
                 "anchor": "last_active_at",
                 "days": 0,
             },
-            file_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
             metadata={},
-            name="Technical Documentation",
+            file_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
         )
         assert_matches_type(VectorStore, vector_store, path=["response"])
 
@@ -487,13 +487,13 @@ class TestAsyncVectorStores:
     async def test_method_update_with_all_params(self, async_client: AsyncMixedbread) -> None:
         vector_store = await async_client.vector_stores.update(
             vector_store_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            name="x",
             description="x",
             expires_after={
                 "anchor": "last_active_at",
                 "days": 0,
             },
             metadata={},
-            name="x",
         )
         assert_matches_type(VectorStore, vector_store, path=["response"])
 
@@ -609,55 +609,55 @@ class TestAsyncVectorStores:
     @parametrize
     async def test_method_question_answering_with_all_params(self, async_client: AsyncMixedbread) -> None:
         vector_store = await async_client.vector_stores.question_answering(
+            query="x",
             vector_store_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
+            top_k=1,
             filters={
                 "all": [
                     {
                         "key": "price",
-                        "operator": "eq",
                         "value": "100",
+                        "operator": "eq",
                     },
                     {
                         "key": "color",
-                        "operator": "eq",
                         "value": "red",
+                        "operator": "eq",
                     },
                 ],
                 "any": [
                     {
                         "key": "price",
-                        "operator": "eq",
                         "value": "100",
+                        "operator": "eq",
                     },
                     {
                         "key": "color",
-                        "operator": "eq",
                         "value": "red",
+                        "operator": "eq",
                     },
                 ],
                 "none": [
                     {
                         "key": "price",
-                        "operator": "eq",
                         "value": "100",
+                        "operator": "eq",
                     },
                     {
                         "key": "color",
-                        "operator": "eq",
                         "value": "red",
+                        "operator": "eq",
                     },
                 ],
             },
-            qa_options={"cite": True},
-            query="x",
             search_options={
-                "return_chunks": True,
                 "return_metadata": True,
-                "rewrite_query": True,
+                "return_chunks": True,
                 "score_threshold": 0,
+                "rewrite_query": True,
             },
             stream=True,
-            top_k=1,
+            qa_options={"cite": True},
         )
         assert_matches_type(object, vector_store, path=["response"])
 
@@ -698,51 +698,51 @@ class TestAsyncVectorStores:
         vector_store = await async_client.vector_stores.search(
             query="how to configure SSL",
             vector_store_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
+            top_k=1,
             filters={
                 "all": [
                     {
                         "key": "price",
-                        "operator": "eq",
                         "value": "100",
+                        "operator": "eq",
                     },
                     {
                         "key": "color",
-                        "operator": "eq",
                         "value": "red",
+                        "operator": "eq",
                     },
                 ],
                 "any": [
                     {
                         "key": "price",
-                        "operator": "eq",
                         "value": "100",
+                        "operator": "eq",
                     },
                     {
                         "key": "color",
-                        "operator": "eq",
                         "value": "red",
+                        "operator": "eq",
                     },
                 ],
                 "none": [
                     {
                         "key": "price",
-                        "operator": "eq",
                         "value": "100",
+                        "operator": "eq",
                     },
                     {
                         "key": "color",
-                        "operator": "eq",
                         "value": "red",
+                        "operator": "eq",
                     },
                 ],
             },
             search_options={
-                "return_chunks": True,
                 "return_metadata": True,
-                "rewrite_query": True,
+                "return_chunks": True,
                 "score_threshold": 0,
+                "rewrite_query": True,
             },
-            top_k=1,
         )
         assert_matches_type(VectorStoreSearchResponse, vector_store, path=["response"])
 

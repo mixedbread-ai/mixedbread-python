@@ -11,11 +11,11 @@ class FileCreateParams(TypedDict, total=False):
     file_id: Required[str]
     """ID of the file to add"""
 
-    experimental: Experimental
-    """Strategy for adding the file"""
-
     metadata: object
     """Optional metadata for the file"""
+
+    experimental: Experimental
+    """Strategy for adding the file"""
 
 
 class Experimental(TypedDict, total=False):

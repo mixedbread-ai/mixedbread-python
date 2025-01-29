@@ -14,42 +14,42 @@ class ValueImageURLInputImage(BaseModel):
 
 
 class ValueImageURLInput(BaseModel):
-    image: ValueImageURLInputImage
-    """The image input specification."""
-
     type: Optional[Literal["image_url"]] = None
     """Input type identifier"""
 
+    image: ValueImageURLInputImage
+    """The image input specification."""
+
 
 class ValueTextInput(BaseModel):
-    text: str
-    """Text content to process"""
-
     type: Optional[Literal["text"]] = None
     """Input type identifier"""
+
+    text: str
+    """Text content to process"""
 
 
 Value: TypeAlias = Union[str, ValueImageURLInput, ValueTextInput, Dict[str, object], None]
 
 
 class ScoredVectorStoreChunk(BaseModel):
-    file_id: str
-    """file id"""
-
     position: int
     """position of the chunk in a file"""
 
-    score: float
-    """score of the chunk"""
-
-    vector_store_id: str
-    """vector store id"""
+    value: Optional[Value] = None
+    """value of the chunk"""
 
     content: Optional[str] = None
     """content of the chunk"""
 
+    score: float
+    """score of the chunk"""
+
+    file_id: str
+    """file id"""
+
+    vector_store_id: str
+    """vector store id"""
+
     metadata: Optional[object] = None
     """file metadata"""
-
-    value: Optional[Value] = None
-    """value of the chunk"""

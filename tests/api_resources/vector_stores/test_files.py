@@ -35,8 +35,8 @@ class TestFiles:
         file = client.vector_stores.files.create(
             vector_store_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             file_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            experimental={"parsing_strategy": "fast"},
             metadata={},
+            experimental={"parsing_strategy": "fast"},
         )
         assert_matches_type(VectorStoreFile, file, path=["response"])
 
@@ -230,51 +230,51 @@ class TestFiles:
         file = client.vector_stores.files.search(
             query="how to configure SSL",
             vector_store_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
+            top_k=1,
             filters={
                 "all": [
                     {
                         "key": "price",
-                        "operator": "eq",
                         "value": "100",
+                        "operator": "eq",
                     },
                     {
                         "key": "color",
-                        "operator": "eq",
                         "value": "red",
+                        "operator": "eq",
                     },
                 ],
                 "any": [
                     {
                         "key": "price",
-                        "operator": "eq",
                         "value": "100",
+                        "operator": "eq",
                     },
                     {
                         "key": "color",
-                        "operator": "eq",
                         "value": "red",
+                        "operator": "eq",
                     },
                 ],
                 "none": [
                     {
                         "key": "price",
-                        "operator": "eq",
                         "value": "100",
+                        "operator": "eq",
                     },
                     {
                         "key": "color",
-                        "operator": "eq",
                         "value": "red",
+                        "operator": "eq",
                     },
                 ],
             },
             search_options={
-                "return_chunks": True,
                 "return_metadata": True,
-                "rewrite_query": True,
+                "return_chunks": True,
                 "score_threshold": 0,
+                "rewrite_query": True,
             },
-            top_k=1,
         )
         assert_matches_type(FileSearchResponse, file, path=["response"])
 
@@ -321,8 +321,8 @@ class TestAsyncFiles:
         file = await async_client.vector_stores.files.create(
             vector_store_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             file_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            experimental={"parsing_strategy": "fast"},
             metadata={},
+            experimental={"parsing_strategy": "fast"},
         )
         assert_matches_type(VectorStoreFile, file, path=["response"])
 
@@ -516,51 +516,51 @@ class TestAsyncFiles:
         file = await async_client.vector_stores.files.search(
             query="how to configure SSL",
             vector_store_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
+            top_k=1,
             filters={
                 "all": [
                     {
                         "key": "price",
-                        "operator": "eq",
                         "value": "100",
+                        "operator": "eq",
                     },
                     {
                         "key": "color",
-                        "operator": "eq",
                         "value": "red",
+                        "operator": "eq",
                     },
                 ],
                 "any": [
                     {
                         "key": "price",
-                        "operator": "eq",
                         "value": "100",
+                        "operator": "eq",
                     },
                     {
                         "key": "color",
-                        "operator": "eq",
                         "value": "red",
+                        "operator": "eq",
                     },
                 ],
                 "none": [
                     {
                         "key": "price",
-                        "operator": "eq",
                         "value": "100",
+                        "operator": "eq",
                     },
                     {
                         "key": "color",
-                        "operator": "eq",
                         "value": "red",
+                        "operator": "eq",
                     },
                 ],
             },
             search_options={
-                "return_chunks": True,
                 "return_metadata": True,
-                "rewrite_query": True,
+                "return_chunks": True,
                 "score_threshold": 0,
+                "rewrite_query": True,
             },
-            top_k=1,
         )
         assert_matches_type(FileSearchResponse, file, path=["response"])
 
