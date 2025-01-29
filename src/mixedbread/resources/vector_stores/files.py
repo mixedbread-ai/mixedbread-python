@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import functools
-from typing import List, Optional
+from typing import Any, List, Optional
 
 import httpx
 
@@ -332,6 +332,7 @@ class FilesResource(SyncAPIResource):
         vector_store_id: str,
         poll_interval_ms: int | NotGiven = NOT_GIVEN,
         poll_timeout_ms: float | NotGiven = NOT_GIVEN,
+        **kwargs: Any,
     ) -> VectorStoreFile:
         """
         Poll for a file's status until it reaches a terminal state.
@@ -346,7 +347,7 @@ class FilesResource(SyncAPIResource):
         polling_interval_ms = poll_interval_ms or 500
         polling_timeout_ms = poll_timeout_ms or None
         return polling.poll(
-            fn=functools.partial(self.retrieve, file_id, vector_store_id=vector_store_id),
+            fn=functools.partial(self.retrieve, file_id, vector_store_id=vector_store_id, **kwargs),
             condition=lambda res: res.status == "completed" or res.status == "failed" or res.status == "cancelled",
             interval_seconds=polling_interval_ms / 1000,
             timeout_seconds=polling_timeout_ms / 1000 if polling_timeout_ms else None,
@@ -358,8 +359,10 @@ class FilesResource(SyncAPIResource):
         *,
         vector_store_id: str,
         metadata: Optional[object] | NotGiven = NOT_GIVEN,
+        experimental: file_create_params.Experimental | NotGiven = NOT_GIVEN,
         poll_interval_ms: int | NotGiven = NOT_GIVEN,
         poll_timeout_ms: float | NotGiven = NOT_GIVEN,
+        **kwargs: Any,
     ) -> VectorStoreFile:
         """
         Attach a file to the given vector store and wait for it to be processed.
@@ -372,12 +375,15 @@ class FilesResource(SyncAPIResource):
         Returns:
             The file object once it reaches a terminal state
         """
-        self.create(vector_store_id=vector_store_id, file_id=file_id, metadata=metadata)
+        self.create(
+            vector_store_id=vector_store_id, file_id=file_id, metadata=metadata, experimental=experimental, **kwargs
+        )
         return self.poll(
             file_id,
             vector_store_id=vector_store_id,
             poll_interval_ms=poll_interval_ms,
             poll_timeout_ms=poll_timeout_ms,
+            **kwargs,
         )
 
     def upload(
@@ -386,13 +392,21 @@ class FilesResource(SyncAPIResource):
         vector_store_id: str,
         file: FileTypes,
         metadata: Optional[object] | NotGiven = NOT_GIVEN,
+        experimental: file_create_params.Experimental | NotGiven = NOT_GIVEN,
+        **kwargs: Any,
     ) -> VectorStoreFile:
         """Upload a file to the `files` API and then attach it to the given vector store.
         Note the file will be asynchronously processed (you can use the alternative
         polling helper method to wait for processing to complete).
         """
-        file_obj = self._client.files.create(file=file)
-        return self.create(vector_store_id=vector_store_id, file_id=file_obj.id, metadata=metadata)
+        file_obj = self._client.files.create(file=file, **kwargs)
+        return self.create(
+            vector_store_id=vector_store_id,
+            file_id=file_obj.id,
+            metadata=metadata,
+            experimental=experimental,
+            **kwargs,
+        )
 
     def upload_and_poll(
         self,
@@ -400,15 +414,21 @@ class FilesResource(SyncAPIResource):
         vector_store_id: str,
         file: FileTypes,
         metadata: Optional[object] | NotGiven = NOT_GIVEN,
+        experimental: file_create_params.Experimental | NotGiven = NOT_GIVEN,
         poll_interval_ms: int | NotGiven = NOT_GIVEN,
+        poll_timeout_ms: float | NotGiven = NOT_GIVEN,
+        **kwargs: Any,
     ) -> VectorStoreFile:
         """Add a file to a vector store and poll until processing is complete."""
-        file_obj = self._client.files.create(file=file)
+        file_obj = self._client.files.create(file=file, **kwargs)
         return self.create_and_poll(
             vector_store_id=vector_store_id,
             file_id=file_obj.id,
             metadata=metadata,
+            experimental=experimental,
             poll_interval_ms=poll_interval_ms,
+            poll_timeout_ms=poll_timeout_ms,
+            **kwargs,
         )
 
 
@@ -712,6 +732,7 @@ class AsyncFilesResource(AsyncAPIResource):
         vector_store_id: str,
         poll_interval_ms: int | NotGiven = NOT_GIVEN,
         poll_timeout_ms: float | NotGiven = NOT_GIVEN,
+        **kwargs: Any,
     ) -> VectorStoreFile:
         """
         Poll for a file's status until it reaches a terminal state.
@@ -726,7 +747,7 @@ class AsyncFilesResource(AsyncAPIResource):
         polling_interval_ms = poll_interval_ms or 500
         polling_timeout_ms = poll_timeout_ms or None
         return await polling.poll_async(
-            fn=functools.partial(self.retrieve, file_id, vector_store_id=vector_store_id),
+            fn=functools.partial(self.retrieve, file_id, vector_store_id=vector_store_id, **kwargs),
             condition=lambda res: res.status == "completed" or res.status == "failed" or res.status == "cancelled",
             interval_seconds=polling_interval_ms / 1000,
             timeout_seconds=polling_timeout_ms / 1000 if polling_timeout_ms else None,
@@ -738,8 +759,10 @@ class AsyncFilesResource(AsyncAPIResource):
         *,
         vector_store_id: str,
         metadata: Optional[object] | NotGiven = NOT_GIVEN,
+        experimental: file_create_params.Experimental | NotGiven = NOT_GIVEN,
         poll_interval_ms: int | NotGiven = NOT_GIVEN,
         poll_timeout_ms: float | NotGiven = NOT_GIVEN,
+        **kwargs: Any,
     ) -> VectorStoreFile:
         """
         Attach a file to the given vector store and wait for it to be processed.
@@ -752,12 +775,19 @@ class AsyncFilesResource(AsyncAPIResource):
         Returns:
             The file object once it reaches a terminal state
         """
-        await self.create(vector_store_id=vector_store_id, file_id=file_id, metadata=metadata)
+        await self.create(
+            vector_store_id=vector_store_id,
+            file_id=file_id,
+            metadata=metadata,
+            experimental=experimental,
+            **kwargs,
+        )
         return await self.poll(
             file_id,
             vector_store_id=vector_store_id,
             poll_interval_ms=poll_interval_ms,
             poll_timeout_ms=poll_timeout_ms,
+            **kwargs,
         )
 
     async def upload(
@@ -766,13 +796,21 @@ class AsyncFilesResource(AsyncAPIResource):
         vector_store_id: str,
         file: FileTypes,
         metadata: Optional[object] | NotGiven = NOT_GIVEN,
+        experimental: file_create_params.Experimental | NotGiven = NOT_GIVEN,
+        **kwargs: Any,
     ) -> VectorStoreFile:
         """Upload a file to the `files` API and then attach it to the given vector store.
         Note the file will be asynchronously processed (you can use the alternative
         polling helper method to wait for processing to complete).
         """
-        file_obj = await self._client.files.create(file=file)
-        return await self.create(vector_store_id=vector_store_id, file_id=file_obj.id, metadata=metadata)
+        file_obj = await self._client.files.create(file=file, **kwargs)
+        return await self.create(
+            vector_store_id=vector_store_id,
+            file_id=file_obj.id,
+            metadata=metadata,
+            experimental=experimental,
+            **kwargs,
+        )
 
     async def upload_and_poll(
         self,
@@ -780,15 +818,21 @@ class AsyncFilesResource(AsyncAPIResource):
         vector_store_id: str,
         file: FileTypes,
         metadata: Optional[object] | NotGiven = NOT_GIVEN,
+        experimental: file_create_params.Experimental | NotGiven = NOT_GIVEN,
         poll_interval_ms: int | NotGiven = NOT_GIVEN,
+        poll_timeout_ms: float | NotGiven = NOT_GIVEN,
+        **kwargs: Any,
     ) -> VectorStoreFile:
         """Add a file to a vector store and poll until processing is complete."""
-        file_obj = await self._client.files.create(file=file)
+        file_obj = await self._client.files.create(file=file, **kwargs)
         return await self.create_and_poll(
             vector_store_id=vector_store_id,
             file_id=file_obj.id,
             metadata=metadata,
+            experimental=experimental,
             poll_interval_ms=poll_interval_ms,
+            poll_timeout_ms=poll_timeout_ms,
+            **kwargs,
         )
 
 
