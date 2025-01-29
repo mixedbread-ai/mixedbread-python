@@ -8,6 +8,9 @@ __all__ = ["FileCounts"]
 
 
 class FileCounts(BaseModel):
+    in_progress: Optional[int] = None
+    """Number of files currently being processed"""
+
     cancelled: Optional[int] = None
     """Number of files whose processing was cancelled"""
 
@@ -16,9 +19,6 @@ class FileCounts(BaseModel):
 
     failed: Optional[int] = None
     """Number of files that failed processing"""
-
-    in_progress: Optional[int] = None
-    """Number of files currently being processed"""
 
     total: Optional[int] = None
     """Total number of files"""

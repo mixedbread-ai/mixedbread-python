@@ -11,8 +11,8 @@ class SearchFilterCondition(TypedDict, total=False):
     key: Required[str]
     """The field to apply the condition on"""
 
-    operator: Required[Literal["eq", "not_eq", "gt", "gte", "lt", "lte", "in", "not_in", "like", "not_like"]]
-    """The operator for the condition"""
-
     value: Required[object]
     """The value to compare against"""
+
+    operator: Required[Literal["eq", "not_eq", "gt", "gte", "lt", "lte", "in", "not_in", "like", "not_like"]]
+    """The operator for the condition"""

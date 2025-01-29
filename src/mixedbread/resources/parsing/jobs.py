@@ -56,7 +56,6 @@ class JobsResource(SyncAPIResource):
         self,
         *,
         file_id: str,
-        chunking_strategy: Literal["page"] | NotGiven = NOT_GIVEN,
         element_types: Optional[
             List[
                 Literal[
@@ -75,6 +74,7 @@ class JobsResource(SyncAPIResource):
             ]
         ]
         | NotGiven = NOT_GIVEN,
+        chunking_strategy: Literal["page"] | NotGiven = NOT_GIVEN,
         return_format: Literal["html", "markdown", "plain"] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -93,9 +93,9 @@ class JobsResource(SyncAPIResource):
         Args:
           file_id: The ID of the file to parse
 
-          chunking_strategy: The strategy to use for chunking the content
-
           element_types: The elements to extract from the document
+
+          chunking_strategy: The strategy to use for chunking the content
 
           return_format: The format of the returned content
 
@@ -112,8 +112,8 @@ class JobsResource(SyncAPIResource):
             body=maybe_transform(
                 {
                     "file_id": file_id,
-                    "chunking_strategy": chunking_strategy,
                     "element_types": element_types,
+                    "chunking_strategy": chunking_strategy,
                     "return_format": return_format,
                 },
                 job_create_params.JobCreateParams,
@@ -475,7 +475,6 @@ class AsyncJobsResource(AsyncAPIResource):
         self,
         *,
         file_id: str,
-        chunking_strategy: Literal["page"] | NotGiven = NOT_GIVEN,
         element_types: Optional[
             List[
                 Literal[
@@ -494,6 +493,7 @@ class AsyncJobsResource(AsyncAPIResource):
             ]
         ]
         | NotGiven = NOT_GIVEN,
+        chunking_strategy: Literal["page"] | NotGiven = NOT_GIVEN,
         return_format: Literal["html", "markdown", "plain"] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -512,9 +512,9 @@ class AsyncJobsResource(AsyncAPIResource):
         Args:
           file_id: The ID of the file to parse
 
-          chunking_strategy: The strategy to use for chunking the content
-
           element_types: The elements to extract from the document
+
+          chunking_strategy: The strategy to use for chunking the content
 
           return_format: The format of the returned content
 
@@ -531,8 +531,8 @@ class AsyncJobsResource(AsyncAPIResource):
             body=await async_maybe_transform(
                 {
                     "file_id": file_id,
-                    "chunking_strategy": chunking_strategy,
                     "element_types": element_types,
+                    "chunking_strategy": chunking_strategy,
                     "return_format": return_format,
                 },
                 job_create_params.JobCreateParams,
