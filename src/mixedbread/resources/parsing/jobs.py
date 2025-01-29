@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import functools
-from typing import List, Optional
+from typing import Any, List, Optional
 from typing_extensions import Literal
 
 import httpx
@@ -299,6 +299,7 @@ class JobsResource(SyncAPIResource):
         *,
         poll_interval_ms: int | NotGiven = NOT_GIVEN,
         poll_timeout_ms: float | NotGiven = NOT_GIVEN,
+        **kwargs: Any,
     ) -> ParsingJob:
         """
         Poll for a job's status until it reaches a terminal state.
@@ -312,7 +313,7 @@ class JobsResource(SyncAPIResource):
         polling_interval_ms = poll_interval_ms or 500
         polling_timeout_ms = poll_timeout_ms or None
         return polling.poll(
-            fn=functools.partial(self.retrieve, job_id),
+            fn=functools.partial(self.retrieve, job_id, **kwargs),
             condition=lambda res: res.status == "completed" or res.status == "failed" or res.status == "cancelled",
             interval_seconds=polling_interval_ms / 1000,
             timeout_seconds=polling_timeout_ms / 1000 if polling_timeout_ms else None,
@@ -344,6 +345,7 @@ class JobsResource(SyncAPIResource):
         return_format: Literal["html", "markdown", "plain"] | NotGiven = NOT_GIVEN,
         poll_interval_ms: int | NotGiven = NOT_GIVEN,
         poll_timeout_ms: float | NotGiven = NOT_GIVEN,
+        **kwargs: Any,
     ) -> ParsingJob:
         """
         Create a parsing job and wait for it to complete.
@@ -362,11 +364,13 @@ class JobsResource(SyncAPIResource):
             chunking_strategy=chunking_strategy,
             element_types=element_types,
             return_format=return_format,
+            **kwargs,
         )
         return self.poll(
             job.id,
             poll_interval_ms=poll_interval_ms,
             poll_timeout_ms=poll_timeout_ms,
+            **kwargs,
         )
 
     def upload(
@@ -393,17 +397,19 @@ class JobsResource(SyncAPIResource):
         ]
         | NotGiven = NOT_GIVEN,
         return_format: Literal["html", "markdown", "plain"] | NotGiven = NOT_GIVEN,
+        **kwargs: Any,
     ) -> ParsingJob:
         """Upload a file to the `files` API and then create a parsing job for it.
         Note the job will be asynchronously processed (you can use the alternative
         polling helper method to wait for processing to complete).
         """
-        file_obj = self._client.files.create(file=file)
+        file_obj = self._client.files.create(file=file, **kwargs)
         return self.create(
             file_id=file_obj.id,
             chunking_strategy=chunking_strategy,
             element_types=element_types,
             return_format=return_format,
+            **kwargs,
         )
 
     def upload_and_poll(
@@ -431,15 +437,17 @@ class JobsResource(SyncAPIResource):
         | NotGiven = NOT_GIVEN,
         return_format: Literal["html", "markdown", "plain"] | NotGiven = NOT_GIVEN,
         poll_interval_ms: int | NotGiven = NOT_GIVEN,
+        **kwargs: Any,
     ) -> ParsingJob:
         """Upload a file and create a parsing job, then poll until processing is complete."""
-        file_obj = self._client.files.create(file=file)
+        file_obj = self._client.files.create(file=file, **kwargs)
         return self.create_and_poll(
             file_id=file_obj.id,
             chunking_strategy=chunking_strategy,
             element_types=element_types,
             return_format=return_format,
             poll_interval_ms=poll_interval_ms,
+            **kwargs,
         )
 
 
@@ -710,6 +718,7 @@ class AsyncJobsResource(AsyncAPIResource):
         *,
         poll_interval_ms: int | NotGiven = NOT_GIVEN,
         poll_timeout_ms: float | NotGiven = NOT_GIVEN,
+        **kwargs: Any,
     ) -> ParsingJob:
         """
         Poll for a job's status until it reaches a terminal state.
@@ -723,7 +732,7 @@ class AsyncJobsResource(AsyncAPIResource):
         polling_interval_ms = poll_interval_ms or 500
         polling_timeout_ms = poll_timeout_ms or None
         return await polling.poll_async(
-            fn=functools.partial(self.retrieve, job_id),
+            fn=functools.partial(self.retrieve, job_id, **kwargs),
             condition=lambda res: res.status == "completed" or res.status == "failed" or res.status == "cancelled",
             interval_seconds=polling_interval_ms / 1000,
             timeout_seconds=polling_timeout_ms / 1000 if polling_timeout_ms else None,
@@ -755,6 +764,7 @@ class AsyncJobsResource(AsyncAPIResource):
         return_format: Literal["html", "markdown", "plain"] | NotGiven = NOT_GIVEN,
         poll_interval_ms: int | NotGiven = NOT_GIVEN,
         poll_timeout_ms: float | NotGiven = NOT_GIVEN,
+        **kwargs: Any,
     ) -> ParsingJob:
         """
         Create a parsing job and wait for it to complete.
@@ -773,11 +783,13 @@ class AsyncJobsResource(AsyncAPIResource):
             chunking_strategy=chunking_strategy,
             element_types=element_types,
             return_format=return_format,
+            **kwargs,
         )
         return await self.poll(
             job.id,
             poll_interval_ms=poll_interval_ms,
             poll_timeout_ms=poll_timeout_ms,
+            **kwargs,
         )
 
     async def upload(
@@ -804,17 +816,19 @@ class AsyncJobsResource(AsyncAPIResource):
         ]
         | NotGiven = NOT_GIVEN,
         return_format: Literal["html", "markdown", "plain"] | NotGiven = NOT_GIVEN,
+        **kwargs: Any,
     ) -> ParsingJob:
         """Upload a file to the `files` API and then create a parsing job for it.
         Note the job will be asynchronously processed (you can use the alternative
         polling helper method to wait for processing to complete).
         """
-        file_obj = await self._client.files.create(file=file)
+        file_obj = await self._client.files.create(file=file, **kwargs)
         return await self.create(
             file_id=file_obj.id,
             chunking_strategy=chunking_strategy,
             element_types=element_types,
             return_format=return_format,
+            **kwargs,
         )
 
     async def upload_and_poll(
@@ -842,15 +856,17 @@ class AsyncJobsResource(AsyncAPIResource):
         | NotGiven = NOT_GIVEN,
         return_format: Literal["html", "markdown", "plain"] | NotGiven = NOT_GIVEN,
         poll_interval_ms: int | NotGiven = NOT_GIVEN,
+        **kwargs: Any,
     ) -> ParsingJob:
         """Upload a file and create a parsing job, then poll until processing is complete."""
-        file_obj = await self._client.files.create(file=file)
+        file_obj = await self._client.files.create(file=file, **kwargs)
         return await self.create_and_poll(
             file_id=file_obj.id,
             chunking_strategy=chunking_strategy,
             element_types=element_types,
             return_format=return_format,
             poll_interval_ms=poll_interval_ms,
+            **kwargs,
         )
 
 
