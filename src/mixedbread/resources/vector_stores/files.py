@@ -55,7 +55,6 @@ class FilesResource(SyncAPIResource):
         vector_store_id: str,
         *,
         file_id: str,
-        experimental: file_create_params.Experimental | NotGiven = NOT_GIVEN,
         metadata: object | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -77,8 +76,6 @@ class FilesResource(SyncAPIResource):
 
           file_id: ID of the file to add
 
-          experimental: Strategy for adding the file
-
           metadata: Optional metadata for the file
 
           extra_headers: Send extra headers
@@ -96,7 +93,6 @@ class FilesResource(SyncAPIResource):
             body=maybe_transform(
                 {
                     "file_id": file_id,
-                    "experimental": experimental,
                     "metadata": metadata,
                 },
                 file_create_params.FileCreateParams,
@@ -349,7 +345,6 @@ class AsyncFilesResource(AsyncAPIResource):
         vector_store_id: str,
         *,
         file_id: str,
-        experimental: file_create_params.Experimental | NotGiven = NOT_GIVEN,
         metadata: object | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -371,8 +366,6 @@ class AsyncFilesResource(AsyncAPIResource):
 
           file_id: ID of the file to add
 
-          experimental: Strategy for adding the file
-
           metadata: Optional metadata for the file
 
           extra_headers: Send extra headers
@@ -390,7 +383,6 @@ class AsyncFilesResource(AsyncAPIResource):
             body=await async_maybe_transform(
                 {
                     "file_id": file_id,
-                    "experimental": experimental,
                     "metadata": metadata,
                 },
                 file_create_params.FileCreateParams,
