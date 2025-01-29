@@ -9,7 +9,7 @@ __all__ = ["FileCounts"]
 
 class FileCounts(BaseModel):
     cancelled: Optional[int] = None
-    """Number of files whose processing was canceled"""
+    """Number of files whose processing was cancelled"""
 
     completed: Optional[int] = None
     """Number of successfully processed files"""
