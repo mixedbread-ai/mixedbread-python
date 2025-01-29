@@ -55,8 +55,8 @@ class FilesResource(SyncAPIResource):
         vector_store_id: str,
         *,
         file_id: str,
-        experimental: file_create_params.Experimental | NotGiven = NOT_GIVEN,
         metadata: object | NotGiven = NOT_GIVEN,
+        experimental: file_create_params.Experimental | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -77,9 +77,9 @@ class FilesResource(SyncAPIResource):
 
           file_id: ID of the file to add
 
-          experimental: Strategy for adding the file
-
           metadata: Optional metadata for the file
+
+          experimental: Strategy for adding the file
 
           extra_headers: Send extra headers
 
@@ -96,8 +96,8 @@ class FilesResource(SyncAPIResource):
             body=maybe_transform(
                 {
                     "file_id": file_id,
-                    "experimental": experimental,
                     "metadata": metadata,
+                    "experimental": experimental,
                 },
                 file_create_params.FileCreateParams,
             ),
@@ -258,9 +258,9 @@ class FilesResource(SyncAPIResource):
         *,
         query: str,
         vector_store_ids: List[str],
+        top_k: int | NotGiven = NOT_GIVEN,
         filters: Optional[file_search_params.Filters] | NotGiven = NOT_GIVEN,
         search_options: VectorStoreSearchOptionsParam | NotGiven = NOT_GIVEN,
-        top_k: int | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -291,11 +291,11 @@ class FilesResource(SyncAPIResource):
 
           vector_store_ids: IDs of vector stores to search
 
+          top_k: Number of results to return
+
           filters: Optional filter conditions
 
           search_options: Search configuration options
-
-          top_k: Number of results to return
 
           extra_headers: Send extra headers
 
@@ -311,9 +311,9 @@ class FilesResource(SyncAPIResource):
                 {
                     "query": query,
                     "vector_store_ids": vector_store_ids,
+                    "top_k": top_k,
                     "filters": filters,
                     "search_options": search_options,
-                    "top_k": top_k,
                 },
                 file_search_params.FileSearchParams,
             ),
@@ -349,8 +349,8 @@ class AsyncFilesResource(AsyncAPIResource):
         vector_store_id: str,
         *,
         file_id: str,
-        experimental: file_create_params.Experimental | NotGiven = NOT_GIVEN,
         metadata: object | NotGiven = NOT_GIVEN,
+        experimental: file_create_params.Experimental | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -371,9 +371,9 @@ class AsyncFilesResource(AsyncAPIResource):
 
           file_id: ID of the file to add
 
-          experimental: Strategy for adding the file
-
           metadata: Optional metadata for the file
+
+          experimental: Strategy for adding the file
 
           extra_headers: Send extra headers
 
@@ -390,8 +390,8 @@ class AsyncFilesResource(AsyncAPIResource):
             body=await async_maybe_transform(
                 {
                     "file_id": file_id,
-                    "experimental": experimental,
                     "metadata": metadata,
+                    "experimental": experimental,
                 },
                 file_create_params.FileCreateParams,
             ),
@@ -552,9 +552,9 @@ class AsyncFilesResource(AsyncAPIResource):
         *,
         query: str,
         vector_store_ids: List[str],
+        top_k: int | NotGiven = NOT_GIVEN,
         filters: Optional[file_search_params.Filters] | NotGiven = NOT_GIVEN,
         search_options: VectorStoreSearchOptionsParam | NotGiven = NOT_GIVEN,
-        top_k: int | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -585,11 +585,11 @@ class AsyncFilesResource(AsyncAPIResource):
 
           vector_store_ids: IDs of vector stores to search
 
+          top_k: Number of results to return
+
           filters: Optional filter conditions
 
           search_options: Search configuration options
-
-          top_k: Number of results to return
 
           extra_headers: Send extra headers
 
@@ -605,9 +605,9 @@ class AsyncFilesResource(AsyncAPIResource):
                 {
                     "query": query,
                     "vector_store_ids": vector_store_ids,
+                    "top_k": top_k,
                     "filters": filters,
                     "search_options": search_options,
-                    "top_k": top_k,
                 },
                 file_search_params.FileSearchParams,
             ),

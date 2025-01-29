@@ -12,9 +12,6 @@ class JobCreateParams(TypedDict, total=False):
     file_id: Required[str]
     """The ID of the file to parse"""
 
-    chunking_strategy: Literal["page"]
-    """The strategy to use for chunking the content"""
-
     element_types: Optional[
         List[
             Literal[
@@ -33,6 +30,9 @@ class JobCreateParams(TypedDict, total=False):
         ]
     ]
     """The elements to extract from the document"""
+
+    chunking_strategy: Literal["page"]
+    """The strategy to use for chunking the content"""
 
     return_format: Literal["html", "markdown", "plain"]
     """The format of the returned content"""

@@ -16,17 +16,17 @@ class JobListResponse(BaseModel):
     status: Literal["pending", "in_progress", "cancelled", "completed", "failed"]
     """The status of the job"""
 
-    created_at: Optional[datetime] = None
-    """The creation time of the job"""
+    started_at: Optional[datetime] = None
+    """The started time of the job"""
 
     finished_at: Optional[datetime] = None
     """The finished time of the job"""
 
-    object: Optional[Literal["parsing_job"]] = None
-    """The type of the object"""
-
-    started_at: Optional[datetime] = None
-    """The started time of the job"""
+    created_at: Optional[datetime] = None
+    """The creation time of the job"""
 
     updated_at: Optional[datetime] = None
     """The updated time of the job"""
+
+    object: Optional[Literal["parsing_job"]] = None
+    """The type of the object"""

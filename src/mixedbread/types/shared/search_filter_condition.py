@@ -11,8 +11,8 @@ class SearchFilterCondition(BaseModel):
     key: str
     """The field to apply the condition on"""
 
-    operator: Literal["eq", "not_eq", "gt", "gte", "lt", "lte", "in", "not_in", "like", "not_like"]
-    """The operator for the condition"""
-
     value: object
     """The value to compare against"""
+
+    operator: Literal["eq", "not_eq", "gt", "gte", "lt", "lte", "in", "not_in", "like", "not_like"]
+    """The operator for the condition"""

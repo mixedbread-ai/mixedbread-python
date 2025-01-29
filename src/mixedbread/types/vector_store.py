@@ -15,35 +15,35 @@ class VectorStore(BaseModel):
     id: str
     """Unique identifier for the vector store"""
 
-    created_at: datetime
-    """Timestamp when the vector store was created"""
-
     name: str
     """Name of the vector store"""
-
-    updated_at: datetime
-    """Timestamp when the vector store was last updated"""
 
     description: Optional[str] = None
     """Detailed description of the vector store's purpose and contents"""
 
-    expires_after: Optional[ExpiresAfter] = None
-    """Represents an expiration policy for a vector store."""
-
-    expires_at: Optional[datetime] = None
-    """Optional expiration timestamp for the vector store"""
+    metadata: Optional[object] = None
+    """Additional metadata associated with the vector store"""
 
     file_counts: Optional[FileCounts] = None
     """Counts of files in different states"""
 
-    last_active_at: Optional[datetime] = None
-    """Timestamp when the vector store was last used"""
-
-    metadata: Optional[object] = None
-    """Additional metadata associated with the vector store"""
-
-    object: Optional[Literal["vector_store"]] = None
-    """Type of the object"""
+    expires_after: Optional[ExpiresAfter] = None
+    """Represents an expiration policy for a vector store."""
 
     status: Optional[Literal["expired", "in_progress", "completed"]] = None
     """Processing status of the vector store"""
+
+    created_at: datetime
+    """Timestamp when the vector store was created"""
+
+    updated_at: datetime
+    """Timestamp when the vector store was last updated"""
+
+    last_active_at: Optional[datetime] = None
+    """Timestamp when the vector store was last used"""
+
+    expires_at: Optional[datetime] = None
+    """Optional expiration timestamp for the vector store"""
+
+    object: Optional[Literal["vector_store"]] = None
+    """Type of the object"""

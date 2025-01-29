@@ -10,8 +10,8 @@ __all__ = ["VectorStoreSearchResponse"]
 
 
 class VectorStoreSearchResponse(BaseModel):
-    data: List[ScoredVectorStoreChunk]
-    """The list of scored vector store file chunks"""
-
     object: Optional[Literal["list"]] = None
     """The object type of the response"""
+
+    data: List[ScoredVectorStoreChunk]
+    """The list of scored vector store file chunks"""
