@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-alpha.20 (2025-01-29)
+
+Full Changelog: [v0.1.0-alpha.19...v0.1.0-alpha.20](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.1.0-alpha.19...v0.1.0-alpha.20)
+
+### Features
+
+* feat: Support kwargs + experimental ([d48fd9a](https://github.com/mixedbread-ai/mixedbread-python/commit/d48fd9ab322bbd075cba80c3ad81e8685dc66762))
+
 ## 0.1.0-alpha.19 (2025-01-29)
 
 Full Changelog: [v0.1.0-alpha.18...v0.1.0-alpha.19](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.1.0-alpha.18...v0.1.0-alpha.19)
