@@ -40,7 +40,17 @@ class SyncLimitOffset(BaseSyncPage[_T], BasePage[_T], Generic[_T]):
         length = len(self._get_page_items())
         current_count = offset + length
 
-        return PageInfo(params={"offset": current_count})
+        total = None
+        if self.pagination is not None:
+            if self.pagination.total is not None:
+                total = self.pagination.total
+        if total is None:
+            return None
+
+        if current_count < total:
+            return PageInfo(params={"offset": current_count})
+
+        return None
 
 
 class AsyncLimitOffset(BaseAsyncPage[_T], BasePage[_T], Generic[_T]):
@@ -66,4 +76,14 @@ class AsyncLimitOffset(BaseAsyncPage[_T], BasePage[_T], Generic[_T]):
         length = len(self._get_page_items())
         current_count = offset + length
 
-        return PageInfo(params={"offset": current_count})
+        total = None
+        if self.pagination is not None:
+            if self.pagination.total is not None:
+                total = self.pagination.total
+        if total is None:
+            return None
+
+        if current_count < total:
+            return PageInfo(params={"offset": current_count})
+
+        return None
