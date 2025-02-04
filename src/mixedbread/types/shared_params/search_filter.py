@@ -2,18 +2,28 @@
 
 from __future__ import annotations
 
-from typing import Union, Iterable, Optional
-from typing_extensions import TypeAlias, TypedDict
+from typing import TYPE_CHECKING, Union, Iterable, Optional
+from typing_extensions import TypeAlias, TypedDict, TypeAliasType
 
+from ..._compat import PYDANTIC_V2
 from .search_filter_condition import SearchFilterCondition
 
 __all__ = ["SearchFilter", "All", "Any", "NoneType"]
 
-All: TypeAlias = Union["SearchFilter", SearchFilterCondition]
+if TYPE_CHECKING or PYDANTIC_V2:
+    All = TypeAliasType("All", Union["SearchFilter", SearchFilterCondition])
+else:
+    All: TypeAlias = Union["SearchFilter", SearchFilterCondition]
 
-Any: TypeAlias = Union["SearchFilter", SearchFilterCondition]
+if TYPE_CHECKING or PYDANTIC_V2:
+    Any = TypeAliasType("Any", Union["SearchFilter", SearchFilterCondition])
+else:
+    Any: TypeAlias = Union["SearchFilter", SearchFilterCondition]
 
-NoneType: TypeAlias = Union["SearchFilter", SearchFilterCondition]
+if TYPE_CHECKING or PYDANTIC_V2:
+    NoneType = TypeAliasType("NoneType", Union["SearchFilter", SearchFilterCondition])
+else:
+    NoneType: TypeAlias = Union["SearchFilter", SearchFilterCondition]
 
 
 class SearchFilter(TypedDict, total=False):
