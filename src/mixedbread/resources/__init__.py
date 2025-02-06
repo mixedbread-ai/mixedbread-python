@@ -16,6 +16,14 @@ from .parsing import (
     ParsingResourceWithStreamingResponse,
     AsyncParsingResourceWithStreamingResponse,
 )
+from .extractions import (
+    ExtractionsResource,
+    AsyncExtractionsResource,
+    ExtractionsResourceWithRawResponse,
+    AsyncExtractionsResourceWithRawResponse,
+    ExtractionsResourceWithStreamingResponse,
+    AsyncExtractionsResourceWithStreamingResponse,
+)
 from .vector_stores import (
     VectorStoresResource,
     AsyncVectorStoresResource,
@@ -44,4 +52,10 @@ __all__ = [
     "AsyncVectorStoresResourceWithRawResponse",
     "VectorStoresResourceWithStreamingResponse",
     "AsyncVectorStoresResourceWithStreamingResponse",
+    "ExtractionsResource",
+    "AsyncExtractionsResource",
+    "ExtractionsResourceWithRawResponse",
+    "AsyncExtractionsResourceWithRawResponse",
+    "ExtractionsResourceWithStreamingResponse",
+    "AsyncExtractionsResourceWithStreamingResponse",
 ]
