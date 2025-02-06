@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.1.0-alpha.24 (2025-02-06)
+
+Full Changelog: [v0.1.0-alpha.23...v0.1.0-alpha.24](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.1.0-alpha.23...v0.1.0-alpha.24)
+
+### Features
+
+* **api:** update via SDK Studio ([#111](https://github.com/mixedbread-ai/mixedbread-python/issues/111)) ([5b3e4c4](https://github.com/mixedbread-ai/mixedbread-python/commit/5b3e4c4bd32c5bafbfd465dedba94a5f1663d90a))
+* **client:** send `X-Stainless-Read-Timeout` header ([#110](https://github.com/mixedbread-ai/mixedbread-python/issues/110)) ([870d21d](https://github.com/mixedbread-ai/mixedbread-python/commit/870d21d4bd83e0120640b01a0b415feea5473aec))
+
+
+### Chores
+
+* **internal:** bummp ruff dependency ([#108](https://github.com/mixedbread-ai/mixedbread-python/issues/108)) ([76291c2](https://github.com/mixedbread-ai/mixedbread-python/commit/76291c27a1638ed09d920b1f7fb567c63cd9a469))
+* **internal:** change default timeout to an int ([#107](https://github.com/mixedbread-ai/mixedbread-python/issues/107)) ([1916121](https://github.com/mixedbread-ai/mixedbread-python/commit/1916121d59d5942319409de017981b2fa8178aad))
+* **internal:** codegen related update ([#105](https://github.com/mixedbread-ai/mixedbread-python/issues/105)) ([a001692](https://github.com/mixedbread-ai/mixedbread-python/commit/a001692fc3661ae2f7fd2c4385c1b225ea844d12))
+* **internal:** use TypeAliasType for type aliases ([#109](https://github.com/mixedbread-ai/mixedbread-python/issues/109)) ([76fd1fc](https://github.com/mixedbread-ai/mixedbread-python/commit/76fd1fc06b1cdba0eec51fd440f24b20115a10b9))
+
 ## 0.1.0-alpha.23 (2025-01-29)
 
 Full Changelog: [v0.1.0-alpha.22...v0.1.0-alpha.23](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.1.0-alpha.22...v0.1.0-alpha.23)
