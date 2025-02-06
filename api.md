@@ -98,3 +98,44 @@ Methods:
 - <code title="get /v1/vector_stores/{vector_store_id}/files">client.vector_stores.files.<a href="./src/mixedbread/resources/vector_stores/files.py">list</a>(vector_store_id, \*\*<a href="src/mixedbread/types/vector_stores/file_list_params.py">params</a>) -> <a href="./src/mixedbread/types/vector_stores/vector_store_file.py">SyncLimitOffset[VectorStoreFile]</a></code>
 - <code title="delete /v1/vector_stores/{vector_store_id}/files/{file_id}">client.vector_stores.files.<a href="./src/mixedbread/resources/vector_stores/files.py">delete</a>(file_id, \*, vector_store_id) -> <a href="./src/mixedbread/types/vector_stores/file_delete_response.py">FileDeleteResponse</a></code>
 - <code title="post /v1/vector_stores/files/search">client.vector_stores.files.<a href="./src/mixedbread/resources/vector_stores/files.py">search</a>(\*\*<a href="src/mixedbread/types/vector_stores/file_search_params.py">params</a>) -> <a href="./src/mixedbread/types/vector_stores/file_search_response.py">FileSearchResponse</a></code>
+
+# Extractions
+
+## Jobs
+
+Types:
+
+```python
+from mixedbread.types.extractions import ExtractionJob
+```
+
+Methods:
+
+- <code title="post /v1/extractions/jobs">client.extractions.jobs.<a href="./src/mixedbread/resources/extractions/jobs.py">create</a>(\*\*<a href="src/mixedbread/types/extractions/job_create_params.py">params</a>) -> <a href="./src/mixedbread/types/extractions/extraction_job.py">ExtractionJob</a></code>
+- <code title="get /v1/extractions/jobs/{job_id}">client.extractions.jobs.<a href="./src/mixedbread/resources/extractions/jobs.py">retrieve</a>(job_id) -> <a href="./src/mixedbread/types/extractions/extraction_job.py">ExtractionJob</a></code>
+
+## Schema
+
+Types:
+
+```python
+from mixedbread.types.extractions import CreatedJsonSchema, EnhancedJsonSchema, ValidatedJsonSchema
+```
+
+Methods:
+
+- <code title="post /v1/extractions/schema">client.extractions.schema.<a href="./src/mixedbread/resources/extractions/schema.py">create</a>(\*\*<a href="src/mixedbread/types/extractions/schema_create_params.py">params</a>) -> <a href="./src/mixedbread/types/extractions/created_json_schema.py">CreatedJsonSchema</a></code>
+- <code title="post /v1/extractions/schema/enhance">client.extractions.schema.<a href="./src/mixedbread/resources/extractions/schema.py">enhance</a>(\*\*<a href="src/mixedbread/types/extractions/schema_enhance_params.py">params</a>) -> <a href="./src/mixedbread/types/extractions/enhanced_json_schema.py">EnhancedJsonSchema</a></code>
+- <code title="post /v1/extractions/schema/validate">client.extractions.schema.<a href="./src/mixedbread/resources/extractions/schema.py">validate</a>(\*\*<a href="src/mixedbread/types/extractions/schema_validate_params.py">params</a>) -> <a href="./src/mixedbread/types/extractions/validated_json_schema.py">ValidatedJsonSchema</a></code>
+
+## Content
+
+Types:
+
+```python
+from mixedbread.types.extractions import ExtractionResult
+```
+
+Methods:
+
+- <code title="post /v1/extractions/content">client.extractions.content.<a href="./src/mixedbread/resources/extractions/content.py">create</a>(\*\*<a href="src/mixedbread/types/extractions/content_create_params.py">params</a>) -> <a href="./src/mixedbread/types/extractions/extraction_result.py">ExtractionResult</a></code>
