@@ -737,7 +737,7 @@ class TestMixedbread:
         with pytest.raises(APITimeoutError):
             self.client.post(
                 "/v1/vector_stores",
-                body=cast(object, maybe_transform(dict(), VectorStoreCreateParams)),
+                body=cast(object, maybe_transform({}, VectorStoreCreateParams)),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
@@ -752,7 +752,7 @@ class TestMixedbread:
         with pytest.raises(APIStatusError):
             self.client.post(
                 "/v1/vector_stores",
-                body=cast(object, maybe_transform(dict(), VectorStoreCreateParams)),
+                body=cast(object, maybe_transform({}, VectorStoreCreateParams)),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
@@ -1523,7 +1523,7 @@ class TestAsyncMixedbread:
         with pytest.raises(APITimeoutError):
             await self.client.post(
                 "/v1/vector_stores",
-                body=cast(object, maybe_transform(dict(), VectorStoreCreateParams)),
+                body=cast(object, maybe_transform({}, VectorStoreCreateParams)),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
@@ -1538,7 +1538,7 @@ class TestAsyncMixedbread:
         with pytest.raises(APIStatusError):
             await self.client.post(
                 "/v1/vector_stores",
-                body=cast(object, maybe_transform(dict(), VectorStoreCreateParams)),
+                body=cast(object, maybe_transform({}, VectorStoreCreateParams)),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
