@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.1.0-alpha.25 (2025-02-14)
+
+Full Changelog: [v0.1.0-alpha.24...v0.1.0-alpha.25](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.1.0-alpha.24...v0.1.0-alpha.25)
+
+### Bug Fixes
+
+* asyncify on non-asyncio runtimes ([#117](https://github.com/mixedbread-ai/mixedbread-python/issues/117)) ([149d5c1](https://github.com/mixedbread-ai/mixedbread-python/commit/149d5c142ce91e4ba109490a8efef03ec33387a5))
+
+
+### Chores
+
+* **internal:** fix type traversing dictionary params ([#113](https://github.com/mixedbread-ai/mixedbread-python/issues/113)) ([326e6a7](https://github.com/mixedbread-ai/mixedbread-python/commit/326e6a75bf544395d8e708f32f4543f230aad1a3))
+* **internal:** minor type handling changes ([#115](https://github.com/mixedbread-ai/mixedbread-python/issues/115)) ([e9e257c](https://github.com/mixedbread-ai/mixedbread-python/commit/e9e257c60e9e210043f3b320bf499c58d7d6688d))
+* **internal:** update client tests ([#116](https://github.com/mixedbread-ai/mixedbread-python/issues/116)) ([dd97d92](https://github.com/mixedbread-ai/mixedbread-python/commit/dd97d920954f4a1193ef9226357070a91eec99ba))
+
 ## 0.1.0-alpha.24 (2025-02-06)
 
 Full Changelog: [v0.1.0-alpha.23...v0.1.0-alpha.24](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.1.0-alpha.23...v0.1.0-alpha.24)
