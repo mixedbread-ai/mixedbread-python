@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.1.0-alpha.26 (2025-02-21)
+
+Full Changelog: [v0.1.0-alpha.25...v0.1.0-alpha.26](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.1.0-alpha.25...v0.1.0-alpha.26)
+
+### Features
+
+* **client:** allow passing `NotGiven` for body ([#122](https://github.com/mixedbread-ai/mixedbread-python/issues/122)) ([d23452e](https://github.com/mixedbread-ai/mixedbread-python/commit/d23452e636ada79e4688cab9f4eabd7647cb0319))
+
+
+### Bug Fixes
+
+* **client:** mark some request bodies as optional ([d23452e](https://github.com/mixedbread-ai/mixedbread-python/commit/d23452e636ada79e4688cab9f4eabd7647cb0319))
+
+
+### Chores
+
+* **internal:** codegen related update ([#121](https://github.com/mixedbread-ai/mixedbread-python/issues/121)) ([2a97f57](https://github.com/mixedbread-ai/mixedbread-python/commit/2a97f57c004ff7f820c7c282fa50959d954821f1))
+* **internal:** update client tests ([#119](https://github.com/mixedbread-ai/mixedbread-python/issues/119)) ([48516b9](https://github.com/mixedbread-ai/mixedbread-python/commit/48516b9944b79939474d00460063b27f888ec9fd))
+
 ## 0.1.0-alpha.25 (2025-02-14)
 
 Full Changelog: [v0.1.0-alpha.24...v0.1.0-alpha.25](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.1.0-alpha.24...v0.1.0-alpha.25)
