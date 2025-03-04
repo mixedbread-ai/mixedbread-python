@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.1.0-alpha.27 (2025-03-04)
+
+Full Changelog: [v0.1.0-alpha.26...v0.1.0-alpha.27](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.1.0-alpha.26...v0.1.0-alpha.27)
+
+### Features
+
+* **api:** update via SDK Studio ([#129](https://github.com/mixedbread-ai/mixedbread-python/issues/129)) ([424bbf2](https://github.com/mixedbread-ai/mixedbread-python/commit/424bbf2ab6ad06a6a1fa8202b426846e5ca7dbe9))
+
+
+### Chores
+
+* **docs:** update client docstring ([#128](https://github.com/mixedbread-ai/mixedbread-python/issues/128)) ([70fc2aa](https://github.com/mixedbread-ai/mixedbread-python/commit/70fc2aafe8a29f0726ee4862f4f6538bae0d1d2f))
+* **internal:** fix devcontainers setup ([#124](https://github.com/mixedbread-ai/mixedbread-python/issues/124)) ([2f328c7](https://github.com/mixedbread-ai/mixedbread-python/commit/2f328c7f4205eeb9d850fa99538db6dc98c15380))
+* **internal:** properly set __pydantic_private__ ([#126](https://github.com/mixedbread-ai/mixedbread-python/issues/126)) ([c7e4eba](https://github.com/mixedbread-ai/mixedbread-python/commit/c7e4eba3546ac0923eaab44db3d6434d01a86921))
+
+
+### Documentation
+
+* update URLs from stainlessapi.com to stainless.com ([#127](https://github.com/mixedbread-ai/mixedbread-python/issues/127)) ([d20d87b](https://github.com/mixedbread-ai/mixedbread-python/commit/d20d87bcd34aac6d68f071dac319788b9e63b77e))
+
 ## 0.1.0-alpha.26 (2025-02-21)
 
 Full Changelog: [v0.1.0-alpha.25...v0.1.0-alpha.26](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.1.0-alpha.25...v0.1.0-alpha.26)
