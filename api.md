@@ -61,6 +61,8 @@ from mixedbread.types import (
     FileCounts,
     ScoredVectorStoreChunk,
     VectorStore,
+    VectorStoreChunkSearchOptions,
+    VectorStoreFileSearchOptions,
     VectorStoreDeleteResponse,
     VectorStoreQuestionAnsweringResponse,
     VectorStoreSearchResponse,
