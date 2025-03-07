@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.1.0-alpha.28 (2025-03-07)
+
+Full Changelog: [v0.1.0-alpha.27...v0.1.0-alpha.28](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.1.0-alpha.27...v0.1.0-alpha.28)
+
+### Features
+
+* **api:** update via SDK Studio ([#133](https://github.com/mixedbread-ai/mixedbread-python/issues/133)) ([6c1d814](https://github.com/mixedbread-ai/mixedbread-python/commit/6c1d81472666e856754cd654e4b37f10709219e2))
+
+
+### Chores
+
+* **internal:** remove unused http client options forwarding ([#131](https://github.com/mixedbread-ai/mixedbread-python/issues/131)) ([3974e4b](https://github.com/mixedbread-ai/mixedbread-python/commit/3974e4b46cfbf587d45e4a8798f92bfd15873cbc))
+
 ## 0.1.0-alpha.27 (2025-03-04)
 
 Full Changelog: [v0.1.0-alpha.26...v0.1.0-alpha.27](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.1.0-alpha.26...v0.1.0-alpha.27)
