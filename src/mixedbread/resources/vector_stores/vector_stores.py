@@ -40,6 +40,8 @@ from ...types.vector_store import VectorStore
 from ...types.expires_after_param import ExpiresAfterParam
 from ...types.vector_store_delete_response import VectorStoreDeleteResponse
 from ...types.vector_store_search_response import VectorStoreSearchResponse
+from ...types.vector_store_file_search_options_param import VectorStoreFileSearchOptionsParam
+from ...types.vector_store_chunk_search_options_param import VectorStoreChunkSearchOptionsParam
 
 __all__ = ["VectorStoresResource", "AsyncVectorStoresResource"]
 
@@ -326,7 +328,7 @@ class VectorStoresResource(SyncAPIResource):
         vector_store_ids: List[str],
         top_k: int | NotGiven = NOT_GIVEN,
         filters: Optional[vector_store_question_answering_params.Filters] | NotGiven = NOT_GIVEN,
-        search_options: vector_store_question_answering_params.SearchOptions | NotGiven = NOT_GIVEN,
+        search_options: VectorStoreFileSearchOptionsParam | NotGiven = NOT_GIVEN,
         stream: bool | NotGiven = NOT_GIVEN,
         qa_options: vector_store_question_answering_params.QaOptions | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -391,7 +393,7 @@ class VectorStoresResource(SyncAPIResource):
         vector_store_ids: List[str],
         top_k: int | NotGiven = NOT_GIVEN,
         filters: Optional[vector_store_search_params.Filters] | NotGiven = NOT_GIVEN,
-        search_options: vector_store_search_params.SearchOptions | NotGiven = NOT_GIVEN,
+        search_options: VectorStoreChunkSearchOptionsParam | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -736,7 +738,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         vector_store_ids: List[str],
         top_k: int | NotGiven = NOT_GIVEN,
         filters: Optional[vector_store_question_answering_params.Filters] | NotGiven = NOT_GIVEN,
-        search_options: vector_store_question_answering_params.SearchOptions | NotGiven = NOT_GIVEN,
+        search_options: VectorStoreFileSearchOptionsParam | NotGiven = NOT_GIVEN,
         stream: bool | NotGiven = NOT_GIVEN,
         qa_options: vector_store_question_answering_params.QaOptions | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -801,7 +803,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         vector_store_ids: List[str],
         top_k: int | NotGiven = NOT_GIVEN,
         filters: Optional[vector_store_search_params.Filters] | NotGiven = NOT_GIVEN,
-        search_options: vector_store_search_params.SearchOptions | NotGiven = NOT_GIVEN,
+        search_options: VectorStoreChunkSearchOptionsParam | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
