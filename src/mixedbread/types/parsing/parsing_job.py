@@ -79,6 +79,9 @@ class Result(BaseModel):
     chunks: List[ResultChunk]
     """List of extracted chunks from the document"""
 
+    page_sizes: Optional[List[List[object]]] = None
+    """List of (width, height) tuples for each page"""
+
 
 class ParsingJob(BaseModel):
     id: str

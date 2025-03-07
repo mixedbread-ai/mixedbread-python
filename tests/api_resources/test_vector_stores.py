@@ -274,10 +274,11 @@ class TestVectorStores:
                 ],
             },
             search_options={
-                "return_metadata": True,
-                "return_chunks": True,
                 "score_threshold": 0,
                 "rewrite_query": True,
+                "return_metadata": True,
+                "return_chunks": True,
+                "chunks_per_file": 0,
             },
             stream=True,
             qa_options={"cite": True},
@@ -361,10 +362,9 @@ class TestVectorStores:
                 ],
             },
             search_options={
-                "return_metadata": True,
-                "return_chunks": True,
                 "score_threshold": 0,
                 "rewrite_query": True,
+                "return_metadata": True,
             },
         )
         assert_matches_type(VectorStoreSearchResponse, vector_store, path=["response"])
@@ -651,10 +651,11 @@ class TestAsyncVectorStores:
                 ],
             },
             search_options={
-                "return_metadata": True,
-                "return_chunks": True,
                 "score_threshold": 0,
                 "rewrite_query": True,
+                "return_metadata": True,
+                "return_chunks": True,
+                "chunks_per_file": 0,
             },
             stream=True,
             qa_options={"cite": True},
@@ -738,10 +739,9 @@ class TestAsyncVectorStores:
                 ],
             },
             search_options={
-                "return_metadata": True,
-                "return_chunks": True,
                 "score_threshold": 0,
                 "rewrite_query": True,
+                "return_metadata": True,
             },
         )
         assert_matches_type(VectorStoreSearchResponse, vector_store, path=["response"])

@@ -270,10 +270,11 @@ class TestFiles:
                 ],
             },
             search_options={
-                "return_metadata": True,
-                "return_chunks": True,
                 "score_threshold": 0,
                 "rewrite_query": True,
+                "return_metadata": True,
+                "return_chunks": True,
+                "chunks_per_file": 0,
             },
         )
         assert_matches_type(FileSearchResponse, file, path=["response"])
@@ -556,10 +557,11 @@ class TestAsyncFiles:
                 ],
             },
             search_options={
-                "return_metadata": True,
-                "return_chunks": True,
                 "score_threshold": 0,
                 "rewrite_query": True,
+                "return_metadata": True,
+                "return_chunks": True,
+                "chunks_per_file": 0,
             },
         )
         assert_matches_type(FileSearchResponse, file, path=["response"])

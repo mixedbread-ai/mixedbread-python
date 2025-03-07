@@ -41,5 +41,5 @@ class ScoredVectorStoreFile(BaseModel):
     score: float
     """score of the file"""
 
-    chunks: List[ScoredVectorStoreChunk]
+    chunks: Optional[List[ScoredVectorStoreChunk]] = None
     """chunks"""
