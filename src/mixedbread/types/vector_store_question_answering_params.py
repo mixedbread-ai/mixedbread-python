@@ -6,8 +6,9 @@ from typing import List, Union, Iterable, Optional
 from typing_extensions import Required, TypeAlias, TypedDict
 
 from .shared_params.search_filter_condition import SearchFilterCondition
+from .vector_store_file_search_options_param import VectorStoreFileSearchOptionsParam
 
-__all__ = ["VectorStoreQuestionAnsweringParams", "Filters", "FiltersUnionMember2", "SearchOptions", "QaOptions"]
+__all__ = ["VectorStoreQuestionAnsweringParams", "Filters", "FiltersUnionMember2", "QaOptions"]
 
 
 class VectorStoreQuestionAnsweringParams(TypedDict, total=False):
@@ -26,7 +27,7 @@ class VectorStoreQuestionAnsweringParams(TypedDict, total=False):
     filters: Optional[Filters]
     """Optional filter conditions"""
 
-    search_options: SearchOptions
+    search_options: VectorStoreFileSearchOptionsParam
     """Search configuration options"""
 
     stream: bool
@@ -39,23 +40,6 @@ class VectorStoreQuestionAnsweringParams(TypedDict, total=False):
 FiltersUnionMember2: TypeAlias = Union["SearchFilter", SearchFilterCondition]
 
 Filters: TypeAlias = Union["SearchFilter", SearchFilterCondition, Iterable[FiltersUnionMember2]]
-
-
-class SearchOptions(TypedDict, total=False):
-    score_threshold: float
-    """Minimum similarity score threshold"""
-
-    rewrite_query: bool
-    """Whether to rewrite the query"""
-
-    return_metadata: bool
-    """Whether to return file metadata"""
-
-    return_chunks: bool
-    """Whether to return matching text chunks"""
-
-    chunks_per_file: int
-    """Number of chunks to return for each file"""
 
 
 class QaOptions(TypedDict, total=False):

@@ -25,6 +25,7 @@ from ...types.vector_stores import file_list_params, file_create_params, file_se
 from ...types.vector_stores.vector_store_file import VectorStoreFile
 from ...types.vector_stores.file_delete_response import FileDeleteResponse
 from ...types.vector_stores.file_search_response import FileSearchResponse
+from ...types.vector_store_file_search_options_param import VectorStoreFileSearchOptionsParam
 
 __all__ = ["FilesResource", "AsyncFilesResource"]
 
@@ -259,7 +260,7 @@ class FilesResource(SyncAPIResource):
         vector_store_ids: List[str],
         top_k: int | NotGiven = NOT_GIVEN,
         filters: Optional[file_search_params.Filters] | NotGiven = NOT_GIVEN,
-        search_options: file_search_params.SearchOptions | NotGiven = NOT_GIVEN,
+        search_options: VectorStoreFileSearchOptionsParam | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -553,7 +554,7 @@ class AsyncFilesResource(AsyncAPIResource):
         vector_store_ids: List[str],
         top_k: int | NotGiven = NOT_GIVEN,
         filters: Optional[file_search_params.Filters] | NotGiven = NOT_GIVEN,
-        search_options: file_search_params.SearchOptions | NotGiven = NOT_GIVEN,
+        search_options: VectorStoreFileSearchOptionsParam | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,

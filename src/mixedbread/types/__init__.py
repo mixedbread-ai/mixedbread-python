@@ -20,6 +20,12 @@ from .vector_store_search_params import VectorStoreSearchParams as VectorStoreSe
 from .vector_store_update_params import VectorStoreUpdateParams as VectorStoreUpdateParams
 from .vector_store_delete_response import VectorStoreDeleteResponse as VectorStoreDeleteResponse
 from .vector_store_search_response import VectorStoreSearchResponse as VectorStoreSearchResponse
+from .vector_store_file_search_options_param import (
+    VectorStoreFileSearchOptionsParam as VectorStoreFileSearchOptionsParam,
+)
 from .vector_store_question_answering_params import (
     VectorStoreQuestionAnsweringParams as VectorStoreQuestionAnsweringParams,
+)
+from .vector_store_chunk_search_options_param import (
+    VectorStoreChunkSearchOptionsParam as VectorStoreChunkSearchOptionsParam,
 )
