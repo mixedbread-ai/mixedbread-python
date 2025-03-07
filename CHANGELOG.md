@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-alpha.29 (2025-03-07)
+
+Full Changelog: [v0.1.0-alpha.28...v0.1.0-alpha.29](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.1.0-alpha.28...v0.1.0-alpha.29)
+
+### Features
+
+* **api:** update via SDK Studio ([#135](https://github.com/mixedbread-ai/mixedbread-python/issues/135)) ([f41ae1a](https://github.com/mixedbread-ai/mixedbread-python/commit/f41ae1aa4f36f934f92dafc146e2db94819bd9ed))
+
 ## 0.1.0-alpha.28 (2025-03-07)
 
 Full Changelog: [v0.1.0-alpha.27...v0.1.0-alpha.28](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.1.0-alpha.27...v0.1.0-alpha.28)
