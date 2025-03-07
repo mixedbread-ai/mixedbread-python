@@ -42,6 +42,9 @@ class VectorStore(BaseModel):
     last_active_at: Optional[datetime] = None
     """Timestamp when the vector store was last used"""
 
+    usage_bytes: Optional[int] = None
+    """Total storage usage in bytes"""
+
     expires_at: Optional[datetime] = None
     """Optional expiration timestamp for the vector store"""
 
