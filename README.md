@@ -142,6 +142,24 @@ for vector_store in first_page.data:
 # Remove `await` for non-async usage.
 ```
 
+## Nested params
+
+Nested parameters are dictionaries, typed using `TypedDict`, for example:
+
+```python
+from mixedbread import Mixedbread
+
+client = Mixedbread()
+
+vector_store = client.vector_stores.create(
+    expires_after={
+        "anchor": "last_active_at",
+        "days": 0,
+    },
+)
+print(vector_store.expires_after)
+```
+
 ## File uploads
 
 Request parameters that correspond to file uploads can be passed as `bytes`, a [`PathLike`](https://docs.python.org/3/library/os.html#os.PathLike) instance or a tuple of `(filename, contents, media type)`.
