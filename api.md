@@ -9,12 +9,26 @@ from mixedbread.types import SearchFilter, SearchFilterCondition
 Types:
 
 ```python
-from mixedbread.types import InfoResponse
+from mixedbread.types import InfoResponse, RerankResponse
 ```
 
 Methods:
 
+- <code title="post /v1/embeddings">client.<a href="./src/mixedbread/_client.py">embed</a>(\*\*<a href="src/mixedbread/types/client_embed_params.py">params</a>) -> <a href="./src/mixedbread/types/embedding_create_response.py">EmbeddingCreateResponse</a></code>
 - <code title="get /">client.<a href="./src/mixedbread/_client.py">info</a>() -> <a href="./src/mixedbread/types/info_response.py">InfoResponse</a></code>
+- <code title="post /v1/reranking">client.<a href="./src/mixedbread/_client.py">rerank</a>(\*\*<a href="src/mixedbread/types/client_rerank_params.py">params</a>) -> <a href="./src/mixedbread/types/rerank_response.py">RerankResponse</a></code>
+
+# Embeddings
+
+Types:
+
+```python
+from mixedbread.types import Embedding, EmbeddingCreateResponse
+```
+
+Methods:
+
+- <code title="post /v1/embeddings">client.embeddings.<a href="./src/mixedbread/resources/embeddings.py">create</a>(\*\*<a href="src/mixedbread/types/embedding_create_params.py">params</a>) -> <a href="./src/mixedbread/types/embedding_create_response.py">EmbeddingCreateResponse</a></code>
 
 # Parsing
 
