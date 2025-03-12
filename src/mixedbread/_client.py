@@ -3,13 +3,14 @@
 from __future__ import annotations
 
 import os
-from typing import Any, Dict, Union, Mapping, cast
+from typing import Any, Dict, List, Union, Mapping, Optional, cast
 from typing_extensions import Self, Literal, override
 
 import httpx
 
 from . import _exceptions
 from ._qs import Querystring
+from .types import client_embed_params, client_rerank_params
 from ._types import (
     NOT_GIVEN,
     Body,
@@ -24,7 +25,9 @@ from ._types import (
 )
 from ._utils import (
     is_given,
+    maybe_transform,
     get_async_library,
+    async_maybe_transform,
 )
 from ._version import __version__
 from ._response import (
@@ -33,7 +36,7 @@ from ._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from .resources import files
+from .resources import files, embeddings
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import APIStatusError, MixedbreadError
 from ._base_client import (
@@ -45,7 +48,9 @@ from ._base_client import (
 from .resources.parsing import parsing
 from .types.info_response import InfoResponse
 from .resources.extractions import extractions
+from .types.rerank_response import RerankResponse
 from .resources.vector_stores import vector_stores
+from .types.embedding_create_response import EmbeddingCreateResponse
 
 __all__ = [
     "ENVIRONMENTS",
@@ -66,6 +71,7 @@ ENVIRONMENTS: Dict[str, str] = {
 
 
 class Mixedbread(SyncAPIClient):
+    embeddings: embeddings.EmbeddingsResource
     parsing: parsing.ParsingResource
     files: files.FilesResource
     vector_stores: vector_stores.VectorStoresResource
@@ -151,6 +157,7 @@ class Mixedbread(SyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
+        self.embeddings = embeddings.EmbeddingsResource(self)
         self.parsing = parsing.ParsingResource(self)
         self.files = files.FilesResource(self)
         self.vector_stores = vector_stores.VectorStoresResource(self)
@@ -231,6 +238,74 @@ class Mixedbread(SyncAPIClient):
     # client.with_options(timeout=10).foo.create(...)
     with_options = copy
 
+    def embed(
+        self,
+        *,
+        model: str,
+        input: client_embed_params.Input,
+        dimensions: Optional[int] | NotGiven = NOT_GIVEN,
+        prompt: Optional[str] | NotGiven = NOT_GIVEN,
+        normalized: bool | NotGiven = NOT_GIVEN,
+        encoding_format: Union[
+            Literal["float", "float16", "base64", "binary", "ubinary", "int8", "uint8"],
+            List[Literal["float", "float16", "base64", "binary", "ubinary", "int8", "uint8"]],
+        ]
+        | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> EmbeddingCreateResponse:
+        """
+        Create embeddings for text or images using the specified model, encoding format,
+        and normalization.
+
+        Args: params: The parameters for creating embeddings.
+
+        Returns: EmbeddingCreateResponse: The response containing the embeddings.
+
+        Args:
+          model: The model to use for creating embeddings.
+
+          input: The input to create embeddings for.
+
+          dimensions: The number of dimensions to use for the embeddings.
+
+          prompt: The prompt to use for the embedding creation.
+
+          normalized: Whether to normalize the embeddings.
+
+          encoding_format: The encoding format of the embeddings.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self.post(
+            "/v1/embeddings",
+            body=maybe_transform(
+                {
+                    "model": model,
+                    "input": input,
+                    "dimensions": dimensions,
+                    "prompt": prompt,
+                    "normalized": normalized,
+                    "encoding_format": encoding_format,
+                },
+                client_embed_params.ClientEmbedParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=EmbeddingCreateResponse,
+        )
+
     def info(
         self,
         *,
@@ -252,6 +327,69 @@ class Mixedbread(SyncAPIClient):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=InfoResponse,
+        )
+
+    def rerank(
+        self,
+        *,
+        model: str | NotGiven = NOT_GIVEN,
+        query: str,
+        input: List[Union[str, object]],
+        rank_fields: Optional[List[str]] | NotGiven = NOT_GIVEN,
+        top_k: int | NotGiven = NOT_GIVEN,
+        return_input: bool | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> RerankResponse:
+        """
+        Rerank different kind of documents for a given query.
+
+        Args: params: RerankingCreateParams: The parameters for reranking.
+
+        Returns: RerankingCreateResponse: The reranked documents for the input query.
+
+        Args:
+          model: The model to use for reranking documents.
+
+          query: The query to rerank the documents.
+
+          input: The input documents to rerank.
+
+          rank_fields: The fields of the documents to rank.
+
+          top_k: The number of documents to return.
+
+          return_input: Whether to return the documents.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self.post(
+            "/v1/reranking",
+            body=maybe_transform(
+                {
+                    "model": model,
+                    "query": query,
+                    "input": input,
+                    "rank_fields": rank_fields,
+                    "top_k": top_k,
+                    "return_input": return_input,
+                },
+                client_rerank_params.ClientRerankParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=RerankResponse,
         )
 
     @override
@@ -289,6 +427,7 @@ class Mixedbread(SyncAPIClient):
 
 
 class AsyncMixedbread(AsyncAPIClient):
+    embeddings: embeddings.AsyncEmbeddingsResource
     parsing: parsing.AsyncParsingResource
     files: files.AsyncFilesResource
     vector_stores: vector_stores.AsyncVectorStoresResource
@@ -374,6 +513,7 @@ class AsyncMixedbread(AsyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
+        self.embeddings = embeddings.AsyncEmbeddingsResource(self)
         self.parsing = parsing.AsyncParsingResource(self)
         self.files = files.AsyncFilesResource(self)
         self.vector_stores = vector_stores.AsyncVectorStoresResource(self)
@@ -454,6 +594,74 @@ class AsyncMixedbread(AsyncAPIClient):
     # client.with_options(timeout=10).foo.create(...)
     with_options = copy
 
+    async def embed(
+        self,
+        *,
+        model: str,
+        input: client_embed_params.Input,
+        dimensions: Optional[int] | NotGiven = NOT_GIVEN,
+        prompt: Optional[str] | NotGiven = NOT_GIVEN,
+        normalized: bool | NotGiven = NOT_GIVEN,
+        encoding_format: Union[
+            Literal["float", "float16", "base64", "binary", "ubinary", "int8", "uint8"],
+            List[Literal["float", "float16", "base64", "binary", "ubinary", "int8", "uint8"]],
+        ]
+        | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> EmbeddingCreateResponse:
+        """
+        Create embeddings for text or images using the specified model, encoding format,
+        and normalization.
+
+        Args: params: The parameters for creating embeddings.
+
+        Returns: EmbeddingCreateResponse: The response containing the embeddings.
+
+        Args:
+          model: The model to use for creating embeddings.
+
+          input: The input to create embeddings for.
+
+          dimensions: The number of dimensions to use for the embeddings.
+
+          prompt: The prompt to use for the embedding creation.
+
+          normalized: Whether to normalize the embeddings.
+
+          encoding_format: The encoding format of the embeddings.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self.post(
+            "/v1/embeddings",
+            body=await async_maybe_transform(
+                {
+                    "model": model,
+                    "input": input,
+                    "dimensions": dimensions,
+                    "prompt": prompt,
+                    "normalized": normalized,
+                    "encoding_format": encoding_format,
+                },
+                client_embed_params.ClientEmbedParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=EmbeddingCreateResponse,
+        )
+
     async def info(
         self,
         *,
@@ -475,6 +683,69 @@ class AsyncMixedbread(AsyncAPIClient):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=InfoResponse,
+        )
+
+    async def rerank(
+        self,
+        *,
+        model: str | NotGiven = NOT_GIVEN,
+        query: str,
+        input: List[Union[str, object]],
+        rank_fields: Optional[List[str]] | NotGiven = NOT_GIVEN,
+        top_k: int | NotGiven = NOT_GIVEN,
+        return_input: bool | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> RerankResponse:
+        """
+        Rerank different kind of documents for a given query.
+
+        Args: params: RerankingCreateParams: The parameters for reranking.
+
+        Returns: RerankingCreateResponse: The reranked documents for the input query.
+
+        Args:
+          model: The model to use for reranking documents.
+
+          query: The query to rerank the documents.
+
+          input: The input documents to rerank.
+
+          rank_fields: The fields of the documents to rank.
+
+          top_k: The number of documents to return.
+
+          return_input: Whether to return the documents.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self.post(
+            "/v1/reranking",
+            body=await async_maybe_transform(
+                {
+                    "model": model,
+                    "query": query,
+                    "input": input,
+                    "rank_fields": rank_fields,
+                    "top_k": top_k,
+                    "return_input": return_input,
+                },
+                client_rerank_params.ClientRerankParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=RerankResponse,
         )
 
     @override
@@ -513,49 +784,77 @@ class AsyncMixedbread(AsyncAPIClient):
 
 class MixedbreadWithRawResponse:
     def __init__(self, client: Mixedbread) -> None:
+        self.embeddings = embeddings.EmbeddingsResourceWithRawResponse(client.embeddings)
         self.parsing = parsing.ParsingResourceWithRawResponse(client.parsing)
         self.files = files.FilesResourceWithRawResponse(client.files)
         self.vector_stores = vector_stores.VectorStoresResourceWithRawResponse(client.vector_stores)
         self.extractions = extractions.ExtractionsResourceWithRawResponse(client.extractions)
 
+        self.embed = to_raw_response_wrapper(
+            client.embed,
+        )
         self.info = to_raw_response_wrapper(
             client.info,
+        )
+        self.rerank = to_raw_response_wrapper(
+            client.rerank,
         )
 
 
 class AsyncMixedbreadWithRawResponse:
     def __init__(self, client: AsyncMixedbread) -> None:
+        self.embeddings = embeddings.AsyncEmbeddingsResourceWithRawResponse(client.embeddings)
         self.parsing = parsing.AsyncParsingResourceWithRawResponse(client.parsing)
         self.files = files.AsyncFilesResourceWithRawResponse(client.files)
         self.vector_stores = vector_stores.AsyncVectorStoresResourceWithRawResponse(client.vector_stores)
         self.extractions = extractions.AsyncExtractionsResourceWithRawResponse(client.extractions)
 
+        self.embed = async_to_raw_response_wrapper(
+            client.embed,
+        )
         self.info = async_to_raw_response_wrapper(
             client.info,
+        )
+        self.rerank = async_to_raw_response_wrapper(
+            client.rerank,
         )
 
 
 class MixedbreadWithStreamedResponse:
     def __init__(self, client: Mixedbread) -> None:
+        self.embeddings = embeddings.EmbeddingsResourceWithStreamingResponse(client.embeddings)
         self.parsing = parsing.ParsingResourceWithStreamingResponse(client.parsing)
         self.files = files.FilesResourceWithStreamingResponse(client.files)
         self.vector_stores = vector_stores.VectorStoresResourceWithStreamingResponse(client.vector_stores)
         self.extractions = extractions.ExtractionsResourceWithStreamingResponse(client.extractions)
 
+        self.embed = to_streamed_response_wrapper(
+            client.embed,
+        )
         self.info = to_streamed_response_wrapper(
             client.info,
+        )
+        self.rerank = to_streamed_response_wrapper(
+            client.rerank,
         )
 
 
 class AsyncMixedbreadWithStreamedResponse:
     def __init__(self, client: AsyncMixedbread) -> None:
+        self.embeddings = embeddings.AsyncEmbeddingsResourceWithStreamingResponse(client.embeddings)
         self.parsing = parsing.AsyncParsingResourceWithStreamingResponse(client.parsing)
         self.files = files.AsyncFilesResourceWithStreamingResponse(client.files)
         self.vector_stores = vector_stores.AsyncVectorStoresResourceWithStreamingResponse(client.vector_stores)
         self.extractions = extractions.AsyncExtractionsResourceWithStreamingResponse(client.extractions)
 
+        self.embed = async_to_streamed_response_wrapper(
+            client.embed,
+        )
         self.info = async_to_streamed_response_wrapper(
             client.info,
+        )
+        self.rerank = async_to_streamed_response_wrapper(
+            client.rerank,
         )
 
 
