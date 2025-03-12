@@ -21,3 +21,6 @@ class FileCreateParams(TypedDict, total=False):
 class Experimental(TypedDict, total=False):
     parsing_strategy: Literal["fast", "high_quality"]
     """Strategy for adding the file"""
+
+    contextualization: bool
+    """Whether to contextualize the file"""

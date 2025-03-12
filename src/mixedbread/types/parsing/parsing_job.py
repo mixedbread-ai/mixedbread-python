@@ -87,6 +87,9 @@ class ParsingJob(BaseModel):
     id: str
     """The ID of the job"""
 
+    file_id: str
+    """The ID of the file to parse"""
+
     status: Literal["pending", "in_progress", "cancelled", "completed", "failed"]
     """The status of the job"""
 
