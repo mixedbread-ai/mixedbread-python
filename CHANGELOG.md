@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.1.0-alpha.32 (2025-03-17)
+
+Full Changelog: [v0.1.0-alpha.31...v0.1.0-alpha.32](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.1.0-alpha.31...v0.1.0-alpha.32)
+
+### Bug Fixes
+
+* **ci:** ensure pip is always available ([#151](https://github.com/mixedbread-ai/mixedbread-python/issues/151)) ([0f45b41](https://github.com/mixedbread-ai/mixedbread-python/commit/0f45b41a965578a881dcad238dd2f7e2bb78e8f1))
+* **types:** handle more discriminated union shapes ([#150](https://github.com/mixedbread-ai/mixedbread-python/issues/150)) ([bea9bfe](https://github.com/mixedbread-ai/mixedbread-python/commit/bea9bfeac5b250baff43e2347a9e84354938db53))
+
+
+### Chores
+
+* **internal:** bump rye to 0.44.0 ([#149](https://github.com/mixedbread-ai/mixedbread-python/issues/149)) ([c66d4c9](https://github.com/mixedbread-ai/mixedbread-python/commit/c66d4c92c9eac9f3e80e244bee6c01a5e9f88f32))
+* **internal:** remove extra empty newlines ([#146](https://github.com/mixedbread-ai/mixedbread-python/issues/146)) ([6e75573](https://github.com/mixedbread-ai/mixedbread-python/commit/6e755738f7d96d7015267124c5bf33765b0a93af))
+
 ## 0.1.0-alpha.31 (2025-03-12)
 
 Full Changelog: [v0.1.0-alpha.30...v0.1.0-alpha.31](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.1.0-alpha.30...v0.1.0-alpha.31)
