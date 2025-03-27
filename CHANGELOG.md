@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.1.0-alpha.33 (2025-03-27)
+
+Full Changelog: [v0.1.0-alpha.32...v0.1.0-alpha.33](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.1.0-alpha.32...v0.1.0-alpha.33)
+
+### Bug Fixes
+
+* **ci:** remove publishing patch ([#153](https://github.com/mixedbread-ai/mixedbread-python/issues/153)) ([ac8c93e](https://github.com/mixedbread-ai/mixedbread-python/commit/ac8c93e93ea77416eba8e85f660f91a1fa3b49db))
+
+
+### Chores
+
+* fix typos ([#155](https://github.com/mixedbread-ai/mixedbread-python/issues/155)) ([1e32018](https://github.com/mixedbread-ai/mixedbread-python/commit/1e320180ee5f2df270efd0ca2a52648297ede4a1))
+
 ## 0.1.0-alpha.32 (2025-03-17)
 
 Full Changelog: [v0.1.0-alpha.31...v0.1.0-alpha.32](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.1.0-alpha.31...v0.1.0-alpha.32)
