@@ -48,6 +48,9 @@ class ScoredVectorStoreChunk(BaseModel):
     file_id: str
     """file id"""
 
+    filename: str
+    """filename"""
+
     vector_store_id: str
     """vector store id"""
 
