@@ -14,6 +14,9 @@ class ScoredVectorStoreFile(BaseModel):
     id: str
     """Unique identifier for the file"""
 
+    filename: Optional[str] = None
+    """Name of the file"""
+
     metadata: Optional[object] = None
     """Optional file metadata"""
 
