@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.1.0-alpha.34 (2025-03-28)
+
+Full Changelog: [v0.1.0-alpha.33...v0.1.0-alpha.34](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.1.0-alpha.33...v0.1.0-alpha.34)
+
+### Features
+
+* **api:** update via SDK Studio ([#158](https://github.com/mixedbread-ai/mixedbread-python/issues/158)) ([6e46412](https://github.com/mixedbread-ai/mixedbread-python/commit/6e46412e9a3537a3fb52dc93a857e1d696532fca))
+
+
+### Chores
+
+* add hash of OpenAPI spec/config inputs to .stats.yml ([#156](https://github.com/mixedbread-ai/mixedbread-python/issues/156)) ([939d44d](https://github.com/mixedbread-ai/mixedbread-python/commit/939d44d81db7d36178cb1834c5b32e562dd62791))
+
 ## 0.1.0-alpha.33 (2025-03-27)
 
 Full Changelog: [v0.1.0-alpha.32...v0.1.0-alpha.33](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.1.0-alpha.32...v0.1.0-alpha.33)
