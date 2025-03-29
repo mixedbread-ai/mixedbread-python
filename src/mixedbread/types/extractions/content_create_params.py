@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from typing import Dict
 from typing_extensions import Required, TypedDict
 
 __all__ = ["ContentCreateParams"]
@@ -11,5 +12,5 @@ class ContentCreateParams(TypedDict, total=False):
     content: Required[str]
     """The content to extract from"""
 
-    json_schema: Required[object]
+    json_schema: Required[Dict[str, object]]
     """The JSON schema to use for extraction"""

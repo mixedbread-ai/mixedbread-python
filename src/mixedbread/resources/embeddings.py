@@ -51,7 +51,7 @@ class EmbeddingsResource(SyncAPIResource):
         self,
         *,
         model: str,
-        input: embedding_create_params.Input,
+        input: List[str],
         dimensions: Optional[int] | NotGiven = NOT_GIVEN,
         prompt: Optional[str] | NotGiven = NOT_GIVEN,
         normalized: bool | NotGiven = NOT_GIVEN,
@@ -86,7 +86,8 @@ class EmbeddingsResource(SyncAPIResource):
 
           normalized: Whether to normalize the embeddings.
 
-          encoding_format: The encoding format of the embeddings.
+          encoding_format: The encoding format(s) of the embeddings. Can be a single format or a list of
+              formats.
 
           extra_headers: Send extra headers
 
@@ -140,7 +141,7 @@ class AsyncEmbeddingsResource(AsyncAPIResource):
         self,
         *,
         model: str,
-        input: embedding_create_params.Input,
+        input: List[str],
         dimensions: Optional[int] | NotGiven = NOT_GIVEN,
         prompt: Optional[str] | NotGiven = NOT_GIVEN,
         normalized: bool | NotGiven = NOT_GIVEN,
@@ -175,7 +176,8 @@ class AsyncEmbeddingsResource(AsyncAPIResource):
 
           normalized: Whether to normalize the embeddings.
 
-          encoding_format: The encoding format of the embeddings.
+          encoding_format: The encoding format(s) of the embeddings. Can be a single format or a list of
+              formats.
 
           extra_headers: Send extra headers
 

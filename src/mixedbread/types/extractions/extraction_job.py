@@ -1,6 +1,6 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import Optional
+from typing import Dict, Optional
 from datetime import datetime
 from typing_extensions import Literal
 
@@ -38,8 +38,8 @@ class ExtractionJob(BaseModel):
     result: Optional[ExtractionResult] = None
     """The result of an extraction job."""
 
-    error: Optional[object] = None
+    error: Optional[Dict[str, object]] = None
     """Error information if failed"""
 
-    json_schema: object
+    json_schema: Dict[str, object]
     """The JSON schema used for extraction"""

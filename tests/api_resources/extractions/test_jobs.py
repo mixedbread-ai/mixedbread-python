@@ -21,7 +21,7 @@ class TestJobs:
     def test_method_create(self, client: Mixedbread) -> None:
         job = client.extractions.jobs.create(
             file_id="file_id",
-            json_schema={},
+            json_schema={"foo": "bar"},
         )
         assert_matches_type(ExtractionJob, job, path=["response"])
 
@@ -29,7 +29,7 @@ class TestJobs:
     def test_raw_response_create(self, client: Mixedbread) -> None:
         response = client.extractions.jobs.with_raw_response.create(
             file_id="file_id",
-            json_schema={},
+            json_schema={"foo": "bar"},
         )
 
         assert response.is_closed is True
@@ -41,7 +41,7 @@ class TestJobs:
     def test_streaming_response_create(self, client: Mixedbread) -> None:
         with client.extractions.jobs.with_streaming_response.create(
             file_id="file_id",
-            json_schema={},
+            json_schema={"foo": "bar"},
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -97,7 +97,7 @@ class TestAsyncJobs:
     async def test_method_create(self, async_client: AsyncMixedbread) -> None:
         job = await async_client.extractions.jobs.create(
             file_id="file_id",
-            json_schema={},
+            json_schema={"foo": "bar"},
         )
         assert_matches_type(ExtractionJob, job, path=["response"])
 
@@ -105,7 +105,7 @@ class TestAsyncJobs:
     async def test_raw_response_create(self, async_client: AsyncMixedbread) -> None:
         response = await async_client.extractions.jobs.with_raw_response.create(
             file_id="file_id",
-            json_schema={},
+            json_schema={"foo": "bar"},
         )
 
         assert response.is_closed is True
@@ -117,7 +117,7 @@ class TestAsyncJobs:
     async def test_streaming_response_create(self, async_client: AsyncMixedbread) -> None:
         async with async_client.extractions.jobs.with_streaming_response.create(
             file_id="file_id",
-            json_schema={},
+            json_schema={"foo": "bar"},
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
