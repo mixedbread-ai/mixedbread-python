@@ -21,7 +21,7 @@ class TestEmbeddings:
     def test_method_create(self, client: Mixedbread) -> None:
         embedding = client.embeddings.create(
             model="mixedbread-ai/mxbai-embed-large-v1",
-            input="This is a sample text input.",
+            input=["string"],
         )
         assert_matches_type(EmbeddingCreateResponse, embedding, path=["response"])
 
@@ -29,7 +29,7 @@ class TestEmbeddings:
     def test_method_create_with_all_params(self, client: Mixedbread) -> None:
         embedding = client.embeddings.create(
             model="mixedbread-ai/mxbai-embed-large-v1",
-            input="This is a sample text input.",
+            input=["string"],
             dimensions=768,
             prompt="Provide a detailed summary of the following text.",
             normalized=True,
@@ -41,7 +41,7 @@ class TestEmbeddings:
     def test_raw_response_create(self, client: Mixedbread) -> None:
         response = client.embeddings.with_raw_response.create(
             model="mixedbread-ai/mxbai-embed-large-v1",
-            input="This is a sample text input.",
+            input=["string"],
         )
 
         assert response.is_closed is True
@@ -53,7 +53,7 @@ class TestEmbeddings:
     def test_streaming_response_create(self, client: Mixedbread) -> None:
         with client.embeddings.with_streaming_response.create(
             model="mixedbread-ai/mxbai-embed-large-v1",
-            input="This is a sample text input.",
+            input=["string"],
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -71,7 +71,7 @@ class TestAsyncEmbeddings:
     async def test_method_create(self, async_client: AsyncMixedbread) -> None:
         embedding = await async_client.embeddings.create(
             model="mixedbread-ai/mxbai-embed-large-v1",
-            input="This is a sample text input.",
+            input=["string"],
         )
         assert_matches_type(EmbeddingCreateResponse, embedding, path=["response"])
 
@@ -79,7 +79,7 @@ class TestAsyncEmbeddings:
     async def test_method_create_with_all_params(self, async_client: AsyncMixedbread) -> None:
         embedding = await async_client.embeddings.create(
             model="mixedbread-ai/mxbai-embed-large-v1",
-            input="This is a sample text input.",
+            input=["string"],
             dimensions=768,
             prompt="Provide a detailed summary of the following text.",
             normalized=True,
@@ -91,7 +91,7 @@ class TestAsyncEmbeddings:
     async def test_raw_response_create(self, async_client: AsyncMixedbread) -> None:
         response = await async_client.embeddings.with_raw_response.create(
             model="mixedbread-ai/mxbai-embed-large-v1",
-            input="This is a sample text input.",
+            input=["string"],
         )
 
         assert response.is_closed is True
@@ -103,7 +103,7 @@ class TestAsyncEmbeddings:
     async def test_streaming_response_create(self, async_client: AsyncMixedbread) -> None:
         async with async_client.embeddings.with_streaming_response.create(
             model="mixedbread-ai/mxbai-embed-large-v1",
-            input="This is a sample text input.",
+            input=["string"],
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
