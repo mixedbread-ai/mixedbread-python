@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import Dict
+
 import httpx
 
 from ..._types import NOT_GIVEN, Body, Query, Headers, NotGiven
@@ -48,7 +50,7 @@ class ContentResource(SyncAPIResource):
         self,
         *,
         content: str,
-        json_schema: object,
+        json_schema: Dict[str, object],
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -116,7 +118,7 @@ class AsyncContentResource(AsyncAPIResource):
         self,
         *,
         content: str,
-        json_schema: object,
+        json_schema: Dict[str, object],
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,

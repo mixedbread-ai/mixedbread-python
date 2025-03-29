@@ -3,16 +3,16 @@
 from __future__ import annotations
 
 from typing import List, Union, Optional
-from typing_extensions import Literal, Required, TypeAlias, TypedDict
+from typing_extensions import Literal, Required, TypedDict
 
-__all__ = ["EmbeddingCreateParams", "Input", "InputImageURLInput", "InputImageURLInputImage", "InputTextInput"]
+__all__ = ["EmbeddingCreateParams"]
 
 
 class EmbeddingCreateParams(TypedDict, total=False):
     model: Required[str]
     """The model to use for creating embeddings."""
 
-    input: Required[Input]
+    input: Required[List[str]]
     """The input to create embeddings for."""
 
     dimensions: Optional[int]
@@ -28,28 +28,7 @@ class EmbeddingCreateParams(TypedDict, total=False):
         Literal["float", "float16", "base64", "binary", "ubinary", "int8", "uint8"],
         List[Literal["float", "float16", "base64", "binary", "ubinary", "int8", "uint8"]],
     ]
-    """The encoding format of the embeddings."""
+    """The encoding format(s) of the embeddings.
 
-
-class InputImageURLInputImage(TypedDict, total=False):
-    url: Required[str]
-    """The image URL. Can be either a URL or a Data URI."""
-
-
-class InputImageURLInput(TypedDict, total=False):
-    type: Literal["image_url"]
-    """Input type identifier"""
-
-    image: Required[InputImageURLInputImage]
-    """The image input specification."""
-
-
-class InputTextInput(TypedDict, total=False):
-    type: Literal["text"]
-    """Input type identifier"""
-
-    text: Required[str]
-    """Text content to process"""
-
-
-Input: TypeAlias = Union[str, InputImageURLInput, InputTextInput]
+    Can be a single format or a list of formats.
+    """

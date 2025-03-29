@@ -242,7 +242,7 @@ class Mixedbread(SyncAPIClient):
         self,
         *,
         model: str,
-        input: client_embed_params.Input,
+        input: List[str],
         dimensions: Optional[int] | NotGiven = NOT_GIVEN,
         prompt: Optional[str] | NotGiven = NOT_GIVEN,
         normalized: bool | NotGiven = NOT_GIVEN,
@@ -277,7 +277,8 @@ class Mixedbread(SyncAPIClient):
 
           normalized: Whether to normalize the embeddings.
 
-          encoding_format: The encoding format of the embeddings.
+          encoding_format: The encoding format(s) of the embeddings. Can be a single format or a list of
+              formats.
 
           extra_headers: Send extra headers
 
@@ -598,7 +599,7 @@ class AsyncMixedbread(AsyncAPIClient):
         self,
         *,
         model: str,
-        input: client_embed_params.Input,
+        input: List[str],
         dimensions: Optional[int] | NotGiven = NOT_GIVEN,
         prompt: Optional[str] | NotGiven = NOT_GIVEN,
         normalized: bool | NotGiven = NOT_GIVEN,
@@ -633,7 +634,8 @@ class AsyncMixedbread(AsyncAPIClient):
 
           normalized: Whether to normalize the embeddings.
 
-          encoding_format: The encoding format of the embeddings.
+          encoding_format: The encoding format(s) of the embeddings. Can be a single format or a list of
+              formats.
 
           extra_headers: Send extra headers
 

@@ -32,7 +32,7 @@ class DataUnionMember1Embedding(BaseModel):
 
     ubinary: Optional[List[int]] = None
 
-    base64: Optional[List[str]] = None
+    base64: Optional[str] = None
 
 
 class DataUnionMember1(BaseModel):
@@ -45,7 +45,7 @@ class DataUnionMember1(BaseModel):
     index: int
     """The index of the embedding."""
 
-    object: Literal["embedding_dict"]
+    object: Optional[Literal["embedding_dict"]] = None
     """The object type of the embedding."""
 
 
@@ -66,7 +66,7 @@ class EmbeddingCreateResponse(BaseModel):
             "job",
             "embedding",
             "embedding_dict",
-            "text_document",
+            "rank_result",
             "file",
             "vector_store",
             "vector_store.file",
@@ -82,7 +82,7 @@ class EmbeddingCreateResponse(BaseModel):
         Literal["float", "float16", "base64", "binary", "ubinary", "int8", "uint8"],
         List[Literal["float", "float16", "base64", "binary", "ubinary", "int8", "uint8"]],
     ]
-    """The encoding format of the embeddings."""
+    """The encoding formats of the embeddings."""
 
     dimensions: Optional[int] = None
     """The number of dimensions used for the embeddings."""

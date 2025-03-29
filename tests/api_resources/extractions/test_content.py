@@ -21,7 +21,7 @@ class TestContent:
     def test_method_create(self, client: Mixedbread) -> None:
         content = client.extractions.content.create(
             content="content",
-            json_schema={},
+            json_schema={"foo": "bar"},
         )
         assert_matches_type(ExtractionResult, content, path=["response"])
 
@@ -29,7 +29,7 @@ class TestContent:
     def test_raw_response_create(self, client: Mixedbread) -> None:
         response = client.extractions.content.with_raw_response.create(
             content="content",
-            json_schema={},
+            json_schema={"foo": "bar"},
         )
 
         assert response.is_closed is True
@@ -41,7 +41,7 @@ class TestContent:
     def test_streaming_response_create(self, client: Mixedbread) -> None:
         with client.extractions.content.with_streaming_response.create(
             content="content",
-            json_schema={},
+            json_schema={"foo": "bar"},
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -59,7 +59,7 @@ class TestAsyncContent:
     async def test_method_create(self, async_client: AsyncMixedbread) -> None:
         content = await async_client.extractions.content.create(
             content="content",
-            json_schema={},
+            json_schema={"foo": "bar"},
         )
         assert_matches_type(ExtractionResult, content, path=["response"])
 
@@ -67,7 +67,7 @@ class TestAsyncContent:
     async def test_raw_response_create(self, async_client: AsyncMixedbread) -> None:
         response = await async_client.extractions.content.with_raw_response.create(
             content="content",
-            json_schema={},
+            json_schema={"foo": "bar"},
         )
 
         assert response.is_closed is True
@@ -79,7 +79,7 @@ class TestAsyncContent:
     async def test_streaming_response_create(self, async_client: AsyncMixedbread) -> None:
         async with async_client.extractions.content.with_streaming_response.create(
             content="content",
-            json_schema={},
+            json_schema={"foo": "bar"},
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"

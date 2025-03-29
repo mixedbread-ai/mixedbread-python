@@ -55,14 +55,14 @@ class TestSchema:
     @parametrize
     def test_method_enhance(self, client: Mixedbread) -> None:
         schema = client.extractions.schema.enhance(
-            json_schema={},
+            json_schema={"foo": "bar"},
         )
         assert_matches_type(EnhancedJsonSchema, schema, path=["response"])
 
     @parametrize
     def test_raw_response_enhance(self, client: Mixedbread) -> None:
         response = client.extractions.schema.with_raw_response.enhance(
-            json_schema={},
+            json_schema={"foo": "bar"},
         )
 
         assert response.is_closed is True
@@ -73,7 +73,7 @@ class TestSchema:
     @parametrize
     def test_streaming_response_enhance(self, client: Mixedbread) -> None:
         with client.extractions.schema.with_streaming_response.enhance(
-            json_schema={},
+            json_schema={"foo": "bar"},
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -86,14 +86,14 @@ class TestSchema:
     @parametrize
     def test_method_validate(self, client: Mixedbread) -> None:
         schema = client.extractions.schema.validate(
-            json_schema={},
+            json_schema={"foo": "bar"},
         )
         assert_matches_type(ValidatedJsonSchema, schema, path=["response"])
 
     @parametrize
     def test_raw_response_validate(self, client: Mixedbread) -> None:
         response = client.extractions.schema.with_raw_response.validate(
-            json_schema={},
+            json_schema={"foo": "bar"},
         )
 
         assert response.is_closed is True
@@ -104,7 +104,7 @@ class TestSchema:
     @parametrize
     def test_streaming_response_validate(self, client: Mixedbread) -> None:
         with client.extractions.schema.with_streaming_response.validate(
-            json_schema={},
+            json_schema={"foo": "bar"},
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -152,14 +152,14 @@ class TestAsyncSchema:
     @parametrize
     async def test_method_enhance(self, async_client: AsyncMixedbread) -> None:
         schema = await async_client.extractions.schema.enhance(
-            json_schema={},
+            json_schema={"foo": "bar"},
         )
         assert_matches_type(EnhancedJsonSchema, schema, path=["response"])
 
     @parametrize
     async def test_raw_response_enhance(self, async_client: AsyncMixedbread) -> None:
         response = await async_client.extractions.schema.with_raw_response.enhance(
-            json_schema={},
+            json_schema={"foo": "bar"},
         )
 
         assert response.is_closed is True
@@ -170,7 +170,7 @@ class TestAsyncSchema:
     @parametrize
     async def test_streaming_response_enhance(self, async_client: AsyncMixedbread) -> None:
         async with async_client.extractions.schema.with_streaming_response.enhance(
-            json_schema={},
+            json_schema={"foo": "bar"},
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -183,14 +183,14 @@ class TestAsyncSchema:
     @parametrize
     async def test_method_validate(self, async_client: AsyncMixedbread) -> None:
         schema = await async_client.extractions.schema.validate(
-            json_schema={},
+            json_schema={"foo": "bar"},
         )
         assert_matches_type(ValidatedJsonSchema, schema, path=["response"])
 
     @parametrize
     async def test_raw_response_validate(self, async_client: AsyncMixedbread) -> None:
         response = await async_client.extractions.schema.with_raw_response.validate(
-            json_schema={},
+            json_schema={"foo": "bar"},
         )
 
         assert response.is_closed is True
@@ -201,7 +201,7 @@ class TestAsyncSchema:
     @parametrize
     async def test_streaming_response_validate(self, async_client: AsyncMixedbread) -> None:
         async with async_client.extractions.schema.with_streaming_response.validate(
-            json_schema={},
+            json_schema={"foo": "bar"},
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
