@@ -1,6 +1,6 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import List
+from typing import Dict, List
 
 from ..._models import BaseModel
 
@@ -14,5 +14,5 @@ class ValidatedJsonSchema(BaseModel):
     errors: List[str]
     """List of validation errors"""
 
-    json_schema: object
+    json_schema: Dict[str, object]
     """The validated JSON schema"""

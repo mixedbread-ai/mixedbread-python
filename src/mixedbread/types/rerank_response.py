@@ -21,27 +21,15 @@ class Usage(BaseModel):
 
 class Data(BaseModel):
     index: int
+    """The index of the document."""
 
     score: float
     """The score of the document."""
 
-    input: object
+    input: Optional[object] = None
     """The input document."""
 
-    object: Optional[
-        Literal[
-            "list",
-            "parsing_job",
-            "job",
-            "embedding",
-            "embedding_dict",
-            "text_document",
-            "file",
-            "vector_store",
-            "vector_store.file",
-            "api_key",
-        ]
-    ] = None
+    object: Optional[Literal["rank_result"]] = None
     """The object type."""
 
 
@@ -62,7 +50,7 @@ class RerankResponse(BaseModel):
             "job",
             "embedding",
             "embedding_dict",
-            "text_document",
+            "rank_result",
             "file",
             "vector_store",
             "vector_store.file",
