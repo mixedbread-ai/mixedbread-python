@@ -9,7 +9,13 @@ from mixedbread.types import SearchFilter, SearchFilterCondition
 Types:
 
 ```python
-from mixedbread.types import Embedding, EmbeddingCreateResponse, InfoResponse, RerankResponse
+from mixedbread.types import (
+    Embedding,
+    EmbeddingCreateResponse,
+    MultiEncodingEmbedding,
+    InfoResponse,
+    RerankResponse,
+)
 ```
 
 Methods:
