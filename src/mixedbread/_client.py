@@ -47,10 +47,10 @@ from ._base_client import (
 )
 from .resources.parsing import parsing
 from .types.info_response import InfoResponse
-from .types.embed_response import EmbedResponse
 from .resources.extractions import extractions
 from .types.rerank_response import RerankResponse
 from .resources.vector_stores import vector_stores
+from .types.embedding_create_response import EmbeddingCreateResponse
 
 __all__ = [
     "ENVIRONMENTS",
@@ -257,7 +257,7 @@ class Mixedbread(SyncAPIClient):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> EmbedResponse:
+    ) -> EmbeddingCreateResponse:
         """
         Create embeddings for text or images using the specified model, encoding format,
         and normalization.
@@ -304,7 +304,7 @@ class Mixedbread(SyncAPIClient):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=EmbedResponse,
+            cast_to=EmbeddingCreateResponse,
         )
 
     def info(
@@ -614,7 +614,7 @@ class AsyncMixedbread(AsyncAPIClient):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> EmbedResponse:
+    ) -> EmbeddingCreateResponse:
         """
         Create embeddings for text or images using the specified model, encoding format,
         and normalization.
@@ -661,7 +661,7 @@ class AsyncMixedbread(AsyncAPIClient):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=EmbedResponse,
+            cast_to=EmbeddingCreateResponse,
         )
 
     async def info(

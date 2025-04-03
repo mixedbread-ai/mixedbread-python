@@ -11,8 +11,8 @@ Types:
 ```python
 from mixedbread.types import (
     Embedding,
+    EmbeddingCreateResponse,
     MultiEncodingEmbedding,
-    EmbedResponse,
     InfoResponse,
     RerankResponse,
 )
@@ -20,7 +20,7 @@ from mixedbread.types import (
 
 Methods:
 
-- <code title="post /v1/embeddings">client.<a href="./src/mixedbread/_client.py">embed</a>(\*\*<a href="src/mixedbread/types/client_embed_params.py">params</a>) -> <a href="./src/mixedbread/types/embed_response.py">EmbedResponse</a></code>
+- <code title="post /v1/embeddings">client.<a href="./src/mixedbread/_client.py">embed</a>(\*\*<a href="src/mixedbread/types/client_embed_params.py">params</a>) -> <a href="./src/mixedbread/types/embedding_create_response.py">EmbeddingCreateResponse</a></code>
 - <code title="get /">client.<a href="./src/mixedbread/_client.py">info</a>() -> <a href="./src/mixedbread/types/info_response.py">InfoResponse</a></code>
 - <code title="post /v1/reranking">client.<a href="./src/mixedbread/_client.py">rerank</a>(\*\*<a href="src/mixedbread/types/client_rerank_params.py">params</a>) -> <a href="./src/mixedbread/types/rerank_response.py">RerankResponse</a></code>
 
@@ -150,12 +150,6 @@ Methods:
 - <code title="post /v1/extractions/content">client.extractions.content.<a href="./src/mixedbread/resources/extractions/content.py">create</a>(\*\*<a href="src/mixedbread/types/extractions/content_create_params.py">params</a>) -> <a href="./src/mixedbread/types/extractions/extraction_result.py">ExtractionResult</a></code>
 
 # Embeddings
-
-Types:
-
-```python
-from mixedbread.types import EmbeddingCreateResponse
-```
 
 Methods:
 

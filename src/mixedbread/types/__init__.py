@@ -9,7 +9,6 @@ from .file_object import FileObject as FileObject
 from .vector_store import VectorStore as VectorStore
 from .expires_after import ExpiresAfter as ExpiresAfter
 from .info_response import InfoResponse as InfoResponse
-from .embed_response import EmbedResponse as EmbedResponse
 from .rerank_response import RerankResponse as RerankResponse
 from .file_list_params import FileListParams as FileListParams
 from .file_create_params import FileCreateParams as FileCreateParams
