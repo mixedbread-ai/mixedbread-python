@@ -5,8 +5,9 @@ from typing import List, Union, Optional
 from typing_extensions import Literal
 
 from .._models import BaseModel
+from .embedding import Embedding
 
-__all__ = ["EmbeddingCreateResponse", "Usage", "DataUnionMember0", "DataUnionMember1", "DataUnionMember1Embedding"]
+__all__ = ["EmbeddingCreateResponse", "Usage", "DataUnionMember1", "DataUnionMember1Embedding"]
 
 
 class Usage(BaseModel):
@@ -18,17 +19,6 @@ class Usage(BaseModel):
 
     completion_tokens: Optional[int] = None
     """The number of tokens used for the completion"""
-
-
-class DataUnionMember0(BaseModel):
-    embedding: Union[List[float], List[int], str]
-    """The encoded embedding."""
-
-    index: int
-    """The index of the embedding."""
-
-    object: Optional[Literal["embedding"]] = None
-    """The object type of the embedding."""
 
 
 class DataUnionMember1Embedding(BaseModel):
@@ -66,7 +56,7 @@ class EmbeddingCreateResponse(BaseModel):
     model: str
     """The model used"""
 
-    data: Union[List[DataUnionMember0], List[DataUnionMember1]]
+    data: Union[List[Embedding], List[DataUnionMember1]]
     """The created embeddings."""
 
     object: Optional[
