@@ -18,6 +18,7 @@ from .expires_after_param import ExpiresAfterParam as ExpiresAfterParam
 from .client_rerank_params import ClientRerankParams as ClientRerankParams
 from .file_delete_response import FileDeleteResponse as FileDeleteResponse
 from .embedding_create_params import EmbeddingCreateParams as EmbeddingCreateParams
+from .multi_encoding_embedding import MultiEncodingEmbedding as MultiEncodingEmbedding
 from .vector_store_list_params import VectorStoreListParams as VectorStoreListParams
 from .embedding_create_response import EmbeddingCreateResponse as EmbeddingCreateResponse
 from .scored_vector_store_chunk import ScoredVectorStoreChunk as ScoredVectorStoreChunk
