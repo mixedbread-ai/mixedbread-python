@@ -9,7 +9,7 @@ import pytest
 
 from mixedbread import Mixedbread, AsyncMixedbread
 from tests.utils import assert_matches_type
-from mixedbread.types import EmbeddingCreateResponse
+from mixedbread.types import Em
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -23,7 +23,7 @@ class TestEmbeddings:
             model="mixedbread-ai/mxbai-embed-large-v1",
             input=["string"],
         )
-        assert_matches_type(EmbeddingCreateResponse, embedding, path=["response"])
+        assert_matches_type(Em, embedding, path=["response"])
 
     @parametrize
     def test_method_create_with_all_params(self, client: Mixedbread) -> None:
@@ -35,7 +35,7 @@ class TestEmbeddings:
             normalized=True,
             encoding_format="float",
         )
-        assert_matches_type(EmbeddingCreateResponse, embedding, path=["response"])
+        assert_matches_type(Em, embedding, path=["response"])
 
     @parametrize
     def test_raw_response_create(self, client: Mixedbread) -> None:
@@ -47,7 +47,7 @@ class TestEmbeddings:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         embedding = response.parse()
-        assert_matches_type(EmbeddingCreateResponse, embedding, path=["response"])
+        assert_matches_type(Em, embedding, path=["response"])
 
     @parametrize
     def test_streaming_response_create(self, client: Mixedbread) -> None:
@@ -59,7 +59,7 @@ class TestEmbeddings:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             embedding = response.parse()
-            assert_matches_type(EmbeddingCreateResponse, embedding, path=["response"])
+            assert_matches_type(Em, embedding, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -73,7 +73,7 @@ class TestAsyncEmbeddings:
             model="mixedbread-ai/mxbai-embed-large-v1",
             input=["string"],
         )
-        assert_matches_type(EmbeddingCreateResponse, embedding, path=["response"])
+        assert_matches_type(Em, embedding, path=["response"])
 
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncMixedbread) -> None:
@@ -85,7 +85,7 @@ class TestAsyncEmbeddings:
             normalized=True,
             encoding_format="float",
         )
-        assert_matches_type(EmbeddingCreateResponse, embedding, path=["response"])
+        assert_matches_type(Em, embedding, path=["response"])
 
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncMixedbread) -> None:
@@ -97,7 +97,7 @@ class TestAsyncEmbeddings:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         embedding = await response.parse()
-        assert_matches_type(EmbeddingCreateResponse, embedding, path=["response"])
+        assert_matches_type(Em, embedding, path=["response"])
 
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncMixedbread) -> None:
@@ -109,6 +109,6 @@ class TestAsyncEmbeddings:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             embedding = await response.parse()
-            assert_matches_type(EmbeddingCreateResponse, embedding, path=["response"])
+            assert_matches_type(Em, embedding, path=["response"])
 
         assert cast(Any, response.is_closed) is True
