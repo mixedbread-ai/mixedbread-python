@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from .shared import SearchFilter as SearchFilter, SearchFilterCondition as SearchFilterCondition
+from .shared import Usage as Usage, SearchFilter as SearchFilter, SearchFilterCondition as SearchFilterCondition
 from .embedding import Embedding as Embedding
 from .file_counts import FileCounts as FileCounts
 from .file_object import FileObject as FileObject
