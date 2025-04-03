@@ -4,19 +4,9 @@ from typing import List, Optional
 from typing_extensions import Literal
 
 from .._models import BaseModel
+from .shared.usage import Usage
 
-__all__ = ["RerankResponse", "Usage", "Data"]
-
-
-class Usage(BaseModel):
-    prompt_tokens: int
-    """The number of tokens used for the prompt"""
-
-    total_tokens: int
-    """The total number of tokens used"""
-
-    completion_tokens: Optional[int] = None
-    """The number of tokens used for the completion"""
+__all__ = ["RerankResponse", "Data"]
 
 
 class Data(BaseModel):
