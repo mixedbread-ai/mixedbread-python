@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import os
-from typing import Any, Dict, List, Union, Mapping, Optional, cast
+from typing import Any, Dict, List, Union, Mapping, Iterable, Optional, cast
 from typing_extensions import Self, Literal, override
 
 import httpx
@@ -47,10 +47,10 @@ from ._base_client import (
 )
 from .resources.parsing import parsing
 from .types.info_response import InfoResponse
+from .types.embed_response import EmbedResponse
 from .resources.extractions import extractions
 from .types.rerank_response import RerankResponse
 from .resources.vector_stores import vector_stores
-from .types.embedding_create_response import EmbeddingCreateResponse
 
 __all__ = [
     "ENVIRONMENTS",
@@ -71,11 +71,11 @@ ENVIRONMENTS: Dict[str, str] = {
 
 
 class Mixedbread(SyncAPIClient):
-    embeddings: embeddings.EmbeddingsResource
+    vector_stores: vector_stores.VectorStoresResource
     parsing: parsing.ParsingResource
     files: files.FilesResource
-    vector_stores: vector_stores.VectorStoresResource
     extractions: extractions.ExtractionsResource
+    embeddings: embeddings.EmbeddingsResource
     with_raw_response: MixedbreadWithRawResponse
     with_streaming_response: MixedbreadWithStreamedResponse
 
@@ -157,11 +157,11 @@ class Mixedbread(SyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.embeddings = embeddings.EmbeddingsResource(self)
+        self.vector_stores = vector_stores.VectorStoresResource(self)
         self.parsing = parsing.ParsingResource(self)
         self.files = files.FilesResource(self)
-        self.vector_stores = vector_stores.VectorStoresResource(self)
         self.extractions = extractions.ExtractionsResource(self)
+        self.embeddings = embeddings.EmbeddingsResource(self)
         self.with_raw_response = MixedbreadWithRawResponse(self)
         self.with_streaming_response = MixedbreadWithStreamedResponse(self)
 
@@ -257,7 +257,7 @@ class Mixedbread(SyncAPIClient):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> EmbeddingCreateResponse:
+    ) -> EmbedResponse:
         """
         Create embeddings for text or images using the specified model, encoding format,
         and normalization.
@@ -304,7 +304,7 @@ class Mixedbread(SyncAPIClient):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=EmbeddingCreateResponse,
+            cast_to=EmbedResponse,
         )
 
     def info(
@@ -335,7 +335,7 @@ class Mixedbread(SyncAPIClient):
         *,
         model: str | NotGiven = NOT_GIVEN,
         query: str,
-        input: List[Union[str, object]],
+        input: List[Union[str, Iterable[object], object]],
         rank_fields: Optional[List[str]] | NotGiven = NOT_GIVEN,
         top_k: int | NotGiven = NOT_GIVEN,
         return_input: bool | NotGiven = NOT_GIVEN,
@@ -349,9 +349,9 @@ class Mixedbread(SyncAPIClient):
         """
         Rerank different kind of documents for a given query.
 
-        Args: params: RerankingCreateParams: The parameters for reranking.
+        Args: params: RerankParams: The parameters for reranking.
 
-        Returns: RerankingCreateResponse: The reranked documents for the input query.
+        Returns: RerankResponse: The reranked documents for the input query.
 
         Args:
           model: The model to use for reranking documents.
@@ -428,11 +428,11 @@ class Mixedbread(SyncAPIClient):
 
 
 class AsyncMixedbread(AsyncAPIClient):
-    embeddings: embeddings.AsyncEmbeddingsResource
+    vector_stores: vector_stores.AsyncVectorStoresResource
     parsing: parsing.AsyncParsingResource
     files: files.AsyncFilesResource
-    vector_stores: vector_stores.AsyncVectorStoresResource
     extractions: extractions.AsyncExtractionsResource
+    embeddings: embeddings.AsyncEmbeddingsResource
     with_raw_response: AsyncMixedbreadWithRawResponse
     with_streaming_response: AsyncMixedbreadWithStreamedResponse
 
@@ -514,11 +514,11 @@ class AsyncMixedbread(AsyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.embeddings = embeddings.AsyncEmbeddingsResource(self)
+        self.vector_stores = vector_stores.AsyncVectorStoresResource(self)
         self.parsing = parsing.AsyncParsingResource(self)
         self.files = files.AsyncFilesResource(self)
-        self.vector_stores = vector_stores.AsyncVectorStoresResource(self)
         self.extractions = extractions.AsyncExtractionsResource(self)
+        self.embeddings = embeddings.AsyncEmbeddingsResource(self)
         self.with_raw_response = AsyncMixedbreadWithRawResponse(self)
         self.with_streaming_response = AsyncMixedbreadWithStreamedResponse(self)
 
@@ -614,7 +614,7 @@ class AsyncMixedbread(AsyncAPIClient):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> EmbeddingCreateResponse:
+    ) -> EmbedResponse:
         """
         Create embeddings for text or images using the specified model, encoding format,
         and normalization.
@@ -661,7 +661,7 @@ class AsyncMixedbread(AsyncAPIClient):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=EmbeddingCreateResponse,
+            cast_to=EmbedResponse,
         )
 
     async def info(
@@ -692,7 +692,7 @@ class AsyncMixedbread(AsyncAPIClient):
         *,
         model: str | NotGiven = NOT_GIVEN,
         query: str,
-        input: List[Union[str, object]],
+        input: List[Union[str, Iterable[object], object]],
         rank_fields: Optional[List[str]] | NotGiven = NOT_GIVEN,
         top_k: int | NotGiven = NOT_GIVEN,
         return_input: bool | NotGiven = NOT_GIVEN,
@@ -706,9 +706,9 @@ class AsyncMixedbread(AsyncAPIClient):
         """
         Rerank different kind of documents for a given query.
 
-        Args: params: RerankingCreateParams: The parameters for reranking.
+        Args: params: RerankParams: The parameters for reranking.
 
-        Returns: RerankingCreateResponse: The reranked documents for the input query.
+        Returns: RerankResponse: The reranked documents for the input query.
 
         Args:
           model: The model to use for reranking documents.
@@ -786,11 +786,11 @@ class AsyncMixedbread(AsyncAPIClient):
 
 class MixedbreadWithRawResponse:
     def __init__(self, client: Mixedbread) -> None:
-        self.embeddings = embeddings.EmbeddingsResourceWithRawResponse(client.embeddings)
+        self.vector_stores = vector_stores.VectorStoresResourceWithRawResponse(client.vector_stores)
         self.parsing = parsing.ParsingResourceWithRawResponse(client.parsing)
         self.files = files.FilesResourceWithRawResponse(client.files)
-        self.vector_stores = vector_stores.VectorStoresResourceWithRawResponse(client.vector_stores)
         self.extractions = extractions.ExtractionsResourceWithRawResponse(client.extractions)
+        self.embeddings = embeddings.EmbeddingsResourceWithRawResponse(client.embeddings)
 
         self.embed = to_raw_response_wrapper(
             client.embed,
@@ -805,11 +805,11 @@ class MixedbreadWithRawResponse:
 
 class AsyncMixedbreadWithRawResponse:
     def __init__(self, client: AsyncMixedbread) -> None:
-        self.embeddings = embeddings.AsyncEmbeddingsResourceWithRawResponse(client.embeddings)
+        self.vector_stores = vector_stores.AsyncVectorStoresResourceWithRawResponse(client.vector_stores)
         self.parsing = parsing.AsyncParsingResourceWithRawResponse(client.parsing)
         self.files = files.AsyncFilesResourceWithRawResponse(client.files)
-        self.vector_stores = vector_stores.AsyncVectorStoresResourceWithRawResponse(client.vector_stores)
         self.extractions = extractions.AsyncExtractionsResourceWithRawResponse(client.extractions)
+        self.embeddings = embeddings.AsyncEmbeddingsResourceWithRawResponse(client.embeddings)
 
         self.embed = async_to_raw_response_wrapper(
             client.embed,
@@ -824,11 +824,11 @@ class AsyncMixedbreadWithRawResponse:
 
 class MixedbreadWithStreamedResponse:
     def __init__(self, client: Mixedbread) -> None:
-        self.embeddings = embeddings.EmbeddingsResourceWithStreamingResponse(client.embeddings)
+        self.vector_stores = vector_stores.VectorStoresResourceWithStreamingResponse(client.vector_stores)
         self.parsing = parsing.ParsingResourceWithStreamingResponse(client.parsing)
         self.files = files.FilesResourceWithStreamingResponse(client.files)
-        self.vector_stores = vector_stores.VectorStoresResourceWithStreamingResponse(client.vector_stores)
         self.extractions = extractions.ExtractionsResourceWithStreamingResponse(client.extractions)
+        self.embeddings = embeddings.EmbeddingsResourceWithStreamingResponse(client.embeddings)
 
         self.embed = to_streamed_response_wrapper(
             client.embed,
@@ -843,11 +843,11 @@ class MixedbreadWithStreamedResponse:
 
 class AsyncMixedbreadWithStreamedResponse:
     def __init__(self, client: AsyncMixedbread) -> None:
-        self.embeddings = embeddings.AsyncEmbeddingsResourceWithStreamingResponse(client.embeddings)
+        self.vector_stores = vector_stores.AsyncVectorStoresResourceWithStreamingResponse(client.vector_stores)
         self.parsing = parsing.AsyncParsingResourceWithStreamingResponse(client.parsing)
         self.files = files.AsyncFilesResourceWithStreamingResponse(client.files)
-        self.vector_stores = vector_stores.AsyncVectorStoresResourceWithStreamingResponse(client.vector_stores)
         self.extractions = extractions.AsyncExtractionsResourceWithStreamingResponse(client.extractions)
+        self.embeddings = embeddings.AsyncEmbeddingsResourceWithStreamingResponse(client.embeddings)
 
         self.embed = async_to_streamed_response_wrapper(
             client.embed,
