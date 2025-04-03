@@ -33,7 +33,7 @@ from mixedbread._base_client import (
     BaseClient,
     make_request_options,
 )
-from mixedbread.types.vector_store_create_params import VectorStoreCreateParams
+from mixedbread.types.vector_store_search_params import VectorStoreSearchParams
 
 from .utils import update_env
 
@@ -732,12 +732,18 @@ class TestMixedbread:
     @mock.patch("mixedbread._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
-        respx_mock.post("/v1/vector_stores").mock(side_effect=httpx.TimeoutException("Test timeout error"))
+        respx_mock.post("/v1/vector_stores/search").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
             self.client.post(
-                "/v1/vector_stores",
-                body=cast(object, maybe_transform({}, VectorStoreCreateParams)),
+                "/v1/vector_stores/search",
+                body=cast(
+                    object,
+                    maybe_transform(
+                        dict(query="how to configure SSL", vector_store_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"]),
+                        VectorStoreSearchParams,
+                    ),
+                ),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
@@ -747,12 +753,18 @@ class TestMixedbread:
     @mock.patch("mixedbread._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
-        respx_mock.post("/v1/vector_stores").mock(return_value=httpx.Response(500))
+        respx_mock.post("/v1/vector_stores/search").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
             self.client.post(
-                "/v1/vector_stores",
-                body=cast(object, maybe_transform({}, VectorStoreCreateParams)),
+                "/v1/vector_stores/search",
+                body=cast(
+                    object,
+                    maybe_transform(
+                        dict(query="how to configure SSL", vector_store_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"]),
+                        VectorStoreSearchParams,
+                    ),
+                ),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
@@ -783,9 +795,11 @@ class TestMixedbread:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v1/vector_stores").mock(side_effect=retry_handler)
+        respx_mock.post("/v1/vector_stores/search").mock(side_effect=retry_handler)
 
-        response = client.vector_stores.with_raw_response.create()
+        response = client.vector_stores.with_raw_response.search(
+            query="how to configure SSL", vector_store_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"]
+        )
 
         assert response.retries_taken == failures_before_success
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
@@ -807,9 +821,13 @@ class TestMixedbread:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v1/vector_stores").mock(side_effect=retry_handler)
+        respx_mock.post("/v1/vector_stores/search").mock(side_effect=retry_handler)
 
-        response = client.vector_stores.with_raw_response.create(extra_headers={"x-stainless-retry-count": Omit()})
+        response = client.vector_stores.with_raw_response.search(
+            query="how to configure SSL",
+            vector_store_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
+            extra_headers={"x-stainless-retry-count": Omit()},
+        )
 
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
 
@@ -830,9 +848,13 @@ class TestMixedbread:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v1/vector_stores").mock(side_effect=retry_handler)
+        respx_mock.post("/v1/vector_stores/search").mock(side_effect=retry_handler)
 
-        response = client.vector_stores.with_raw_response.create(extra_headers={"x-stainless-retry-count": "42"})
+        response = client.vector_stores.with_raw_response.search(
+            query="how to configure SSL",
+            vector_store_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
+            extra_headers={"x-stainless-retry-count": "42"},
+        )
 
         assert response.http_request.headers.get("x-stainless-retry-count") == "42"
 
@@ -1518,12 +1540,18 @@ class TestAsyncMixedbread:
     @mock.patch("mixedbread._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     async def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
-        respx_mock.post("/v1/vector_stores").mock(side_effect=httpx.TimeoutException("Test timeout error"))
+        respx_mock.post("/v1/vector_stores/search").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
             await self.client.post(
-                "/v1/vector_stores",
-                body=cast(object, maybe_transform({}, VectorStoreCreateParams)),
+                "/v1/vector_stores/search",
+                body=cast(
+                    object,
+                    maybe_transform(
+                        dict(query="how to configure SSL", vector_store_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"]),
+                        VectorStoreSearchParams,
+                    ),
+                ),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
@@ -1533,12 +1561,18 @@ class TestAsyncMixedbread:
     @mock.patch("mixedbread._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     async def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
-        respx_mock.post("/v1/vector_stores").mock(return_value=httpx.Response(500))
+        respx_mock.post("/v1/vector_stores/search").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
             await self.client.post(
-                "/v1/vector_stores",
-                body=cast(object, maybe_transform({}, VectorStoreCreateParams)),
+                "/v1/vector_stores/search",
+                body=cast(
+                    object,
+                    maybe_transform(
+                        dict(query="how to configure SSL", vector_store_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"]),
+                        VectorStoreSearchParams,
+                    ),
+                ),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
@@ -1570,9 +1604,11 @@ class TestAsyncMixedbread:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v1/vector_stores").mock(side_effect=retry_handler)
+        respx_mock.post("/v1/vector_stores/search").mock(side_effect=retry_handler)
 
-        response = await client.vector_stores.with_raw_response.create()
+        response = await client.vector_stores.with_raw_response.search(
+            query="how to configure SSL", vector_store_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"]
+        )
 
         assert response.retries_taken == failures_before_success
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
@@ -1595,10 +1631,12 @@ class TestAsyncMixedbread:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v1/vector_stores").mock(side_effect=retry_handler)
+        respx_mock.post("/v1/vector_stores/search").mock(side_effect=retry_handler)
 
-        response = await client.vector_stores.with_raw_response.create(
-            extra_headers={"x-stainless-retry-count": Omit()}
+        response = await client.vector_stores.with_raw_response.search(
+            query="how to configure SSL",
+            vector_store_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
+            extra_headers={"x-stainless-retry-count": Omit()},
         )
 
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
@@ -1621,9 +1659,13 @@ class TestAsyncMixedbread:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v1/vector_stores").mock(side_effect=retry_handler)
+        respx_mock.post("/v1/vector_stores/search").mock(side_effect=retry_handler)
 
-        response = await client.vector_stores.with_raw_response.create(extra_headers={"x-stainless-retry-count": "42"})
+        response = await client.vector_stores.with_raw_response.search(
+            query="how to configure SSL",
+            vector_store_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
+            extra_headers={"x-stainless-retry-count": "42"},
+        )
 
         assert response.http_request.headers.get("x-stainless-retry-count") == "42"
 

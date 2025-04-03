@@ -7,7 +7,7 @@ from .._models import BaseModel
 from .embedding import Embedding
 from .multi_encoding_embedding import MultiEncodingEmbedding
 
-__all__ = ["EmbeddingCreateResponse", "Usage"]
+__all__ = ["Em", "Usage"]
 
 
 class Usage(BaseModel):
@@ -21,7 +21,7 @@ class Usage(BaseModel):
     """The number of tokens used for the completion"""
 
 
-class EmbeddingCreateResponse(BaseModel):
+class Em(BaseModel):
     usage: Usage
     """The usage of the model"""
 
