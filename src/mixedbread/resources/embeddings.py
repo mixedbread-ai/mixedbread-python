@@ -14,7 +14,6 @@ from .._utils import (
     async_maybe_transform,
 )
 from .._compat import cached_property
-from ..types.em import Em
 from .._resource import SyncAPIResource, AsyncAPIResource
 from .._response import (
     to_raw_response_wrapper,
@@ -23,6 +22,7 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
+from ..types.embedding_create_response import EmbeddingCreateResponse
 
 __all__ = ["EmbeddingsResource", "AsyncEmbeddingsResource"]
 
@@ -66,7 +66,7 @@ class EmbeddingsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> Em:
+    ) -> EmbeddingCreateResponse:
         """
         Create embeddings for text or images using the specified model, encoding format,
         and normalization.
@@ -113,7 +113,7 @@ class EmbeddingsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=Em,
+            cast_to=EmbeddingCreateResponse,
         )
 
 
@@ -156,7 +156,7 @@ class AsyncEmbeddingsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> Em:
+    ) -> EmbeddingCreateResponse:
         """
         Create embeddings for text or images using the specified model, encoding format,
         and normalization.
@@ -203,7 +203,7 @@ class AsyncEmbeddingsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=Em,
+            cast_to=EmbeddingCreateResponse,
         )
 
 
