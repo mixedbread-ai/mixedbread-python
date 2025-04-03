@@ -1,7 +1,7 @@
 # Shared Types
 
 ```python
-from mixedbread.types import SearchFilter, SearchFilterCondition
+from mixedbread.types import SearchFilter, SearchFilterCondition, Usage
 ```
 
 # Mixedbread

@@ -5,20 +5,10 @@ from typing_extensions import Literal
 
 from .._models import BaseModel
 from .embedding import Embedding
+from .shared.usage import Usage
 from .multi_encoding_embedding import MultiEncodingEmbedding
 
-__all__ = ["EmbeddingCreateResponse", "Usage"]
-
-
-class Usage(BaseModel):
-    prompt_tokens: int
-    """The number of tokens used for the prompt"""
-
-    total_tokens: int
-    """The total number of tokens used"""
-
-    completion_tokens: Optional[int] = None
-    """The number of tokens used for the completion"""
+__all__ = ["EmbeddingCreateResponse"]
 
 
 class EmbeddingCreateResponse(BaseModel):
