@@ -6,7 +6,7 @@ from typing_extensions import Literal
 
 from .._models import BaseModel
 
-__all__ = ["EmbeddingCreateResponse", "Usage", "DataUnionMember0", "DataUnionMember1", "DataUnionMember1Embedding"]
+__all__ = ["EmbedResponse", "Usage", "DataUnionMember0", "DataUnionMember1", "DataUnionMember1Embedding"]
 
 
 class Usage(BaseModel):
@@ -59,7 +59,7 @@ class DataUnionMember1(BaseModel):
     """The object type of the embedding."""
 
 
-class EmbeddingCreateResponse(BaseModel):
+class EmbedResponse(BaseModel):
     usage: Usage
     """The usage of the model"""
 
