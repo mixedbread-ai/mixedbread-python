@@ -12,7 +12,7 @@ class ClientEmbedParams(TypedDict, total=False):
     model: Required[str]
     """The model to use for creating embeddings."""
 
-    input: Required[List[str]]
+    input: Required[Union[str, List[str]]]
     """The input to create embeddings for."""
 
     dimensions: Optional[int]
