@@ -25,7 +25,7 @@ class TestClient:
     def test_method_embed(self, client: Mixedbread) -> None:
         client_ = client.embed(
             model="mixedbread-ai/mxbai-embed-large-v1",
-            input=["string"],
+            input="x",
         )
         assert_matches_type(EmbeddingCreateResponse, client_, path=["response"])
 
@@ -33,7 +33,7 @@ class TestClient:
     def test_method_embed_with_all_params(self, client: Mixedbread) -> None:
         client_ = client.embed(
             model="mixedbread-ai/mxbai-embed-large-v1",
-            input=["string"],
+            input="x",
             dimensions=768,
             prompt="Provide a detailed summary of the following text.",
             normalized=True,
@@ -45,7 +45,7 @@ class TestClient:
     def test_raw_response_embed(self, client: Mixedbread) -> None:
         response = client.with_raw_response.embed(
             model="mixedbread-ai/mxbai-embed-large-v1",
-            input=["string"],
+            input="x",
         )
 
         assert response.is_closed is True
@@ -57,7 +57,7 @@ class TestClient:
     def test_streaming_response_embed(self, client: Mixedbread) -> None:
         with client.with_streaming_response.embed(
             model="mixedbread-ai/mxbai-embed-large-v1",
-            input=["string"],
+            input="x",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -95,7 +95,7 @@ class TestClient:
     @parametrize
     def test_method_rerank(self, client: Mixedbread) -> None:
         client_ = client.rerank(
-            query="What is mixedbread ai?",
+            query="What are the key features of the Mixedbread embedding model?",
             input=["Document 1", "Document 2"],
         )
         assert_matches_type(RerankResponse, client_, path=["response"])
@@ -103,10 +103,10 @@ class TestClient:
     @parametrize
     def test_method_rerank_with_all_params(self, client: Mixedbread) -> None:
         client_ = client.rerank(
-            model="x",
-            query="What is mixedbread ai?",
+            model="mixedbread-ai/mxbai-rerank-large-v2",
+            query="What are the key features of the Mixedbread embedding model?",
             input=["Document 1", "Document 2"],
-            rank_fields=["field1", "field2"],
+            rank_fields=["content", "title"],
             top_k=10,
             return_input=False,
         )
@@ -115,7 +115,7 @@ class TestClient:
     @parametrize
     def test_raw_response_rerank(self, client: Mixedbread) -> None:
         response = client.with_raw_response.rerank(
-            query="What is mixedbread ai?",
+            query="What are the key features of the Mixedbread embedding model?",
             input=["Document 1", "Document 2"],
         )
 
@@ -127,7 +127,7 @@ class TestClient:
     @parametrize
     def test_streaming_response_rerank(self, client: Mixedbread) -> None:
         with client.with_streaming_response.rerank(
-            query="What is mixedbread ai?",
+            query="What are the key features of the Mixedbread embedding model?",
             input=["Document 1", "Document 2"],
         ) as response:
             assert not response.is_closed
@@ -146,7 +146,7 @@ class TestAsyncClient:
     async def test_method_embed(self, async_client: AsyncMixedbread) -> None:
         client = await async_client.embed(
             model="mixedbread-ai/mxbai-embed-large-v1",
-            input=["string"],
+            input="x",
         )
         assert_matches_type(EmbeddingCreateResponse, client, path=["response"])
 
@@ -154,7 +154,7 @@ class TestAsyncClient:
     async def test_method_embed_with_all_params(self, async_client: AsyncMixedbread) -> None:
         client = await async_client.embed(
             model="mixedbread-ai/mxbai-embed-large-v1",
-            input=["string"],
+            input="x",
             dimensions=768,
             prompt="Provide a detailed summary of the following text.",
             normalized=True,
@@ -166,7 +166,7 @@ class TestAsyncClient:
     async def test_raw_response_embed(self, async_client: AsyncMixedbread) -> None:
         response = await async_client.with_raw_response.embed(
             model="mixedbread-ai/mxbai-embed-large-v1",
-            input=["string"],
+            input="x",
         )
 
         assert response.is_closed is True
@@ -178,7 +178,7 @@ class TestAsyncClient:
     async def test_streaming_response_embed(self, async_client: AsyncMixedbread) -> None:
         async with async_client.with_streaming_response.embed(
             model="mixedbread-ai/mxbai-embed-large-v1",
-            input=["string"],
+            input="x",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -216,7 +216,7 @@ class TestAsyncClient:
     @parametrize
     async def test_method_rerank(self, async_client: AsyncMixedbread) -> None:
         client = await async_client.rerank(
-            query="What is mixedbread ai?",
+            query="What are the key features of the Mixedbread embedding model?",
             input=["Document 1", "Document 2"],
         )
         assert_matches_type(RerankResponse, client, path=["response"])
@@ -224,10 +224,10 @@ class TestAsyncClient:
     @parametrize
     async def test_method_rerank_with_all_params(self, async_client: AsyncMixedbread) -> None:
         client = await async_client.rerank(
-            model="x",
-            query="What is mixedbread ai?",
+            model="mixedbread-ai/mxbai-rerank-large-v2",
+            query="What are the key features of the Mixedbread embedding model?",
             input=["Document 1", "Document 2"],
-            rank_fields=["field1", "field2"],
+            rank_fields=["content", "title"],
             top_k=10,
             return_input=False,
         )
@@ -236,7 +236,7 @@ class TestAsyncClient:
     @parametrize
     async def test_raw_response_rerank(self, async_client: AsyncMixedbread) -> None:
         response = await async_client.with_raw_response.rerank(
-            query="What is mixedbread ai?",
+            query="What are the key features of the Mixedbread embedding model?",
             input=["Document 1", "Document 2"],
         )
 
@@ -248,7 +248,7 @@ class TestAsyncClient:
     @parametrize
     async def test_streaming_response_rerank(self, async_client: AsyncMixedbread) -> None:
         async with async_client.with_streaming_response.rerank(
-            query="What is mixedbread ai?",
+            query="What are the key features of the Mixedbread embedding model?",
             input=["Document 1", "Document 2"],
         ) as response:
             assert not response.is_closed
