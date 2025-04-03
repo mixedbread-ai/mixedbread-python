@@ -10,7 +10,7 @@ It is generated with [Stainless](https://www.stainless.com/).
 
 ## Documentation
 
-The REST API documentation can be found on [mixedbread.ai](https://mixedbread.ai/docs). The full API of this library can be found in [api.md](api.md).
+The REST API documentation can be found on [mixedbread.com](https://mixedbread.com/docs). The full API of this library can be found in [api.md](api.md).
 
 ## Installation
 
@@ -28,7 +28,7 @@ import os
 from mixedbread import Mixedbread
 
 client = Mixedbread(
-    api_key=os.environ.get("MXBAI_API_KEY"),  # This is the default and can be omitted
+    api_key=os.environ.get("MIXEDBREAD_API_KEY"),  # This is the default and can be omitted
     # defaults to "production".
     environment="local",
 )
@@ -39,7 +39,7 @@ print(vector_store.id)
 
 While you can provide an `api_key` keyword argument,
 we recommend using [python-dotenv](https://pypi.org/project/python-dotenv/)
-to add `MXBAI_API_KEY="My API Key"` to your `.env` file
+to add `MIXEDBREAD_API_KEY="My API Key"` to your `.env` file
 so that your API Key is not stored in source control.
 
 ## Async usage
@@ -52,7 +52,7 @@ import asyncio
 from mixedbread import AsyncMixedbread
 
 client = AsyncMixedbread(
-    api_key=os.environ.get("MXBAI_API_KEY"),  # This is the default and can be omitted
+    api_key=os.environ.get("MIXEDBREAD_API_KEY"),  # This is the default and can be omitted
     # defaults to "production".
     environment="local",
 )
