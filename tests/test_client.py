@@ -1639,7 +1639,7 @@ class TestAsyncMixedbread:
         import threading
 
         from mixedbread._utils import asyncify
-        from mixedbread._base_client import get_platform 
+        from mixedbread._base_client import get_platform
 
         async def test_main() -> None:
             result = await asyncify(get_platform)()
