@@ -16,7 +16,7 @@ The REST API documentation can be found on [mixedbread.com](https://mixedbread.c
 
 ```sh
 # install from PyPI
-pip install --pre mixedbread
+pip install mixedbread
 ```
 
 ## Usage
