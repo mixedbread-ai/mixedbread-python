@@ -28,7 +28,7 @@ import os
 from mixedbread import Mixedbread
 
 client = Mixedbread(
-    api_key=os.environ.get("MIXEDBREAD_API_KEY"),  # This is the default and can be omitted
+    api_key=os.environ.get("MXBAI_API_KEY"),  # This is the default and can be omitted
     # defaults to "production".
     environment="local",
 )
@@ -39,7 +39,7 @@ print(vector_store.id)
 
 While you can provide an `api_key` keyword argument,
 we recommend using [python-dotenv](https://pypi.org/project/python-dotenv/)
-to add `MIXEDBREAD_API_KEY="My API Key"` to your `.env` file
+to add `MXBAI_API_KEY="My API Key"` to your `.env` file
 so that your API Key is not stored in source control.
 
 ## Async usage
@@ -52,7 +52,7 @@ import asyncio
 from mixedbread import AsyncMixedbread
 
 client = AsyncMixedbread(
-    api_key=os.environ.get("MIXEDBREAD_API_KEY"),  # This is the default and can be omitted
+    api_key=os.environ.get("MXBAI_API_KEY"),  # This is the default and can be omitted
     # defaults to "production".
     environment="local",
 )
