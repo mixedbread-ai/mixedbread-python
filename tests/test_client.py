@@ -342,7 +342,7 @@ class TestMixedbread:
         assert request.headers.get("Authorization") == f"Bearer {api_key}"
 
         with pytest.raises(MixedbreadError):
-            with update_env(**{"MIXEDBREAD_API_KEY": Omit()}):
+            with update_env(**{"MXBAI_API_KEY": Omit()}):
                 client2 = Mixedbread(base_url=base_url, api_key=None, _strict_response_validation=True)
             _ = client2
 
@@ -1122,7 +1122,7 @@ class TestAsyncMixedbread:
         assert request.headers.get("Authorization") == f"Bearer {api_key}"
 
         with pytest.raises(MixedbreadError):
-            with update_env(**{"MIXEDBREAD_API_KEY": Omit()}):
+            with update_env(**{"MXBAI_API_KEY": Omit()}):
                 client2 = AsyncMixedbread(base_url=base_url, api_key=None, _strict_response_validation=True)
             _ = client2
 
