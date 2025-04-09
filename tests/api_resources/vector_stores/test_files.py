@@ -239,7 +239,7 @@ class TestFiles:
                     {
                         "key": "price",
                         "value": "100",
-                        "operator": "eq",
+                        "operator": "gt",
                     },
                     {
                         "key": "color",
@@ -251,7 +251,7 @@ class TestFiles:
                     {
                         "key": "price",
                         "value": "100",
-                        "operator": "eq",
+                        "operator": "gt",
                     },
                     {
                         "key": "color",
@@ -263,7 +263,7 @@ class TestFiles:
                     {
                         "key": "price",
                         "value": "100",
-                        "operator": "eq",
+                        "operator": "gt",
                     },
                     {
                         "key": "color",
@@ -529,7 +529,7 @@ class TestAsyncFiles:
                     {
                         "key": "price",
                         "value": "100",
-                        "operator": "eq",
+                        "operator": "gt",
                     },
                     {
                         "key": "color",
@@ -541,7 +541,7 @@ class TestAsyncFiles:
                     {
                         "key": "price",
                         "value": "100",
-                        "operator": "eq",
+                        "operator": "gt",
                     },
                     {
                         "key": "color",
@@ -553,7 +553,7 @@ class TestAsyncFiles:
                     {
                         "key": "price",
                         "value": "100",
-                        "operator": "eq",
+                        "operator": "gt",
                     },
                     {
                         "key": "color",
