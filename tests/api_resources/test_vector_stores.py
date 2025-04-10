@@ -240,7 +240,7 @@ class TestVectorStores:
                     {
                         "key": "price",
                         "value": "100",
-                        "operator": "eq",
+                        "operator": "gt",
                     },
                     {
                         "key": "color",
@@ -252,7 +252,7 @@ class TestVectorStores:
                     {
                         "key": "price",
                         "value": "100",
-                        "operator": "eq",
+                        "operator": "gt",
                     },
                     {
                         "key": "color",
@@ -264,7 +264,7 @@ class TestVectorStores:
                     {
                         "key": "price",
                         "value": "100",
-                        "operator": "eq",
+                        "operator": "gt",
                     },
                     {
                         "key": "color",
@@ -328,7 +328,7 @@ class TestVectorStores:
                     {
                         "key": "price",
                         "value": "100",
-                        "operator": "eq",
+                        "operator": "gt",
                     },
                     {
                         "key": "color",
@@ -340,7 +340,7 @@ class TestVectorStores:
                     {
                         "key": "price",
                         "value": "100",
-                        "operator": "eq",
+                        "operator": "gt",
                     },
                     {
                         "key": "color",
@@ -352,7 +352,7 @@ class TestVectorStores:
                     {
                         "key": "price",
                         "value": "100",
-                        "operator": "eq",
+                        "operator": "gt",
                     },
                     {
                         "key": "color",
@@ -617,7 +617,7 @@ class TestAsyncVectorStores:
                     {
                         "key": "price",
                         "value": "100",
-                        "operator": "eq",
+                        "operator": "gt",
                     },
                     {
                         "key": "color",
@@ -629,7 +629,7 @@ class TestAsyncVectorStores:
                     {
                         "key": "price",
                         "value": "100",
-                        "operator": "eq",
+                        "operator": "gt",
                     },
                     {
                         "key": "color",
@@ -641,7 +641,7 @@ class TestAsyncVectorStores:
                     {
                         "key": "price",
                         "value": "100",
-                        "operator": "eq",
+                        "operator": "gt",
                     },
                     {
                         "key": "color",
@@ -705,7 +705,7 @@ class TestAsyncVectorStores:
                     {
                         "key": "price",
                         "value": "100",
-                        "operator": "eq",
+                        "operator": "gt",
                     },
                     {
                         "key": "color",
@@ -717,7 +717,7 @@ class TestAsyncVectorStores:
                     {
                         "key": "price",
                         "value": "100",
-                        "operator": "eq",
+                        "operator": "gt",
                     },
                     {
                         "key": "color",
@@ -729,7 +729,7 @@ class TestAsyncVectorStores:
                     {
                         "key": "price",
                         "value": "100",
-                        "operator": "eq",
+                        "operator": "gt",
                     },
                     {
                         "key": "color",
