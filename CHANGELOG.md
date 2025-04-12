@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.2.1 (2025-04-12)
+
+Full Changelog: [v0.2.0...v0.2.1](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.2.0...v0.2.1)
+
+### Bug Fixes
+
+* **perf:** skip traversing types for NotGiven values ([77ca84f](https://github.com/mixedbread-ai/mixedbread-python/commit/77ca84fd479fdc4bb8e097ce77717fb7d6351974))
+
+
+### Chores
+
+* **internal:** expand CI branch coverage ([a3c7c80](https://github.com/mixedbread-ai/mixedbread-python/commit/a3c7c80a2e913a3f53e95eb7c85637f9fbaed2b2))
+* **internal:** reduce CI branch coverage ([bf50b05](https://github.com/mixedbread-ai/mixedbread-python/commit/bf50b0586e3b716afe2e09ff19b0ddf6eb835db1))
+* **internal:** slight transform perf improvement ([#196](https://github.com/mixedbread-ai/mixedbread-python/issues/196)) ([65548f9](https://github.com/mixedbread-ai/mixedbread-python/commit/65548f934aae308b4ae4f44158d789c74436501a))
+* slight wording improvement in README ([#198](https://github.com/mixedbread-ai/mixedbread-python/issues/198)) ([5bbfa5a](https://github.com/mixedbread-ai/mixedbread-python/commit/5bbfa5acac3c1d9fd6c476f7e1ebf44ee317cacb))
+* **tests:** improve enum examples ([#197](https://github.com/mixedbread-ai/mixedbread-python/issues/197)) ([662d9f5](https://github.com/mixedbread-ai/mixedbread-python/commit/662d9f5cfdb106d43b9d55fc85bc5b2ea78af7c4))
+
 ## 0.2.0 (2025-04-08)
 
 Full Changelog: [v0.1.0...v0.2.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.1.0...v0.2.0)
