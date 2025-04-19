@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.2.2 (2025-04-19)
+
+Full Changelog: [v0.2.1...v0.2.2](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.2.1...v0.2.2)
+
+### Bug Fixes
+
+* **perf:** optimize some hot paths ([bd06b56](https://github.com/mixedbread-ai/mixedbread-python/commit/bd06b5637169c1509e8fe985464648923059be1f))
+
+
+### Chores
+
+* **client:** minor internal fixes ([b662363](https://github.com/mixedbread-ai/mixedbread-python/commit/b66236373a0d5f6c11b38c00c0b6ee553fb91137))
+* **internal:** base client updates ([0f1103d](https://github.com/mixedbread-ai/mixedbread-python/commit/0f1103d58e3c031470a580cac145aad06f6c9316))
+* **internal:** bump pyright version ([6850203](https://github.com/mixedbread-ai/mixedbread-python/commit/68502037ad57b8b20cfbd482151b5c7f3930e2d6))
+* **internal:** update models test ([f4cffd9](https://github.com/mixedbread-ai/mixedbread-python/commit/f4cffd9b164310452f345b4d3508a6764671d750))
+* **internal:** update pyright settings ([0d8905c](https://github.com/mixedbread-ai/mixedbread-python/commit/0d8905c2e4865d9ac385146ad49d691c9cb49a14))
+
 ## 0.2.1 (2025-04-12)
 
 Full Changelog: [v0.2.0...v0.2.1](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.2.0...v0.2.1)
