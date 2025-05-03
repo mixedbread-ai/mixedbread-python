@@ -6,7 +6,7 @@ from typing import List, Union, Iterable, Optional
 from typing_extensions import Required, TypeAlias, TypedDict
 
 from .shared_params.search_filter_condition import SearchFilterCondition
-from .vector_store_file_search_options_param import VectorStoreFileSearchOptionsParam
+from .vector_store_chunk_search_options_param import VectorStoreChunkSearchOptionsParam
 
 __all__ = ["VectorStoreQuestionAnsweringParams", "Filters", "FiltersUnionMember2", "QaOptions"]
 
@@ -27,7 +27,7 @@ class VectorStoreQuestionAnsweringParams(TypedDict, total=False):
     filters: Optional[Filters]
     """Optional filter conditions"""
 
-    search_options: VectorStoreFileSearchOptionsParam
+    search_options: VectorStoreChunkSearchOptionsParam
     """Search configuration options"""
 
     stream: bool

@@ -36,3 +36,6 @@ from .vector_store_question_answering_params import (
 from .vector_store_chunk_search_options_param import (
     VectorStoreChunkSearchOptionsParam as VectorStoreChunkSearchOptionsParam,
 )
+from .vector_store_question_answering_response import (
+    VectorStoreQuestionAnsweringResponse as VectorStoreQuestionAnsweringResponse,
+)

@@ -71,6 +71,7 @@ class JobsResource(SyncAPIResource):
         | NotGiven = NOT_GIVEN,
         chunking_strategy: Literal["page"] | NotGiven = NOT_GIVEN,
         return_format: Literal["html", "markdown", "plain"] | NotGiven = NOT_GIVEN,
+        mode: Literal["fast", "high_quality"] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -94,6 +95,8 @@ class JobsResource(SyncAPIResource):
 
           return_format: The format of the returned content
 
+          mode: The strategy to use for OCR
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -110,6 +113,7 @@ class JobsResource(SyncAPIResource):
                     "element_types": element_types,
                     "chunking_strategy": chunking_strategy,
                     "return_format": return_format,
+                    "mode": mode,
                 },
                 job_create_params.JobCreateParams,
             ),
@@ -333,6 +337,7 @@ class AsyncJobsResource(AsyncAPIResource):
         | NotGiven = NOT_GIVEN,
         chunking_strategy: Literal["page"] | NotGiven = NOT_GIVEN,
         return_format: Literal["html", "markdown", "plain"] | NotGiven = NOT_GIVEN,
+        mode: Literal["fast", "high_quality"] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -356,6 +361,8 @@ class AsyncJobsResource(AsyncAPIResource):
 
           return_format: The format of the returned content
 
+          mode: The strategy to use for OCR
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -372,6 +379,7 @@ class AsyncJobsResource(AsyncAPIResource):
                     "element_types": element_types,
                     "chunking_strategy": chunking_strategy,
                     "return_format": return_format,
+                    "mode": mode,
                 },
                 job_create_params.JobCreateParams,
             ),

@@ -26,3 +26,6 @@ class ClientRerankParams(TypedDict, total=False):
 
     return_input: bool
     """Whether to return the documents."""
+
+    rewrite_query: bool
+    """Wether or not to rewrite the query before passing it to the reranking model"""

@@ -32,6 +32,7 @@ class TestJobs:
             element_types=["caption"],
             chunking_strategy="page",
             return_format="html",
+            mode="fast",
         )
         assert_matches_type(ParsingJob, job, path=["response"])
 
@@ -224,6 +225,7 @@ class TestAsyncJobs:
             element_types=["caption"],
             chunking_strategy="page",
             return_format="html",
+            mode="fast",
         )
         assert_matches_type(ParsingJob, job, path=["response"])
 

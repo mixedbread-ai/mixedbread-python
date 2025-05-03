@@ -46,7 +46,7 @@ class ResultChunk(BaseModel):
     """The full content of the chunk"""
 
     content_to_embed: str
-    """The content to be used for embedding"""
+    """The content of the chunk to embed"""
 
     elements: List[ResultChunkElement]
     """List of elements contained in this chunk"""

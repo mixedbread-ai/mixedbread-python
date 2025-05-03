@@ -20,15 +20,24 @@ class TestContent:
     @parametrize
     def test_method_create(self, client: Mixedbread) -> None:
         content = client.extractions.content.create(
-            content="content",
+            content="string",
             json_schema={"foo": "bar"},
+        )
+        assert_matches_type(ExtractionResult, content, path=["response"])
+
+    @parametrize
+    def test_method_create_with_all_params(self, client: Mixedbread) -> None:
+        content = client.extractions.content.create(
+            content="string",
+            json_schema={"foo": "bar"},
+            instructions="instructions",
         )
         assert_matches_type(ExtractionResult, content, path=["response"])
 
     @parametrize
     def test_raw_response_create(self, client: Mixedbread) -> None:
         response = client.extractions.content.with_raw_response.create(
-            content="content",
+            content="string",
             json_schema={"foo": "bar"},
         )
 
@@ -40,7 +49,7 @@ class TestContent:
     @parametrize
     def test_streaming_response_create(self, client: Mixedbread) -> None:
         with client.extractions.content.with_streaming_response.create(
-            content="content",
+            content="string",
             json_schema={"foo": "bar"},
         ) as response:
             assert not response.is_closed
@@ -58,15 +67,24 @@ class TestAsyncContent:
     @parametrize
     async def test_method_create(self, async_client: AsyncMixedbread) -> None:
         content = await async_client.extractions.content.create(
-            content="content",
+            content="string",
             json_schema={"foo": "bar"},
+        )
+        assert_matches_type(ExtractionResult, content, path=["response"])
+
+    @parametrize
+    async def test_method_create_with_all_params(self, async_client: AsyncMixedbread) -> None:
+        content = await async_client.extractions.content.create(
+            content="string",
+            json_schema={"foo": "bar"},
+            instructions="instructions",
         )
         assert_matches_type(ExtractionResult, content, path=["response"])
 
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncMixedbread) -> None:
         response = await async_client.extractions.content.with_raw_response.create(
-            content="content",
+            content="string",
             json_schema={"foo": "bar"},
         )
 
@@ -78,7 +96,7 @@ class TestAsyncContent:
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncMixedbread) -> None:
         async with async_client.extractions.content.with_streaming_response.create(
-            content="content",
+            content="string",
             json_schema={"foo": "bar"},
         ) as response:
             assert not response.is_closed

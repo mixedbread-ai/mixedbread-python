@@ -37,8 +37,8 @@ from ...types.vector_store import VectorStore
 from ...types.expires_after_param import ExpiresAfterParam
 from ...types.vector_store_delete_response import VectorStoreDeleteResponse
 from ...types.vector_store_search_response import VectorStoreSearchResponse
-from ...types.vector_store_file_search_options_param import VectorStoreFileSearchOptionsParam
 from ...types.vector_store_chunk_search_options_param import VectorStoreChunkSearchOptionsParam
+from ...types.vector_store_question_answering_response import VectorStoreQuestionAnsweringResponse
 
 __all__ = ["VectorStoresResource", "AsyncVectorStoresResource"]
 
@@ -325,7 +325,7 @@ class VectorStoresResource(SyncAPIResource):
         vector_store_ids: List[str],
         top_k: int | NotGiven = NOT_GIVEN,
         filters: Optional[vector_store_question_answering_params.Filters] | NotGiven = NOT_GIVEN,
-        search_options: VectorStoreFileSearchOptionsParam | NotGiven = NOT_GIVEN,
+        search_options: VectorStoreChunkSearchOptionsParam | NotGiven = NOT_GIVEN,
         stream: bool | NotGiven = NOT_GIVEN,
         qa_options: vector_store_question_answering_params.QaOptions | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -334,7 +334,7 @@ class VectorStoresResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> object:
+    ) -> VectorStoreQuestionAnsweringResponse:
         """Question answering
 
         Args:
@@ -380,7 +380,7 @@ class VectorStoresResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=object,
+            cast_to=VectorStoreQuestionAnsweringResponse,
         )
 
     def search(
@@ -735,7 +735,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         vector_store_ids: List[str],
         top_k: int | NotGiven = NOT_GIVEN,
         filters: Optional[vector_store_question_answering_params.Filters] | NotGiven = NOT_GIVEN,
-        search_options: VectorStoreFileSearchOptionsParam | NotGiven = NOT_GIVEN,
+        search_options: VectorStoreChunkSearchOptionsParam | NotGiven = NOT_GIVEN,
         stream: bool | NotGiven = NOT_GIVEN,
         qa_options: vector_store_question_answering_params.QaOptions | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -744,7 +744,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> object:
+    ) -> VectorStoreQuestionAnsweringResponse:
         """Question answering
 
         Args:
@@ -790,7 +790,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=object,
+            cast_to=VectorStoreQuestionAnsweringResponse,
         )
 
     async def search(
