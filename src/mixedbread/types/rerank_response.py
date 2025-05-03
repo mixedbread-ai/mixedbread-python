@@ -37,7 +37,7 @@ class RerankResponse(BaseModel):
         Literal[
             "list",
             "parsing_job",
-            "job",
+            "extraction_job",
             "embedding",
             "embedding_dict",
             "rank_result",
@@ -45,6 +45,8 @@ class RerankResponse(BaseModel):
             "vector_store",
             "vector_store.file",
             "api_key",
+            "data_source",
+            "data_source.connector",
         ]
     ] = None
     """The object type of the response"""

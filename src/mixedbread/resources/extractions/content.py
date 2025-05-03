@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Dict
+from typing import Dict, List, Union, Iterable, Optional
 
 import httpx
 
@@ -46,8 +46,9 @@ class ContentResource(SyncAPIResource):
     def create(
         self,
         *,
-        content: str,
+        content: Union[str, List[str], Iterable[content_create_params.ContentUnionMember2]],
         json_schema: Dict[str, object],
+        instructions: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -67,6 +68,8 @@ class ContentResource(SyncAPIResource):
 
           json_schema: The JSON schema to use for extraction
 
+          instructions: Additional instructions for the extraction
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -81,6 +84,7 @@ class ContentResource(SyncAPIResource):
                 {
                     "content": content,
                     "json_schema": json_schema,
+                    "instructions": instructions,
                 },
                 content_create_params.ContentCreateParams,
             ),
@@ -114,8 +118,9 @@ class AsyncContentResource(AsyncAPIResource):
     async def create(
         self,
         *,
-        content: str,
+        content: Union[str, List[str], Iterable[content_create_params.ContentUnionMember2]],
         json_schema: Dict[str, object],
+        instructions: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -135,6 +140,8 @@ class AsyncContentResource(AsyncAPIResource):
 
           json_schema: The JSON schema to use for extraction
 
+          instructions: Additional instructions for the extraction
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -149,6 +156,7 @@ class AsyncContentResource(AsyncAPIResource):
                 {
                     "content": content,
                     "json_schema": json_schema,
+                    "instructions": instructions,
                 },
                 content_create_params.ContentCreateParams,
             ),
