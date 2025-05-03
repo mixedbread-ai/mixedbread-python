@@ -109,6 +109,7 @@ class TestClient:
             rank_fields=["content", "title"],
             top_k=10,
             return_input=False,
+            rewrite_query=False,
         )
         assert_matches_type(RerankResponse, client_, path=["response"])
 
@@ -230,6 +231,7 @@ class TestAsyncClient:
             rank_fields=["content", "title"],
             top_k=10,
             return_input=False,
+            rewrite_query=False,
         )
         assert_matches_type(RerankResponse, client, path=["response"])
 

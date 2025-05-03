@@ -13,6 +13,7 @@ from mixedbread.types import (
     VectorStore,
     VectorStoreDeleteResponse,
     VectorStoreSearchResponse,
+    VectorStoreQuestionAnsweringResponse,
 )
 from mixedbread.pagination import SyncLimitOffset, AsyncLimitOffset
 
@@ -227,7 +228,7 @@ class TestVectorStores:
         vector_store = client.vector_stores.question_answering(
             vector_store_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
         )
-        assert_matches_type(object, vector_store, path=["response"])
+        assert_matches_type(VectorStoreQuestionAnsweringResponse, vector_store, path=["response"])
 
     @parametrize
     def test_method_question_answering_with_all_params(self, client: Mixedbread) -> None:
@@ -277,13 +278,11 @@ class TestVectorStores:
                 "score_threshold": 0,
                 "rewrite_query": True,
                 "return_metadata": True,
-                "return_chunks": True,
-                "chunks_per_file": 0,
             },
             stream=True,
             qa_options={"cite": True},
         )
-        assert_matches_type(object, vector_store, path=["response"])
+        assert_matches_type(VectorStoreQuestionAnsweringResponse, vector_store, path=["response"])
 
     @parametrize
     def test_raw_response_question_answering(self, client: Mixedbread) -> None:
@@ -294,7 +293,7 @@ class TestVectorStores:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         vector_store = response.parse()
-        assert_matches_type(object, vector_store, path=["response"])
+        assert_matches_type(VectorStoreQuestionAnsweringResponse, vector_store, path=["response"])
 
     @parametrize
     def test_streaming_response_question_answering(self, client: Mixedbread) -> None:
@@ -305,7 +304,7 @@ class TestVectorStores:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             vector_store = response.parse()
-            assert_matches_type(object, vector_store, path=["response"])
+            assert_matches_type(VectorStoreQuestionAnsweringResponse, vector_store, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -604,7 +603,7 @@ class TestAsyncVectorStores:
         vector_store = await async_client.vector_stores.question_answering(
             vector_store_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
         )
-        assert_matches_type(object, vector_store, path=["response"])
+        assert_matches_type(VectorStoreQuestionAnsweringResponse, vector_store, path=["response"])
 
     @parametrize
     async def test_method_question_answering_with_all_params(self, async_client: AsyncMixedbread) -> None:
@@ -654,13 +653,11 @@ class TestAsyncVectorStores:
                 "score_threshold": 0,
                 "rewrite_query": True,
                 "return_metadata": True,
-                "return_chunks": True,
-                "chunks_per_file": 0,
             },
             stream=True,
             qa_options={"cite": True},
         )
-        assert_matches_type(object, vector_store, path=["response"])
+        assert_matches_type(VectorStoreQuestionAnsweringResponse, vector_store, path=["response"])
 
     @parametrize
     async def test_raw_response_question_answering(self, async_client: AsyncMixedbread) -> None:
@@ -671,7 +668,7 @@ class TestAsyncVectorStores:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         vector_store = await response.parse()
-        assert_matches_type(object, vector_store, path=["response"])
+        assert_matches_type(VectorStoreQuestionAnsweringResponse, vector_store, path=["response"])
 
     @parametrize
     async def test_streaming_response_question_answering(self, async_client: AsyncMixedbread) -> None:
@@ -682,7 +679,7 @@ class TestAsyncVectorStores:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             vector_store = await response.parse()
-            assert_matches_type(object, vector_store, path=["response"])
+            assert_matches_type(VectorStoreQuestionAnsweringResponse, vector_store, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 

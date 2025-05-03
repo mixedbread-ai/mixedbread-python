@@ -5,10 +5,10 @@ from typing_extensions import Literal, TypeAlias
 
 from .._models import BaseModel
 
-__all__ = ["ScoredVectorStoreChunk", "Value", "ValueImageURLInput", "ValueImageURLInputImage", "ValueTextInput"]
+__all__ = ["ScoredVectorStoreChunk", "Value", "ValueImageURLInput", "ValueImageURLInputImageURL", "ValueTextInput"]
 
 
-class ValueImageURLInputImage(BaseModel):
+class ValueImageURLInputImageURL(BaseModel):
     url: str
     """The image URL. Can be either a URL or a Data URI."""
 
@@ -17,7 +17,7 @@ class ValueImageURLInput(BaseModel):
     type: Optional[Literal["image_url"]] = None
     """Input type identifier"""
 
-    image: ValueImageURLInputImage
+    image_url: ValueImageURLInputImageURL
     """The image input specification."""
 
 

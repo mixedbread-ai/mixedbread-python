@@ -36,3 +36,6 @@ class JobCreateParams(TypedDict, total=False):
 
     return_format: Literal["html", "markdown", "plain"]
     """The format of the returned content"""
+
+    mode: Literal["fast", "high_quality"]
+    """The strategy to use for OCR"""
