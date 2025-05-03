@@ -1,5 +1,36 @@
 # Changelog
 
+## 0.3.0 (2025-05-03)
+
+Full Changelog: [v0.2.1...v0.3.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.2.1...v0.3.0)
+
+### Features
+
+* **api:** update via SDK Studio ([b952b6a](https://github.com/mixedbread-ai/mixedbread-python/commit/b952b6ad1ee7324c6b327d943c5386d678728a54))
+
+
+### Bug Fixes
+
+* **perf:** optimize some hot paths ([bd06b56](https://github.com/mixedbread-ai/mixedbread-python/commit/bd06b5637169c1509e8fe985464648923059be1f))
+* **pydantic v1:** more robust ModelField.annotation check ([c2189be](https://github.com/mixedbread-ai/mixedbread-python/commit/c2189bec21bb2aa3939fa6fbf2101af83ac0d5e2))
+
+
+### Chores
+
+* broadly detect json family of content-type headers ([5c95291](https://github.com/mixedbread-ai/mixedbread-python/commit/5c952910272c0da69b007e99f0df942c7b9ccccd))
+* **ci:** add timeout thresholds for CI jobs ([01d43f8](https://github.com/mixedbread-ai/mixedbread-python/commit/01d43f8e077b0c44aa5c899a8929451f5043ed74))
+* **ci:** only use depot for staging repos ([3dc4f6c](https://github.com/mixedbread-ai/mixedbread-python/commit/3dc4f6c070134034b2a237e496a3faf8aab74119))
+* **client:** minor internal fixes ([b662363](https://github.com/mixedbread-ai/mixedbread-python/commit/b66236373a0d5f6c11b38c00c0b6ee553fb91137))
+* **internal:** base client updates ([0f1103d](https://github.com/mixedbread-ai/mixedbread-python/commit/0f1103d58e3c031470a580cac145aad06f6c9316))
+* **internal:** bump pyright version ([6850203](https://github.com/mixedbread-ai/mixedbread-python/commit/68502037ad57b8b20cfbd482151b5c7f3930e2d6))
+* **internal:** codegen related update ([121e724](https://github.com/mixedbread-ai/mixedbread-python/commit/121e7247c1943d414ea9d3bd72a6e4b0c8ec8e56))
+* **internal:** fix list file params ([9892446](https://github.com/mixedbread-ai/mixedbread-python/commit/9892446c896e49243fc52c060589fc54ad4ece45))
+* **internal:** import reformatting ([ecbe1ef](https://github.com/mixedbread-ai/mixedbread-python/commit/ecbe1ef4b2f62723ba1bcb5683b78ae48163e452))
+* **internal:** minor formatting changes ([c0fad7c](https://github.com/mixedbread-ai/mixedbread-python/commit/c0fad7c5489d0dc6f8daae839f0f85620d079d8e))
+* **internal:** refactor retries to not use recursion ([0b184e2](https://github.com/mixedbread-ai/mixedbread-python/commit/0b184e21de7946ba4ad826831a8adbe25fd126f6))
+* **internal:** update models test ([f4cffd9](https://github.com/mixedbread-ai/mixedbread-python/commit/f4cffd9b164310452f345b4d3508a6764671d750))
+* **internal:** update pyright settings ([0d8905c](https://github.com/mixedbread-ai/mixedbread-python/commit/0d8905c2e4865d9ac385146ad49d691c9cb49a14))
+
 ## 0.2.1 (2025-04-12)
 
 Full Changelog: [v0.2.0...v0.2.1](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.2.0...v0.2.1)
