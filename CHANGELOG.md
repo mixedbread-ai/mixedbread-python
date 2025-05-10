@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.3.1 (2025-05-10)
+
+Full Changelog: [v0.3.0...v0.3.1](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.3.0...v0.3.1)
+
+### Bug Fixes
+
+* **package:** support direct resource imports ([95be7c3](https://github.com/mixedbread-ai/mixedbread-python/commit/95be7c333ec101050db0539b2d955baa8347171b))
+
+
+### Chores
+
+* **internal:** avoid errors for isinstance checks on proxies ([08890c1](https://github.com/mixedbread-ai/mixedbread-python/commit/08890c17a698ba50acfc1343439d8311d6aaf2f5))
+* **internal:** avoid lint errors in pagination expressions ([0b0c882](https://github.com/mixedbread-ai/mixedbread-python/commit/0b0c8827c390e46ef302e10f0a1d504237ce6501))
+
 ## 0.3.0 (2025-05-03)
 
 Full Changelog: [v0.2.1...v0.3.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.2.1...v0.3.0)
