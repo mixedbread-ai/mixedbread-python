@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.3.2 (2025-05-16)
+
+Full Changelog: [v0.3.1...v0.3.2](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.3.1...v0.3.2)
+
+### Chores
+
+* **ci:** fix installation instructions ([3b8060d](https://github.com/mixedbread-ai/mixedbread-python/commit/3b8060de754d0b46c4aed0fb7a1f2fc20584d53d))
+* **ci:** upload sdks to package manager ([360dea4](https://github.com/mixedbread-ai/mixedbread-python/commit/360dea48d1c7d36ddb7e1a932d9a9ec759441a57))
+
 ## 0.3.1 (2025-05-10)
 
 Full Changelog: [v0.3.0...v0.3.1](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.3.0...v0.3.1)
