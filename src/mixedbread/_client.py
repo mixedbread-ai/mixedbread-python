@@ -36,7 +36,7 @@ from ._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from .resources import files, embeddings
+from .resources import chat, files, embeddings
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import APIStatusError, MixedbreadError
 from ._base_client import (
@@ -49,6 +49,7 @@ from .resources.parsing import parsing
 from .types.info_response import InfoResponse
 from .resources.extractions import extractions
 from .types.rerank_response import RerankResponse
+from .resources.data_sources import data_sources
 from .resources.vector_stores import vector_stores
 from .types.embedding_create_response import EmbeddingCreateResponse
 
@@ -76,6 +77,8 @@ class Mixedbread(SyncAPIClient):
     files: files.FilesResource
     extractions: extractions.ExtractionsResource
     embeddings: embeddings.EmbeddingsResource
+    chat: chat.ChatResource
+    data_sources: data_sources.DataSourcesResource
     with_raw_response: MixedbreadWithRawResponse
     with_streaming_response: MixedbreadWithStreamedResponse
 
@@ -162,6 +165,8 @@ class Mixedbread(SyncAPIClient):
         self.files = files.FilesResource(self)
         self.extractions = extractions.ExtractionsResource(self)
         self.embeddings = embeddings.EmbeddingsResource(self)
+        self.chat = chat.ChatResource(self)
+        self.data_sources = data_sources.DataSourcesResource(self)
         self.with_raw_response = MixedbreadWithRawResponse(self)
         self.with_streaming_response = MixedbreadWithStreamedResponse(self)
 
@@ -437,6 +442,8 @@ class AsyncMixedbread(AsyncAPIClient):
     files: files.AsyncFilesResource
     extractions: extractions.AsyncExtractionsResource
     embeddings: embeddings.AsyncEmbeddingsResource
+    chat: chat.AsyncChatResource
+    data_sources: data_sources.AsyncDataSourcesResource
     with_raw_response: AsyncMixedbreadWithRawResponse
     with_streaming_response: AsyncMixedbreadWithStreamedResponse
 
@@ -523,6 +530,8 @@ class AsyncMixedbread(AsyncAPIClient):
         self.files = files.AsyncFilesResource(self)
         self.extractions = extractions.AsyncExtractionsResource(self)
         self.embeddings = embeddings.AsyncEmbeddingsResource(self)
+        self.chat = chat.AsyncChatResource(self)
+        self.data_sources = data_sources.AsyncDataSourcesResource(self)
         self.with_raw_response = AsyncMixedbreadWithRawResponse(self)
         self.with_streaming_response = AsyncMixedbreadWithStreamedResponse(self)
 
@@ -799,6 +808,8 @@ class MixedbreadWithRawResponse:
         self.files = files.FilesResourceWithRawResponse(client.files)
         self.extractions = extractions.ExtractionsResourceWithRawResponse(client.extractions)
         self.embeddings = embeddings.EmbeddingsResourceWithRawResponse(client.embeddings)
+        self.chat = chat.ChatResourceWithRawResponse(client.chat)
+        self.data_sources = data_sources.DataSourcesResourceWithRawResponse(client.data_sources)
 
         self.embed = to_raw_response_wrapper(
             client.embed,
@@ -818,6 +829,8 @@ class AsyncMixedbreadWithRawResponse:
         self.files = files.AsyncFilesResourceWithRawResponse(client.files)
         self.extractions = extractions.AsyncExtractionsResourceWithRawResponse(client.extractions)
         self.embeddings = embeddings.AsyncEmbeddingsResourceWithRawResponse(client.embeddings)
+        self.chat = chat.AsyncChatResourceWithRawResponse(client.chat)
+        self.data_sources = data_sources.AsyncDataSourcesResourceWithRawResponse(client.data_sources)
 
         self.embed = async_to_raw_response_wrapper(
             client.embed,
@@ -837,6 +850,8 @@ class MixedbreadWithStreamedResponse:
         self.files = files.FilesResourceWithStreamingResponse(client.files)
         self.extractions = extractions.ExtractionsResourceWithStreamingResponse(client.extractions)
         self.embeddings = embeddings.EmbeddingsResourceWithStreamingResponse(client.embeddings)
+        self.chat = chat.ChatResourceWithStreamingResponse(client.chat)
+        self.data_sources = data_sources.DataSourcesResourceWithStreamingResponse(client.data_sources)
 
         self.embed = to_streamed_response_wrapper(
             client.embed,
@@ -856,6 +871,8 @@ class AsyncMixedbreadWithStreamedResponse:
         self.files = files.AsyncFilesResourceWithStreamingResponse(client.files)
         self.extractions = extractions.AsyncExtractionsResourceWithStreamingResponse(client.extractions)
         self.embeddings = embeddings.AsyncEmbeddingsResourceWithStreamingResponse(client.embeddings)
+        self.chat = chat.AsyncChatResourceWithStreamingResponse(client.chat)
+        self.data_sources = data_sources.AsyncDataSourcesResourceWithStreamingResponse(client.data_sources)
 
         self.embed = async_to_streamed_response_wrapper(
             client.embed,
