@@ -1,7 +1,7 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 from typing import Optional
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing_extensions import Literal
 
 from ..._models import BaseModel
@@ -31,7 +31,7 @@ class DataSourceConnector(BaseModel):
     metadata: object
     """The metadata of the connector"""
 
-    polling_interval: str
+    polling_interval: timedelta
     """The polling interval of the connector"""
 
     started_at: Optional[datetime] = None

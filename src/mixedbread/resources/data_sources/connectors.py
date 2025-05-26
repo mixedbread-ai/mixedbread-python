@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from typing import Dict, Optional
+from datetime import timedelta
 
 import httpx
 
@@ -53,7 +54,7 @@ class ConnectorsResource(SyncAPIResource):
         name: str | NotGiven = NOT_GIVEN,
         trigger_sync: bool | NotGiven = NOT_GIVEN,
         metadata: object | NotGiven = NOT_GIVEN,
-        polling_interval: Optional[str] | NotGiven = NOT_GIVEN,
+        polling_interval: Optional[timedelta] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -163,7 +164,7 @@ class ConnectorsResource(SyncAPIResource):
         name: Optional[str] | NotGiven = NOT_GIVEN,
         metadata: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
         trigger_sync: Optional[bool] | NotGiven = NOT_GIVEN,
-        polling_interval: Optional[str] | NotGiven = NOT_GIVEN,
+        polling_interval: Optional[timedelta] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -353,7 +354,7 @@ class AsyncConnectorsResource(AsyncAPIResource):
         name: str | NotGiven = NOT_GIVEN,
         trigger_sync: bool | NotGiven = NOT_GIVEN,
         metadata: object | NotGiven = NOT_GIVEN,
-        polling_interval: Optional[str] | NotGiven = NOT_GIVEN,
+        polling_interval: Optional[timedelta] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -463,7 +464,7 @@ class AsyncConnectorsResource(AsyncAPIResource):
         name: Optional[str] | NotGiven = NOT_GIVEN,
         metadata: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
         trigger_sync: Optional[bool] | NotGiven = NOT_GIVEN,
-        polling_interval: Optional[str] | NotGiven = NOT_GIVEN,
+        polling_interval: Optional[timedelta] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
