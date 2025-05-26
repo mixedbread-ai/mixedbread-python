@@ -6,10 +6,10 @@ from typing_extensions import Literal
 
 from .._models import BaseModel
 
-__all__ = ["DataSourceUpdateResponse", "AuthParams"]
+__all__ = ["DataSourceOauth2Params"]
 
 
-class AuthParams(BaseModel):
+class DataSourceOauth2Params(BaseModel):
     type: Optional[Literal["oauth2"]] = None
 
     created_at: Optional[datetime] = None
@@ -38,29 +38,3 @@ class AuthParams(BaseModel):
 
     expires_on: Optional[datetime] = None
     """The OAuth2 token expiration timestamp"""
-
-
-class DataSourceUpdateResponse(BaseModel):
-    id: str
-    """The ID of the data source"""
-
-    created_at: datetime
-    """The creation time of the data source"""
-
-    updated_at: datetime
-    """The last update time of the data source"""
-
-    type: Literal["notion", "linear"]
-    """The type of data source"""
-
-    name: str
-    """The name of the data source"""
-
-    metadata: object
-    """The metadata of the data source"""
-
-    auth_params: Optional[AuthParams] = None
-    """Authentication parameters for a OAuth data source."""
-
-    object: Optional[Literal["data_source"]] = None
-    """The type of the object"""

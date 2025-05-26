@@ -24,6 +24,14 @@ from .parsing import (
     ParsingResourceWithStreamingResponse,
     AsyncParsingResourceWithStreamingResponse,
 )
+from .api_keys import (
+    APIKeysResource,
+    AsyncAPIKeysResource,
+    APIKeysResourceWithRawResponse,
+    AsyncAPIKeysResourceWithRawResponse,
+    APIKeysResourceWithStreamingResponse,
+    AsyncAPIKeysResourceWithStreamingResponse,
+)
 from .embeddings import (
     EmbeddingsResource,
     AsyncEmbeddingsResource,
@@ -100,4 +108,10 @@ __all__ = [
     "AsyncDataSourcesResourceWithRawResponse",
     "DataSourcesResourceWithStreamingResponse",
     "AsyncDataSourcesResourceWithStreamingResponse",
+    "APIKeysResource",
+    "AsyncAPIKeysResource",
+    "APIKeysResourceWithRawResponse",
+    "AsyncAPIKeysResourceWithRawResponse",
+    "APIKeysResourceWithStreamingResponse",
+    "AsyncAPIKeysResourceWithStreamingResponse",
 ]

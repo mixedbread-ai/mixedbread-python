@@ -10,11 +10,8 @@ import pytest
 from mixedbread import Mixedbread, AsyncMixedbread
 from tests.utils import assert_matches_type
 from mixedbread.types import (
-    DataSourceListResponse,
-    DataSourceCreateResponse,
+    DataSource,
     DataSourceDeleteResponse,
-    DataSourceUpdateResponse,
-    DataSourceRetrieveResponse,
 )
 from mixedbread._utils import parse_datetime
 from mixedbread.pagination import SyncLimitOffset, AsyncLimitOffset
@@ -31,7 +28,7 @@ class TestDataSources:
             type="notion",
             name="name",
         )
-        assert_matches_type(DataSourceCreateResponse, data_source, path=["response"])
+        assert_matches_type(DataSource, data_source, path=["response"])
 
     @parametrize
     def test_method_create_with_all_params(self, client: Mixedbread) -> None:
@@ -52,7 +49,7 @@ class TestDataSources:
                 "expires_on": parse_datetime("2019-12-27T18:11:19.117Z"),
             },
         )
-        assert_matches_type(DataSourceCreateResponse, data_source, path=["response"])
+        assert_matches_type(DataSource, data_source, path=["response"])
 
     @parametrize
     def test_raw_response_create(self, client: Mixedbread) -> None:
@@ -64,7 +61,7 @@ class TestDataSources:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         data_source = response.parse()
-        assert_matches_type(DataSourceCreateResponse, data_source, path=["response"])
+        assert_matches_type(DataSource, data_source, path=["response"])
 
     @parametrize
     def test_streaming_response_create(self, client: Mixedbread) -> None:
@@ -76,7 +73,7 @@ class TestDataSources:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             data_source = response.parse()
-            assert_matches_type(DataSourceCreateResponse, data_source, path=["response"])
+            assert_matches_type(DataSource, data_source, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -85,7 +82,7 @@ class TestDataSources:
         data_source = client.data_sources.retrieve(
             "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(DataSourceRetrieveResponse, data_source, path=["response"])
+        assert_matches_type(DataSource, data_source, path=["response"])
 
     @parametrize
     def test_raw_response_retrieve(self, client: Mixedbread) -> None:
@@ -96,7 +93,7 @@ class TestDataSources:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         data_source = response.parse()
-        assert_matches_type(DataSourceRetrieveResponse, data_source, path=["response"])
+        assert_matches_type(DataSource, data_source, path=["response"])
 
     @parametrize
     def test_streaming_response_retrieve(self, client: Mixedbread) -> None:
@@ -107,7 +104,7 @@ class TestDataSources:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             data_source = response.parse()
-            assert_matches_type(DataSourceRetrieveResponse, data_source, path=["response"])
+            assert_matches_type(DataSource, data_source, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -123,7 +120,7 @@ class TestDataSources:
         data_source = client.data_sources.update(
             data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(DataSourceUpdateResponse, data_source, path=["response"])
+        assert_matches_type(DataSource, data_source, path=["response"])
 
     @parametrize
     def test_method_update_with_all_params(self, client: Mixedbread) -> None:
@@ -144,7 +141,7 @@ class TestDataSources:
                 "expires_on": parse_datetime("2019-12-27T18:11:19.117Z"),
             },
         )
-        assert_matches_type(DataSourceUpdateResponse, data_source, path=["response"])
+        assert_matches_type(DataSource, data_source, path=["response"])
 
     @parametrize
     def test_raw_response_update(self, client: Mixedbread) -> None:
@@ -155,7 +152,7 @@ class TestDataSources:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         data_source = response.parse()
-        assert_matches_type(DataSourceUpdateResponse, data_source, path=["response"])
+        assert_matches_type(DataSource, data_source, path=["response"])
 
     @parametrize
     def test_streaming_response_update(self, client: Mixedbread) -> None:
@@ -166,7 +163,7 @@ class TestDataSources:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             data_source = response.parse()
-            assert_matches_type(DataSourceUpdateResponse, data_source, path=["response"])
+            assert_matches_type(DataSource, data_source, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -180,7 +177,7 @@ class TestDataSources:
     @parametrize
     def test_method_list(self, client: Mixedbread) -> None:
         data_source = client.data_sources.list()
-        assert_matches_type(SyncLimitOffset[DataSourceListResponse], data_source, path=["response"])
+        assert_matches_type(SyncLimitOffset[DataSource], data_source, path=["response"])
 
     @parametrize
     def test_method_list_with_all_params(self, client: Mixedbread) -> None:
@@ -188,7 +185,7 @@ class TestDataSources:
             limit=1000,
             offset=0,
         )
-        assert_matches_type(SyncLimitOffset[DataSourceListResponse], data_source, path=["response"])
+        assert_matches_type(SyncLimitOffset[DataSource], data_source, path=["response"])
 
     @parametrize
     def test_raw_response_list(self, client: Mixedbread) -> None:
@@ -197,7 +194,7 @@ class TestDataSources:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         data_source = response.parse()
-        assert_matches_type(SyncLimitOffset[DataSourceListResponse], data_source, path=["response"])
+        assert_matches_type(SyncLimitOffset[DataSource], data_source, path=["response"])
 
     @parametrize
     def test_streaming_response_list(self, client: Mixedbread) -> None:
@@ -206,7 +203,7 @@ class TestDataSources:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             data_source = response.parse()
-            assert_matches_type(SyncLimitOffset[DataSourceListResponse], data_source, path=["response"])
+            assert_matches_type(SyncLimitOffset[DataSource], data_source, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -258,7 +255,7 @@ class TestAsyncDataSources:
             type="notion",
             name="name",
         )
-        assert_matches_type(DataSourceCreateResponse, data_source, path=["response"])
+        assert_matches_type(DataSource, data_source, path=["response"])
 
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncMixedbread) -> None:
@@ -279,7 +276,7 @@ class TestAsyncDataSources:
                 "expires_on": parse_datetime("2019-12-27T18:11:19.117Z"),
             },
         )
-        assert_matches_type(DataSourceCreateResponse, data_source, path=["response"])
+        assert_matches_type(DataSource, data_source, path=["response"])
 
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncMixedbread) -> None:
@@ -291,7 +288,7 @@ class TestAsyncDataSources:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         data_source = await response.parse()
-        assert_matches_type(DataSourceCreateResponse, data_source, path=["response"])
+        assert_matches_type(DataSource, data_source, path=["response"])
 
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncMixedbread) -> None:
@@ -303,7 +300,7 @@ class TestAsyncDataSources:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             data_source = await response.parse()
-            assert_matches_type(DataSourceCreateResponse, data_source, path=["response"])
+            assert_matches_type(DataSource, data_source, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -312,7 +309,7 @@ class TestAsyncDataSources:
         data_source = await async_client.data_sources.retrieve(
             "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(DataSourceRetrieveResponse, data_source, path=["response"])
+        assert_matches_type(DataSource, data_source, path=["response"])
 
     @parametrize
     async def test_raw_response_retrieve(self, async_client: AsyncMixedbread) -> None:
@@ -323,7 +320,7 @@ class TestAsyncDataSources:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         data_source = await response.parse()
-        assert_matches_type(DataSourceRetrieveResponse, data_source, path=["response"])
+        assert_matches_type(DataSource, data_source, path=["response"])
 
     @parametrize
     async def test_streaming_response_retrieve(self, async_client: AsyncMixedbread) -> None:
@@ -334,7 +331,7 @@ class TestAsyncDataSources:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             data_source = await response.parse()
-            assert_matches_type(DataSourceRetrieveResponse, data_source, path=["response"])
+            assert_matches_type(DataSource, data_source, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -350,7 +347,7 @@ class TestAsyncDataSources:
         data_source = await async_client.data_sources.update(
             data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(DataSourceUpdateResponse, data_source, path=["response"])
+        assert_matches_type(DataSource, data_source, path=["response"])
 
     @parametrize
     async def test_method_update_with_all_params(self, async_client: AsyncMixedbread) -> None:
@@ -371,7 +368,7 @@ class TestAsyncDataSources:
                 "expires_on": parse_datetime("2019-12-27T18:11:19.117Z"),
             },
         )
-        assert_matches_type(DataSourceUpdateResponse, data_source, path=["response"])
+        assert_matches_type(DataSource, data_source, path=["response"])
 
     @parametrize
     async def test_raw_response_update(self, async_client: AsyncMixedbread) -> None:
@@ -382,7 +379,7 @@ class TestAsyncDataSources:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         data_source = await response.parse()
-        assert_matches_type(DataSourceUpdateResponse, data_source, path=["response"])
+        assert_matches_type(DataSource, data_source, path=["response"])
 
     @parametrize
     async def test_streaming_response_update(self, async_client: AsyncMixedbread) -> None:
@@ -393,7 +390,7 @@ class TestAsyncDataSources:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             data_source = await response.parse()
-            assert_matches_type(DataSourceUpdateResponse, data_source, path=["response"])
+            assert_matches_type(DataSource, data_source, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -407,7 +404,7 @@ class TestAsyncDataSources:
     @parametrize
     async def test_method_list(self, async_client: AsyncMixedbread) -> None:
         data_source = await async_client.data_sources.list()
-        assert_matches_type(AsyncLimitOffset[DataSourceListResponse], data_source, path=["response"])
+        assert_matches_type(AsyncLimitOffset[DataSource], data_source, path=["response"])
 
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncMixedbread) -> None:
@@ -415,7 +412,7 @@ class TestAsyncDataSources:
             limit=1000,
             offset=0,
         )
-        assert_matches_type(AsyncLimitOffset[DataSourceListResponse], data_source, path=["response"])
+        assert_matches_type(AsyncLimitOffset[DataSource], data_source, path=["response"])
 
     @parametrize
     async def test_raw_response_list(self, async_client: AsyncMixedbread) -> None:
@@ -424,7 +421,7 @@ class TestAsyncDataSources:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         data_source = await response.parse()
-        assert_matches_type(AsyncLimitOffset[DataSourceListResponse], data_source, path=["response"])
+        assert_matches_type(AsyncLimitOffset[DataSource], data_source, path=["response"])
 
     @parametrize
     async def test_streaming_response_list(self, async_client: AsyncMixedbread) -> None:
@@ -433,7 +430,7 @@ class TestAsyncDataSources:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             data_source = await response.parse()
-            assert_matches_type(AsyncLimitOffset[DataSourceListResponse], data_source, path=["response"])
+            assert_matches_type(AsyncLimitOffset[DataSource], data_source, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 

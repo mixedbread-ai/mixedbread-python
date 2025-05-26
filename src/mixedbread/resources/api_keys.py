@@ -2,86 +2,75 @@
 
 from __future__ import annotations
 
-from typing import List, Optional
-from typing_extensions import Literal
+from typing import Union
+from datetime import datetime
 
 import httpx
 
-from ..._types import NOT_GIVEN, Body, Query, Headers, NotGiven
-from ..._utils import maybe_transform, async_maybe_transform
-from ..._compat import cached_property
-from ..._resource import SyncAPIResource, AsyncAPIResource
-from ..._response import (
+from ..types import api_key_list_params, api_key_create_params
+from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
+from .._utils import maybe_transform, async_maybe_transform
+from .._compat import cached_property
+from .._resource import SyncAPIResource, AsyncAPIResource
+from .._response import (
     to_raw_response_wrapper,
     to_streamed_response_wrapper,
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ...pagination import SyncLimitOffset, AsyncLimitOffset
-from ..._base_client import AsyncPaginator, make_request_options
-from ...types.parsing import ReturnFormat, ChunkingStrategy, job_list_params, job_create_params
-from ...types.parsing.parsing_job import ParsingJob
-from ...types.parsing.element_type import ElementType
-from ...types.parsing.return_format import ReturnFormat
-from ...types.parsing.chunking_strategy import ChunkingStrategy
-from ...types.parsing.job_list_response import JobListResponse
-from ...types.parsing.job_delete_response import JobDeleteResponse
+from ..pagination import SyncLimitOffset, AsyncLimitOffset
+from .._base_client import AsyncPaginator, make_request_options
+from ..types.api_key import APIKey
+from ..types.api_key_created import APIKeyCreated
+from ..types.api_key_delete_response import APIKeyDeleteResponse
 
-__all__ = ["JobsResource", "AsyncJobsResource"]
+__all__ = ["APIKeysResource", "AsyncAPIKeysResource"]
 
 
-class JobsResource(SyncAPIResource):
+class APIKeysResource(SyncAPIResource):
     @cached_property
-    def with_raw_response(self) -> JobsResourceWithRawResponse:
+    def with_raw_response(self) -> APIKeysResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
         For more information, see https://www.github.com/mixedbread-ai/mixedbread-python#accessing-raw-response-data-eg-headers
         """
-        return JobsResourceWithRawResponse(self)
+        return APIKeysResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> JobsResourceWithStreamingResponse:
+    def with_streaming_response(self) -> APIKeysResourceWithStreamingResponse:
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
         For more information, see https://www.github.com/mixedbread-ai/mixedbread-python#with_streaming_response
         """
-        return JobsResourceWithStreamingResponse(self)
+        return APIKeysResourceWithStreamingResponse(self)
 
     def create(
         self,
         *,
-        file_id: str,
-        element_types: Optional[List[ElementType]] | NotGiven = NOT_GIVEN,
-        chunking_strategy: ChunkingStrategy | NotGiven = NOT_GIVEN,
-        return_format: ReturnFormat | NotGiven = NOT_GIVEN,
-        mode: Literal["fast", "high_quality"] | NotGiven = NOT_GIVEN,
+        name: str | NotGiven = NOT_GIVEN,
+        expires_at: Union[str, datetime, None] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ParsingJob:
+    ) -> APIKeyCreated:
         """
-        Start a parse job for the provided file.
+        Create a new API key.
 
-        Args: params: The parameters for creating a parse job.
+        Args: params: The parameters for creating the API key.
 
-        Returns: The created parsing job.
+        Returns: ApiKeyCreated: The response containing the details of the created API
+        key.
 
         Args:
-          file_id: The ID of the file to parse
+          name: A name/description for the API key
 
-          element_types: The elements to extract from the document
-
-          chunking_strategy: The strategy to use for chunking the content
-
-          return_format: The format of the returned content
-
-          mode: The strategy to use for OCR
+          expires_at: Optional expiration datetime
 
           extra_headers: Send extra headers
 
@@ -92,26 +81,23 @@ class JobsResource(SyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return self._post(
-            "/v1/parsing/jobs",
+            "/v1/api-keys",
             body=maybe_transform(
                 {
-                    "file_id": file_id,
-                    "element_types": element_types,
-                    "chunking_strategy": chunking_strategy,
-                    "return_format": return_format,
-                    "mode": mode,
+                    "name": name,
+                    "expires_at": expires_at,
                 },
-                job_create_params.JobCreateParams,
+                api_key_create_params.APIKeyCreateParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ParsingJob,
+            cast_to=APIKeyCreated,
         )
 
     def retrieve(
         self,
-        job_id: str,
+        api_key_id: str,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -119,16 +105,16 @@ class JobsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ParsingJob:
+    ) -> APIKey:
         """
-        Get detailed information about a specific parse job.
+        Retrieve details of a specific API key by its ID.
 
-        Args: job_id: The ID of the parse job.
+        Args: api_key_id: The ID of the API key to retrieve.
 
-        Returns: Detailed information about the parse job.
+        Returns: ApiKey: The response containing the API key details.
 
         Args:
-          job_id: The ID of the parse job to retrieve
+          api_key_id: The ID of the API key to retrieve
 
           extra_headers: Send extra headers
 
@@ -138,14 +124,14 @@ class JobsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not job_id:
-            raise ValueError(f"Expected a non-empty value for `job_id` but received {job_id!r}")
+        if not api_key_id:
+            raise ValueError(f"Expected a non-empty value for `api_key_id` but received {api_key_id!r}")
         return self._get(
-            f"/v1/parsing/jobs/{job_id}",
+            f"/v1/api-keys/{api_key_id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ParsingJob,
+            cast_to=APIKey,
         )
 
     def list(
@@ -159,14 +145,13 @@ class JobsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> SyncLimitOffset[JobListResponse]:
-        """List parsing jobs with pagination.
+    ) -> SyncLimitOffset[APIKey]:
+        """
+        List all API keys for the authenticated user.
 
-        Args: limit: The number of items to return.
+        Args: pagination: The pagination options
 
-        offset: The number of items to skip.
-
-        Returns: List of parsing jobs with pagination.
+        Returns: A list of API keys belonging to the user.
 
         Args:
           limit: Maximum number of items to return per page
@@ -182,8 +167,8 @@ class JobsResource(SyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return self._get_api_list(
-            "/v1/parsing/jobs",
-            page=SyncLimitOffset[JobListResponse],
+            "/v1/api-keys",
+            page=SyncLimitOffset[APIKey],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -194,15 +179,15 @@ class JobsResource(SyncAPIResource):
                         "limit": limit,
                         "offset": offset,
                     },
-                    job_list_params.JobListParams,
+                    api_key_list_params.APIKeyListParams,
                 ),
             ),
-            model=JobListResponse,
+            model=APIKey,
         )
 
     def delete(
         self,
-        job_id: str,
+        api_key_id: str,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -210,16 +195,17 @@ class JobsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> JobDeleteResponse:
+    ) -> APIKeyDeleteResponse:
         """
-        Delete a specific parse job.
+        Delete a specific API key by its ID.
 
-        Args: job_id: The ID of the parse job to delete.
+        Args: api_key_id: The ID of the API key to delete.
 
-        Returns: The deleted parsing job.
+        Returns: ApiKeyDeleted: The response containing the details of the deleted API
+        key.
 
         Args:
-          job_id: The ID of the parse job to delete
+          api_key_id: The ID of the API key to delete
 
           extra_headers: Send extra headers
 
@@ -229,19 +215,19 @@ class JobsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not job_id:
-            raise ValueError(f"Expected a non-empty value for `job_id` but received {job_id!r}")
+        if not api_key_id:
+            raise ValueError(f"Expected a non-empty value for `api_key_id` but received {api_key_id!r}")
         return self._delete(
-            f"/v1/parsing/jobs/{job_id}",
+            f"/v1/api-keys/{api_key_id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=JobDeleteResponse,
+            cast_to=APIKeyDeleteResponse,
         )
 
-    def cancel(
+    def reroll(
         self,
-        job_id: str,
+        api_key_id: str,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -249,16 +235,19 @@ class JobsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ParsingJob:
+    ) -> APIKeyCreated:
         """
-        Cancel a specific parse job.
+        Reroll the secret for a specific API key by its ID.
 
-        Args: job_id: The ID of the parse job to cancel.
+        This generates a new secret key, invalidating the old one.
 
-        Returns: The cancelled parsing job.
+        Args: api_key_id: The ID of the API key to reroll.
+
+        Returns: ApiKeyCreated: The response containing the API key details with the new
+        secret key.
 
         Args:
-          job_id: The ID of the parse job to cancel
+          api_key_id: The ID of the API key to reroll
 
           extra_headers: Send extra headers
 
@@ -268,69 +257,100 @@ class JobsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not job_id:
-            raise ValueError(f"Expected a non-empty value for `job_id` but received {job_id!r}")
-        return self._patch(
-            f"/v1/parsing/jobs/{job_id}",
+        if not api_key_id:
+            raise ValueError(f"Expected a non-empty value for `api_key_id` but received {api_key_id!r}")
+        return self._post(
+            f"/v1/api-keys/{api_key_id}/reroll",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ParsingJob,
+            cast_to=APIKeyCreated,
+        )
+
+    def revoke(
+        self,
+        api_key_id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> APIKey:
+        """
+        Revoke a specific API key by its ID.
+
+        Args: api_key_id: The ID of the API key to revoke.
+
+        Returns: ApiKey: The response containing the details of the revoked API key.
+
+        Args:
+          api_key_id: The ID of the API key to revoke
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not api_key_id:
+            raise ValueError(f"Expected a non-empty value for `api_key_id` but received {api_key_id!r}")
+        return self._post(
+            f"/v1/api-keys/{api_key_id}/revoke",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=APIKey,
         )
 
 
-class AsyncJobsResource(AsyncAPIResource):
+class AsyncAPIKeysResource(AsyncAPIResource):
     @cached_property
-    def with_raw_response(self) -> AsyncJobsResourceWithRawResponse:
+    def with_raw_response(self) -> AsyncAPIKeysResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
         For more information, see https://www.github.com/mixedbread-ai/mixedbread-python#accessing-raw-response-data-eg-headers
         """
-        return AsyncJobsResourceWithRawResponse(self)
+        return AsyncAPIKeysResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> AsyncJobsResourceWithStreamingResponse:
+    def with_streaming_response(self) -> AsyncAPIKeysResourceWithStreamingResponse:
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
         For more information, see https://www.github.com/mixedbread-ai/mixedbread-python#with_streaming_response
         """
-        return AsyncJobsResourceWithStreamingResponse(self)
+        return AsyncAPIKeysResourceWithStreamingResponse(self)
 
     async def create(
         self,
         *,
-        file_id: str,
-        element_types: Optional[List[ElementType]] | NotGiven = NOT_GIVEN,
-        chunking_strategy: ChunkingStrategy | NotGiven = NOT_GIVEN,
-        return_format: ReturnFormat | NotGiven = NOT_GIVEN,
-        mode: Literal["fast", "high_quality"] | NotGiven = NOT_GIVEN,
+        name: str | NotGiven = NOT_GIVEN,
+        expires_at: Union[str, datetime, None] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ParsingJob:
+    ) -> APIKeyCreated:
         """
-        Start a parse job for the provided file.
+        Create a new API key.
 
-        Args: params: The parameters for creating a parse job.
+        Args: params: The parameters for creating the API key.
 
-        Returns: The created parsing job.
+        Returns: ApiKeyCreated: The response containing the details of the created API
+        key.
 
         Args:
-          file_id: The ID of the file to parse
+          name: A name/description for the API key
 
-          element_types: The elements to extract from the document
-
-          chunking_strategy: The strategy to use for chunking the content
-
-          return_format: The format of the returned content
-
-          mode: The strategy to use for OCR
+          expires_at: Optional expiration datetime
 
           extra_headers: Send extra headers
 
@@ -341,26 +361,23 @@ class AsyncJobsResource(AsyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return await self._post(
-            "/v1/parsing/jobs",
+            "/v1/api-keys",
             body=await async_maybe_transform(
                 {
-                    "file_id": file_id,
-                    "element_types": element_types,
-                    "chunking_strategy": chunking_strategy,
-                    "return_format": return_format,
-                    "mode": mode,
+                    "name": name,
+                    "expires_at": expires_at,
                 },
-                job_create_params.JobCreateParams,
+                api_key_create_params.APIKeyCreateParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ParsingJob,
+            cast_to=APIKeyCreated,
         )
 
     async def retrieve(
         self,
-        job_id: str,
+        api_key_id: str,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -368,16 +385,16 @@ class AsyncJobsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ParsingJob:
+    ) -> APIKey:
         """
-        Get detailed information about a specific parse job.
+        Retrieve details of a specific API key by its ID.
 
-        Args: job_id: The ID of the parse job.
+        Args: api_key_id: The ID of the API key to retrieve.
 
-        Returns: Detailed information about the parse job.
+        Returns: ApiKey: The response containing the API key details.
 
         Args:
-          job_id: The ID of the parse job to retrieve
+          api_key_id: The ID of the API key to retrieve
 
           extra_headers: Send extra headers
 
@@ -387,14 +404,14 @@ class AsyncJobsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not job_id:
-            raise ValueError(f"Expected a non-empty value for `job_id` but received {job_id!r}")
+        if not api_key_id:
+            raise ValueError(f"Expected a non-empty value for `api_key_id` but received {api_key_id!r}")
         return await self._get(
-            f"/v1/parsing/jobs/{job_id}",
+            f"/v1/api-keys/{api_key_id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ParsingJob,
+            cast_to=APIKey,
         )
 
     def list(
@@ -408,14 +425,13 @@ class AsyncJobsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> AsyncPaginator[JobListResponse, AsyncLimitOffset[JobListResponse]]:
-        """List parsing jobs with pagination.
+    ) -> AsyncPaginator[APIKey, AsyncLimitOffset[APIKey]]:
+        """
+        List all API keys for the authenticated user.
 
-        Args: limit: The number of items to return.
+        Args: pagination: The pagination options
 
-        offset: The number of items to skip.
-
-        Returns: List of parsing jobs with pagination.
+        Returns: A list of API keys belonging to the user.
 
         Args:
           limit: Maximum number of items to return per page
@@ -431,8 +447,8 @@ class AsyncJobsResource(AsyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return self._get_api_list(
-            "/v1/parsing/jobs",
-            page=AsyncLimitOffset[JobListResponse],
+            "/v1/api-keys",
+            page=AsyncLimitOffset[APIKey],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -443,15 +459,15 @@ class AsyncJobsResource(AsyncAPIResource):
                         "limit": limit,
                         "offset": offset,
                     },
-                    job_list_params.JobListParams,
+                    api_key_list_params.APIKeyListParams,
                 ),
             ),
-            model=JobListResponse,
+            model=APIKey,
         )
 
     async def delete(
         self,
-        job_id: str,
+        api_key_id: str,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -459,16 +475,17 @@ class AsyncJobsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> JobDeleteResponse:
+    ) -> APIKeyDeleteResponse:
         """
-        Delete a specific parse job.
+        Delete a specific API key by its ID.
 
-        Args: job_id: The ID of the parse job to delete.
+        Args: api_key_id: The ID of the API key to delete.
 
-        Returns: The deleted parsing job.
+        Returns: ApiKeyDeleted: The response containing the details of the deleted API
+        key.
 
         Args:
-          job_id: The ID of the parse job to delete
+          api_key_id: The ID of the API key to delete
 
           extra_headers: Send extra headers
 
@@ -478,19 +495,19 @@ class AsyncJobsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not job_id:
-            raise ValueError(f"Expected a non-empty value for `job_id` but received {job_id!r}")
+        if not api_key_id:
+            raise ValueError(f"Expected a non-empty value for `api_key_id` but received {api_key_id!r}")
         return await self._delete(
-            f"/v1/parsing/jobs/{job_id}",
+            f"/v1/api-keys/{api_key_id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=JobDeleteResponse,
+            cast_to=APIKeyDeleteResponse,
         )
 
-    async def cancel(
+    async def reroll(
         self,
-        job_id: str,
+        api_key_id: str,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -498,16 +515,19 @@ class AsyncJobsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ParsingJob:
+    ) -> APIKeyCreated:
         """
-        Cancel a specific parse job.
+        Reroll the secret for a specific API key by its ID.
 
-        Args: job_id: The ID of the parse job to cancel.
+        This generates a new secret key, invalidating the old one.
 
-        Returns: The cancelled parsing job.
+        Args: api_key_id: The ID of the API key to reroll.
+
+        Returns: ApiKeyCreated: The response containing the API key details with the new
+        secret key.
 
         Args:
-          job_id: The ID of the parse job to cancel
+          api_key_id: The ID of the API key to reroll
 
           extra_headers: Send extra headers
 
@@ -517,96 +537,147 @@ class AsyncJobsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not job_id:
-            raise ValueError(f"Expected a non-empty value for `job_id` but received {job_id!r}")
-        return await self._patch(
-            f"/v1/parsing/jobs/{job_id}",
+        if not api_key_id:
+            raise ValueError(f"Expected a non-empty value for `api_key_id` but received {api_key_id!r}")
+        return await self._post(
+            f"/v1/api-keys/{api_key_id}/reroll",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ParsingJob,
+            cast_to=APIKeyCreated,
+        )
+
+    async def revoke(
+        self,
+        api_key_id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> APIKey:
+        """
+        Revoke a specific API key by its ID.
+
+        Args: api_key_id: The ID of the API key to revoke.
+
+        Returns: ApiKey: The response containing the details of the revoked API key.
+
+        Args:
+          api_key_id: The ID of the API key to revoke
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not api_key_id:
+            raise ValueError(f"Expected a non-empty value for `api_key_id` but received {api_key_id!r}")
+        return await self._post(
+            f"/v1/api-keys/{api_key_id}/revoke",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=APIKey,
         )
 
 
-class JobsResourceWithRawResponse:
-    def __init__(self, jobs: JobsResource) -> None:
-        self._jobs = jobs
+class APIKeysResourceWithRawResponse:
+    def __init__(self, api_keys: APIKeysResource) -> None:
+        self._api_keys = api_keys
 
         self.create = to_raw_response_wrapper(
-            jobs.create,
+            api_keys.create,
         )
         self.retrieve = to_raw_response_wrapper(
-            jobs.retrieve,
+            api_keys.retrieve,
         )
         self.list = to_raw_response_wrapper(
-            jobs.list,
+            api_keys.list,
         )
         self.delete = to_raw_response_wrapper(
-            jobs.delete,
+            api_keys.delete,
         )
-        self.cancel = to_raw_response_wrapper(
-            jobs.cancel,
+        self.reroll = to_raw_response_wrapper(
+            api_keys.reroll,
+        )
+        self.revoke = to_raw_response_wrapper(
+            api_keys.revoke,
         )
 
 
-class AsyncJobsResourceWithRawResponse:
-    def __init__(self, jobs: AsyncJobsResource) -> None:
-        self._jobs = jobs
+class AsyncAPIKeysResourceWithRawResponse:
+    def __init__(self, api_keys: AsyncAPIKeysResource) -> None:
+        self._api_keys = api_keys
 
         self.create = async_to_raw_response_wrapper(
-            jobs.create,
+            api_keys.create,
         )
         self.retrieve = async_to_raw_response_wrapper(
-            jobs.retrieve,
+            api_keys.retrieve,
         )
         self.list = async_to_raw_response_wrapper(
-            jobs.list,
+            api_keys.list,
         )
         self.delete = async_to_raw_response_wrapper(
-            jobs.delete,
+            api_keys.delete,
         )
-        self.cancel = async_to_raw_response_wrapper(
-            jobs.cancel,
+        self.reroll = async_to_raw_response_wrapper(
+            api_keys.reroll,
+        )
+        self.revoke = async_to_raw_response_wrapper(
+            api_keys.revoke,
         )
 
 
-class JobsResourceWithStreamingResponse:
-    def __init__(self, jobs: JobsResource) -> None:
-        self._jobs = jobs
+class APIKeysResourceWithStreamingResponse:
+    def __init__(self, api_keys: APIKeysResource) -> None:
+        self._api_keys = api_keys
 
         self.create = to_streamed_response_wrapper(
-            jobs.create,
+            api_keys.create,
         )
         self.retrieve = to_streamed_response_wrapper(
-            jobs.retrieve,
+            api_keys.retrieve,
         )
         self.list = to_streamed_response_wrapper(
-            jobs.list,
+            api_keys.list,
         )
         self.delete = to_streamed_response_wrapper(
-            jobs.delete,
+            api_keys.delete,
         )
-        self.cancel = to_streamed_response_wrapper(
-            jobs.cancel,
+        self.reroll = to_streamed_response_wrapper(
+            api_keys.reroll,
+        )
+        self.revoke = to_streamed_response_wrapper(
+            api_keys.revoke,
         )
 
 
-class AsyncJobsResourceWithStreamingResponse:
-    def __init__(self, jobs: AsyncJobsResource) -> None:
-        self._jobs = jobs
+class AsyncAPIKeysResourceWithStreamingResponse:
+    def __init__(self, api_keys: AsyncAPIKeysResource) -> None:
+        self._api_keys = api_keys
 
         self.create = async_to_streamed_response_wrapper(
-            jobs.create,
+            api_keys.create,
         )
         self.retrieve = async_to_streamed_response_wrapper(
-            jobs.retrieve,
+            api_keys.retrieve,
         )
         self.list = async_to_streamed_response_wrapper(
-            jobs.list,
+            api_keys.list,
         )
         self.delete = async_to_streamed_response_wrapper(
-            jobs.delete,
+            api_keys.delete,
         )
-        self.cancel = async_to_streamed_response_wrapper(
-            jobs.cancel,
+        self.reroll = async_to_streamed_response_wrapper(
+            api_keys.reroll,
+        )
+        self.revoke = async_to_streamed_response_wrapper(
+            api_keys.revoke,
         )

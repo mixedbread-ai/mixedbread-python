@@ -3,11 +3,15 @@
 from __future__ import annotations
 
 from typing import Optional
-from typing_extensions import Literal
 
 import httpx
 
-from ...types import data_source_list_params, data_source_create_params, data_source_update_params
+from ...types import (
+    DataSourceType,
+    data_source_list_params,
+    data_source_create_params,
+    data_source_update_params,
+)
 from ..._types import NOT_GIVEN, Body, Query, Headers, NotGiven
 from ..._utils import maybe_transform, async_maybe_transform
 from ..._compat import cached_property
@@ -28,11 +32,10 @@ from ..._response import (
 )
 from ...pagination import SyncLimitOffset, AsyncLimitOffset
 from ..._base_client import AsyncPaginator, make_request_options
-from ...types.data_source_list_response import DataSourceListResponse
-from ...types.data_source_create_response import DataSourceCreateResponse
+from ...types.data_source import DataSource
+from ...types.data_source_type import DataSourceType
 from ...types.data_source_delete_response import DataSourceDeleteResponse
-from ...types.data_source_update_response import DataSourceUpdateResponse
-from ...types.data_source_retrieve_response import DataSourceRetrieveResponse
+from ...types.data_source_oauth2_params_param import DataSourceOauth2ParamsParam
 
 __all__ = ["DataSourcesResource", "AsyncDataSourcesResource"]
 
@@ -64,17 +67,17 @@ class DataSourcesResource(SyncAPIResource):
     def create(
         self,
         *,
-        type: Literal["notion", "linear"],
+        type: DataSourceType,
         name: str,
         metadata: object | NotGiven = NOT_GIVEN,
-        auth_params: Optional[data_source_create_params.AuthParams] | NotGiven = NOT_GIVEN,
+        auth_params: Optional[DataSourceOauth2ParamsParam] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> DataSourceCreateResponse:
+    ) -> DataSource:
         """
         Create a new data source.
 
@@ -113,7 +116,7 @@ class DataSourcesResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=DataSourceCreateResponse,
+            cast_to=DataSource,
         )
 
     def retrieve(
@@ -126,7 +129,7 @@ class DataSourcesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> DataSourceRetrieveResponse:
+    ) -> DataSource:
         """
         Get a data source by ID.
 
@@ -152,7 +155,7 @@ class DataSourcesResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=DataSourceRetrieveResponse,
+            cast_to=DataSource,
         )
 
     def update(
@@ -161,14 +164,14 @@ class DataSourcesResource(SyncAPIResource):
         *,
         name: Optional[str] | NotGiven = NOT_GIVEN,
         metadata: object | NotGiven = NOT_GIVEN,
-        auth_params: Optional[data_source_update_params.AuthParams] | NotGiven = NOT_GIVEN,
+        auth_params: Optional[DataSourceOauth2ParamsParam] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> DataSourceUpdateResponse:
+    ) -> DataSource:
         """Update a data source.
 
         Args: data_source_id: The ID of the data source to update.
@@ -210,7 +213,7 @@ class DataSourcesResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=DataSourceUpdateResponse,
+            cast_to=DataSource,
         )
 
     def list(
@@ -224,7 +227,7 @@ class DataSourcesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> SyncLimitOffset[DataSourceListResponse]:
+    ) -> SyncLimitOffset[DataSource]:
         """
         Get all data sources.
 
@@ -245,7 +248,7 @@ class DataSourcesResource(SyncAPIResource):
         """
         return self._get_api_list(
             "/v1/data_sources/",
-            page=SyncLimitOffset[DataSourceListResponse],
+            page=SyncLimitOffset[DataSource],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -259,7 +262,7 @@ class DataSourcesResource(SyncAPIResource):
                     data_source_list_params.DataSourceListParams,
                 ),
             ),
-            model=DataSourceListResponse,
+            model=DataSource,
         )
 
     def delete(
@@ -327,17 +330,17 @@ class AsyncDataSourcesResource(AsyncAPIResource):
     async def create(
         self,
         *,
-        type: Literal["notion", "linear"],
+        type: DataSourceType,
         name: str,
         metadata: object | NotGiven = NOT_GIVEN,
-        auth_params: Optional[data_source_create_params.AuthParams] | NotGiven = NOT_GIVEN,
+        auth_params: Optional[DataSourceOauth2ParamsParam] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> DataSourceCreateResponse:
+    ) -> DataSource:
         """
         Create a new data source.
 
@@ -376,7 +379,7 @@ class AsyncDataSourcesResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=DataSourceCreateResponse,
+            cast_to=DataSource,
         )
 
     async def retrieve(
@@ -389,7 +392,7 @@ class AsyncDataSourcesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> DataSourceRetrieveResponse:
+    ) -> DataSource:
         """
         Get a data source by ID.
 
@@ -415,7 +418,7 @@ class AsyncDataSourcesResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=DataSourceRetrieveResponse,
+            cast_to=DataSource,
         )
 
     async def update(
@@ -424,14 +427,14 @@ class AsyncDataSourcesResource(AsyncAPIResource):
         *,
         name: Optional[str] | NotGiven = NOT_GIVEN,
         metadata: object | NotGiven = NOT_GIVEN,
-        auth_params: Optional[data_source_update_params.AuthParams] | NotGiven = NOT_GIVEN,
+        auth_params: Optional[DataSourceOauth2ParamsParam] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> DataSourceUpdateResponse:
+    ) -> DataSource:
         """Update a data source.
 
         Args: data_source_id: The ID of the data source to update.
@@ -473,7 +476,7 @@ class AsyncDataSourcesResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=DataSourceUpdateResponse,
+            cast_to=DataSource,
         )
 
     def list(
@@ -487,7 +490,7 @@ class AsyncDataSourcesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> AsyncPaginator[DataSourceListResponse, AsyncLimitOffset[DataSourceListResponse]]:
+    ) -> AsyncPaginator[DataSource, AsyncLimitOffset[DataSource]]:
         """
         Get all data sources.
 
@@ -508,7 +511,7 @@ class AsyncDataSourcesResource(AsyncAPIResource):
         """
         return self._get_api_list(
             "/v1/data_sources/",
-            page=AsyncLimitOffset[DataSourceListResponse],
+            page=AsyncLimitOffset[DataSource],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -522,7 +525,7 @@ class AsyncDataSourcesResource(AsyncAPIResource):
                     data_source_list_params.DataSourceListParams,
                 ),
             ),
-            model=DataSourceListResponse,
+            model=DataSource,
         )
 
     async def delete(

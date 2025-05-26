@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 from typing import List, Union, Optional
-from typing_extensions import Literal, Required, TypedDict
+from typing_extensions import Required, TypedDict
+
+from .encoding_format import EncodingFormat
 
 __all__ = ["EmbeddingCreateParams"]
 
@@ -24,10 +26,7 @@ class EmbeddingCreateParams(TypedDict, total=False):
     normalized: bool
     """Whether to normalize the embeddings."""
 
-    encoding_format: Union[
-        Literal["float", "float16", "base64", "binary", "ubinary", "int8", "uint8"],
-        List[Literal["float", "float16", "base64", "binary", "ubinary", "int8", "uint8"]],
-    ]
+    encoding_format: Union[EncodingFormat, List[EncodingFormat]]
     """The encoding format(s) of the embeddings.
 
     Can be a single format or a list of formats.

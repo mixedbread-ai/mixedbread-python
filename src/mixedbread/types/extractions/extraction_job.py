@@ -2,10 +2,10 @@
 
 from typing import Dict, Optional
 from datetime import datetime
-from typing_extensions import Literal
 
 from ..._models import BaseModel
 from .extraction_result import ExtractionResult
+from ..parsing.parsing_job_status import ParsingJobStatus
 
 __all__ = ["ExtractionJob"]
 
@@ -32,7 +32,7 @@ class ExtractionJob(BaseModel):
     finished_at: Optional[datetime] = None
     """When the job finished processing"""
 
-    status: Literal["pending", "in_progress", "cancelled", "completed", "failed"]
+    status: ParsingJobStatus
     """Current status of the job"""
 
     result: Optional[ExtractionResult] = None

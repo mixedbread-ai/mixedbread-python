@@ -11,11 +11,8 @@ from mixedbread import Mixedbread, AsyncMixedbread
 from tests.utils import assert_matches_type
 from mixedbread.pagination import SyncLimitOffset, AsyncLimitOffset
 from mixedbread.types.data_sources import (
-    ConnectorListResponse,
-    ConnectorCreateResponse,
+    DataSourceConnector,
     ConnectorDeleteResponse,
-    ConnectorUpdateResponse,
-    ConnectorRetrieveResponse,
 )
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
@@ -30,7 +27,7 @@ class TestConnectors:
             data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             vector_store_id="vector_store_id",
         )
-        assert_matches_type(ConnectorCreateResponse, connector, path=["response"])
+        assert_matches_type(DataSourceConnector, connector, path=["response"])
 
     @parametrize
     def test_method_create_with_all_params(self, client: Mixedbread) -> None:
@@ -42,7 +39,7 @@ class TestConnectors:
             metadata={},
             polling_interval="polling_interval",
         )
-        assert_matches_type(ConnectorCreateResponse, connector, path=["response"])
+        assert_matches_type(DataSourceConnector, connector, path=["response"])
 
     @parametrize
     def test_raw_response_create(self, client: Mixedbread) -> None:
@@ -54,7 +51,7 @@ class TestConnectors:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         connector = response.parse()
-        assert_matches_type(ConnectorCreateResponse, connector, path=["response"])
+        assert_matches_type(DataSourceConnector, connector, path=["response"])
 
     @parametrize
     def test_streaming_response_create(self, client: Mixedbread) -> None:
@@ -66,7 +63,7 @@ class TestConnectors:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             connector = response.parse()
-            assert_matches_type(ConnectorCreateResponse, connector, path=["response"])
+            assert_matches_type(DataSourceConnector, connector, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -84,7 +81,7 @@ class TestConnectors:
             connector_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(ConnectorRetrieveResponse, connector, path=["response"])
+        assert_matches_type(DataSourceConnector, connector, path=["response"])
 
     @parametrize
     def test_raw_response_retrieve(self, client: Mixedbread) -> None:
@@ -96,7 +93,7 @@ class TestConnectors:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         connector = response.parse()
-        assert_matches_type(ConnectorRetrieveResponse, connector, path=["response"])
+        assert_matches_type(DataSourceConnector, connector, path=["response"])
 
     @parametrize
     def test_streaming_response_retrieve(self, client: Mixedbread) -> None:
@@ -108,7 +105,7 @@ class TestConnectors:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             connector = response.parse()
-            assert_matches_type(ConnectorRetrieveResponse, connector, path=["response"])
+            assert_matches_type(DataSourceConnector, connector, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -132,7 +129,7 @@ class TestConnectors:
             connector_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(ConnectorUpdateResponse, connector, path=["response"])
+        assert_matches_type(DataSourceConnector, connector, path=["response"])
 
     @parametrize
     def test_method_update_with_all_params(self, client: Mixedbread) -> None:
@@ -144,7 +141,7 @@ class TestConnectors:
             trigger_sync=True,
             polling_interval="polling_interval",
         )
-        assert_matches_type(ConnectorUpdateResponse, connector, path=["response"])
+        assert_matches_type(DataSourceConnector, connector, path=["response"])
 
     @parametrize
     def test_raw_response_update(self, client: Mixedbread) -> None:
@@ -156,7 +153,7 @@ class TestConnectors:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         connector = response.parse()
-        assert_matches_type(ConnectorUpdateResponse, connector, path=["response"])
+        assert_matches_type(DataSourceConnector, connector, path=["response"])
 
     @parametrize
     def test_streaming_response_update(self, client: Mixedbread) -> None:
@@ -168,7 +165,7 @@ class TestConnectors:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             connector = response.parse()
-            assert_matches_type(ConnectorUpdateResponse, connector, path=["response"])
+            assert_matches_type(DataSourceConnector, connector, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -191,7 +188,7 @@ class TestConnectors:
         connector = client.data_sources.connectors.list(
             data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(SyncLimitOffset[ConnectorListResponse], connector, path=["response"])
+        assert_matches_type(SyncLimitOffset[DataSourceConnector], connector, path=["response"])
 
     @parametrize
     def test_method_list_with_all_params(self, client: Mixedbread) -> None:
@@ -200,7 +197,7 @@ class TestConnectors:
             limit=1000,
             offset=0,
         )
-        assert_matches_type(SyncLimitOffset[ConnectorListResponse], connector, path=["response"])
+        assert_matches_type(SyncLimitOffset[DataSourceConnector], connector, path=["response"])
 
     @parametrize
     def test_raw_response_list(self, client: Mixedbread) -> None:
@@ -211,7 +208,7 @@ class TestConnectors:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         connector = response.parse()
-        assert_matches_type(SyncLimitOffset[ConnectorListResponse], connector, path=["response"])
+        assert_matches_type(SyncLimitOffset[DataSourceConnector], connector, path=["response"])
 
     @parametrize
     def test_streaming_response_list(self, client: Mixedbread) -> None:
@@ -222,7 +219,7 @@ class TestConnectors:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             connector = response.parse()
-            assert_matches_type(SyncLimitOffset[ConnectorListResponse], connector, path=["response"])
+            assert_matches_type(SyncLimitOffset[DataSourceConnector], connector, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -291,7 +288,7 @@ class TestAsyncConnectors:
             data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             vector_store_id="vector_store_id",
         )
-        assert_matches_type(ConnectorCreateResponse, connector, path=["response"])
+        assert_matches_type(DataSourceConnector, connector, path=["response"])
 
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncMixedbread) -> None:
@@ -303,7 +300,7 @@ class TestAsyncConnectors:
             metadata={},
             polling_interval="polling_interval",
         )
-        assert_matches_type(ConnectorCreateResponse, connector, path=["response"])
+        assert_matches_type(DataSourceConnector, connector, path=["response"])
 
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncMixedbread) -> None:
@@ -315,7 +312,7 @@ class TestAsyncConnectors:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         connector = await response.parse()
-        assert_matches_type(ConnectorCreateResponse, connector, path=["response"])
+        assert_matches_type(DataSourceConnector, connector, path=["response"])
 
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncMixedbread) -> None:
@@ -327,7 +324,7 @@ class TestAsyncConnectors:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             connector = await response.parse()
-            assert_matches_type(ConnectorCreateResponse, connector, path=["response"])
+            assert_matches_type(DataSourceConnector, connector, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -345,7 +342,7 @@ class TestAsyncConnectors:
             connector_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(ConnectorRetrieveResponse, connector, path=["response"])
+        assert_matches_type(DataSourceConnector, connector, path=["response"])
 
     @parametrize
     async def test_raw_response_retrieve(self, async_client: AsyncMixedbread) -> None:
@@ -357,7 +354,7 @@ class TestAsyncConnectors:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         connector = await response.parse()
-        assert_matches_type(ConnectorRetrieveResponse, connector, path=["response"])
+        assert_matches_type(DataSourceConnector, connector, path=["response"])
 
     @parametrize
     async def test_streaming_response_retrieve(self, async_client: AsyncMixedbread) -> None:
@@ -369,7 +366,7 @@ class TestAsyncConnectors:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             connector = await response.parse()
-            assert_matches_type(ConnectorRetrieveResponse, connector, path=["response"])
+            assert_matches_type(DataSourceConnector, connector, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -393,7 +390,7 @@ class TestAsyncConnectors:
             connector_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(ConnectorUpdateResponse, connector, path=["response"])
+        assert_matches_type(DataSourceConnector, connector, path=["response"])
 
     @parametrize
     async def test_method_update_with_all_params(self, async_client: AsyncMixedbread) -> None:
@@ -405,7 +402,7 @@ class TestAsyncConnectors:
             trigger_sync=True,
             polling_interval="polling_interval",
         )
-        assert_matches_type(ConnectorUpdateResponse, connector, path=["response"])
+        assert_matches_type(DataSourceConnector, connector, path=["response"])
 
     @parametrize
     async def test_raw_response_update(self, async_client: AsyncMixedbread) -> None:
@@ -417,7 +414,7 @@ class TestAsyncConnectors:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         connector = await response.parse()
-        assert_matches_type(ConnectorUpdateResponse, connector, path=["response"])
+        assert_matches_type(DataSourceConnector, connector, path=["response"])
 
     @parametrize
     async def test_streaming_response_update(self, async_client: AsyncMixedbread) -> None:
@@ -429,7 +426,7 @@ class TestAsyncConnectors:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             connector = await response.parse()
-            assert_matches_type(ConnectorUpdateResponse, connector, path=["response"])
+            assert_matches_type(DataSourceConnector, connector, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -452,7 +449,7 @@ class TestAsyncConnectors:
         connector = await async_client.data_sources.connectors.list(
             data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(AsyncLimitOffset[ConnectorListResponse], connector, path=["response"])
+        assert_matches_type(AsyncLimitOffset[DataSourceConnector], connector, path=["response"])
 
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncMixedbread) -> None:
@@ -461,7 +458,7 @@ class TestAsyncConnectors:
             limit=1000,
             offset=0,
         )
-        assert_matches_type(AsyncLimitOffset[ConnectorListResponse], connector, path=["response"])
+        assert_matches_type(AsyncLimitOffset[DataSourceConnector], connector, path=["response"])
 
     @parametrize
     async def test_raw_response_list(self, async_client: AsyncMixedbread) -> None:
@@ -472,7 +469,7 @@ class TestAsyncConnectors:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         connector = await response.parse()
-        assert_matches_type(AsyncLimitOffset[ConnectorListResponse], connector, path=["response"])
+        assert_matches_type(AsyncLimitOffset[DataSourceConnector], connector, path=["response"])
 
     @parametrize
     async def test_streaming_response_list(self, async_client: AsyncMixedbread) -> None:
@@ -483,7 +480,7 @@ class TestAsyncConnectors:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             connector = await response.parse()
-            assert_matches_type(AsyncLimitOffset[ConnectorListResponse], connector, path=["response"])
+            assert_matches_type(AsyncLimitOffset[DataSourceConnector], connector, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
