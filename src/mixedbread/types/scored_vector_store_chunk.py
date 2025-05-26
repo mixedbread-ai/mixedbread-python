@@ -1,35 +1,15 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 from typing import Dict, Union, Optional
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import TypeAlias
 
 from .._models import BaseModel
+from .extractions.text_input import TextInput
+from .extractions.image_url_input import ImageURLInput
 
-__all__ = ["ScoredVectorStoreChunk", "Value", "ValueImageURLInput", "ValueImageURLInputImageURL", "ValueTextInput"]
+__all__ = ["ScoredVectorStoreChunk", "Value"]
 
-
-class ValueImageURLInputImageURL(BaseModel):
-    url: str
-    """The image URL. Can be either a URL or a Data URI."""
-
-
-class ValueImageURLInput(BaseModel):
-    type: Optional[Literal["image_url"]] = None
-    """Input type identifier"""
-
-    image_url: ValueImageURLInputImageURL
-    """The image input specification."""
-
-
-class ValueTextInput(BaseModel):
-    type: Optional[Literal["text"]] = None
-    """Input type identifier"""
-
-    text: str
-    """Text content to process"""
-
-
-Value: TypeAlias = Union[str, ValueImageURLInput, ValueTextInput, Dict[str, object], None]
+Value: TypeAlias = Union[str, ImageURLInput, TextInput, Dict[str, object], None]
 
 
 class ScoredVectorStoreChunk(BaseModel):

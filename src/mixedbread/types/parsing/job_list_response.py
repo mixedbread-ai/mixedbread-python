@@ -5,6 +5,7 @@ from datetime import datetime
 from typing_extensions import Literal
 
 from ..._models import BaseModel
+from .parsing_job_status import ParsingJobStatus
 
 __all__ = ["JobListResponse"]
 
@@ -16,7 +17,7 @@ class JobListResponse(BaseModel):
     file_id: str
     """The ID of the file to parse"""
 
-    status: Literal["pending", "in_progress", "cancelled", "completed", "failed"]
+    status: ParsingJobStatus
     """The status of the job"""
 
     started_at: Optional[datetime] = None

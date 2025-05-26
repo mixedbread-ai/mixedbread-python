@@ -2,13 +2,12 @@
 
 from __future__ import annotations
 
-from typing import Union, Optional
-from datetime import datetime
-from typing_extensions import Literal, Required, Annotated, TypedDict
+from typing import Optional
+from typing_extensions import TypedDict
 
-from .._utils import PropertyInfo
+from .data_source_oauth2_params_param import DataSourceOauth2ParamsParam
 
-__all__ = ["DataSourceUpdateParams", "AuthParams"]
+__all__ = ["DataSourceUpdateParams"]
 
 
 class DataSourceUpdateParams(TypedDict, total=False):
@@ -18,36 +17,5 @@ class DataSourceUpdateParams(TypedDict, total=False):
     metadata: object
     """The metadata of the data source"""
 
-    auth_params: Optional[AuthParams]
+    auth_params: Optional[DataSourceOauth2ParamsParam]
     """Authentication parameters for a OAuth data source."""
-
-
-class AuthParams(TypedDict, total=False):
-    type: Literal["oauth2"]
-
-    created_at: Annotated[Union[str, datetime], PropertyInfo(format="iso8601")]
-    """The timestamp when the OAuth2 credentials were created"""
-
-    client_id: Required[str]
-    """The OAuth2 client ID"""
-
-    client_secret: Required[str]
-    """The OAuth2 client secret"""
-
-    redirect_uri: Required[str]
-    """The OAuth2 redirect URI"""
-
-    scope: Required[str]
-    """The OAuth2 scope"""
-
-    access_token: Optional[str]
-    """The OAuth2 access token"""
-
-    refresh_token: Optional[str]
-    """The OAuth2 refresh token"""
-
-    token_type: Optional[str]
-    """The OAuth2 token type"""
-
-    expires_on: Annotated[Union[str, datetime, None], PropertyInfo(format="iso8601")]
-    """The OAuth2 token expiration timestamp"""

@@ -6,10 +6,10 @@ from typing_extensions import Literal
 
 from ..._models import BaseModel
 
-__all__ = ["ConnectorUpdateResponse"]
+__all__ = ["DataSourceConnector"]
 
 
-class ConnectorUpdateResponse(BaseModel):
+class DataSourceConnector(BaseModel):
     id: str
     """The ID of the connector"""
 

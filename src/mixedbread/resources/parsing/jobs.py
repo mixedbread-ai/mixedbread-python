@@ -21,8 +21,11 @@ from ..._response import (
 )
 from ...pagination import SyncLimitOffset, AsyncLimitOffset
 from ..._base_client import AsyncPaginator, make_request_options
-from ...types.parsing import job_list_params, job_create_params
+from ...types.parsing import ReturnFormat, ChunkingStrategy, job_list_params, job_create_params
 from ...types.parsing.parsing_job import ParsingJob
+from ...types.parsing.element_type import ElementType
+from ...types.parsing.return_format import ReturnFormat
+from ...types.parsing.chunking_strategy import ChunkingStrategy
 from ...types.parsing.job_list_response import JobListResponse
 from ...types.parsing.job_delete_response import JobDeleteResponse
 
@@ -53,26 +56,9 @@ class JobsResource(SyncAPIResource):
         self,
         *,
         file_id: str,
-        element_types: Optional[
-            List[
-                Literal[
-                    "caption",
-                    "footnote",
-                    "formula",
-                    "list-item",
-                    "page-footer",
-                    "page-header",
-                    "picture",
-                    "section-header",
-                    "table",
-                    "text",
-                    "title",
-                ]
-            ]
-        ]
-        | NotGiven = NOT_GIVEN,
-        chunking_strategy: Literal["page"] | NotGiven = NOT_GIVEN,
-        return_format: Literal["html", "markdown", "plain"] | NotGiven = NOT_GIVEN,
+        element_types: Optional[List[ElementType]] | NotGiven = NOT_GIVEN,
+        chunking_strategy: ChunkingStrategy | NotGiven = NOT_GIVEN,
+        return_format: ReturnFormat | NotGiven = NOT_GIVEN,
         mode: Literal["fast", "high_quality"] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -476,26 +462,9 @@ class AsyncJobsResource(AsyncAPIResource):
         self,
         *,
         file_id: str,
-        element_types: Optional[
-            List[
-                Literal[
-                    "caption",
-                    "footnote",
-                    "formula",
-                    "list-item",
-                    "page-footer",
-                    "page-header",
-                    "picture",
-                    "section-header",
-                    "table",
-                    "text",
-                    "title",
-                ]
-            ]
-        ]
-        | NotGiven = NOT_GIVEN,
-        chunking_strategy: Literal["page"] | NotGiven = NOT_GIVEN,
-        return_format: Literal["html", "markdown", "plain"] | NotGiven = NOT_GIVEN,
+        element_types: Optional[List[ElementType]] | NotGiven = NOT_GIVEN,
+        chunking_strategy: ChunkingStrategy | NotGiven = NOT_GIVEN,
+        return_format: ReturnFormat | NotGiven = NOT_GIVEN,
         mode: Literal["fast", "high_quality"] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.

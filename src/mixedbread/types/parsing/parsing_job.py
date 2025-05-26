@@ -5,24 +5,16 @@ from datetime import datetime
 from typing_extensions import Literal
 
 from ..._models import BaseModel
+from .element_type import ElementType
+from .return_format import ReturnFormat
+from .chunking_strategy import ChunkingStrategy
+from .parsing_job_status import ParsingJobStatus
 
 __all__ = ["ParsingJob", "Result", "ResultChunk", "ResultChunkElement"]
 
 
 class ResultChunkElement(BaseModel):
-    type: Literal[
-        "caption",
-        "footnote",
-        "formula",
-        "list-item",
-        "page-footer",
-        "page-header",
-        "picture",
-        "section-header",
-        "table",
-        "text",
-        "title",
-    ]
+    type: ElementType
     """The type of the extracted element"""
 
     confidence: float
@@ -53,27 +45,13 @@ class ResultChunk(BaseModel):
 
 
 class Result(BaseModel):
-    chunking_strategy: Literal["page"]
+    chunking_strategy: ChunkingStrategy
     """The strategy used for chunking the document"""
 
-    return_format: Literal["html", "markdown", "plain"]
+    return_format: ReturnFormat
     """The format of the returned content"""
 
-    element_types: List[
-        Literal[
-            "caption",
-            "footnote",
-            "formula",
-            "list-item",
-            "page-footer",
-            "page-header",
-            "picture",
-            "section-header",
-            "table",
-            "text",
-            "title",
-        ]
-    ]
+    element_types: List[ElementType]
     """The types of elements extracted"""
 
     chunks: List[ResultChunk]
@@ -90,7 +68,7 @@ class ParsingJob(BaseModel):
     file_id: str
     """The ID of the file to parse"""
 
-    status: Literal["pending", "in_progress", "cancelled", "completed", "failed"]
+    status: ParsingJobStatus
     """The status of the job"""
 
     error: Optional[object] = None

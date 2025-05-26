@@ -80,7 +80,15 @@ Methods:
 Types:
 
 ```python
-from mixedbread.types.parsing import ParsingJob, JobListResponse, JobDeleteResponse
+from mixedbread.types.parsing import (
+    ChunkingStrategy,
+    ElementType,
+    ParsingJobStatus,
+    ParsingJob,
+    ReturnFormat,
+    JobListResponse,
+    JobDeleteResponse,
+)
 ```
 
 Methods:
@@ -96,7 +104,7 @@ Methods:
 Types:
 
 ```python
-from mixedbread.types import FileObject, FileDeleteResponse
+from mixedbread.types import FileObject, PaginationWithTotal, FileDeleteResponse
 ```
 
 Methods:
@@ -142,7 +150,7 @@ Methods:
 Types:
 
 ```python
-from mixedbread.types.extractions import ExtractionResult
+from mixedbread.types.extractions import ExtractionResult, ImageURLInput, TextInput
 ```
 
 Methods:
@@ -150,6 +158,12 @@ Methods:
 - <code title="post /v1/extractions/content">client.extractions.content.<a href="./src/mixedbread/resources/extractions/content.py">create</a>(\*\*<a href="src/mixedbread/types/extractions/content_create_params.py">params</a>) -> <a href="./src/mixedbread/types/extractions/extraction_result.py">ExtractionResult</a></code>
 
 # Embeddings
+
+Types:
+
+```python
+from mixedbread.types import EncodingFormat, ObjectType
+```
 
 Methods:
 
@@ -173,20 +187,19 @@ Types:
 
 ```python
 from mixedbread.types import (
-    DataSourceCreateResponse,
-    DataSourceRetrieveResponse,
-    DataSourceUpdateResponse,
-    DataSourceListResponse,
+    DataSource,
+    DataSourceOauth2Params,
+    DataSourceType,
     DataSourceDeleteResponse,
 )
 ```
 
 Methods:
 
-- <code title="post /v1/data_sources/">client.data_sources.<a href="./src/mixedbread/resources/data_sources/data_sources.py">create</a>(\*\*<a href="src/mixedbread/types/data_source_create_params.py">params</a>) -> <a href="./src/mixedbread/types/data_source_create_response.py">DataSourceCreateResponse</a></code>
-- <code title="get /v1/data_sources/{data_source_id}">client.data_sources.<a href="./src/mixedbread/resources/data_sources/data_sources.py">retrieve</a>(data_source_id) -> <a href="./src/mixedbread/types/data_source_retrieve_response.py">DataSourceRetrieveResponse</a></code>
-- <code title="put /v1/data_sources/{data_source_id}">client.data_sources.<a href="./src/mixedbread/resources/data_sources/data_sources.py">update</a>(data_source_id, \*\*<a href="src/mixedbread/types/data_source_update_params.py">params</a>) -> <a href="./src/mixedbread/types/data_source_update_response.py">DataSourceUpdateResponse</a></code>
-- <code title="get /v1/data_sources/">client.data_sources.<a href="./src/mixedbread/resources/data_sources/data_sources.py">list</a>(\*\*<a href="src/mixedbread/types/data_source_list_params.py">params</a>) -> <a href="./src/mixedbread/types/data_source_list_response.py">SyncLimitOffset[DataSourceListResponse]</a></code>
+- <code title="post /v1/data_sources/">client.data_sources.<a href="./src/mixedbread/resources/data_sources/data_sources.py">create</a>(\*\*<a href="src/mixedbread/types/data_source_create_params.py">params</a>) -> <a href="./src/mixedbread/types/data_source.py">DataSource</a></code>
+- <code title="get /v1/data_sources/{data_source_id}">client.data_sources.<a href="./src/mixedbread/resources/data_sources/data_sources.py">retrieve</a>(data_source_id) -> <a href="./src/mixedbread/types/data_source.py">DataSource</a></code>
+- <code title="put /v1/data_sources/{data_source_id}">client.data_sources.<a href="./src/mixedbread/resources/data_sources/data_sources.py">update</a>(data_source_id, \*\*<a href="src/mixedbread/types/data_source_update_params.py">params</a>) -> <a href="./src/mixedbread/types/data_source.py">DataSource</a></code>
+- <code title="get /v1/data_sources/">client.data_sources.<a href="./src/mixedbread/resources/data_sources/data_sources.py">list</a>(\*\*<a href="src/mixedbread/types/data_source_list_params.py">params</a>) -> <a href="./src/mixedbread/types/data_source.py">SyncLimitOffset[DataSource]</a></code>
 - <code title="delete /v1/data_sources/{data_source_id}">client.data_sources.<a href="./src/mixedbread/resources/data_sources/data_sources.py">delete</a>(data_source_id) -> <a href="./src/mixedbread/types/data_source_delete_response.py">DataSourceDeleteResponse</a></code>
 
 ## Connectors
@@ -194,19 +207,30 @@ Methods:
 Types:
 
 ```python
-from mixedbread.types.data_sources import (
-    ConnectorCreateResponse,
-    ConnectorRetrieveResponse,
-    ConnectorUpdateResponse,
-    ConnectorListResponse,
-    ConnectorDeleteResponse,
-)
+from mixedbread.types.data_sources import DataSourceConnector, ConnectorDeleteResponse
 ```
 
 Methods:
 
-- <code title="post /v1/data_sources/{data_source_id}/connectors">client.data_sources.connectors.<a href="./src/mixedbread/resources/data_sources/connectors.py">create</a>(data_source_id, \*\*<a href="src/mixedbread/types/data_sources/connector_create_params.py">params</a>) -> <a href="./src/mixedbread/types/data_sources/connector_create_response.py">ConnectorCreateResponse</a></code>
-- <code title="get /v1/data_sources/{data_source_id}/connectors/{connector_id}">client.data_sources.connectors.<a href="./src/mixedbread/resources/data_sources/connectors.py">retrieve</a>(connector_id, \*, data_source_id) -> <a href="./src/mixedbread/types/data_sources/connector_retrieve_response.py">ConnectorRetrieveResponse</a></code>
-- <code title="put /v1/data_sources/{data_source_id}/connectors/{connector_id}">client.data_sources.connectors.<a href="./src/mixedbread/resources/data_sources/connectors.py">update</a>(connector_id, \*, data_source_id, \*\*<a href="src/mixedbread/types/data_sources/connector_update_params.py">params</a>) -> <a href="./src/mixedbread/types/data_sources/connector_update_response.py">ConnectorUpdateResponse</a></code>
-- <code title="get /v1/data_sources/{data_source_id}/connectors">client.data_sources.connectors.<a href="./src/mixedbread/resources/data_sources/connectors.py">list</a>(data_source_id, \*\*<a href="src/mixedbread/types/data_sources/connector_list_params.py">params</a>) -> <a href="./src/mixedbread/types/data_sources/connector_list_response.py">SyncLimitOffset[ConnectorListResponse]</a></code>
+- <code title="post /v1/data_sources/{data_source_id}/connectors">client.data_sources.connectors.<a href="./src/mixedbread/resources/data_sources/connectors.py">create</a>(data_source_id, \*\*<a href="src/mixedbread/types/data_sources/connector_create_params.py">params</a>) -> <a href="./src/mixedbread/types/data_sources/data_source_connector.py">DataSourceConnector</a></code>
+- <code title="get /v1/data_sources/{data_source_id}/connectors/{connector_id}">client.data_sources.connectors.<a href="./src/mixedbread/resources/data_sources/connectors.py">retrieve</a>(connector_id, \*, data_source_id) -> <a href="./src/mixedbread/types/data_sources/data_source_connector.py">DataSourceConnector</a></code>
+- <code title="put /v1/data_sources/{data_source_id}/connectors/{connector_id}">client.data_sources.connectors.<a href="./src/mixedbread/resources/data_sources/connectors.py">update</a>(connector_id, \*, data_source_id, \*\*<a href="src/mixedbread/types/data_sources/connector_update_params.py">params</a>) -> <a href="./src/mixedbread/types/data_sources/data_source_connector.py">DataSourceConnector</a></code>
+- <code title="get /v1/data_sources/{data_source_id}/connectors">client.data_sources.connectors.<a href="./src/mixedbread/resources/data_sources/connectors.py">list</a>(data_source_id, \*\*<a href="src/mixedbread/types/data_sources/connector_list_params.py">params</a>) -> <a href="./src/mixedbread/types/data_sources/data_source_connector.py">SyncLimitOffset[DataSourceConnector]</a></code>
 - <code title="delete /v1/data_sources/{data_source_id}/connectors/{connector_id}">client.data_sources.connectors.<a href="./src/mixedbread/resources/data_sources/connectors.py">delete</a>(connector_id, \*, data_source_id) -> <a href="./src/mixedbread/types/data_sources/connector_delete_response.py">ConnectorDeleteResponse</a></code>
+
+# APIKeys
+
+Types:
+
+```python
+from mixedbread.types import APIKey, APIKeyCreated, APIKeyDeleteResponse
+```
+
+Methods:
+
+- <code title="post /v1/api-keys">client.api_keys.<a href="./src/mixedbread/resources/api_keys.py">create</a>(\*\*<a href="src/mixedbread/types/api_key_create_params.py">params</a>) -> <a href="./src/mixedbread/types/api_key_created.py">APIKeyCreated</a></code>
+- <code title="get /v1/api-keys/{api_key_id}">client.api_keys.<a href="./src/mixedbread/resources/api_keys.py">retrieve</a>(api_key_id) -> <a href="./src/mixedbread/types/api_key.py">APIKey</a></code>
+- <code title="get /v1/api-keys">client.api_keys.<a href="./src/mixedbread/resources/api_keys.py">list</a>(\*\*<a href="src/mixedbread/types/api_key_list_params.py">params</a>) -> <a href="./src/mixedbread/types/api_key.py">SyncLimitOffset[APIKey]</a></code>
+- <code title="delete /v1/api-keys/{api_key_id}">client.api_keys.<a href="./src/mixedbread/resources/api_keys.py">delete</a>(api_key_id) -> <a href="./src/mixedbread/types/api_key_delete_response.py">APIKeyDeleteResponse</a></code>
+- <code title="post /v1/api-keys/{api_key_id}/reroll">client.api_keys.<a href="./src/mixedbread/resources/api_keys.py">reroll</a>(api_key_id) -> <a href="./src/mixedbread/types/api_key_created.py">APIKeyCreated</a></code>
+- <code title="post /v1/api-keys/{api_key_id}/revoke">client.api_keys.<a href="./src/mixedbread/resources/api_keys.py">revoke</a>(api_key_id) -> <a href="./src/mixedbread/types/api_key.py">APIKey</a></code>
