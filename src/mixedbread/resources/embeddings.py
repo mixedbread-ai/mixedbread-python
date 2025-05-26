@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 from typing import List, Union, Optional
-from typing_extensions import Literal
 
 import httpx
 
@@ -19,6 +18,7 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
+from ..types.encoding_format import EncodingFormat
 from ..types.embedding_create_response import EmbeddingCreateResponse
 
 __all__ = ["EmbeddingsResource", "AsyncEmbeddingsResource"]
@@ -52,11 +52,7 @@ class EmbeddingsResource(SyncAPIResource):
         dimensions: Optional[int] | NotGiven = NOT_GIVEN,
         prompt: Optional[str] | NotGiven = NOT_GIVEN,
         normalized: bool | NotGiven = NOT_GIVEN,
-        encoding_format: Union[
-            Literal["float", "float16", "base64", "binary", "ubinary", "int8", "uint8"],
-            List[Literal["float", "float16", "base64", "binary", "ubinary", "int8", "uint8"]],
-        ]
-        | NotGiven = NOT_GIVEN,
+        encoding_format: Union[EncodingFormat, List[EncodingFormat]] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -142,11 +138,7 @@ class AsyncEmbeddingsResource(AsyncAPIResource):
         dimensions: Optional[int] | NotGiven = NOT_GIVEN,
         prompt: Optional[str] | NotGiven = NOT_GIVEN,
         normalized: bool | NotGiven = NOT_GIVEN,
-        encoding_format: Union[
-            Literal["float", "float16", "base64", "binary", "ubinary", "int8", "uint8"],
-            List[Literal["float", "float16", "base64", "binary", "ubinary", "int8", "uint8"]],
-        ]
-        | NotGiven = NOT_GIVEN,
+        encoding_format: Union[EncodingFormat, List[EncodingFormat]] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,

@@ -36,7 +36,7 @@ from ._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from .resources import chat, files, embeddings
+from .resources import chat, files, api_keys, embeddings
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import APIStatusError, MixedbreadError
 from ._base_client import (
@@ -48,6 +48,7 @@ from ._base_client import (
 from .resources.parsing import parsing
 from .types.info_response import InfoResponse
 from .resources.extractions import extractions
+from .types.encoding_format import EncodingFormat
 from .types.rerank_response import RerankResponse
 from .resources.data_sources import data_sources
 from .resources.vector_stores import vector_stores
@@ -79,6 +80,7 @@ class Mixedbread(SyncAPIClient):
     embeddings: embeddings.EmbeddingsResource
     chat: chat.ChatResource
     data_sources: data_sources.DataSourcesResource
+    api_keys: api_keys.APIKeysResource
     with_raw_response: MixedbreadWithRawResponse
     with_streaming_response: MixedbreadWithStreamedResponse
 
@@ -167,6 +169,7 @@ class Mixedbread(SyncAPIClient):
         self.embeddings = embeddings.EmbeddingsResource(self)
         self.chat = chat.ChatResource(self)
         self.data_sources = data_sources.DataSourcesResource(self)
+        self.api_keys = api_keys.APIKeysResource(self)
         self.with_raw_response = MixedbreadWithRawResponse(self)
         self.with_streaming_response = MixedbreadWithStreamedResponse(self)
 
@@ -251,11 +254,7 @@ class Mixedbread(SyncAPIClient):
         dimensions: Optional[int] | NotGiven = NOT_GIVEN,
         prompt: Optional[str] | NotGiven = NOT_GIVEN,
         normalized: bool | NotGiven = NOT_GIVEN,
-        encoding_format: Union[
-            Literal["float", "float16", "base64", "binary", "ubinary", "int8", "uint8"],
-            List[Literal["float", "float16", "base64", "binary", "ubinary", "int8", "uint8"]],
-        ]
-        | NotGiven = NOT_GIVEN,
+        encoding_format: Union[EncodingFormat, List[EncodingFormat]] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -444,6 +443,7 @@ class AsyncMixedbread(AsyncAPIClient):
     embeddings: embeddings.AsyncEmbeddingsResource
     chat: chat.AsyncChatResource
     data_sources: data_sources.AsyncDataSourcesResource
+    api_keys: api_keys.AsyncAPIKeysResource
     with_raw_response: AsyncMixedbreadWithRawResponse
     with_streaming_response: AsyncMixedbreadWithStreamedResponse
 
@@ -532,6 +532,7 @@ class AsyncMixedbread(AsyncAPIClient):
         self.embeddings = embeddings.AsyncEmbeddingsResource(self)
         self.chat = chat.AsyncChatResource(self)
         self.data_sources = data_sources.AsyncDataSourcesResource(self)
+        self.api_keys = api_keys.AsyncAPIKeysResource(self)
         self.with_raw_response = AsyncMixedbreadWithRawResponse(self)
         self.with_streaming_response = AsyncMixedbreadWithStreamedResponse(self)
 
@@ -616,11 +617,7 @@ class AsyncMixedbread(AsyncAPIClient):
         dimensions: Optional[int] | NotGiven = NOT_GIVEN,
         prompt: Optional[str] | NotGiven = NOT_GIVEN,
         normalized: bool | NotGiven = NOT_GIVEN,
-        encoding_format: Union[
-            Literal["float", "float16", "base64", "binary", "ubinary", "int8", "uint8"],
-            List[Literal["float", "float16", "base64", "binary", "ubinary", "int8", "uint8"]],
-        ]
-        | NotGiven = NOT_GIVEN,
+        encoding_format: Union[EncodingFormat, List[EncodingFormat]] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -810,6 +807,7 @@ class MixedbreadWithRawResponse:
         self.embeddings = embeddings.EmbeddingsResourceWithRawResponse(client.embeddings)
         self.chat = chat.ChatResourceWithRawResponse(client.chat)
         self.data_sources = data_sources.DataSourcesResourceWithRawResponse(client.data_sources)
+        self.api_keys = api_keys.APIKeysResourceWithRawResponse(client.api_keys)
 
         self.embed = to_raw_response_wrapper(
             client.embed,
@@ -831,6 +829,7 @@ class AsyncMixedbreadWithRawResponse:
         self.embeddings = embeddings.AsyncEmbeddingsResourceWithRawResponse(client.embeddings)
         self.chat = chat.AsyncChatResourceWithRawResponse(client.chat)
         self.data_sources = data_sources.AsyncDataSourcesResourceWithRawResponse(client.data_sources)
+        self.api_keys = api_keys.AsyncAPIKeysResourceWithRawResponse(client.api_keys)
 
         self.embed = async_to_raw_response_wrapper(
             client.embed,
@@ -852,6 +851,7 @@ class MixedbreadWithStreamedResponse:
         self.embeddings = embeddings.EmbeddingsResourceWithStreamingResponse(client.embeddings)
         self.chat = chat.ChatResourceWithStreamingResponse(client.chat)
         self.data_sources = data_sources.DataSourcesResourceWithStreamingResponse(client.data_sources)
+        self.api_keys = api_keys.APIKeysResourceWithStreamingResponse(client.api_keys)
 
         self.embed = to_streamed_response_wrapper(
             client.embed,
@@ -873,6 +873,7 @@ class AsyncMixedbreadWithStreamedResponse:
         self.embeddings = embeddings.AsyncEmbeddingsResourceWithStreamingResponse(client.embeddings)
         self.chat = chat.AsyncChatResourceWithStreamingResponse(client.chat)
         self.data_sources = data_sources.AsyncDataSourcesResourceWithStreamingResponse(client.data_sources)
+        self.api_keys = api_keys.AsyncAPIKeysResourceWithStreamingResponse(client.api_keys)
 
         self.embed = async_to_streamed_response_wrapper(
             client.embed,
