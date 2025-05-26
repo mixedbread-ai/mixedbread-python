@@ -2,9 +2,7 @@
 
 from __future__ import annotations
 
-from .text_input import TextInput as TextInput
 from .extraction_job import ExtractionJob as ExtractionJob
-from .image_url_input import ImageURLInput as ImageURLInput
 from .text_input_param import TextInputParam as TextInputParam
 from .extraction_result import ExtractionResult as ExtractionResult
 from .job_create_params import JobCreateParams as JobCreateParams

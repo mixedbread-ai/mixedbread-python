@@ -32,7 +32,10 @@ Types:
 from mixedbread.types import (
     ExpiresAfter,
     FileCounts,
-    ScoredVectorStoreChunk,
+    ScoredAudioURLInputChunk,
+    ScoredImageURLInputChunk,
+    ScoredTextInputChunk,
+    ScoredVideoURLInputChunk,
     VectorStore,
     VectorStoreChunkSearchOptions,
     VectorStoreFileSearchOptions,

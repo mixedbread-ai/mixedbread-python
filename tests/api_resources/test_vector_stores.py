@@ -112,7 +112,7 @@ class TestVectorStores:
         vector_store = client.vector_stores.update(
             vector_store_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             name="x",
-            description="x",
+            description="description",
             expires_after={
                 "anchor": "last_active_at",
                 "days": 0,
@@ -280,7 +280,10 @@ class TestVectorStores:
                 "return_metadata": True,
             },
             stream=True,
-            qa_options={"cite": True},
+            qa_options={
+                "cite": True,
+                "multimodal": True,
+            },
         )
         assert_matches_type(VectorStoreQuestionAnsweringResponse, vector_store, path=["response"])
 
@@ -487,7 +490,7 @@ class TestAsyncVectorStores:
         vector_store = await async_client.vector_stores.update(
             vector_store_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             name="x",
-            description="x",
+            description="description",
             expires_after={
                 "anchor": "last_active_at",
                 "days": 0,
@@ -655,7 +658,10 @@ class TestAsyncVectorStores:
                 "return_metadata": True,
             },
             stream=True,
-            qa_options={"cite": True},
+            qa_options={
+                "cite": True,
+                "multimodal": True,
+            },
         )
         assert_matches_type(VectorStoreQuestionAnsweringResponse, vector_store, path=["response"])
 

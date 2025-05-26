@@ -4,7 +4,6 @@ from typing import List, Optional
 from typing_extensions import Literal
 
 from .._models import BaseModel
-from .object_type import ObjectType
 from .shared.usage import Usage
 
 __all__ = ["RerankResponse", "Data"]
@@ -34,7 +33,7 @@ class RerankResponse(BaseModel):
     data: List[Data]
     """The ranked documents."""
 
-    object: Optional[ObjectType] = None
+    object: Optional[Literal["list"]] = None
     """The object type of the response"""
 
     top_k: int
