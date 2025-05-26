@@ -5,8 +5,9 @@ from datetime import datetime
 from typing_extensions import Literal
 
 from .._models import BaseModel
+from .expires_after import ExpiresAfter
 
-__all__ = ["VectorStoreRetrieveResponse", "FileCounts", "ExpiresAfter"]
+__all__ = ["VectorStore", "FileCounts"]
 
 
 class FileCounts(BaseModel):
@@ -26,15 +27,7 @@ class FileCounts(BaseModel):
     """Total number of files"""
 
 
-class ExpiresAfter(BaseModel):
-    anchor: Optional[Literal["last_active_at"]] = None
-    """Anchor date for the expiration policy"""
-
-    days: Optional[int] = None
-    """Number of days after which the vector store expires"""
-
-
-class VectorStoreRetrieveResponse(BaseModel):
+class VectorStore(BaseModel):
     id: str
     """Unique identifier for the vector store"""
 
