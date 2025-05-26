@@ -6,9 +6,8 @@ from typing import List, Union, Iterable, Optional
 from typing_extensions import Required, TypeAlias, TypedDict
 
 from .shared_params.search_filter_condition import SearchFilterCondition
-from .vector_store_chunk_search_options_param import VectorStoreChunkSearchOptionsParam
 
-__all__ = ["VectorStoreSearchParams", "Filters", "FiltersUnionMember2"]
+__all__ = ["VectorStoreSearchParams", "Filters", "FiltersUnionMember2", "SearchOptions"]
 
 
 class VectorStoreSearchParams(TypedDict, total=False):
@@ -24,12 +23,24 @@ class VectorStoreSearchParams(TypedDict, total=False):
     filters: Optional[Filters]
     """Optional filter conditions"""
 
-    search_options: VectorStoreChunkSearchOptionsParam
+    search_options: SearchOptions
     """Search configuration options"""
 
 
 FiltersUnionMember2: TypeAlias = Union["SearchFilter", SearchFilterCondition]
 
 Filters: TypeAlias = Union["SearchFilter", SearchFilterCondition, Iterable[FiltersUnionMember2]]
+
+
+class SearchOptions(TypedDict, total=False):
+    score_threshold: float
+    """Minimum similarity score threshold"""
+
+    rewrite_query: bool
+    """Whether to rewrite the query"""
+
+    return_metadata: bool
+    """Whether to return file metadata"""
+
 
 from .shared_params.search_filter import SearchFilter
