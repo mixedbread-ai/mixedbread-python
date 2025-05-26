@@ -1,19 +1,148 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 from typing import List, Union, Optional
-from typing_extensions import Annotated, TypeAlias
+from typing_extensions import Literal, Annotated, TypeAlias
 
 from .._utils import PropertyInfo
 from .._models import BaseModel
-from .scored_text_input_chunk import ScoredTextInputChunk
-from .scored_audio_url_input_chunk import ScoredAudioURLInputChunk
-from .scored_image_url_input_chunk import ScoredImageURLInputChunk
 from .scored_video_url_input_chunk import ScoredVideoURLInputChunk
 
-__all__ = ["VectorStoreQuestionAnsweringResponse", "Source"]
+__all__ = [
+    "VectorStoreQuestionAnsweringResponse",
+    "Source",
+    "SourceScoredTextInputChunk",
+    "SourceScoredImageURLInputChunk",
+    "SourceScoredImageURLInputChunkImageURL",
+    "SourceScoredAudioURLInputChunk",
+    "SourceScoredAudioURLInputChunkAudioURL",
+]
+
+
+class SourceScoredTextInputChunk(BaseModel):
+    chunk_index: int
+    """position of the chunk in a file"""
+
+    mime_type: Optional[str] = None
+    """mime type of the chunk"""
+
+    model: Optional[str] = None
+    """model used for this chunk"""
+
+    score: float
+    """score of the chunk"""
+
+    file_id: str
+    """file id"""
+
+    filename: str
+    """filename"""
+
+    vector_store_id: str
+    """vector store id"""
+
+    metadata: Optional[object] = None
+    """file metadata"""
+
+    type: Optional[Literal["text"]] = None
+    """Input type identifier"""
+
+    text: str
+    """Text content to process"""
+
+
+class SourceScoredImageURLInputChunkImageURL(BaseModel):
+    url: str
+    """The image URL. Can be either a URL or a Data URI."""
+
+
+class SourceScoredImageURLInputChunk(BaseModel):
+    chunk_index: int
+    """position of the chunk in a file"""
+
+    mime_type: Optional[str] = None
+    """mime type of the chunk"""
+
+    model: Optional[str] = None
+    """model used for this chunk"""
+
+    score: float
+    """score of the chunk"""
+
+    file_id: str
+    """file id"""
+
+    filename: str
+    """filename"""
+
+    vector_store_id: str
+    """vector store id"""
+
+    metadata: Optional[object] = None
+    """file metadata"""
+
+    type: Optional[Literal["image_url"]] = None
+    """Input type identifier"""
+
+    image_url: SourceScoredImageURLInputChunkImageURL
+    """The image input specification."""
+
+    ocr_text: Optional[str] = None
+    """ocr text of the image"""
+
+    summary: Optional[str] = None
+    """summary of the image"""
+
+
+class SourceScoredAudioURLInputChunkAudioURL(BaseModel):
+    url: str
+    """The audio URL. Can be either a URL or a Data URI."""
+
+
+class SourceScoredAudioURLInputChunk(BaseModel):
+    chunk_index: int
+    """position of the chunk in a file"""
+
+    mime_type: Optional[str] = None
+    """mime type of the chunk"""
+
+    model: Optional[str] = None
+    """model used for this chunk"""
+
+    score: float
+    """score of the chunk"""
+
+    file_id: str
+    """file id"""
+
+    filename: str
+    """filename"""
+
+    vector_store_id: str
+    """vector store id"""
+
+    metadata: Optional[object] = None
+    """file metadata"""
+
+    type: Optional[Literal["audio_url"]] = None
+    """Input type identifier"""
+
+    audio_url: SourceScoredAudioURLInputChunkAudioURL
+    """The audio input specification."""
+
+    transcription: Optional[str] = None
+    """speech recognition (sr) text of the audio"""
+
+    summary: Optional[str] = None
+    """summary of the audio"""
+
 
 Source: TypeAlias = Annotated[
-    Union[ScoredTextInputChunk, ScoredImageURLInputChunk, ScoredAudioURLInputChunk, ScoredVideoURLInputChunk],
+    Union[
+        SourceScoredTextInputChunk,
+        SourceScoredImageURLInputChunk,
+        SourceScoredAudioURLInputChunk,
+        ScoredVideoURLInputChunk,
+    ],
     PropertyInfo(discriminator="type"),
 ]
 

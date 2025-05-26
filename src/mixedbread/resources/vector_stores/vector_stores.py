@@ -33,11 +33,12 @@ from ..._response import (
 )
 from ...pagination import SyncLimitOffset, AsyncLimitOffset
 from ..._base_client import AsyncPaginator, make_request_options
-from ...types.vector_store import VectorStore
-from ...types.expires_after_param import ExpiresAfterParam
+from ...types.vector_store_list_response import VectorStoreListResponse
+from ...types.vector_store_create_response import VectorStoreCreateResponse
 from ...types.vector_store_delete_response import VectorStoreDeleteResponse
 from ...types.vector_store_search_response import VectorStoreSearchResponse
-from ...types.vector_store_chunk_search_options_param import VectorStoreChunkSearchOptionsParam
+from ...types.vector_store_update_response import VectorStoreUpdateResponse
+from ...types.vector_store_retrieve_response import VectorStoreRetrieveResponse
 from ...types.vector_store_question_answering_response import VectorStoreQuestionAnsweringResponse
 
 __all__ = ["VectorStoresResource", "AsyncVectorStoresResource"]
@@ -72,7 +73,7 @@ class VectorStoresResource(SyncAPIResource):
         *,
         name: Optional[str] | NotGiven = NOT_GIVEN,
         description: Optional[str] | NotGiven = NOT_GIVEN,
-        expires_after: Optional[ExpiresAfterParam] | NotGiven = NOT_GIVEN,
+        expires_after: Optional[vector_store_create_params.ExpiresAfter] | NotGiven = NOT_GIVEN,
         metadata: object | NotGiven = NOT_GIVEN,
         file_ids: Optional[List[str]] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -81,7 +82,7 @@ class VectorStoresResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> VectorStore:
+    ) -> VectorStoreCreateResponse:
         """
         Create a new vector store.
 
@@ -124,7 +125,7 @@ class VectorStoresResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=VectorStore,
+            cast_to=VectorStoreCreateResponse,
         )
 
     def retrieve(
@@ -137,7 +138,7 @@ class VectorStoresResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> VectorStore:
+    ) -> VectorStoreRetrieveResponse:
         """
         Get a vector store by ID.
 
@@ -163,7 +164,7 @@ class VectorStoresResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=VectorStore,
+            cast_to=VectorStoreRetrieveResponse,
         )
 
     def update(
@@ -172,7 +173,7 @@ class VectorStoresResource(SyncAPIResource):
         *,
         name: Optional[str] | NotGiven = NOT_GIVEN,
         description: Optional[str] | NotGiven = NOT_GIVEN,
-        expires_after: Optional[ExpiresAfterParam] | NotGiven = NOT_GIVEN,
+        expires_after: Optional[vector_store_update_params.ExpiresAfter] | NotGiven = NOT_GIVEN,
         metadata: object | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -180,7 +181,7 @@ class VectorStoresResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> VectorStore:
+    ) -> VectorStoreUpdateResponse:
         """
         Update a vector store by ID.
 
@@ -225,7 +226,7 @@ class VectorStoresResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=VectorStore,
+            cast_to=VectorStoreUpdateResponse,
         )
 
     def list(
@@ -239,7 +240,7 @@ class VectorStoresResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> SyncLimitOffset[VectorStore]:
+    ) -> SyncLimitOffset[VectorStoreListResponse]:
         """
         List all vector stores.
 
@@ -262,7 +263,7 @@ class VectorStoresResource(SyncAPIResource):
         """
         return self._get_api_list(
             "/v1/vector_stores",
-            page=SyncLimitOffset[VectorStore],
+            page=SyncLimitOffset[VectorStoreListResponse],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -276,7 +277,7 @@ class VectorStoresResource(SyncAPIResource):
                     vector_store_list_params.VectorStoreListParams,
                 ),
             ),
-            model=VectorStore,
+            model=VectorStoreListResponse,
         )
 
     def delete(
@@ -325,7 +326,7 @@ class VectorStoresResource(SyncAPIResource):
         vector_store_ids: List[str],
         top_k: int | NotGiven = NOT_GIVEN,
         filters: Optional[vector_store_question_answering_params.Filters] | NotGiven = NOT_GIVEN,
-        search_options: VectorStoreChunkSearchOptionsParam | NotGiven = NOT_GIVEN,
+        search_options: vector_store_question_answering_params.SearchOptions | NotGiven = NOT_GIVEN,
         stream: bool | NotGiven = NOT_GIVEN,
         qa_options: vector_store_question_answering_params.QaOptions | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -390,7 +391,7 @@ class VectorStoresResource(SyncAPIResource):
         vector_store_ids: List[str],
         top_k: int | NotGiven = NOT_GIVEN,
         filters: Optional[vector_store_search_params.Filters] | NotGiven = NOT_GIVEN,
-        search_options: VectorStoreChunkSearchOptionsParam | NotGiven = NOT_GIVEN,
+        search_options: vector_store_search_params.SearchOptions | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -482,7 +483,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         *,
         name: Optional[str] | NotGiven = NOT_GIVEN,
         description: Optional[str] | NotGiven = NOT_GIVEN,
-        expires_after: Optional[ExpiresAfterParam] | NotGiven = NOT_GIVEN,
+        expires_after: Optional[vector_store_create_params.ExpiresAfter] | NotGiven = NOT_GIVEN,
         metadata: object | NotGiven = NOT_GIVEN,
         file_ids: Optional[List[str]] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -491,7 +492,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> VectorStore:
+    ) -> VectorStoreCreateResponse:
         """
         Create a new vector store.
 
@@ -534,7 +535,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=VectorStore,
+            cast_to=VectorStoreCreateResponse,
         )
 
     async def retrieve(
@@ -547,7 +548,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> VectorStore:
+    ) -> VectorStoreRetrieveResponse:
         """
         Get a vector store by ID.
 
@@ -573,7 +574,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=VectorStore,
+            cast_to=VectorStoreRetrieveResponse,
         )
 
     async def update(
@@ -582,7 +583,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         *,
         name: Optional[str] | NotGiven = NOT_GIVEN,
         description: Optional[str] | NotGiven = NOT_GIVEN,
-        expires_after: Optional[ExpiresAfterParam] | NotGiven = NOT_GIVEN,
+        expires_after: Optional[vector_store_update_params.ExpiresAfter] | NotGiven = NOT_GIVEN,
         metadata: object | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -590,7 +591,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> VectorStore:
+    ) -> VectorStoreUpdateResponse:
         """
         Update a vector store by ID.
 
@@ -635,7 +636,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=VectorStore,
+            cast_to=VectorStoreUpdateResponse,
         )
 
     def list(
@@ -649,7 +650,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> AsyncPaginator[VectorStore, AsyncLimitOffset[VectorStore]]:
+    ) -> AsyncPaginator[VectorStoreListResponse, AsyncLimitOffset[VectorStoreListResponse]]:
         """
         List all vector stores.
 
@@ -672,7 +673,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         """
         return self._get_api_list(
             "/v1/vector_stores",
-            page=AsyncLimitOffset[VectorStore],
+            page=AsyncLimitOffset[VectorStoreListResponse],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -686,7 +687,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
                     vector_store_list_params.VectorStoreListParams,
                 ),
             ),
-            model=VectorStore,
+            model=VectorStoreListResponse,
         )
 
     async def delete(
@@ -735,7 +736,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         vector_store_ids: List[str],
         top_k: int | NotGiven = NOT_GIVEN,
         filters: Optional[vector_store_question_answering_params.Filters] | NotGiven = NOT_GIVEN,
-        search_options: VectorStoreChunkSearchOptionsParam | NotGiven = NOT_GIVEN,
+        search_options: vector_store_question_answering_params.SearchOptions | NotGiven = NOT_GIVEN,
         stream: bool | NotGiven = NOT_GIVEN,
         qa_options: vector_store_question_answering_params.QaOptions | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -800,7 +801,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         vector_store_ids: List[str],
         top_k: int | NotGiven = NOT_GIVEN,
         filters: Optional[vector_store_search_params.Filters] | NotGiven = NOT_GIVEN,
-        search_options: VectorStoreChunkSearchOptionsParam | NotGiven = NOT_GIVEN,
+        search_options: vector_store_search_params.SearchOptions | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
