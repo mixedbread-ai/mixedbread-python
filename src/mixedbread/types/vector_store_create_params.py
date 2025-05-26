@@ -3,9 +3,11 @@
 from __future__ import annotations
 
 from typing import List, Optional
-from typing_extensions import Literal, TypedDict
+from typing_extensions import TypedDict
 
-__all__ = ["VectorStoreCreateParams", "ExpiresAfter"]
+from .expires_after_param import ExpiresAfterParam
+
+__all__ = ["VectorStoreCreateParams"]
 
 
 class VectorStoreCreateParams(TypedDict, total=False):
@@ -15,7 +17,7 @@ class VectorStoreCreateParams(TypedDict, total=False):
     description: Optional[str]
     """Description of the vector store"""
 
-    expires_after: Optional[ExpiresAfter]
+    expires_after: Optional[ExpiresAfterParam]
     """Represents an expiration policy for a vector store."""
 
     metadata: object
@@ -23,11 +25,3 @@ class VectorStoreCreateParams(TypedDict, total=False):
 
     file_ids: Optional[List[str]]
     """Optional list of file IDs"""
-
-
-class ExpiresAfter(TypedDict, total=False):
-    anchor: Literal["last_active_at"]
-    """Anchor date for the expiration policy"""
-
-    days: int
-    """Number of days after which the vector store expires"""
