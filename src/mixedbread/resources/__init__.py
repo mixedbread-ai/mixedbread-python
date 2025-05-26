@@ -1,5 +1,13 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
+from .chat import (
+    ChatResource,
+    AsyncChatResource,
+    ChatResourceWithRawResponse,
+    AsyncChatResourceWithRawResponse,
+    ChatResourceWithStreamingResponse,
+    AsyncChatResourceWithStreamingResponse,
+)
 from .files import (
     FilesResource,
     AsyncFilesResource,
@@ -31,6 +39,14 @@ from .extractions import (
     AsyncExtractionsResourceWithRawResponse,
     ExtractionsResourceWithStreamingResponse,
     AsyncExtractionsResourceWithStreamingResponse,
+)
+from .data_sources import (
+    DataSourcesResource,
+    AsyncDataSourcesResource,
+    DataSourcesResourceWithRawResponse,
+    AsyncDataSourcesResourceWithRawResponse,
+    DataSourcesResourceWithStreamingResponse,
+    AsyncDataSourcesResourceWithStreamingResponse,
 )
 from .vector_stores import (
     VectorStoresResource,
@@ -72,4 +88,16 @@ __all__ = [
     "AsyncEmbeddingsResourceWithRawResponse",
     "EmbeddingsResourceWithStreamingResponse",
     "AsyncEmbeddingsResourceWithStreamingResponse",
+    "ChatResource",
+    "AsyncChatResource",
+    "ChatResourceWithRawResponse",
+    "AsyncChatResourceWithRawResponse",
+    "ChatResourceWithStreamingResponse",
+    "AsyncChatResourceWithStreamingResponse",
+    "DataSourcesResource",
+    "AsyncDataSourcesResource",
+    "DataSourcesResourceWithRawResponse",
+    "AsyncDataSourcesResourceWithRawResponse",
+    "DataSourcesResourceWithStreamingResponse",
+    "AsyncDataSourcesResourceWithStreamingResponse",
 ]
