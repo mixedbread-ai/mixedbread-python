@@ -46,5 +46,8 @@ class QaOptions(TypedDict, total=False):
     cite: bool
     """Whether to use citations"""
 
+    multimodal: bool
+    """Whether to use multimodal context"""
+
 
 from .shared_params.search_filter import SearchFilter
