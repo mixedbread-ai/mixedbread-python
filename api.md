@@ -172,15 +172,9 @@ Methods:
 
 # Chat
 
-Types:
-
-```python
-from mixedbread.types import ChatCreateCompletionResponse
-```
-
 Methods:
 
-- <code title="post /v1/chat/completions">client.chat.<a href="./src/mixedbread/resources/chat.py">create_completion</a>() -> <a href="./src/mixedbread/types/chat_create_completion_response.py">object</a></code>
+- <code title="post /v1/chat/completions">client.chat.<a href="./src/mixedbread/resources/chat.py">create_completion</a>() -> object</code>
 
 # DataSources
 
