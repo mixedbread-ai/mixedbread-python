@@ -37,7 +37,7 @@ class TestConnectors:
             name="name",
             trigger_sync=True,
             metadata={},
-            polling_interval="polling_interval",
+            polling_interval=1800,
         )
         assert_matches_type(DataSourceConnector, connector, path=["response"])
 
@@ -139,7 +139,7 @@ class TestConnectors:
             name="name",
             metadata={"foo": "bar"},
             trigger_sync=True,
-            polling_interval="polling_interval",
+            polling_interval=1800,
         )
         assert_matches_type(DataSourceConnector, connector, path=["response"])
 
@@ -298,7 +298,7 @@ class TestAsyncConnectors:
             name="name",
             trigger_sync=True,
             metadata={},
-            polling_interval="polling_interval",
+            polling_interval=1800,
         )
         assert_matches_type(DataSourceConnector, connector, path=["response"])
 
@@ -400,7 +400,7 @@ class TestAsyncConnectors:
             name="name",
             metadata={"foo": "bar"},
             trigger_sync=True,
-            polling_interval="polling_interval",
+            polling_interval=1800,
         )
         assert_matches_type(DataSourceConnector, connector, path=["response"])
 

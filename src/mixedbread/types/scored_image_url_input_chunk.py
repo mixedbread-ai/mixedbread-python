@@ -12,6 +12,9 @@ class ImageURL(BaseModel):
     url: str
     """The image URL. Can be either a URL or a Data URI."""
 
+    format: Optional[str] = None
+    """The image format/mimetype"""
+
 
 class ScoredImageURLInputChunk(BaseModel):
     chunk_index: int

@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Dict, Optional
+from typing import Dict, Union, Optional
 
 import httpx
 
@@ -53,7 +53,7 @@ class ConnectorsResource(SyncAPIResource):
         name: str | NotGiven = NOT_GIVEN,
         trigger_sync: bool | NotGiven = NOT_GIVEN,
         metadata: object | NotGiven = NOT_GIVEN,
-        polling_interval: Optional[str] | NotGiven = NOT_GIVEN,
+        polling_interval: Union[int, str, None] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -80,7 +80,12 @@ class ConnectorsResource(SyncAPIResource):
 
           metadata: The metadata of the connector
 
-          polling_interval: The polling interval of the connector
+          polling_interval: Polling interval for the connector. Defaults to 30 minutes if not specified. Can
+              be provided as:
+
+              - int: Number of seconds (e.g., 1800 for 30 minutes)
+              - str: Duration string (e.g., '30m', '1h', '2d') or ISO 8601 format (e.g.,
+                'PT30M', 'P1D') Valid range: 15 seconds to 30 days
 
           extra_headers: Send extra headers
 
@@ -163,7 +168,7 @@ class ConnectorsResource(SyncAPIResource):
         name: Optional[str] | NotGiven = NOT_GIVEN,
         metadata: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
         trigger_sync: Optional[bool] | NotGiven = NOT_GIVEN,
-        polling_interval: Optional[str] | NotGiven = NOT_GIVEN,
+        polling_interval: Union[int, str, None] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -191,7 +196,12 @@ class ConnectorsResource(SyncAPIResource):
 
           trigger_sync: Whether the connector should be synced after update
 
-          polling_interval: The polling interval of the connector
+          polling_interval: Polling interval for the connector. Defaults to 30 minutes if not specified. Can
+              be provided as:
+
+              - int: Number of seconds (e.g., 1800 for 30 minutes)
+              - str: Duration string (e.g., '30m', '1h', '2d') or ISO 8601 format (e.g.,
+                'PT30M', 'P1D') Valid range: 15 seconds to 30 days
 
           extra_headers: Send extra headers
 
@@ -353,7 +363,7 @@ class AsyncConnectorsResource(AsyncAPIResource):
         name: str | NotGiven = NOT_GIVEN,
         trigger_sync: bool | NotGiven = NOT_GIVEN,
         metadata: object | NotGiven = NOT_GIVEN,
-        polling_interval: Optional[str] | NotGiven = NOT_GIVEN,
+        polling_interval: Union[int, str, None] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -380,7 +390,12 @@ class AsyncConnectorsResource(AsyncAPIResource):
 
           metadata: The metadata of the connector
 
-          polling_interval: The polling interval of the connector
+          polling_interval: Polling interval for the connector. Defaults to 30 minutes if not specified. Can
+              be provided as:
+
+              - int: Number of seconds (e.g., 1800 for 30 minutes)
+              - str: Duration string (e.g., '30m', '1h', '2d') or ISO 8601 format (e.g.,
+                'PT30M', 'P1D') Valid range: 15 seconds to 30 days
 
           extra_headers: Send extra headers
 
@@ -463,7 +478,7 @@ class AsyncConnectorsResource(AsyncAPIResource):
         name: Optional[str] | NotGiven = NOT_GIVEN,
         metadata: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
         trigger_sync: Optional[bool] | NotGiven = NOT_GIVEN,
-        polling_interval: Optional[str] | NotGiven = NOT_GIVEN,
+        polling_interval: Union[int, str, None] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -491,7 +506,12 @@ class AsyncConnectorsResource(AsyncAPIResource):
 
           trigger_sync: Whether the connector should be synced after update
 
-          polling_interval: The polling interval of the connector
+          polling_interval: Polling interval for the connector. Defaults to 30 minutes if not specified. Can
+              be provided as:
+
+              - int: Number of seconds (e.g., 1800 for 30 minutes)
+              - str: Duration string (e.g., '30m', '1h', '2d') or ISO 8601 format (e.g.,
+                'PT30M', 'P1D') Valid range: 15 seconds to 30 days
 
           extra_headers: Send extra headers
 
