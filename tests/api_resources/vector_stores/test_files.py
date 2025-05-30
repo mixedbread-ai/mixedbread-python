@@ -275,6 +275,7 @@ class TestFiles:
             search_options={
                 "score_threshold": 0,
                 "rewrite_query": True,
+                "rerank": True,
                 "return_metadata": True,
                 "return_chunks": True,
                 "chunks_per_file": 0,
@@ -565,6 +566,7 @@ class TestAsyncFiles:
             search_options={
                 "score_threshold": 0,
                 "rewrite_query": True,
+                "rerank": True,
                 "return_metadata": True,
                 "return_chunks": True,
                 "chunks_per_file": 0,
