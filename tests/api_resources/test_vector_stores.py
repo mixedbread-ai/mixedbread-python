@@ -277,6 +277,7 @@ class TestVectorStores:
             search_options={
                 "score_threshold": 0,
                 "rewrite_query": True,
+                "rerank": True,
                 "return_metadata": True,
             },
             stream=True,
@@ -366,6 +367,7 @@ class TestVectorStores:
             search_options={
                 "score_threshold": 0,
                 "rewrite_query": True,
+                "rerank": True,
                 "return_metadata": True,
             },
         )
@@ -655,6 +657,7 @@ class TestAsyncVectorStores:
             search_options={
                 "score_threshold": 0,
                 "rewrite_query": True,
+                "rerank": True,
                 "return_metadata": True,
             },
             stream=True,
@@ -744,6 +747,7 @@ class TestAsyncVectorStores:
             search_options={
                 "score_threshold": 0,
                 "rewrite_query": True,
+                "rerank": True,
                 "return_metadata": True,
             },
         )

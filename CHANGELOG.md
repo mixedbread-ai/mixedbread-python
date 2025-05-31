@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.6.0 (2025-05-31)
+
+Full Changelog: [v0.5.0...v0.6.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.5.0...v0.6.0)
+
+### Features
+
+* **api:** api update ([0296d95](https://github.com/mixedbread-ai/mixedbread-python/commit/0296d958b5d8e82e2626fc04f9618a6423803515))
+* **api:** update via SDK Studio ([ed99b06](https://github.com/mixedbread-ai/mixedbread-python/commit/ed99b067eba308da0bb4ff24623d32b3339563a1))
+
+
+### Bug Fixes
+
+* **docs/api:** remove references to nonexistent types ([43c342b](https://github.com/mixedbread-ai/mixedbread-python/commit/43c342bb106371ea6057969578dc55af713f225e))
+
 ## 0.5.0 (2025-05-26)
 
 Full Changelog: [v0.4.0...v0.5.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.4.0...v0.5.0)
