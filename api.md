@@ -170,12 +170,6 @@ Methods:
 
 - <code title="post /v1/embeddings">client.embeddings.<a href="./src/mixedbread/resources/embeddings.py">create</a>(\*\*<a href="src/mixedbread/types/embedding_create_params.py">params</a>) -> <a href="./src/mixedbread/types/embedding_create_response.py">EmbeddingCreateResponse</a></code>
 
-# Chat
-
-Methods:
-
-- <code title="post /v1/chat/completions">client.chat.<a href="./src/mixedbread/resources/chat.py">create_completion</a>() -> object</code>
-
 # DataSources
 
 Types:
