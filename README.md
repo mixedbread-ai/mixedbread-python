@@ -152,10 +152,7 @@ from mixedbread import Mixedbread
 client = Mixedbread()
 
 vector_store = client.vector_stores.create(
-    expires_after={
-        "anchor": "last_active_at",
-        "days": 0,
-    },
+    expires_after={},
 )
 print(vector_store.expires_after)
 ```
