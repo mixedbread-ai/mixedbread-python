@@ -15,14 +15,19 @@ class VectorStoreSearchParams(TypedDict, total=False):
     query: Required[str]
     """Search query text"""
 
-    vector_store_ids: Required[List[str]]
-    """IDs of vector stores to search"""
+    vector_store_identifiers: Optional[List[str]]
+    """IDs or names of vector stores to search"""
+
+    vector_store_ids: Optional[List[str]]
 
     top_k: int
     """Number of results to return"""
 
     filters: Optional[Filters]
     """Optional filter conditions"""
+
+    file_ids: Union[Iterable[object], List[str], None]
+    """Optional list of file IDs to filter chunks by (inclusion filter)"""
 
     search_options: VectorStoreChunkSearchOptionsParam
     """Search configuration options"""

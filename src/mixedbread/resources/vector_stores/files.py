@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import functools
-from typing import Any, List, Optional
+from typing import Any, List, Union, Iterable, Optional
 
 import httpx
 
@@ -50,7 +50,7 @@ class FilesResource(SyncAPIResource):
 
     def create(
         self,
-        vector_store_id: str,
+        vector_store_identifier: str,
         *,
         file_id: str,
         metadata: object | NotGiven = NOT_GIVEN,
@@ -65,13 +65,13 @@ class FilesResource(SyncAPIResource):
         """
         Upload a new file to a vector store for indexing.
 
-        Args: vector_store_id: The ID of the vector store to upload to file: The file to
-        upload and index
+        Args: vector_store_identifier: The ID or name of the vector store to upload to
+        file: The file to upload and index
 
         Returns: VectorStoreFile: Details of the uploaded and indexed file
 
         Args:
-          vector_store_id: The ID of the vector store
+          vector_store_identifier: The ID or name of the vector store
 
           file_id: ID of the file to add
 
@@ -87,10 +87,12 @@ class FilesResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not vector_store_id:
-            raise ValueError(f"Expected a non-empty value for `vector_store_id` but received {vector_store_id!r}")
+        if not vector_store_identifier:
+            raise ValueError(
+                f"Expected a non-empty value for `vector_store_identifier` but received {vector_store_identifier!r}"
+            )
         return self._post(
-            f"/v1/vector_stores/{vector_store_id}/files",
+            f"/v1/vector_stores/{vector_store_identifier}/files",
             body=maybe_transform(
                 {
                     "file_id": file_id,
@@ -109,7 +111,7 @@ class FilesResource(SyncAPIResource):
         self,
         file_id: str,
         *,
-        vector_store_id: str,
+        vector_store_identifier: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -120,12 +122,13 @@ class FilesResource(SyncAPIResource):
         """
         Get details of a specific file in a vector store.
 
-        Args: vector_store_id: The ID of the vector store file_id: The ID of the file
+        Args: vector_store_identifier: The ID or name of the vector store file_id: The
+        ID of the file
 
         Returns: VectorStoreFile: Details of the vector store file
 
         Args:
-          vector_store_id: The ID of the vector store
+          vector_store_identifier: The ID or name of the vector store
 
           file_id: The ID of the file
 
@@ -137,12 +140,14 @@ class FilesResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not vector_store_id:
-            raise ValueError(f"Expected a non-empty value for `vector_store_id` but received {vector_store_id!r}")
+        if not vector_store_identifier:
+            raise ValueError(
+                f"Expected a non-empty value for `vector_store_identifier` but received {vector_store_identifier!r}"
+            )
         if not file_id:
             raise ValueError(f"Expected a non-empty value for `file_id` but received {file_id!r}")
         return self._get(
-            f"/v1/vector_stores/{vector_store_id}/files/{file_id}",
+            f"/v1/vector_stores/{vector_store_identifier}/files/{file_id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -151,7 +156,7 @@ class FilesResource(SyncAPIResource):
 
     def list(
         self,
-        vector_store_id: str,
+        vector_store_identifier: str,
         *,
         limit: int | NotGiven = NOT_GIVEN,
         offset: int | NotGiven = NOT_GIVEN,
@@ -165,13 +170,13 @@ class FilesResource(SyncAPIResource):
         """
         List files indexed in a vector store with pagination.
 
-        Args: vector_store_id: The ID of the vector store pagination: Pagination
-        parameters
+        Args: vector_store_identifier: The ID or name of the vector store pagination:
+        Pagination parameters
 
         Returns: VectorStoreFileListResponse: Paginated list of vector store files
 
         Args:
-          vector_store_id: The ID of the vector store
+          vector_store_identifier: The ID or name of the vector store
 
           limit: Maximum number of items to return per page
 
@@ -185,10 +190,12 @@ class FilesResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not vector_store_id:
-            raise ValueError(f"Expected a non-empty value for `vector_store_id` but received {vector_store_id!r}")
+        if not vector_store_identifier:
+            raise ValueError(
+                f"Expected a non-empty value for `vector_store_identifier` but received {vector_store_identifier!r}"
+            )
         return self._get_api_list(
-            f"/v1/vector_stores/{vector_store_id}/files",
+            f"/v1/vector_stores/{vector_store_identifier}/files",
             page=SyncLimitOffset[VectorStoreFile],
             options=make_request_options(
                 extra_headers=extra_headers,
@@ -210,7 +217,7 @@ class FilesResource(SyncAPIResource):
         self,
         file_id: str,
         *,
-        vector_store_id: str,
+        vector_store_identifier: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -221,13 +228,13 @@ class FilesResource(SyncAPIResource):
         """
         Delete a file from a vector store.
 
-        Args: vector_store_id: The ID of the vector store file_id: The ID of the file to
-        delete
+        Args: vector_store_identifier: The ID or name of the vector store file_id: The
+        ID of the file to delete
 
         Returns: VectorStoreFileDeleted: The deleted file
 
         Args:
-          vector_store_id: The ID of the vector store
+          vector_store_identifier: The ID or name of the vector store
 
           file_id: The ID of the file to delete
 
@@ -239,12 +246,14 @@ class FilesResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not vector_store_id:
-            raise ValueError(f"Expected a non-empty value for `vector_store_id` but received {vector_store_id!r}")
+        if not vector_store_identifier:
+            raise ValueError(
+                f"Expected a non-empty value for `vector_store_identifier` but received {vector_store_identifier!r}"
+            )
         if not file_id:
             raise ValueError(f"Expected a non-empty value for `file_id` but received {file_id!r}")
         return self._delete(
-            f"/v1/vector_stores/{vector_store_id}/files/{file_id}",
+            f"/v1/vector_stores/{vector_store_identifier}/files/{file_id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -255,9 +264,11 @@ class FilesResource(SyncAPIResource):
         self,
         *,
         query: str,
-        vector_store_ids: List[str],
+        vector_store_identifiers: Optional[List[str]] | NotGiven = NOT_GIVEN,
+        vector_store_ids: Optional[List[str]] | NotGiven = NOT_GIVEN,
         top_k: int | NotGiven = NOT_GIVEN,
         filters: Optional[file_search_params.Filters] | NotGiven = NOT_GIVEN,
+        file_ids: Union[Iterable[object], List[str], None] | NotGiven = NOT_GIVEN,
         search_options: file_search_params.SearchOptions | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -287,11 +298,13 @@ class FilesResource(SyncAPIResource):
         Args:
           query: Search query text
 
-          vector_store_ids: IDs of vector stores to search
+          vector_store_identifiers: IDs or names of vector stores to search
 
           top_k: Number of results to return
 
           filters: Optional filter conditions
+
+          file_ids: Optional list of file IDs to filter chunks by (inclusion filter)
 
           search_options: Search configuration options
 
@@ -308,9 +321,11 @@ class FilesResource(SyncAPIResource):
             body=maybe_transform(
                 {
                     "query": query,
+                    "vector_store_identifiers": vector_store_identifiers,
                     "vector_store_ids": vector_store_ids,
                     "top_k": top_k,
                     "filters": filters,
+                    "file_ids": file_ids,
                     "search_options": search_options,
                 },
                 file_search_params.FileSearchParams,
@@ -450,7 +465,7 @@ class AsyncFilesResource(AsyncAPIResource):
 
     async def create(
         self,
-        vector_store_id: str,
+        vector_store_identifier: str,
         *,
         file_id: str,
         metadata: object | NotGiven = NOT_GIVEN,
@@ -465,13 +480,13 @@ class AsyncFilesResource(AsyncAPIResource):
         """
         Upload a new file to a vector store for indexing.
 
-        Args: vector_store_id: The ID of the vector store to upload to file: The file to
-        upload and index
+        Args: vector_store_identifier: The ID or name of the vector store to upload to
+        file: The file to upload and index
 
         Returns: VectorStoreFile: Details of the uploaded and indexed file
 
         Args:
-          vector_store_id: The ID of the vector store
+          vector_store_identifier: The ID or name of the vector store
 
           file_id: ID of the file to add
 
@@ -487,10 +502,12 @@ class AsyncFilesResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not vector_store_id:
-            raise ValueError(f"Expected a non-empty value for `vector_store_id` but received {vector_store_id!r}")
+        if not vector_store_identifier:
+            raise ValueError(
+                f"Expected a non-empty value for `vector_store_identifier` but received {vector_store_identifier!r}"
+            )
         return await self._post(
-            f"/v1/vector_stores/{vector_store_id}/files",
+            f"/v1/vector_stores/{vector_store_identifier}/files",
             body=await async_maybe_transform(
                 {
                     "file_id": file_id,
@@ -509,7 +526,7 @@ class AsyncFilesResource(AsyncAPIResource):
         self,
         file_id: str,
         *,
-        vector_store_id: str,
+        vector_store_identifier: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -520,12 +537,13 @@ class AsyncFilesResource(AsyncAPIResource):
         """
         Get details of a specific file in a vector store.
 
-        Args: vector_store_id: The ID of the vector store file_id: The ID of the file
+        Args: vector_store_identifier: The ID or name of the vector store file_id: The
+        ID of the file
 
         Returns: VectorStoreFile: Details of the vector store file
 
         Args:
-          vector_store_id: The ID of the vector store
+          vector_store_identifier: The ID or name of the vector store
 
           file_id: The ID of the file
 
@@ -537,12 +555,14 @@ class AsyncFilesResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not vector_store_id:
-            raise ValueError(f"Expected a non-empty value for `vector_store_id` but received {vector_store_id!r}")
+        if not vector_store_identifier:
+            raise ValueError(
+                f"Expected a non-empty value for `vector_store_identifier` but received {vector_store_identifier!r}"
+            )
         if not file_id:
             raise ValueError(f"Expected a non-empty value for `file_id` but received {file_id!r}")
         return await self._get(
-            f"/v1/vector_stores/{vector_store_id}/files/{file_id}",
+            f"/v1/vector_stores/{vector_store_identifier}/files/{file_id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -551,7 +571,7 @@ class AsyncFilesResource(AsyncAPIResource):
 
     def list(
         self,
-        vector_store_id: str,
+        vector_store_identifier: str,
         *,
         limit: int | NotGiven = NOT_GIVEN,
         offset: int | NotGiven = NOT_GIVEN,
@@ -565,13 +585,13 @@ class AsyncFilesResource(AsyncAPIResource):
         """
         List files indexed in a vector store with pagination.
 
-        Args: vector_store_id: The ID of the vector store pagination: Pagination
-        parameters
+        Args: vector_store_identifier: The ID or name of the vector store pagination:
+        Pagination parameters
 
         Returns: VectorStoreFileListResponse: Paginated list of vector store files
 
         Args:
-          vector_store_id: The ID of the vector store
+          vector_store_identifier: The ID or name of the vector store
 
           limit: Maximum number of items to return per page
 
@@ -585,10 +605,12 @@ class AsyncFilesResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not vector_store_id:
-            raise ValueError(f"Expected a non-empty value for `vector_store_id` but received {vector_store_id!r}")
+        if not vector_store_identifier:
+            raise ValueError(
+                f"Expected a non-empty value for `vector_store_identifier` but received {vector_store_identifier!r}"
+            )
         return self._get_api_list(
-            f"/v1/vector_stores/{vector_store_id}/files",
+            f"/v1/vector_stores/{vector_store_identifier}/files",
             page=AsyncLimitOffset[VectorStoreFile],
             options=make_request_options(
                 extra_headers=extra_headers,
@@ -610,7 +632,7 @@ class AsyncFilesResource(AsyncAPIResource):
         self,
         file_id: str,
         *,
-        vector_store_id: str,
+        vector_store_identifier: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -621,13 +643,13 @@ class AsyncFilesResource(AsyncAPIResource):
         """
         Delete a file from a vector store.
 
-        Args: vector_store_id: The ID of the vector store file_id: The ID of the file to
-        delete
+        Args: vector_store_identifier: The ID or name of the vector store file_id: The
+        ID of the file to delete
 
         Returns: VectorStoreFileDeleted: The deleted file
 
         Args:
-          vector_store_id: The ID of the vector store
+          vector_store_identifier: The ID or name of the vector store
 
           file_id: The ID of the file to delete
 
@@ -639,12 +661,14 @@ class AsyncFilesResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not vector_store_id:
-            raise ValueError(f"Expected a non-empty value for `vector_store_id` but received {vector_store_id!r}")
+        if not vector_store_identifier:
+            raise ValueError(
+                f"Expected a non-empty value for `vector_store_identifier` but received {vector_store_identifier!r}"
+            )
         if not file_id:
             raise ValueError(f"Expected a non-empty value for `file_id` but received {file_id!r}")
         return await self._delete(
-            f"/v1/vector_stores/{vector_store_id}/files/{file_id}",
+            f"/v1/vector_stores/{vector_store_identifier}/files/{file_id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -655,9 +679,11 @@ class AsyncFilesResource(AsyncAPIResource):
         self,
         *,
         query: str,
-        vector_store_ids: List[str],
+        vector_store_identifiers: Optional[List[str]] | NotGiven = NOT_GIVEN,
+        vector_store_ids: Optional[List[str]] | NotGiven = NOT_GIVEN,
         top_k: int | NotGiven = NOT_GIVEN,
         filters: Optional[file_search_params.Filters] | NotGiven = NOT_GIVEN,
+        file_ids: Union[Iterable[object], List[str], None] | NotGiven = NOT_GIVEN,
         search_options: file_search_params.SearchOptions | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -687,11 +713,13 @@ class AsyncFilesResource(AsyncAPIResource):
         Args:
           query: Search query text
 
-          vector_store_ids: IDs of vector stores to search
+          vector_store_identifiers: IDs or names of vector stores to search
 
           top_k: Number of results to return
 
           filters: Optional filter conditions
+
+          file_ids: Optional list of file IDs to filter chunks by (inclusion filter)
 
           search_options: Search configuration options
 
@@ -708,9 +736,11 @@ class AsyncFilesResource(AsyncAPIResource):
             body=await async_maybe_transform(
                 {
                     "query": query,
+                    "vector_store_identifiers": vector_store_identifiers,
                     "vector_store_ids": vector_store_ids,
                     "top_k": top_k,
                     "filters": filters,
+                    "file_ids": file_ids,
                     "search_options": search_options,
                 },
                 file_search_params.FileSearchParams,
