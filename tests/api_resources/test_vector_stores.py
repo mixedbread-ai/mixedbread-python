@@ -11,6 +11,7 @@ from mixedbread import Mixedbread, AsyncMixedbread
 from tests.utils import assert_matches_type
 from mixedbread.types import (
     VectorStore,
+    VectorStoreDeleteResponse,
     VectorStoreSearchResponse,
     VectorStoreQuestionAnsweringResponse,
 )
@@ -62,6 +63,100 @@ class TestVectorStores:
         assert cast(Any, response.is_closed) is True
 
     @parametrize
+    def test_method_retrieve(self, client: Mixedbread) -> None:
+        vector_store = client.vector_stores.retrieve(
+            "vector_store_identifier",
+        )
+        assert_matches_type(VectorStore, vector_store, path=["response"])
+
+    @parametrize
+    def test_raw_response_retrieve(self, client: Mixedbread) -> None:
+        response = client.vector_stores.with_raw_response.retrieve(
+            "vector_store_identifier",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        vector_store = response.parse()
+        assert_matches_type(VectorStore, vector_store, path=["response"])
+
+    @parametrize
+    def test_streaming_response_retrieve(self, client: Mixedbread) -> None:
+        with client.vector_stores.with_streaming_response.retrieve(
+            "vector_store_identifier",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            vector_store = response.parse()
+            assert_matches_type(VectorStore, vector_store, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    def test_path_params_retrieve(self, client: Mixedbread) -> None:
+        with pytest.raises(
+            ValueError, match=r"Expected a non-empty value for `vector_store_identifier` but received ''"
+        ):
+            client.vector_stores.with_raw_response.retrieve(
+                "",
+            )
+
+    @parametrize
+    def test_method_update(self, client: Mixedbread) -> None:
+        vector_store = client.vector_stores.update(
+            vector_store_identifier="vector_store_identifier",
+        )
+        assert_matches_type(VectorStore, vector_store, path=["response"])
+
+    @parametrize
+    def test_method_update_with_all_params(self, client: Mixedbread) -> None:
+        vector_store = client.vector_stores.update(
+            vector_store_identifier="vector_store_identifier",
+            name="x",
+            description="description",
+            expires_after={
+                "anchor": "last_active_at",
+                "days": 0,
+            },
+            metadata={},
+        )
+        assert_matches_type(VectorStore, vector_store, path=["response"])
+
+    @parametrize
+    def test_raw_response_update(self, client: Mixedbread) -> None:
+        response = client.vector_stores.with_raw_response.update(
+            vector_store_identifier="vector_store_identifier",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        vector_store = response.parse()
+        assert_matches_type(VectorStore, vector_store, path=["response"])
+
+    @parametrize
+    def test_streaming_response_update(self, client: Mixedbread) -> None:
+        with client.vector_stores.with_streaming_response.update(
+            vector_store_identifier="vector_store_identifier",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            vector_store = response.parse()
+            assert_matches_type(VectorStore, vector_store, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    def test_path_params_update(self, client: Mixedbread) -> None:
+        with pytest.raises(
+            ValueError, match=r"Expected a non-empty value for `vector_store_identifier` but received ''"
+        ):
+            client.vector_stores.with_raw_response.update(
+                vector_store_identifier="",
+            )
+
+    @parametrize
     def test_method_list(self, client: Mixedbread) -> None:
         vector_store = client.vector_stores.list()
         assert_matches_type(SyncLimitOffset[VectorStore], vector_store, path=["response"])
@@ -93,6 +188,46 @@ class TestVectorStores:
             assert_matches_type(SyncLimitOffset[VectorStore], vector_store, path=["response"])
 
         assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    def test_method_delete(self, client: Mixedbread) -> None:
+        vector_store = client.vector_stores.delete(
+            "vector_store_identifier",
+        )
+        assert_matches_type(VectorStoreDeleteResponse, vector_store, path=["response"])
+
+    @parametrize
+    def test_raw_response_delete(self, client: Mixedbread) -> None:
+        response = client.vector_stores.with_raw_response.delete(
+            "vector_store_identifier",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        vector_store = response.parse()
+        assert_matches_type(VectorStoreDeleteResponse, vector_store, path=["response"])
+
+    @parametrize
+    def test_streaming_response_delete(self, client: Mixedbread) -> None:
+        with client.vector_stores.with_streaming_response.delete(
+            "vector_store_identifier",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            vector_store = response.parse()
+            assert_matches_type(VectorStoreDeleteResponse, vector_store, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    def test_path_params_delete(self, client: Mixedbread) -> None:
+        with pytest.raises(
+            ValueError, match=r"Expected a non-empty value for `vector_store_identifier` but received ''"
+        ):
+            client.vector_stores.with_raw_response.delete(
+                "",
+            )
 
     @parametrize
     def test_method_question_answering(self, client: Mixedbread) -> None:
@@ -309,6 +444,100 @@ class TestAsyncVectorStores:
         assert cast(Any, response.is_closed) is True
 
     @parametrize
+    async def test_method_retrieve(self, async_client: AsyncMixedbread) -> None:
+        vector_store = await async_client.vector_stores.retrieve(
+            "vector_store_identifier",
+        )
+        assert_matches_type(VectorStore, vector_store, path=["response"])
+
+    @parametrize
+    async def test_raw_response_retrieve(self, async_client: AsyncMixedbread) -> None:
+        response = await async_client.vector_stores.with_raw_response.retrieve(
+            "vector_store_identifier",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        vector_store = await response.parse()
+        assert_matches_type(VectorStore, vector_store, path=["response"])
+
+    @parametrize
+    async def test_streaming_response_retrieve(self, async_client: AsyncMixedbread) -> None:
+        async with async_client.vector_stores.with_streaming_response.retrieve(
+            "vector_store_identifier",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            vector_store = await response.parse()
+            assert_matches_type(VectorStore, vector_store, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    async def test_path_params_retrieve(self, async_client: AsyncMixedbread) -> None:
+        with pytest.raises(
+            ValueError, match=r"Expected a non-empty value for `vector_store_identifier` but received ''"
+        ):
+            await async_client.vector_stores.with_raw_response.retrieve(
+                "",
+            )
+
+    @parametrize
+    async def test_method_update(self, async_client: AsyncMixedbread) -> None:
+        vector_store = await async_client.vector_stores.update(
+            vector_store_identifier="vector_store_identifier",
+        )
+        assert_matches_type(VectorStore, vector_store, path=["response"])
+
+    @parametrize
+    async def test_method_update_with_all_params(self, async_client: AsyncMixedbread) -> None:
+        vector_store = await async_client.vector_stores.update(
+            vector_store_identifier="vector_store_identifier",
+            name="x",
+            description="description",
+            expires_after={
+                "anchor": "last_active_at",
+                "days": 0,
+            },
+            metadata={},
+        )
+        assert_matches_type(VectorStore, vector_store, path=["response"])
+
+    @parametrize
+    async def test_raw_response_update(self, async_client: AsyncMixedbread) -> None:
+        response = await async_client.vector_stores.with_raw_response.update(
+            vector_store_identifier="vector_store_identifier",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        vector_store = await response.parse()
+        assert_matches_type(VectorStore, vector_store, path=["response"])
+
+    @parametrize
+    async def test_streaming_response_update(self, async_client: AsyncMixedbread) -> None:
+        async with async_client.vector_stores.with_streaming_response.update(
+            vector_store_identifier="vector_store_identifier",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            vector_store = await response.parse()
+            assert_matches_type(VectorStore, vector_store, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    async def test_path_params_update(self, async_client: AsyncMixedbread) -> None:
+        with pytest.raises(
+            ValueError, match=r"Expected a non-empty value for `vector_store_identifier` but received ''"
+        ):
+            await async_client.vector_stores.with_raw_response.update(
+                vector_store_identifier="",
+            )
+
+    @parametrize
     async def test_method_list(self, async_client: AsyncMixedbread) -> None:
         vector_store = await async_client.vector_stores.list()
         assert_matches_type(AsyncLimitOffset[VectorStore], vector_store, path=["response"])
@@ -340,6 +569,46 @@ class TestAsyncVectorStores:
             assert_matches_type(AsyncLimitOffset[VectorStore], vector_store, path=["response"])
 
         assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    async def test_method_delete(self, async_client: AsyncMixedbread) -> None:
+        vector_store = await async_client.vector_stores.delete(
+            "vector_store_identifier",
+        )
+        assert_matches_type(VectorStoreDeleteResponse, vector_store, path=["response"])
+
+    @parametrize
+    async def test_raw_response_delete(self, async_client: AsyncMixedbread) -> None:
+        response = await async_client.vector_stores.with_raw_response.delete(
+            "vector_store_identifier",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        vector_store = await response.parse()
+        assert_matches_type(VectorStoreDeleteResponse, vector_store, path=["response"])
+
+    @parametrize
+    async def test_streaming_response_delete(self, async_client: AsyncMixedbread) -> None:
+        async with async_client.vector_stores.with_streaming_response.delete(
+            "vector_store_identifier",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            vector_store = await response.parse()
+            assert_matches_type(VectorStoreDeleteResponse, vector_store, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    async def test_path_params_delete(self, async_client: AsyncMixedbread) -> None:
+        with pytest.raises(
+            ValueError, match=r"Expected a non-empty value for `vector_store_identifier` but received ''"
+        ):
+            await async_client.vector_stores.with_raw_response.delete(
+                "",
+            )
 
     @parametrize
     async def test_method_question_answering(self, async_client: AsyncMixedbread) -> None:
