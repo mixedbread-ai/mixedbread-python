@@ -3,17 +3,13 @@
 from __future__ import annotations
 
 from typing import Optional
+from typing_extensions import overload
 
 import httpx
 
-from ...types import (
-    DataSourceType,
-    data_source_list_params,
-    data_source_create_params,
-    data_source_update_params,
-)
+from ...types import DataSourceType, data_source_list_params, data_source_create_params, data_source_update_params
 from ..._types import NOT_GIVEN, Body, Query, Headers, NotGiven
-from ..._utils import maybe_transform, async_maybe_transform
+from ..._utils import required_args, maybe_transform, async_maybe_transform
 from ..._compat import cached_property
 from .connectors import (
     ConnectorsResource,
@@ -35,7 +31,6 @@ from ..._base_client import AsyncPaginator, make_request_options
 from ...types.data_source import DataSource
 from ...types.data_source_type import DataSourceType
 from ...types.data_source_delete_response import DataSourceDeleteResponse
-from ...types.data_source_oauth2_params_param import DataSourceOauth2ParamsParam
 
 __all__ = ["DataSourcesResource", "AsyncDataSourcesResource"]
 
@@ -64,13 +59,15 @@ class DataSourcesResource(SyncAPIResource):
         """
         return DataSourcesResourceWithStreamingResponse(self)
 
+    @overload
     def create(
         self,
         *,
-        type: DataSourceType,
+        type: DataSourceType | NotGiven = NOT_GIVEN,
         name: str,
         metadata: object | NotGiven = NOT_GIVEN,
-        auth_params: Optional[DataSourceOauth2ParamsParam] | NotGiven = NOT_GIVEN,
+        auth_params: Optional[data_source_create_params.NotionDataSourceCreateOrUpdateParamsAuthParams]
+        | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -92,7 +89,8 @@ class DataSourcesResource(SyncAPIResource):
 
           metadata: The metadata of the data source
 
-          auth_params: Authentication parameters for a OAuth data source.
+          auth_params: The authentication parameters of the data source. Notion supports OAuth2 and API
+              key.
 
           extra_headers: Send extra headers
 
@@ -102,6 +100,67 @@ class DataSourcesResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        ...
+
+    @overload
+    def create(
+        self,
+        *,
+        type: DataSourceType | NotGiven = NOT_GIVEN,
+        name: str,
+        metadata: object | NotGiven = NOT_GIVEN,
+        auth_params: Optional[data_source_create_params.LinearDataSourceCreateOrUpdateParamsAuthParams]
+        | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> DataSource:
+        """
+        Create a new data source.
+
+        Args: params: The data source to create.
+
+        Returns: The created data source.
+
+        Args:
+          type: The type of data source to create
+
+          name: The name of the data source
+
+          metadata: The metadata of the data source
+
+          auth_params: Base class for OAuth2 create or update parameters.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        ...
+
+    @required_args(["name"])
+    def create(
+        self,
+        *,
+        type: DataSourceType | NotGiven = NOT_GIVEN,
+        name: str,
+        metadata: object | NotGiven = NOT_GIVEN,
+        auth_params: Optional[data_source_create_params.NotionDataSourceCreateOrUpdateParamsAuthParams]
+        | Optional[data_source_create_params.LinearDataSourceCreateOrUpdateParamsAuthParams]
+        | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> DataSource:
         return self._post(
             "/v1/data_sources/",
             body=maybe_transform(
@@ -158,13 +217,16 @@ class DataSourcesResource(SyncAPIResource):
             cast_to=DataSource,
         )
 
+    @overload
     def update(
         self,
         data_source_id: str,
         *,
-        name: Optional[str] | NotGiven = NOT_GIVEN,
+        type: DataSourceType | NotGiven = NOT_GIVEN,
+        name: str,
         metadata: object | NotGiven = NOT_GIVEN,
-        auth_params: Optional[DataSourceOauth2ParamsParam] | NotGiven = NOT_GIVEN,
+        auth_params: Optional[data_source_update_params.NotionDataSourceCreateOrUpdateParamsAuthParams]
+        | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -184,11 +246,14 @@ class DataSourcesResource(SyncAPIResource):
         Args:
           data_source_id: The ID of the data source to update
 
+          type: The type of data source to create
+
           name: The name of the data source
 
           metadata: The metadata of the data source
 
-          auth_params: Authentication parameters for a OAuth data source.
+          auth_params: The authentication parameters of the data source. Notion supports OAuth2 and API
+              key.
 
           extra_headers: Send extra headers
 
@@ -198,12 +263,80 @@ class DataSourcesResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        ...
+
+    @overload
+    def update(
+        self,
+        data_source_id: str,
+        *,
+        type: DataSourceType | NotGiven = NOT_GIVEN,
+        name: str,
+        metadata: object | NotGiven = NOT_GIVEN,
+        auth_params: Optional[data_source_update_params.LinearDataSourceCreateOrUpdateParamsAuthParams]
+        | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> DataSource:
+        """Update a data source.
+
+        Args: data_source_id: The ID of the data source to update.
+
+        params: The data
+        source to update.
+
+        Returns: The updated data source.
+
+        Args:
+          data_source_id: The ID of the data source to update
+
+          type: The type of data source to create
+
+          name: The name of the data source
+
+          metadata: The metadata of the data source
+
+          auth_params: Base class for OAuth2 create or update parameters.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        ...
+
+    @required_args(["name"])
+    def update(
+        self,
+        data_source_id: str,
+        *,
+        type: DataSourceType | NotGiven = NOT_GIVEN,
+        name: str,
+        metadata: object | NotGiven = NOT_GIVEN,
+        auth_params: Optional[data_source_update_params.NotionDataSourceCreateOrUpdateParamsAuthParams]
+        | Optional[data_source_update_params.LinearDataSourceCreateOrUpdateParamsAuthParams]
+        | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> DataSource:
         if not data_source_id:
             raise ValueError(f"Expected a non-empty value for `data_source_id` but received {data_source_id!r}")
         return self._put(
             f"/v1/data_sources/{data_source_id}",
             body=maybe_transform(
                 {
+                    "type": type,
                     "name": name,
                     "metadata": metadata,
                     "auth_params": auth_params,
@@ -327,13 +460,15 @@ class AsyncDataSourcesResource(AsyncAPIResource):
         """
         return AsyncDataSourcesResourceWithStreamingResponse(self)
 
+    @overload
     async def create(
         self,
         *,
-        type: DataSourceType,
+        type: DataSourceType | NotGiven = NOT_GIVEN,
         name: str,
         metadata: object | NotGiven = NOT_GIVEN,
-        auth_params: Optional[DataSourceOauth2ParamsParam] | NotGiven = NOT_GIVEN,
+        auth_params: Optional[data_source_create_params.NotionDataSourceCreateOrUpdateParamsAuthParams]
+        | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -355,7 +490,8 @@ class AsyncDataSourcesResource(AsyncAPIResource):
 
           metadata: The metadata of the data source
 
-          auth_params: Authentication parameters for a OAuth data source.
+          auth_params: The authentication parameters of the data source. Notion supports OAuth2 and API
+              key.
 
           extra_headers: Send extra headers
 
@@ -365,6 +501,67 @@ class AsyncDataSourcesResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        ...
+
+    @overload
+    async def create(
+        self,
+        *,
+        type: DataSourceType | NotGiven = NOT_GIVEN,
+        name: str,
+        metadata: object | NotGiven = NOT_GIVEN,
+        auth_params: Optional[data_source_create_params.LinearDataSourceCreateOrUpdateParamsAuthParams]
+        | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> DataSource:
+        """
+        Create a new data source.
+
+        Args: params: The data source to create.
+
+        Returns: The created data source.
+
+        Args:
+          type: The type of data source to create
+
+          name: The name of the data source
+
+          metadata: The metadata of the data source
+
+          auth_params: Base class for OAuth2 create or update parameters.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        ...
+
+    @required_args(["name"])
+    async def create(
+        self,
+        *,
+        type: DataSourceType | NotGiven = NOT_GIVEN,
+        name: str,
+        metadata: object | NotGiven = NOT_GIVEN,
+        auth_params: Optional[data_source_create_params.NotionDataSourceCreateOrUpdateParamsAuthParams]
+        | Optional[data_source_create_params.LinearDataSourceCreateOrUpdateParamsAuthParams]
+        | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> DataSource:
         return await self._post(
             "/v1/data_sources/",
             body=await async_maybe_transform(
@@ -421,13 +618,16 @@ class AsyncDataSourcesResource(AsyncAPIResource):
             cast_to=DataSource,
         )
 
+    @overload
     async def update(
         self,
         data_source_id: str,
         *,
-        name: Optional[str] | NotGiven = NOT_GIVEN,
+        type: DataSourceType | NotGiven = NOT_GIVEN,
+        name: str,
         metadata: object | NotGiven = NOT_GIVEN,
-        auth_params: Optional[DataSourceOauth2ParamsParam] | NotGiven = NOT_GIVEN,
+        auth_params: Optional[data_source_update_params.NotionDataSourceCreateOrUpdateParamsAuthParams]
+        | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -447,11 +647,14 @@ class AsyncDataSourcesResource(AsyncAPIResource):
         Args:
           data_source_id: The ID of the data source to update
 
+          type: The type of data source to create
+
           name: The name of the data source
 
           metadata: The metadata of the data source
 
-          auth_params: Authentication parameters for a OAuth data source.
+          auth_params: The authentication parameters of the data source. Notion supports OAuth2 and API
+              key.
 
           extra_headers: Send extra headers
 
@@ -461,12 +664,80 @@ class AsyncDataSourcesResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        ...
+
+    @overload
+    async def update(
+        self,
+        data_source_id: str,
+        *,
+        type: DataSourceType | NotGiven = NOT_GIVEN,
+        name: str,
+        metadata: object | NotGiven = NOT_GIVEN,
+        auth_params: Optional[data_source_update_params.LinearDataSourceCreateOrUpdateParamsAuthParams]
+        | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> DataSource:
+        """Update a data source.
+
+        Args: data_source_id: The ID of the data source to update.
+
+        params: The data
+        source to update.
+
+        Returns: The updated data source.
+
+        Args:
+          data_source_id: The ID of the data source to update
+
+          type: The type of data source to create
+
+          name: The name of the data source
+
+          metadata: The metadata of the data source
+
+          auth_params: Base class for OAuth2 create or update parameters.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        ...
+
+    @required_args(["name"])
+    async def update(
+        self,
+        data_source_id: str,
+        *,
+        type: DataSourceType | NotGiven = NOT_GIVEN,
+        name: str,
+        metadata: object | NotGiven = NOT_GIVEN,
+        auth_params: Optional[data_source_update_params.NotionDataSourceCreateOrUpdateParamsAuthParams]
+        | Optional[data_source_update_params.LinearDataSourceCreateOrUpdateParamsAuthParams]
+        | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> DataSource:
         if not data_source_id:
             raise ValueError(f"Expected a non-empty value for `data_source_id` but received {data_source_id!r}")
         return await self._put(
             f"/v1/data_sources/{data_source_id}",
             body=await async_maybe_transform(
                 {
+                    "type": type,
                     "name": name,
                     "metadata": metadata,
                     "auth_params": auth_params,
