@@ -166,6 +166,7 @@ class TestVectorStores:
         vector_store = client.vector_stores.list(
             limit=1000,
             offset=0,
+            q="x",
         )
         assert_matches_type(SyncLimitOffset[VectorStore], vector_store, path=["response"])
 
@@ -547,6 +548,7 @@ class TestAsyncVectorStores:
         vector_store = await async_client.vector_stores.list(
             limit=1000,
             offset=0,
+            q="x",
         )
         assert_matches_type(AsyncLimitOffset[VectorStore], vector_store, path=["response"])
 
