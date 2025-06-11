@@ -237,6 +237,7 @@ class VectorStoresResource(SyncAPIResource):
         *,
         limit: int | NotGiven = NOT_GIVEN,
         offset: int | NotGiven = NOT_GIVEN,
+        q: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -245,9 +246,10 @@ class VectorStoresResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> SyncLimitOffset[VectorStore]:
         """
-        List all vector stores.
+        List all vector stores with optional search.
 
-        Args: pagination: The pagination options.
+        Args: pagination: The pagination options. q: Optional search query to filter
+        vector stores.
 
         Returns: VectorStoreListResponse: The list of vector stores.
 
@@ -255,6 +257,8 @@ class VectorStoresResource(SyncAPIResource):
           limit: Maximum number of items to return per page
 
           offset: Offset of the first item to return
+
+          q: Search query for fuzzy matching over name and description fields
 
           extra_headers: Send extra headers
 
@@ -276,6 +280,7 @@ class VectorStoresResource(SyncAPIResource):
                     {
                         "limit": limit,
                         "offset": offset,
+                        "q": q,
                     },
                     vector_store_list_params.VectorStoreListParams,
                 ),
@@ -667,6 +672,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         *,
         limit: int | NotGiven = NOT_GIVEN,
         offset: int | NotGiven = NOT_GIVEN,
+        q: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -675,9 +681,10 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> AsyncPaginator[VectorStore, AsyncLimitOffset[VectorStore]]:
         """
-        List all vector stores.
+        List all vector stores with optional search.
 
-        Args: pagination: The pagination options.
+        Args: pagination: The pagination options. q: Optional search query to filter
+        vector stores.
 
         Returns: VectorStoreListResponse: The list of vector stores.
 
@@ -685,6 +692,8 @@ class AsyncVectorStoresResource(AsyncAPIResource):
           limit: Maximum number of items to return per page
 
           offset: Offset of the first item to return
+
+          q: Search query for fuzzy matching over name and description fields
 
           extra_headers: Send extra headers
 
@@ -706,6 +715,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
                     {
                         "limit": limit,
                         "offset": offset,
+                        "q": q,
                     },
                     vector_store_list_params.VectorStoreListParams,
                 ),
