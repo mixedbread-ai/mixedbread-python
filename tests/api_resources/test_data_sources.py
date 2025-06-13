@@ -13,7 +13,6 @@ from mixedbread.types import (
     DataSource,
     DataSourceDeleteResponse,
 )
-from mixedbread._utils import parse_datetime
 from mixedbread.pagination import SyncLimitOffset, AsyncLimitOffset
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
@@ -23,38 +22,25 @@ class TestDataSources:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
     @parametrize
-    def test_method_create(self, client: Mixedbread) -> None:
+    def test_method_create_overload_1(self, client: Mixedbread) -> None:
         data_source = client.data_sources.create(
-            type="notion",
             name="name",
         )
         assert_matches_type(DataSource, data_source, path=["response"])
 
     @parametrize
-    def test_method_create_with_all_params(self, client: Mixedbread) -> None:
+    def test_method_create_with_all_params_overload_1(self, client: Mixedbread) -> None:
         data_source = client.data_sources.create(
             type="notion",
             name="name",
             metadata={},
-            auth_params={
-                "type": "oauth2",
-                "created_at": parse_datetime("2019-12-27T18:11:19.117Z"),
-                "client_id": "client_id",
-                "client_secret": "client_secret",
-                "redirect_uri": "redirect_uri",
-                "scope": "scope",
-                "access_token": "access_token",
-                "refresh_token": "refresh_token",
-                "token_type": "token_type",
-                "expires_on": parse_datetime("2019-12-27T18:11:19.117Z"),
-            },
+            auth_params={"type": "oauth2"},
         )
         assert_matches_type(DataSource, data_source, path=["response"])
 
     @parametrize
-    def test_raw_response_create(self, client: Mixedbread) -> None:
+    def test_raw_response_create_overload_1(self, client: Mixedbread) -> None:
         response = client.data_sources.with_raw_response.create(
-            type="notion",
             name="name",
         )
 
@@ -64,9 +50,49 @@ class TestDataSources:
         assert_matches_type(DataSource, data_source, path=["response"])
 
     @parametrize
-    def test_streaming_response_create(self, client: Mixedbread) -> None:
+    def test_streaming_response_create_overload_1(self, client: Mixedbread) -> None:
         with client.data_sources.with_streaming_response.create(
+            name="name",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            data_source = response.parse()
+            assert_matches_type(DataSource, data_source, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    def test_method_create_overload_2(self, client: Mixedbread) -> None:
+        data_source = client.data_sources.create(
+            name="name",
+        )
+        assert_matches_type(DataSource, data_source, path=["response"])
+
+    @parametrize
+    def test_method_create_with_all_params_overload_2(self, client: Mixedbread) -> None:
+        data_source = client.data_sources.create(
             type="notion",
+            name="name",
+            metadata={},
+            auth_params={"type": "oauth2"},
+        )
+        assert_matches_type(DataSource, data_source, path=["response"])
+
+    @parametrize
+    def test_raw_response_create_overload_2(self, client: Mixedbread) -> None:
+        response = client.data_sources.with_raw_response.create(
+            name="name",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        data_source = response.parse()
+        assert_matches_type(DataSource, data_source, path=["response"])
+
+    @parametrize
+    def test_streaming_response_create_overload_2(self, client: Mixedbread) -> None:
+        with client.data_sources.with_streaming_response.create(
             name="name",
         ) as response:
             assert not response.is_closed
@@ -116,37 +142,29 @@ class TestDataSources:
             )
 
     @parametrize
-    def test_method_update(self, client: Mixedbread) -> None:
-        data_source = client.data_sources.update(
-            data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        )
-        assert_matches_type(DataSource, data_source, path=["response"])
-
-    @parametrize
-    def test_method_update_with_all_params(self, client: Mixedbread) -> None:
+    def test_method_update_overload_1(self, client: Mixedbread) -> None:
         data_source = client.data_sources.update(
             data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             name="name",
-            metadata={},
-            auth_params={
-                "type": "oauth2",
-                "created_at": parse_datetime("2019-12-27T18:11:19.117Z"),
-                "client_id": "client_id",
-                "client_secret": "client_secret",
-                "redirect_uri": "redirect_uri",
-                "scope": "scope",
-                "access_token": "access_token",
-                "refresh_token": "refresh_token",
-                "token_type": "token_type",
-                "expires_on": parse_datetime("2019-12-27T18:11:19.117Z"),
-            },
         )
         assert_matches_type(DataSource, data_source, path=["response"])
 
     @parametrize
-    def test_raw_response_update(self, client: Mixedbread) -> None:
+    def test_method_update_with_all_params_overload_1(self, client: Mixedbread) -> None:
+        data_source = client.data_sources.update(
+            data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            type="notion",
+            name="name",
+            metadata={},
+            auth_params={"type": "oauth2"},
+        )
+        assert_matches_type(DataSource, data_source, path=["response"])
+
+    @parametrize
+    def test_raw_response_update_overload_1(self, client: Mixedbread) -> None:
         response = client.data_sources.with_raw_response.update(
             data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            name="name",
         )
 
         assert response.is_closed is True
@@ -155,9 +173,10 @@ class TestDataSources:
         assert_matches_type(DataSource, data_source, path=["response"])
 
     @parametrize
-    def test_streaming_response_update(self, client: Mixedbread) -> None:
+    def test_streaming_response_update_overload_1(self, client: Mixedbread) -> None:
         with client.data_sources.with_streaming_response.update(
             data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            name="name",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -168,10 +187,64 @@ class TestDataSources:
         assert cast(Any, response.is_closed) is True
 
     @parametrize
-    def test_path_params_update(self, client: Mixedbread) -> None:
+    def test_path_params_update_overload_1(self, client: Mixedbread) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `data_source_id` but received ''"):
             client.data_sources.with_raw_response.update(
                 data_source_id="",
+                name="name",
+            )
+
+    @parametrize
+    def test_method_update_overload_2(self, client: Mixedbread) -> None:
+        data_source = client.data_sources.update(
+            data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            name="name",
+        )
+        assert_matches_type(DataSource, data_source, path=["response"])
+
+    @parametrize
+    def test_method_update_with_all_params_overload_2(self, client: Mixedbread) -> None:
+        data_source = client.data_sources.update(
+            data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            type="notion",
+            name="name",
+            metadata={},
+            auth_params={"type": "oauth2"},
+        )
+        assert_matches_type(DataSource, data_source, path=["response"])
+
+    @parametrize
+    def test_raw_response_update_overload_2(self, client: Mixedbread) -> None:
+        response = client.data_sources.with_raw_response.update(
+            data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            name="name",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        data_source = response.parse()
+        assert_matches_type(DataSource, data_source, path=["response"])
+
+    @parametrize
+    def test_streaming_response_update_overload_2(self, client: Mixedbread) -> None:
+        with client.data_sources.with_streaming_response.update(
+            data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            name="name",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            data_source = response.parse()
+            assert_matches_type(DataSource, data_source, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    def test_path_params_update_overload_2(self, client: Mixedbread) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `data_source_id` but received ''"):
+            client.data_sources.with_raw_response.update(
+                data_source_id="",
+                name="name",
             )
 
     @parametrize
@@ -250,38 +323,25 @@ class TestAsyncDataSources:
     parametrize = pytest.mark.parametrize("async_client", [False, True], indirect=True, ids=["loose", "strict"])
 
     @parametrize
-    async def test_method_create(self, async_client: AsyncMixedbread) -> None:
+    async def test_method_create_overload_1(self, async_client: AsyncMixedbread) -> None:
         data_source = await async_client.data_sources.create(
-            type="notion",
             name="name",
         )
         assert_matches_type(DataSource, data_source, path=["response"])
 
     @parametrize
-    async def test_method_create_with_all_params(self, async_client: AsyncMixedbread) -> None:
+    async def test_method_create_with_all_params_overload_1(self, async_client: AsyncMixedbread) -> None:
         data_source = await async_client.data_sources.create(
             type="notion",
             name="name",
             metadata={},
-            auth_params={
-                "type": "oauth2",
-                "created_at": parse_datetime("2019-12-27T18:11:19.117Z"),
-                "client_id": "client_id",
-                "client_secret": "client_secret",
-                "redirect_uri": "redirect_uri",
-                "scope": "scope",
-                "access_token": "access_token",
-                "refresh_token": "refresh_token",
-                "token_type": "token_type",
-                "expires_on": parse_datetime("2019-12-27T18:11:19.117Z"),
-            },
+            auth_params={"type": "oauth2"},
         )
         assert_matches_type(DataSource, data_source, path=["response"])
 
     @parametrize
-    async def test_raw_response_create(self, async_client: AsyncMixedbread) -> None:
+    async def test_raw_response_create_overload_1(self, async_client: AsyncMixedbread) -> None:
         response = await async_client.data_sources.with_raw_response.create(
-            type="notion",
             name="name",
         )
 
@@ -291,9 +351,49 @@ class TestAsyncDataSources:
         assert_matches_type(DataSource, data_source, path=["response"])
 
     @parametrize
-    async def test_streaming_response_create(self, async_client: AsyncMixedbread) -> None:
+    async def test_streaming_response_create_overload_1(self, async_client: AsyncMixedbread) -> None:
         async with async_client.data_sources.with_streaming_response.create(
+            name="name",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            data_source = await response.parse()
+            assert_matches_type(DataSource, data_source, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    async def test_method_create_overload_2(self, async_client: AsyncMixedbread) -> None:
+        data_source = await async_client.data_sources.create(
+            name="name",
+        )
+        assert_matches_type(DataSource, data_source, path=["response"])
+
+    @parametrize
+    async def test_method_create_with_all_params_overload_2(self, async_client: AsyncMixedbread) -> None:
+        data_source = await async_client.data_sources.create(
             type="notion",
+            name="name",
+            metadata={},
+            auth_params={"type": "oauth2"},
+        )
+        assert_matches_type(DataSource, data_source, path=["response"])
+
+    @parametrize
+    async def test_raw_response_create_overload_2(self, async_client: AsyncMixedbread) -> None:
+        response = await async_client.data_sources.with_raw_response.create(
+            name="name",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        data_source = await response.parse()
+        assert_matches_type(DataSource, data_source, path=["response"])
+
+    @parametrize
+    async def test_streaming_response_create_overload_2(self, async_client: AsyncMixedbread) -> None:
+        async with async_client.data_sources.with_streaming_response.create(
             name="name",
         ) as response:
             assert not response.is_closed
@@ -343,37 +443,29 @@ class TestAsyncDataSources:
             )
 
     @parametrize
-    async def test_method_update(self, async_client: AsyncMixedbread) -> None:
-        data_source = await async_client.data_sources.update(
-            data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        )
-        assert_matches_type(DataSource, data_source, path=["response"])
-
-    @parametrize
-    async def test_method_update_with_all_params(self, async_client: AsyncMixedbread) -> None:
+    async def test_method_update_overload_1(self, async_client: AsyncMixedbread) -> None:
         data_source = await async_client.data_sources.update(
             data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             name="name",
-            metadata={},
-            auth_params={
-                "type": "oauth2",
-                "created_at": parse_datetime("2019-12-27T18:11:19.117Z"),
-                "client_id": "client_id",
-                "client_secret": "client_secret",
-                "redirect_uri": "redirect_uri",
-                "scope": "scope",
-                "access_token": "access_token",
-                "refresh_token": "refresh_token",
-                "token_type": "token_type",
-                "expires_on": parse_datetime("2019-12-27T18:11:19.117Z"),
-            },
         )
         assert_matches_type(DataSource, data_source, path=["response"])
 
     @parametrize
-    async def test_raw_response_update(self, async_client: AsyncMixedbread) -> None:
+    async def test_method_update_with_all_params_overload_1(self, async_client: AsyncMixedbread) -> None:
+        data_source = await async_client.data_sources.update(
+            data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            type="notion",
+            name="name",
+            metadata={},
+            auth_params={"type": "oauth2"},
+        )
+        assert_matches_type(DataSource, data_source, path=["response"])
+
+    @parametrize
+    async def test_raw_response_update_overload_1(self, async_client: AsyncMixedbread) -> None:
         response = await async_client.data_sources.with_raw_response.update(
             data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            name="name",
         )
 
         assert response.is_closed is True
@@ -382,9 +474,10 @@ class TestAsyncDataSources:
         assert_matches_type(DataSource, data_source, path=["response"])
 
     @parametrize
-    async def test_streaming_response_update(self, async_client: AsyncMixedbread) -> None:
+    async def test_streaming_response_update_overload_1(self, async_client: AsyncMixedbread) -> None:
         async with async_client.data_sources.with_streaming_response.update(
             data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            name="name",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -395,10 +488,64 @@ class TestAsyncDataSources:
         assert cast(Any, response.is_closed) is True
 
     @parametrize
-    async def test_path_params_update(self, async_client: AsyncMixedbread) -> None:
+    async def test_path_params_update_overload_1(self, async_client: AsyncMixedbread) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `data_source_id` but received ''"):
             await async_client.data_sources.with_raw_response.update(
                 data_source_id="",
+                name="name",
+            )
+
+    @parametrize
+    async def test_method_update_overload_2(self, async_client: AsyncMixedbread) -> None:
+        data_source = await async_client.data_sources.update(
+            data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            name="name",
+        )
+        assert_matches_type(DataSource, data_source, path=["response"])
+
+    @parametrize
+    async def test_method_update_with_all_params_overload_2(self, async_client: AsyncMixedbread) -> None:
+        data_source = await async_client.data_sources.update(
+            data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            type="notion",
+            name="name",
+            metadata={},
+            auth_params={"type": "oauth2"},
+        )
+        assert_matches_type(DataSource, data_source, path=["response"])
+
+    @parametrize
+    async def test_raw_response_update_overload_2(self, async_client: AsyncMixedbread) -> None:
+        response = await async_client.data_sources.with_raw_response.update(
+            data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            name="name",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        data_source = await response.parse()
+        assert_matches_type(DataSource, data_source, path=["response"])
+
+    @parametrize
+    async def test_streaming_response_update_overload_2(self, async_client: AsyncMixedbread) -> None:
+        async with async_client.data_sources.with_streaming_response.update(
+            data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            name="name",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            data_source = await response.parse()
+            assert_matches_type(DataSource, data_source, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    async def test_path_params_update_overload_2(self, async_client: AsyncMixedbread) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `data_source_id` but received ''"):
+            await async_client.data_sources.with_raw_response.update(
+                data_source_id="",
+                name="name",
             )
 
     @parametrize

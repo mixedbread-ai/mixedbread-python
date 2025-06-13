@@ -2,17 +2,24 @@
 
 from __future__ import annotations
 
-from typing import Optional
-from typing_extensions import Required, TypedDict
+from typing import Union, Optional
+from typing_extensions import Literal, Required, TypeAlias, TypedDict
 
 from .data_source_type import DataSourceType
-from .data_source_oauth2_params_param import DataSourceOauth2ParamsParam
 
-__all__ = ["DataSourceCreateParams"]
+__all__ = [
+    "DataSourceCreateParams",
+    "NotionDataSourceCreateOrUpdateParams",
+    "NotionDataSourceCreateOrUpdateParamsAuthParams",
+    "NotionDataSourceCreateOrUpdateParamsAuthParamsOAuth2CreateOrUpdateParams",
+    "NotionDataSourceCreateOrUpdateParamsAuthParamsAPIKeyCreateOrUpdateParams",
+    "LinearDataSourceCreateOrUpdateParams",
+    "LinearDataSourceCreateOrUpdateParamsAuthParams",
+]
 
 
-class DataSourceCreateParams(TypedDict, total=False):
-    type: Required[DataSourceType]
+class NotionDataSourceCreateOrUpdateParams(TypedDict, total=False):
+    type: DataSourceType
     """The type of data source to create"""
 
     name: Required[str]
@@ -21,5 +28,46 @@ class DataSourceCreateParams(TypedDict, total=False):
     metadata: object
     """The metadata of the data source"""
 
-    auth_params: Optional[DataSourceOauth2ParamsParam]
-    """Authentication parameters for a OAuth data source."""
+    auth_params: Optional[NotionDataSourceCreateOrUpdateParamsAuthParams]
+    """The authentication parameters of the data source.
+
+    Notion supports OAuth2 and API key.
+    """
+
+
+class NotionDataSourceCreateOrUpdateParamsAuthParamsOAuth2CreateOrUpdateParams(TypedDict, total=False):
+    type: Literal["oauth2"]
+
+
+class NotionDataSourceCreateOrUpdateParamsAuthParamsAPIKeyCreateOrUpdateParams(TypedDict, total=False):
+    type: Literal["api_key"]
+
+    api_key: Required[str]
+    """The API key"""
+
+
+NotionDataSourceCreateOrUpdateParamsAuthParams: TypeAlias = Union[
+    NotionDataSourceCreateOrUpdateParamsAuthParamsOAuth2CreateOrUpdateParams,
+    NotionDataSourceCreateOrUpdateParamsAuthParamsAPIKeyCreateOrUpdateParams,
+]
+
+
+class LinearDataSourceCreateOrUpdateParams(TypedDict, total=False):
+    type: DataSourceType
+    """The type of data source to create"""
+
+    name: Required[str]
+    """The name of the data source"""
+
+    metadata: object
+    """The metadata of the data source"""
+
+    auth_params: Optional[LinearDataSourceCreateOrUpdateParamsAuthParams]
+    """Base class for OAuth2 create or update parameters."""
+
+
+class LinearDataSourceCreateOrUpdateParamsAuthParams(TypedDict, total=False):
+    type: Literal["oauth2"]
+
+
+DataSourceCreateParams: TypeAlias = Union[NotionDataSourceCreateOrUpdateParams, LinearDataSourceCreateOrUpdateParams]

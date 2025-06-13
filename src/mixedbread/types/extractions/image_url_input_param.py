@@ -11,6 +11,9 @@ class ImageURL(TypedDict, total=False):
     url: Required[str]
     """The image URL. Can be either a URL or a Data URI."""
 
+    format: str
+    """The image format/mimetype"""
+
 
 class ImageURLInputParam(TypedDict, total=False):
     type: Literal["image_url"]

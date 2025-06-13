@@ -11,6 +11,9 @@ __all__ = ["VectorStore", "FileCounts"]
 
 
 class FileCounts(BaseModel):
+    pending: Optional[int] = None
+    """Number of files waiting to be processed"""
+
     in_progress: Optional[int] = None
     """Number of files currently being processed"""
 

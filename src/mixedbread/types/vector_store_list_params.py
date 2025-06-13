@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from typing import Optional
 from typing_extensions import TypedDict
 
 __all__ = ["VectorStoreListParams"]
@@ -13,3 +14,6 @@ class VectorStoreListParams(TypedDict, total=False):
 
     offset: int
     """Offset of the first item to return"""
+
+    q: Optional[str]
+    """Search query for fuzzy matching over name and description fields"""

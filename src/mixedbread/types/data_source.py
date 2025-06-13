@@ -1,14 +1,27 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import Optional
+from typing import Union, Optional
 from datetime import datetime
-from typing_extensions import Literal
+from typing_extensions import Literal, Annotated, TypeAlias
 
+from .._utils import PropertyInfo
 from .._models import BaseModel
 from .data_source_type import DataSourceType
 from .data_source_oauth2_params import DataSourceOauth2Params
 
-__all__ = ["DataSource"]
+__all__ = ["DataSource", "AuthParams", "AuthParamsDataSourceAPIKeyParams"]
+
+
+class AuthParamsDataSourceAPIKeyParams(BaseModel):
+    type: Optional[Literal["api_key"]] = None
+
+    api_key: str
+    """The API key"""
+
+
+AuthParams: TypeAlias = Annotated[
+    Union[DataSourceOauth2Params, AuthParamsDataSourceAPIKeyParams, None], PropertyInfo(discriminator="type")
+]
 
 
 class DataSource(BaseModel):
@@ -30,8 +43,8 @@ class DataSource(BaseModel):
     metadata: object
     """The metadata of the data source"""
 
-    auth_params: Optional[DataSourceOauth2Params] = None
-    """Authentication parameters for a OAuth data source."""
+    auth_params: Optional[AuthParams] = None
+    """Authentication parameters"""
 
     object: Optional[Literal["data_source"]] = None
     """The type of the object"""

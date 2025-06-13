@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import List, Optional
+from typing import List, Union, Iterable, Optional
 
 import httpx
 
@@ -129,7 +129,7 @@ class VectorStoresResource(SyncAPIResource):
 
     def retrieve(
         self,
-        vector_store_id: str,
+        vector_store_identifier: str,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -139,14 +139,14 @@ class VectorStoresResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> VectorStore:
         """
-        Get a vector store by ID.
+        Get a vector store by ID or name.
 
-        Args: vector_store_id: The ID of the vector store to retrieve.
+        Args: vector_store_identifier: The ID or name of the vector store to retrieve.
 
         Returns: VectorStore: The response containing the vector store details.
 
         Args:
-          vector_store_id: The ID of the vector store
+          vector_store_identifier: The ID or name of the vector store
 
           extra_headers: Send extra headers
 
@@ -156,10 +156,12 @@ class VectorStoresResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not vector_store_id:
-            raise ValueError(f"Expected a non-empty value for `vector_store_id` but received {vector_store_id!r}")
+        if not vector_store_identifier:
+            raise ValueError(
+                f"Expected a non-empty value for `vector_store_identifier` but received {vector_store_identifier!r}"
+            )
         return self._get(
-            f"/v1/vector_stores/{vector_store_id}",
+            f"/v1/vector_stores/{vector_store_identifier}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -168,7 +170,7 @@ class VectorStoresResource(SyncAPIResource):
 
     def update(
         self,
-        vector_store_id: str,
+        vector_store_identifier: str,
         *,
         name: Optional[str] | NotGiven = NOT_GIVEN,
         description: Optional[str] | NotGiven = NOT_GIVEN,
@@ -182,16 +184,16 @@ class VectorStoresResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> VectorStore:
         """
-        Update a vector store by ID.
+        Update a vector store by ID or name.
 
-        Args: vector_store_id: The ID of the vector store to update.
+        Args: vector_store_identifier: The ID or name of the vector store to update.
         vector_store_update: VectorStoreCreate object containing the name, description,
         and metadata.
 
         Returns: VectorStore: The response containing the updated vector store details.
 
         Args:
-          vector_store_id: The ID of the vector store
+          vector_store_identifier: The ID or name of the vector store
 
           name: New name for the vector store
 
@@ -209,10 +211,12 @@ class VectorStoresResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not vector_store_id:
-            raise ValueError(f"Expected a non-empty value for `vector_store_id` but received {vector_store_id!r}")
+        if not vector_store_identifier:
+            raise ValueError(
+                f"Expected a non-empty value for `vector_store_identifier` but received {vector_store_identifier!r}"
+            )
         return self._put(
-            f"/v1/vector_stores/{vector_store_id}",
+            f"/v1/vector_stores/{vector_store_identifier}",
             body=maybe_transform(
                 {
                     "name": name,
@@ -233,6 +237,7 @@ class VectorStoresResource(SyncAPIResource):
         *,
         limit: int | NotGiven = NOT_GIVEN,
         offset: int | NotGiven = NOT_GIVEN,
+        q: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -241,9 +246,10 @@ class VectorStoresResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> SyncLimitOffset[VectorStore]:
         """
-        List all vector stores.
+        List all vector stores with optional search.
 
-        Args: pagination: The pagination options.
+        Args: pagination: The pagination options. q: Optional search query to filter
+        vector stores.
 
         Returns: VectorStoreListResponse: The list of vector stores.
 
@@ -251,6 +257,8 @@ class VectorStoresResource(SyncAPIResource):
           limit: Maximum number of items to return per page
 
           offset: Offset of the first item to return
+
+          q: Search query for fuzzy matching over name and description fields
 
           extra_headers: Send extra headers
 
@@ -272,6 +280,7 @@ class VectorStoresResource(SyncAPIResource):
                     {
                         "limit": limit,
                         "offset": offset,
+                        "q": q,
                     },
                     vector_store_list_params.VectorStoreListParams,
                 ),
@@ -281,7 +290,7 @@ class VectorStoresResource(SyncAPIResource):
 
     def delete(
         self,
-        vector_store_id: str,
+        vector_store_identifier: str,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -291,14 +300,14 @@ class VectorStoresResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> VectorStoreDeleteResponse:
         """
-        Delete a vector store by ID.
+        Delete a vector store by ID or name.
 
-        Args: vector_store_id: The ID of the vector store to delete.
+        Args: vector_store_identifier: The ID or name of the vector store to delete.
 
         Returns: VectorStore: The response containing the deleted vector store details.
 
         Args:
-          vector_store_id: The ID of the vector store to delete
+          vector_store_identifier: The ID or name of the vector store to delete
 
           extra_headers: Send extra headers
 
@@ -308,10 +317,12 @@ class VectorStoresResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not vector_store_id:
-            raise ValueError(f"Expected a non-empty value for `vector_store_id` but received {vector_store_id!r}")
+        if not vector_store_identifier:
+            raise ValueError(
+                f"Expected a non-empty value for `vector_store_identifier` but received {vector_store_identifier!r}"
+            )
         return self._delete(
-            f"/v1/vector_stores/{vector_store_id}",
+            f"/v1/vector_stores/{vector_store_identifier}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -322,9 +333,11 @@ class VectorStoresResource(SyncAPIResource):
         self,
         *,
         query: str | NotGiven = NOT_GIVEN,
-        vector_store_ids: List[str],
+        vector_store_identifiers: Optional[List[str]] | NotGiven = NOT_GIVEN,
+        vector_store_ids: Optional[List[str]] | NotGiven = NOT_GIVEN,
         top_k: int | NotGiven = NOT_GIVEN,
         filters: Optional[vector_store_question_answering_params.Filters] | NotGiven = NOT_GIVEN,
+        file_ids: Union[Iterable[object], List[str], None] | NotGiven = NOT_GIVEN,
         search_options: VectorStoreChunkSearchOptionsParam | NotGiven = NOT_GIVEN,
         stream: bool | NotGiven = NOT_GIVEN,
         qa_options: vector_store_question_answering_params.QaOptions | NotGiven = NOT_GIVEN,
@@ -343,11 +356,13 @@ class VectorStoresResource(SyncAPIResource):
         If not provided, the question will be extracted from the
               passed messages.
 
-          vector_store_ids: IDs of vector stores to search
+          vector_store_identifiers: IDs or names of vector stores to search
 
           top_k: Number of results to return
 
           filters: Optional filter conditions
+
+          file_ids: Optional list of file IDs to filter chunks by (inclusion filter)
 
           search_options: Search configuration options
 
@@ -368,9 +383,11 @@ class VectorStoresResource(SyncAPIResource):
             body=maybe_transform(
                 {
                     "query": query,
+                    "vector_store_identifiers": vector_store_identifiers,
                     "vector_store_ids": vector_store_ids,
                     "top_k": top_k,
                     "filters": filters,
+                    "file_ids": file_ids,
                     "search_options": search_options,
                     "stream": stream,
                     "qa_options": qa_options,
@@ -387,9 +404,11 @@ class VectorStoresResource(SyncAPIResource):
         self,
         *,
         query: str,
-        vector_store_ids: List[str],
+        vector_store_identifiers: Optional[List[str]] | NotGiven = NOT_GIVEN,
+        vector_store_ids: Optional[List[str]] | NotGiven = NOT_GIVEN,
         top_k: int | NotGiven = NOT_GIVEN,
         filters: Optional[vector_store_search_params.Filters] | NotGiven = NOT_GIVEN,
+        file_ids: Union[Iterable[object], List[str], None] | NotGiven = NOT_GIVEN,
         search_options: VectorStoreChunkSearchOptionsParam | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -406,7 +425,9 @@ class VectorStoresResource(SyncAPIResource):
         relevance-scored results.
 
         Args: search_params: Search configuration including: - query text or
-        embeddings - metadata filters - pagination parameters - sorting preferences
+        embeddings - vector_store_ids: List of vector stores to search - file_ids:
+        Optional list of file IDs to filter chunks by (or tuple of list and condition
+        operator) - metadata filters - pagination parameters - sorting preferences
         \\__state: API state dependency \\__ctx: Service context dependency
 
         Returns: VectorStoreSearchChunkResponse containing: - List of matched chunks
@@ -418,11 +439,13 @@ class VectorStoresResource(SyncAPIResource):
         Args:
           query: Search query text
 
-          vector_store_ids: IDs of vector stores to search
+          vector_store_identifiers: IDs or names of vector stores to search
 
           top_k: Number of results to return
 
           filters: Optional filter conditions
+
+          file_ids: Optional list of file IDs to filter chunks by (inclusion filter)
 
           search_options: Search configuration options
 
@@ -439,9 +462,11 @@ class VectorStoresResource(SyncAPIResource):
             body=maybe_transform(
                 {
                     "query": query,
+                    "vector_store_identifiers": vector_store_identifiers,
                     "vector_store_ids": vector_store_ids,
                     "top_k": top_k,
                     "filters": filters,
+                    "file_ids": file_ids,
                     "search_options": search_options,
                 },
                 vector_store_search_params.VectorStoreSearchParams,
@@ -539,7 +564,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
 
     async def retrieve(
         self,
-        vector_store_id: str,
+        vector_store_identifier: str,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -549,14 +574,14 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> VectorStore:
         """
-        Get a vector store by ID.
+        Get a vector store by ID or name.
 
-        Args: vector_store_id: The ID of the vector store to retrieve.
+        Args: vector_store_identifier: The ID or name of the vector store to retrieve.
 
         Returns: VectorStore: The response containing the vector store details.
 
         Args:
-          vector_store_id: The ID of the vector store
+          vector_store_identifier: The ID or name of the vector store
 
           extra_headers: Send extra headers
 
@@ -566,10 +591,12 @@ class AsyncVectorStoresResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not vector_store_id:
-            raise ValueError(f"Expected a non-empty value for `vector_store_id` but received {vector_store_id!r}")
+        if not vector_store_identifier:
+            raise ValueError(
+                f"Expected a non-empty value for `vector_store_identifier` but received {vector_store_identifier!r}"
+            )
         return await self._get(
-            f"/v1/vector_stores/{vector_store_id}",
+            f"/v1/vector_stores/{vector_store_identifier}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -578,7 +605,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
 
     async def update(
         self,
-        vector_store_id: str,
+        vector_store_identifier: str,
         *,
         name: Optional[str] | NotGiven = NOT_GIVEN,
         description: Optional[str] | NotGiven = NOT_GIVEN,
@@ -592,16 +619,16 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> VectorStore:
         """
-        Update a vector store by ID.
+        Update a vector store by ID or name.
 
-        Args: vector_store_id: The ID of the vector store to update.
+        Args: vector_store_identifier: The ID or name of the vector store to update.
         vector_store_update: VectorStoreCreate object containing the name, description,
         and metadata.
 
         Returns: VectorStore: The response containing the updated vector store details.
 
         Args:
-          vector_store_id: The ID of the vector store
+          vector_store_identifier: The ID or name of the vector store
 
           name: New name for the vector store
 
@@ -619,10 +646,12 @@ class AsyncVectorStoresResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not vector_store_id:
-            raise ValueError(f"Expected a non-empty value for `vector_store_id` but received {vector_store_id!r}")
+        if not vector_store_identifier:
+            raise ValueError(
+                f"Expected a non-empty value for `vector_store_identifier` but received {vector_store_identifier!r}"
+            )
         return await self._put(
-            f"/v1/vector_stores/{vector_store_id}",
+            f"/v1/vector_stores/{vector_store_identifier}",
             body=await async_maybe_transform(
                 {
                     "name": name,
@@ -643,6 +672,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         *,
         limit: int | NotGiven = NOT_GIVEN,
         offset: int | NotGiven = NOT_GIVEN,
+        q: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -651,9 +681,10 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> AsyncPaginator[VectorStore, AsyncLimitOffset[VectorStore]]:
         """
-        List all vector stores.
+        List all vector stores with optional search.
 
-        Args: pagination: The pagination options.
+        Args: pagination: The pagination options. q: Optional search query to filter
+        vector stores.
 
         Returns: VectorStoreListResponse: The list of vector stores.
 
@@ -661,6 +692,8 @@ class AsyncVectorStoresResource(AsyncAPIResource):
           limit: Maximum number of items to return per page
 
           offset: Offset of the first item to return
+
+          q: Search query for fuzzy matching over name and description fields
 
           extra_headers: Send extra headers
 
@@ -682,6 +715,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
                     {
                         "limit": limit,
                         "offset": offset,
+                        "q": q,
                     },
                     vector_store_list_params.VectorStoreListParams,
                 ),
@@ -691,7 +725,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
 
     async def delete(
         self,
-        vector_store_id: str,
+        vector_store_identifier: str,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -701,14 +735,14 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> VectorStoreDeleteResponse:
         """
-        Delete a vector store by ID.
+        Delete a vector store by ID or name.
 
-        Args: vector_store_id: The ID of the vector store to delete.
+        Args: vector_store_identifier: The ID or name of the vector store to delete.
 
         Returns: VectorStore: The response containing the deleted vector store details.
 
         Args:
-          vector_store_id: The ID of the vector store to delete
+          vector_store_identifier: The ID or name of the vector store to delete
 
           extra_headers: Send extra headers
 
@@ -718,10 +752,12 @@ class AsyncVectorStoresResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not vector_store_id:
-            raise ValueError(f"Expected a non-empty value for `vector_store_id` but received {vector_store_id!r}")
+        if not vector_store_identifier:
+            raise ValueError(
+                f"Expected a non-empty value for `vector_store_identifier` but received {vector_store_identifier!r}"
+            )
         return await self._delete(
-            f"/v1/vector_stores/{vector_store_id}",
+            f"/v1/vector_stores/{vector_store_identifier}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -732,9 +768,11 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         self,
         *,
         query: str | NotGiven = NOT_GIVEN,
-        vector_store_ids: List[str],
+        vector_store_identifiers: Optional[List[str]] | NotGiven = NOT_GIVEN,
+        vector_store_ids: Optional[List[str]] | NotGiven = NOT_GIVEN,
         top_k: int | NotGiven = NOT_GIVEN,
         filters: Optional[vector_store_question_answering_params.Filters] | NotGiven = NOT_GIVEN,
+        file_ids: Union[Iterable[object], List[str], None] | NotGiven = NOT_GIVEN,
         search_options: VectorStoreChunkSearchOptionsParam | NotGiven = NOT_GIVEN,
         stream: bool | NotGiven = NOT_GIVEN,
         qa_options: vector_store_question_answering_params.QaOptions | NotGiven = NOT_GIVEN,
@@ -753,11 +791,13 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         If not provided, the question will be extracted from the
               passed messages.
 
-          vector_store_ids: IDs of vector stores to search
+          vector_store_identifiers: IDs or names of vector stores to search
 
           top_k: Number of results to return
 
           filters: Optional filter conditions
+
+          file_ids: Optional list of file IDs to filter chunks by (inclusion filter)
 
           search_options: Search configuration options
 
@@ -778,9 +818,11 @@ class AsyncVectorStoresResource(AsyncAPIResource):
             body=await async_maybe_transform(
                 {
                     "query": query,
+                    "vector_store_identifiers": vector_store_identifiers,
                     "vector_store_ids": vector_store_ids,
                     "top_k": top_k,
                     "filters": filters,
+                    "file_ids": file_ids,
                     "search_options": search_options,
                     "stream": stream,
                     "qa_options": qa_options,
@@ -797,9 +839,11 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         self,
         *,
         query: str,
-        vector_store_ids: List[str],
+        vector_store_identifiers: Optional[List[str]] | NotGiven = NOT_GIVEN,
+        vector_store_ids: Optional[List[str]] | NotGiven = NOT_GIVEN,
         top_k: int | NotGiven = NOT_GIVEN,
         filters: Optional[vector_store_search_params.Filters] | NotGiven = NOT_GIVEN,
+        file_ids: Union[Iterable[object], List[str], None] | NotGiven = NOT_GIVEN,
         search_options: VectorStoreChunkSearchOptionsParam | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -816,7 +860,9 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         relevance-scored results.
 
         Args: search_params: Search configuration including: - query text or
-        embeddings - metadata filters - pagination parameters - sorting preferences
+        embeddings - vector_store_ids: List of vector stores to search - file_ids:
+        Optional list of file IDs to filter chunks by (or tuple of list and condition
+        operator) - metadata filters - pagination parameters - sorting preferences
         \\__state: API state dependency \\__ctx: Service context dependency
 
         Returns: VectorStoreSearchChunkResponse containing: - List of matched chunks
@@ -828,11 +874,13 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         Args:
           query: Search query text
 
-          vector_store_ids: IDs of vector stores to search
+          vector_store_identifiers: IDs or names of vector stores to search
 
           top_k: Number of results to return
 
           filters: Optional filter conditions
+
+          file_ids: Optional list of file IDs to filter chunks by (inclusion filter)
 
           search_options: Search configuration options
 
@@ -849,9 +897,11 @@ class AsyncVectorStoresResource(AsyncAPIResource):
             body=await async_maybe_transform(
                 {
                     "query": query,
+                    "vector_store_identifiers": vector_store_identifiers,
                     "vector_store_ids": vector_store_ids,
                     "top_k": top_k,
                     "filters": filters,
+                    "file_ids": file_ids,
                     "search_options": search_options,
                 },
                 vector_store_search_params.VectorStoreSearchParams,
