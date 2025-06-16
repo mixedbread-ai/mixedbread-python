@@ -5,6 +5,7 @@ from datetime import datetime
 from typing_extensions import Literal
 
 from ..._models import BaseModel
+from .vector_store_file_status import VectorStoreFileStatus
 
 __all__ = ["VectorStoreFile"]
 
@@ -19,7 +20,7 @@ class VectorStoreFile(BaseModel):
     metadata: Optional[object] = None
     """Optional file metadata"""
 
-    status: Optional[Literal["pending", "in_progress", "cancelled", "completed", "failed"]] = None
+    status: Optional[VectorStoreFileStatus] = None
     """Processing status of the file"""
 
     last_error: Optional[object] = None
