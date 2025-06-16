@@ -33,6 +33,7 @@ class TestVectorStores:
         vector_store = client.vector_stores.create(
             name="Technical Documentation",
             description="Contains technical specifications and guides",
+            is_public=False,
             expires_after={
                 "anchor": "last_active_at",
                 "days": 0,
@@ -115,6 +116,7 @@ class TestVectorStores:
             vector_store_identifier="vector_store_identifier",
             name="x",
             description="description",
+            is_public=True,
             expires_after={
                 "anchor": "last_active_at",
                 "days": 0,
@@ -415,6 +417,7 @@ class TestAsyncVectorStores:
         vector_store = await async_client.vector_stores.create(
             name="Technical Documentation",
             description="Contains technical specifications and guides",
+            is_public=False,
             expires_after={
                 "anchor": "last_active_at",
                 "days": 0,
@@ -497,6 +500,7 @@ class TestAsyncVectorStores:
             vector_store_identifier="vector_store_identifier",
             name="x",
             description="description",
+            is_public=True,
             expires_after={
                 "anchor": "last_active_at",
                 "days": 0,

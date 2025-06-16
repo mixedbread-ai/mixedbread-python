@@ -17,6 +17,9 @@ class VectorStoreCreateParams(TypedDict, total=False):
     description: Optional[str]
     """Description of the vector store"""
 
+    is_public: bool
+    """Whether the vector store can be accessed by anyone with valid login credentials"""
+
     expires_after: Optional[ExpiresAfterParam]
     """Represents an expiration policy for a vector store."""
 
