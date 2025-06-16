@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.7.0 (2025-06-16)
+
+Full Changelog: [v0.6.0...v0.7.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.6.0...v0.7.0)
+
+### Features
+
+* **api:** update via SDK Studio ([6859024](https://github.com/mixedbread-ai/mixedbread-python/commit/6859024cb7bd569462d50c83e84ca8864cd4fb23))
+
+
+### Chores
+
+* update the vs identifiers ([319e732](https://github.com/mixedbread-ai/mixedbread-python/commit/319e732d66ce6f793fb7ddd783d2fc61c4277801))
+
 ## 0.6.0 (2025-06-13)
 
 Full Changelog: [v0.5.0...v0.6.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.5.0...v0.6.0)
