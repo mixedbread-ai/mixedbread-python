@@ -7,6 +7,7 @@ from typing_extensions import Literal, Annotated, TypeAlias
 from ..._utils import PropertyInfo
 from ..._models import BaseModel
 from ..scored_text_input_chunk import ScoredTextInputChunk
+from .vector_store_file_status import VectorStoreFileStatus
 from ..scored_audio_url_input_chunk import ScoredAudioURLInputChunk
 from ..scored_image_url_input_chunk import ScoredImageURLInputChunk
 from ..scored_video_url_input_chunk import ScoredVideoURLInputChunk
@@ -29,7 +30,7 @@ class ScoredVectorStoreFile(BaseModel):
     metadata: Optional[object] = None
     """Optional file metadata"""
 
-    status: Optional[Literal["pending", "in_progress", "cancelled", "completed", "failed"]] = None
+    status: Optional[VectorStoreFileStatus] = None
     """Processing status of the file"""
 
     last_error: Optional[object] = None

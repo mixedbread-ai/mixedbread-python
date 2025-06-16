@@ -7,7 +7,13 @@ from typing_extensions import overload
 
 import httpx
 
-from ...types import DataSourceType, data_source_list_params, data_source_create_params, data_source_update_params
+from ...types import (
+    Oauth2Params,
+    DataSourceType,
+    data_source_list_params,
+    data_source_create_params,
+    data_source_update_params,
+)
 from ..._types import NOT_GIVEN, Body, Query, Headers, NotGiven
 from ..._utils import required_args, maybe_transform, async_maybe_transform
 from ..._compat import cached_property
@@ -29,6 +35,7 @@ from ..._response import (
 from ...pagination import SyncLimitOffset, AsyncLimitOffset
 from ..._base_client import AsyncPaginator, make_request_options
 from ...types.data_source import DataSource
+from ...types.oauth2_params import Oauth2Params
 from ...types.data_source_type import DataSourceType
 from ...types.data_source_delete_response import DataSourceDeleteResponse
 
@@ -66,8 +73,7 @@ class DataSourcesResource(SyncAPIResource):
         type: DataSourceType | NotGiven = NOT_GIVEN,
         name: str,
         metadata: object | NotGiven = NOT_GIVEN,
-        auth_params: Optional[data_source_create_params.NotionDataSourceCreateOrUpdateParamsAuthParams]
-        | NotGiven = NOT_GIVEN,
+        auth_params: Optional[data_source_create_params.NotionDataSourceAuthParams] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -109,8 +115,7 @@ class DataSourcesResource(SyncAPIResource):
         type: DataSourceType | NotGiven = NOT_GIVEN,
         name: str,
         metadata: object | NotGiven = NOT_GIVEN,
-        auth_params: Optional[data_source_create_params.LinearDataSourceCreateOrUpdateParamsAuthParams]
-        | NotGiven = NOT_GIVEN,
+        auth_params: Optional[Oauth2Params] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -151,8 +156,8 @@ class DataSourcesResource(SyncAPIResource):
         type: DataSourceType | NotGiven = NOT_GIVEN,
         name: str,
         metadata: object | NotGiven = NOT_GIVEN,
-        auth_params: Optional[data_source_create_params.NotionDataSourceCreateOrUpdateParamsAuthParams]
-        | Optional[data_source_create_params.LinearDataSourceCreateOrUpdateParamsAuthParams]
+        auth_params: Optional[data_source_create_params.NotionDataSourceAuthParams]
+        | Optional[Oauth2Params]
         | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -225,8 +230,7 @@ class DataSourcesResource(SyncAPIResource):
         type: DataSourceType | NotGiven = NOT_GIVEN,
         name: str,
         metadata: object | NotGiven = NOT_GIVEN,
-        auth_params: Optional[data_source_update_params.NotionDataSourceCreateOrUpdateParamsAuthParams]
-        | NotGiven = NOT_GIVEN,
+        auth_params: Optional[data_source_update_params.NotionDataSourceAuthParams] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -273,8 +277,7 @@ class DataSourcesResource(SyncAPIResource):
         type: DataSourceType | NotGiven = NOT_GIVEN,
         name: str,
         metadata: object | NotGiven = NOT_GIVEN,
-        auth_params: Optional[data_source_update_params.LinearDataSourceCreateOrUpdateParamsAuthParams]
-        | NotGiven = NOT_GIVEN,
+        auth_params: Optional[Oauth2Params] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -320,8 +323,8 @@ class DataSourcesResource(SyncAPIResource):
         type: DataSourceType | NotGiven = NOT_GIVEN,
         name: str,
         metadata: object | NotGiven = NOT_GIVEN,
-        auth_params: Optional[data_source_update_params.NotionDataSourceCreateOrUpdateParamsAuthParams]
-        | Optional[data_source_update_params.LinearDataSourceCreateOrUpdateParamsAuthParams]
+        auth_params: Optional[data_source_update_params.NotionDataSourceAuthParams]
+        | Optional[Oauth2Params]
         | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -467,8 +470,7 @@ class AsyncDataSourcesResource(AsyncAPIResource):
         type: DataSourceType | NotGiven = NOT_GIVEN,
         name: str,
         metadata: object | NotGiven = NOT_GIVEN,
-        auth_params: Optional[data_source_create_params.NotionDataSourceCreateOrUpdateParamsAuthParams]
-        | NotGiven = NOT_GIVEN,
+        auth_params: Optional[data_source_create_params.NotionDataSourceAuthParams] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -510,8 +512,7 @@ class AsyncDataSourcesResource(AsyncAPIResource):
         type: DataSourceType | NotGiven = NOT_GIVEN,
         name: str,
         metadata: object | NotGiven = NOT_GIVEN,
-        auth_params: Optional[data_source_create_params.LinearDataSourceCreateOrUpdateParamsAuthParams]
-        | NotGiven = NOT_GIVEN,
+        auth_params: Optional[Oauth2Params] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -552,8 +553,8 @@ class AsyncDataSourcesResource(AsyncAPIResource):
         type: DataSourceType | NotGiven = NOT_GIVEN,
         name: str,
         metadata: object | NotGiven = NOT_GIVEN,
-        auth_params: Optional[data_source_create_params.NotionDataSourceCreateOrUpdateParamsAuthParams]
-        | Optional[data_source_create_params.LinearDataSourceCreateOrUpdateParamsAuthParams]
+        auth_params: Optional[data_source_create_params.NotionDataSourceAuthParams]
+        | Optional[Oauth2Params]
         | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -626,8 +627,7 @@ class AsyncDataSourcesResource(AsyncAPIResource):
         type: DataSourceType | NotGiven = NOT_GIVEN,
         name: str,
         metadata: object | NotGiven = NOT_GIVEN,
-        auth_params: Optional[data_source_update_params.NotionDataSourceCreateOrUpdateParamsAuthParams]
-        | NotGiven = NOT_GIVEN,
+        auth_params: Optional[data_source_update_params.NotionDataSourceAuthParams] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -674,8 +674,7 @@ class AsyncDataSourcesResource(AsyncAPIResource):
         type: DataSourceType | NotGiven = NOT_GIVEN,
         name: str,
         metadata: object | NotGiven = NOT_GIVEN,
-        auth_params: Optional[data_source_update_params.LinearDataSourceCreateOrUpdateParamsAuthParams]
-        | NotGiven = NOT_GIVEN,
+        auth_params: Optional[Oauth2Params] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -721,8 +720,8 @@ class AsyncDataSourcesResource(AsyncAPIResource):
         type: DataSourceType | NotGiven = NOT_GIVEN,
         name: str,
         metadata: object | NotGiven = NOT_GIVEN,
-        auth_params: Optional[data_source_update_params.NotionDataSourceCreateOrUpdateParamsAuthParams]
-        | Optional[data_source_update_params.LinearDataSourceCreateOrUpdateParamsAuthParams]
+        auth_params: Optional[data_source_update_params.NotionDataSourceAuthParams]
+        | Optional[Oauth2Params]
         | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.

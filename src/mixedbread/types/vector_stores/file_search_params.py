@@ -5,16 +5,10 @@ from __future__ import annotations
 from typing import List, Union, Iterable, Optional
 from typing_extensions import Required, TypeAlias, TypedDict
 
+from .rerank_config_param import RerankConfigParam
 from ..shared_params.search_filter_condition import SearchFilterCondition
 
-__all__ = [
-    "FileSearchParams",
-    "Filters",
-    "FiltersUnionMember2",
-    "SearchOptions",
-    "SearchOptionsRerank",
-    "SearchOptionsRerankRerankConfig",
-]
+__all__ = ["FileSearchParams", "Filters", "FiltersUnionMember2", "SearchOptions", "SearchOptionsRerank"]
 
 
 class FileSearchParams(TypedDict, total=False):
@@ -43,22 +37,7 @@ FiltersUnionMember2: TypeAlias = Union["SearchFilter", SearchFilterCondition]
 
 Filters: TypeAlias = Union["SearchFilter", SearchFilterCondition, Iterable[FiltersUnionMember2]]
 
-
-class SearchOptionsRerankRerankConfig(TypedDict, total=False):
-    model: str
-    """The name of the reranking model"""
-
-    with_metadata: Union[bool, List[str]]
-    """Whether to include metadata in the reranked results"""
-
-    top_k: Optional[int]
-    """Maximum number of results to return after reranking.
-
-    If None, returns all reranked results.
-    """
-
-
-SearchOptionsRerank: TypeAlias = Union[bool, SearchOptionsRerankRerankConfig]
+SearchOptionsRerank: TypeAlias = Union[bool, RerankConfigParam]
 
 
 class SearchOptions(TypedDict, total=False):
