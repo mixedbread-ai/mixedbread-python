@@ -11,6 +11,7 @@ from .object_type import ObjectType as ObjectType
 from .vector_store import VectorStore as VectorStore
 from .expires_after import ExpiresAfter as ExpiresAfter
 from .info_response import InfoResponse as InfoResponse
+from .oauth2_params import Oauth2Params as Oauth2Params
 from .api_key_created import APIKeyCreated as APIKeyCreated
 from .encoding_format import EncodingFormat as EncodingFormat
 from .rerank_response import RerankResponse as RerankResponse
@@ -29,7 +30,9 @@ from .api_key_delete_response import APIKeyDeleteResponse as APIKeyDeleteRespons
 from .data_source_list_params import DataSourceListParams as DataSourceListParams
 from .embedding_create_params import EmbeddingCreateParams as EmbeddingCreateParams
 from .scored_text_input_chunk import ScoredTextInputChunk as ScoredTextInputChunk
+from .linear_data_source_param import LinearDataSourceParam as LinearDataSourceParam
 from .multi_encoding_embedding import MultiEncodingEmbedding as MultiEncodingEmbedding
+from .notion_data_source_param import NotionDataSourceParam as NotionDataSourceParam
 from .vector_store_list_params import VectorStoreListParams as VectorStoreListParams
 from .data_source_create_params import DataSourceCreateParams as DataSourceCreateParams
 from .data_source_oauth2_params import DataSourceOauth2Params as DataSourceOauth2Params

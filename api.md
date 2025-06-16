@@ -59,7 +59,9 @@ Types:
 
 ```python
 from mixedbread.types.vector_stores import (
+    RerankConfig,
     ScoredVectorStoreFile,
+    VectorStoreFileStatus,
     VectorStoreFile,
     FileDeleteResponse,
     FileSearchResponse,
@@ -179,6 +181,9 @@ from mixedbread.types import (
     DataSource,
     DataSourceOauth2Params,
     DataSourceType,
+    LinearDataSource,
+    NotionDataSource,
+    Oauth2Params,
     DataSourceDeleteResponse,
 )
 ```
@@ -223,3 +228,9 @@ Methods:
 - <code title="delete /v1/api-keys/{api_key_id}">client.api_keys.<a href="./src/mixedbread/resources/api_keys.py">delete</a>(api_key_id) -> <a href="./src/mixedbread/types/api_key_delete_response.py">APIKeyDeleteResponse</a></code>
 - <code title="post /v1/api-keys/{api_key_id}/reroll">client.api_keys.<a href="./src/mixedbread/resources/api_keys.py">reroll</a>(api_key_id) -> <a href="./src/mixedbread/types/api_key_created.py">APIKeyCreated</a></code>
 - <code title="post /v1/api-keys/{api_key_id}/revoke">client.api_keys.<a href="./src/mixedbread/resources/api_keys.py">revoke</a>(api_key_id) -> <a href="./src/mixedbread/types/api_key.py">APIKey</a></code>
+
+# Chat
+
+Methods:
+
+- <code title="post /v1/chat/completions">client.chat.<a href="./src/mixedbread/resources/chat.py">create_completion</a>() -> object</code>
