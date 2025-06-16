@@ -40,6 +40,9 @@ class VectorStore(BaseModel):
     description: Optional[str] = None
     """Detailed description of the vector store's purpose and contents"""
 
+    is_public: Optional[bool] = None
+    """Whether the vector store can be accessed by anyone with valid login credentials"""
+
     metadata: Optional[object] = None
     """Additional metadata associated with the vector store"""
 
