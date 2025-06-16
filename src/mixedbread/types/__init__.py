@@ -44,7 +44,6 @@ from .scored_image_url_input_chunk import ScoredImageURLInputChunk as ScoredImag
 from .scored_video_url_input_chunk import ScoredVideoURLInputChunk as ScoredVideoURLInputChunk
 from .vector_store_delete_response import VectorStoreDeleteResponse as VectorStoreDeleteResponse
 from .vector_store_search_response import VectorStoreSearchResponse as VectorStoreSearchResponse
-from .data_source_oauth2_params_param import DataSourceOauth2ParamsParam as DataSourceOauth2ParamsParam
 from .vector_store_question_answering_params import (
     VectorStoreQuestionAnsweringParams as VectorStoreQuestionAnsweringParams,
 )

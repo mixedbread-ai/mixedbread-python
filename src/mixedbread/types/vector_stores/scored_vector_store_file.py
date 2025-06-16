@@ -29,7 +29,7 @@ class ScoredVectorStoreFile(BaseModel):
     metadata: Optional[object] = None
     """Optional file metadata"""
 
-    status: Optional[str] = None
+    status: Optional[Literal["pending", "in_progress", "cancelled", "completed", "failed"]] = None
     """Processing status of the file"""
 
     last_error: Optional[object] = None
