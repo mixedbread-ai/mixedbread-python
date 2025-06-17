@@ -72,6 +72,7 @@ class VectorStoresResource(SyncAPIResource):
         *,
         name: Optional[str] | NotGiven = NOT_GIVEN,
         description: Optional[str] | NotGiven = NOT_GIVEN,
+        is_public: bool | NotGiven = NOT_GIVEN,
         expires_after: Optional[ExpiresAfterParam] | NotGiven = NOT_GIVEN,
         metadata: object | NotGiven = NOT_GIVEN,
         file_ids: Optional[List[str]] | NotGiven = NOT_GIVEN,
@@ -95,6 +96,8 @@ class VectorStoresResource(SyncAPIResource):
 
           description: Description of the vector store
 
+          is_public: Whether the vector store can be accessed by anyone with valid login credentials
+
           expires_after: Represents an expiration policy for a vector store.
 
           metadata: Optional metadata key-value pairs
@@ -115,6 +118,7 @@ class VectorStoresResource(SyncAPIResource):
                 {
                     "name": name,
                     "description": description,
+                    "is_public": is_public,
                     "expires_after": expires_after,
                     "metadata": metadata,
                     "file_ids": file_ids,
@@ -174,6 +178,7 @@ class VectorStoresResource(SyncAPIResource):
         *,
         name: Optional[str] | NotGiven = NOT_GIVEN,
         description: Optional[str] | NotGiven = NOT_GIVEN,
+        is_public: Optional[bool] | NotGiven = NOT_GIVEN,
         expires_after: Optional[ExpiresAfterParam] | NotGiven = NOT_GIVEN,
         metadata: object | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -199,6 +204,8 @@ class VectorStoresResource(SyncAPIResource):
 
           description: New description
 
+          is_public: Whether the vector store can be accessed by anyone with valid login credentials
+
           expires_after: Represents an expiration policy for a vector store.
 
           metadata: Optional metadata key-value pairs
@@ -221,6 +228,7 @@ class VectorStoresResource(SyncAPIResource):
                 {
                     "name": name,
                     "description": description,
+                    "is_public": is_public,
                     "expires_after": expires_after,
                     "metadata": metadata,
                 },
@@ -507,6 +515,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         *,
         name: Optional[str] | NotGiven = NOT_GIVEN,
         description: Optional[str] | NotGiven = NOT_GIVEN,
+        is_public: bool | NotGiven = NOT_GIVEN,
         expires_after: Optional[ExpiresAfterParam] | NotGiven = NOT_GIVEN,
         metadata: object | NotGiven = NOT_GIVEN,
         file_ids: Optional[List[str]] | NotGiven = NOT_GIVEN,
@@ -530,6 +539,8 @@ class AsyncVectorStoresResource(AsyncAPIResource):
 
           description: Description of the vector store
 
+          is_public: Whether the vector store can be accessed by anyone with valid login credentials
+
           expires_after: Represents an expiration policy for a vector store.
 
           metadata: Optional metadata key-value pairs
@@ -550,6 +561,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
                 {
                     "name": name,
                     "description": description,
+                    "is_public": is_public,
                     "expires_after": expires_after,
                     "metadata": metadata,
                     "file_ids": file_ids,
@@ -609,6 +621,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         *,
         name: Optional[str] | NotGiven = NOT_GIVEN,
         description: Optional[str] | NotGiven = NOT_GIVEN,
+        is_public: Optional[bool] | NotGiven = NOT_GIVEN,
         expires_after: Optional[ExpiresAfterParam] | NotGiven = NOT_GIVEN,
         metadata: object | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -634,6 +647,8 @@ class AsyncVectorStoresResource(AsyncAPIResource):
 
           description: New description
 
+          is_public: Whether the vector store can be accessed by anyone with valid login credentials
+
           expires_after: Represents an expiration policy for a vector store.
 
           metadata: Optional metadata key-value pairs
@@ -656,6 +671,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
                 {
                     "name": name,
                     "description": description,
+                    "is_public": is_public,
                     "expires_after": expires_after,
                     "metadata": metadata,
                 },

@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.8.0 (2025-06-17)
+
+Full Changelog: [v0.7.1...v0.8.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.7.1...v0.8.0)
+
+### Features
+
+* **api:** api update ([c49a7d3](https://github.com/mixedbread-ai/mixedbread-python/commit/c49a7d306eb7cf9c3101db686f7b982f9bd53415))
+
+
+### Chores
+
+* **ci:** enable for pull requests ([fa2d679](https://github.com/mixedbread-ai/mixedbread-python/commit/fa2d67970ea8da1ea66ac588a774037d56571d14))
+* **internal:** update conftest.py ([8f25dcd](https://github.com/mixedbread-ai/mixedbread-python/commit/8f25dcdee6c50210e5c7cdbea3af5b9e1aa2ae85))
+* **tests:** add tests for httpx client instantiation & proxies ([290b160](https://github.com/mixedbread-ai/mixedbread-python/commit/290b160b115fe7518b71f773419ceabeecbd72b7))
+
 ## 0.7.1 (2025-06-16)
 
 Full Changelog: [v0.7.0...v0.7.1](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.7.0...v0.7.1)
