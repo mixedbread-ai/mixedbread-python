@@ -23,9 +23,7 @@ from pydantic import ValidationError
 
 from mixedbread import Mixedbread, AsyncMixedbread, APIResponseValidationError
 from mixedbread._types import Omit
-from mixedbread._utils import maybe_transform
 from mixedbread._models import BaseModel, FinalRequestOptions
-from mixedbread._constants import RAW_RESPONSE_HEADER
 from mixedbread._exceptions import APIStatusError, APITimeoutError, MixedbreadError, APIResponseValidationError
 from mixedbread._base_client import (
     DEFAULT_TIMEOUT,
@@ -35,7 +33,6 @@ from mixedbread._base_client import (
     DefaultAsyncHttpxClient,
     make_request_options,
 )
-from mixedbread.types.vector_store_create_params import VectorStoreCreateParams
 
 from .utils import update_env
 
@@ -733,32 +730,21 @@ class TestMixedbread:
 
     @mock.patch("mixedbread._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
-    def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
+    def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter, client: Mixedbread) -> None:
         respx_mock.post("/v1/vector_stores").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
-            self.client.post(
-                "/v1/vector_stores",
-                body=cast(object, maybe_transform({}, VectorStoreCreateParams)),
-                cast_to=httpx.Response,
-                options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
-            )
+            client.vector_stores.with_streaming_response.create().__enter__()
 
         assert _get_open_connections(self.client) == 0
 
     @mock.patch("mixedbread._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
-    def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
+    def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter, client: Mixedbread) -> None:
         respx_mock.post("/v1/vector_stores").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
-            self.client.post(
-                "/v1/vector_stores",
-                body=cast(object, maybe_transform({}, VectorStoreCreateParams)),
-                cast_to=httpx.Response,
-                options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
-            )
-
+            client.vector_stores.with_streaming_response.create().__enter__()
         assert _get_open_connections(self.client) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
@@ -1568,32 +1554,25 @@ class TestAsyncMixedbread:
 
     @mock.patch("mixedbread._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
-    async def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
+    async def test_retrying_timeout_errors_doesnt_leak(
+        self, respx_mock: MockRouter, async_client: AsyncMixedbread
+    ) -> None:
         respx_mock.post("/v1/vector_stores").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
-            await self.client.post(
-                "/v1/vector_stores",
-                body=cast(object, maybe_transform({}, VectorStoreCreateParams)),
-                cast_to=httpx.Response,
-                options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
-            )
+            await async_client.vector_stores.with_streaming_response.create().__aenter__()
 
         assert _get_open_connections(self.client) == 0
 
     @mock.patch("mixedbread._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
-    async def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
+    async def test_retrying_status_errors_doesnt_leak(
+        self, respx_mock: MockRouter, async_client: AsyncMixedbread
+    ) -> None:
         respx_mock.post("/v1/vector_stores").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
-            await self.client.post(
-                "/v1/vector_stores",
-                body=cast(object, maybe_transform({}, VectorStoreCreateParams)),
-                cast_to=httpx.Response,
-                options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
-            )
-
+            await async_client.vector_stores.with_streaming_response.create().__aenter__()
         assert _get_open_connections(self.client) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
