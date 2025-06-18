@@ -1,6 +1,6 @@
 # Mixedbread API Python SDK API library
 
-[![PyPI version](https://img.shields.io/pypi/v/mixedbread.svg)](https://pypi.org/project/mixedbread/)
+[![PyPI version](<https://img.shields.io/pypi/v/mixedbread.svg?label=pypi%20(stable)>)](https://pypi.org/project/mixedbread/)
 
 The Mixedbread API Python SDK library provides convenient access to the Mixedbread REST API from any Python 3.8+
 application. The library includes type definitions for all request params and response fields,
