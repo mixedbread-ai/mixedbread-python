@@ -1,6 +1,6 @@
 [project]
 name = "mixedbread"
-version = "0.8.1"
+version = "0.9.0"
 description = "The official Python library for the Mixedbread API"
 dynamic = ["readme"]
 license = "Apache-2.0"
@@ -37,6 +37,8 @@ classifiers = [
 Homepage = "https://github.com/mixedbread-ai/mixedbread-python"
 Repository = "https://github.com/mixedbread-ai/mixedbread-python"
 
+[project.optional-dependencies]
+aiohttp = ["aiohttp", "httpx_aiohttp>=0.1.6"]
 
 [tool.rye]
 managed = true

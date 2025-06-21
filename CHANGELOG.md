@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.9.0 (2025-06-21)
+
+Full Changelog: [v0.8.1...v0.9.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.8.1...v0.9.0)
+
+### Features
+
+* **client:** add support for aiohttp ([94e0fc5](https://github.com/mixedbread-ai/mixedbread-python/commit/94e0fc58df85c64265612832cefa956c7723a79c))
+
+
+### Documentation
+
+* **client:** fix httpx.Timeout documentation reference ([855e94a](https://github.com/mixedbread-ai/mixedbread-python/commit/855e94ac632b0da2a8460af1964bb50b3ee37edb))
+
 ## 0.8.1 (2025-06-18)
 
 Full Changelog: [v0.8.0...v0.8.1](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.8.0...v0.8.1)
