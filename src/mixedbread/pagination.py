@@ -101,7 +101,7 @@ class CursorPagination(BaseModel):
 
     prev_cursor: Optional[str] = None
 
-    has_more: Optional[object] = None
+    has_more: Optional[bool] = None
 
     has_prev: Optional[bool] = None
 
@@ -118,6 +118,17 @@ class SyncCursor(BaseSyncPage[_T], BasePage[_T], Generic[_T]):
         if not data:
             return []
         return data
+
+    @override
+    def has_next_page(self) -> bool:
+        has_more = None
+        if self.pagination is not None:
+            if self.pagination.has_more is not None:
+                has_more = self.pagination.has_more
+        if has_more is not None and has_more is False:
+            return False
+
+        return super().has_next_page()
 
     @override
     def next_page_info(self) -> Optional[PageInfo]:
@@ -141,6 +152,17 @@ class AsyncCursor(BaseAsyncPage[_T], BasePage[_T], Generic[_T]):
         if not data:
             return []
         return data
+
+    @override
+    def has_next_page(self) -> bool:
+        has_more = None
+        if self.pagination is not None:
+            if self.pagination.has_more is not None:
+                has_more = self.pagination.has_more
+        if has_more is not None and has_more is False:
+            return False
+
+        return super().has_next_page()
 
     @override
     def next_page_info(self) -> Optional[PageInfo]:
