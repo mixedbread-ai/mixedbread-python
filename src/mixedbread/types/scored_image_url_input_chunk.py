@@ -1,6 +1,6 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import Optional
+from typing import Dict, Optional
 from typing_extensions import Literal
 
 from .._models import BaseModel
@@ -22,6 +22,9 @@ class ScoredImageURLInputChunk(BaseModel):
 
     mime_type: Optional[str] = None
     """mime type of the chunk"""
+
+    generated_metadata: Optional[Dict[str, object]] = None
+    """metadata of the chunk"""
 
     model: Optional[str] = None
     """model used for this chunk"""
