@@ -32,11 +32,11 @@ from ..._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ...pagination import SyncLimitOffset, AsyncLimitOffset
-from ..._base_client import AsyncPaginator, make_request_options
+from ..._base_client import make_request_options
 from ...types.data_source import DataSource
 from ...types.oauth2_params import Oauth2Params
 from ...types.data_source_type import DataSourceType
+from ...types.data_source_list_response import DataSourceListResponse
 from ...types.data_source_delete_response import DataSourceDeleteResponse
 
 __all__ = ["DataSourcesResource", "AsyncDataSourcesResource"]
@@ -356,14 +356,15 @@ class DataSourcesResource(SyncAPIResource):
         self,
         *,
         limit: int | NotGiven = NOT_GIVEN,
-        offset: int | NotGiven = NOT_GIVEN,
+        cursor: Optional[str] | NotGiven = NOT_GIVEN,
+        include_total: bool | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> SyncLimitOffset[DataSource]:
+    ) -> DataSourceListResponse:
         """
         Get all data sources.
 
@@ -372,7 +373,9 @@ class DataSourcesResource(SyncAPIResource):
         Args:
           limit: Maximum number of items to return per page
 
-          offset: Offset of the first item to return
+          cursor: Cursor for pagination (base64 encoded cursor)
+
+          include_total: Whether to include the total number of items
 
           extra_headers: Send extra headers
 
@@ -382,9 +385,8 @@ class DataSourcesResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return self._get_api_list(
+        return self._get(
             "/v1/data_sources/",
-            page=SyncLimitOffset[DataSource],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -393,12 +395,13 @@ class DataSourcesResource(SyncAPIResource):
                 query=maybe_transform(
                     {
                         "limit": limit,
-                        "offset": offset,
+                        "cursor": cursor,
+                        "include_total": include_total,
                     },
                     data_source_list_params.DataSourceListParams,
                 ),
             ),
-            model=DataSource,
+            cast_to=DataSourceListResponse,
         )
 
     def delete(
@@ -749,18 +752,19 @@ class AsyncDataSourcesResource(AsyncAPIResource):
             cast_to=DataSource,
         )
 
-    def list(
+    async def list(
         self,
         *,
         limit: int | NotGiven = NOT_GIVEN,
-        offset: int | NotGiven = NOT_GIVEN,
+        cursor: Optional[str] | NotGiven = NOT_GIVEN,
+        include_total: bool | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> AsyncPaginator[DataSource, AsyncLimitOffset[DataSource]]:
+    ) -> DataSourceListResponse:
         """
         Get all data sources.
 
@@ -769,7 +773,9 @@ class AsyncDataSourcesResource(AsyncAPIResource):
         Args:
           limit: Maximum number of items to return per page
 
-          offset: Offset of the first item to return
+          cursor: Cursor for pagination (base64 encoded cursor)
+
+          include_total: Whether to include the total number of items
 
           extra_headers: Send extra headers
 
@@ -779,23 +785,23 @@ class AsyncDataSourcesResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return self._get_api_list(
+        return await self._get(
             "/v1/data_sources/",
-            page=AsyncLimitOffset[DataSource],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=maybe_transform(
+                query=await async_maybe_transform(
                     {
                         "limit": limit,
-                        "offset": offset,
+                        "cursor": cursor,
+                        "include_total": include_total,
                     },
                     data_source_list_params.DataSourceListParams,
                 ),
             ),
-            model=DataSource,
+            cast_to=DataSourceListResponse,
         )
 
     async def delete(
