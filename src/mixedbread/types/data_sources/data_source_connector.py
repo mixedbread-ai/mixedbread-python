@@ -1,6 +1,6 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import Optional
+from typing import Dict, Optional
 from datetime import datetime
 from typing_extensions import Literal
 
@@ -46,7 +46,7 @@ class DataSourceConnector(BaseModel):
     status: Literal["idle", "pending", "in_progress", "cancelled", "completed", "failed"]
     """The sync status of the connector"""
 
-    error: Optional[str] = None
+    error: Optional[Dict[str, object]] = None
     """The sync error of the connector"""
 
     object: Optional[Literal["data_source.connector"]] = None
