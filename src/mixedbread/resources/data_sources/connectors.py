@@ -16,10 +16,10 @@ from ..._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ...pagination import SyncLimitOffset, AsyncLimitOffset
-from ..._base_client import AsyncPaginator, make_request_options
+from ..._base_client import make_request_options
 from ...types.data_sources import connector_list_params, connector_create_params, connector_update_params
 from ...types.data_sources.data_source_connector import DataSourceConnector
+from ...types.data_sources.connector_list_response import ConnectorListResponse
 from ...types.data_sources.connector_delete_response import ConnectorDeleteResponse
 
 __all__ = ["ConnectorsResource", "AsyncConnectorsResource"]
@@ -237,14 +237,15 @@ class ConnectorsResource(SyncAPIResource):
         data_source_id: str,
         *,
         limit: int | NotGiven = NOT_GIVEN,
-        offset: int | NotGiven = NOT_GIVEN,
+        cursor: Optional[str] | NotGiven = NOT_GIVEN,
+        include_total: bool | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> SyncLimitOffset[DataSourceConnector]:
+    ) -> ConnectorListResponse:
         """
         Get all connectors for a data source.
 
@@ -258,7 +259,9 @@ class ConnectorsResource(SyncAPIResource):
 
           limit: Maximum number of items to return per page
 
-          offset: Offset of the first item to return
+          cursor: Cursor for pagination (base64 encoded cursor)
+
+          include_total: Whether to include the total number of items
 
           extra_headers: Send extra headers
 
@@ -270,9 +273,8 @@ class ConnectorsResource(SyncAPIResource):
         """
         if not data_source_id:
             raise ValueError(f"Expected a non-empty value for `data_source_id` but received {data_source_id!r}")
-        return self._get_api_list(
+        return self._get(
             f"/v1/data_sources/{data_source_id}/connectors",
-            page=SyncLimitOffset[DataSourceConnector],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -281,12 +283,13 @@ class ConnectorsResource(SyncAPIResource):
                 query=maybe_transform(
                     {
                         "limit": limit,
-                        "offset": offset,
+                        "cursor": cursor,
+                        "include_total": include_total,
                     },
                     connector_list_params.ConnectorListParams,
                 ),
             ),
-            model=DataSourceConnector,
+            cast_to=ConnectorListResponse,
         )
 
     def delete(
@@ -542,19 +545,20 @@ class AsyncConnectorsResource(AsyncAPIResource):
             cast_to=DataSourceConnector,
         )
 
-    def list(
+    async def list(
         self,
         data_source_id: str,
         *,
         limit: int | NotGiven = NOT_GIVEN,
-        offset: int | NotGiven = NOT_GIVEN,
+        cursor: Optional[str] | NotGiven = NOT_GIVEN,
+        include_total: bool | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> AsyncPaginator[DataSourceConnector, AsyncLimitOffset[DataSourceConnector]]:
+    ) -> ConnectorListResponse:
         """
         Get all connectors for a data source.
 
@@ -568,7 +572,9 @@ class AsyncConnectorsResource(AsyncAPIResource):
 
           limit: Maximum number of items to return per page
 
-          offset: Offset of the first item to return
+          cursor: Cursor for pagination (base64 encoded cursor)
+
+          include_total: Whether to include the total number of items
 
           extra_headers: Send extra headers
 
@@ -580,23 +586,23 @@ class AsyncConnectorsResource(AsyncAPIResource):
         """
         if not data_source_id:
             raise ValueError(f"Expected a non-empty value for `data_source_id` but received {data_source_id!r}")
-        return self._get_api_list(
+        return await self._get(
             f"/v1/data_sources/{data_source_id}/connectors",
-            page=AsyncLimitOffset[DataSourceConnector],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=maybe_transform(
+                query=await async_maybe_transform(
                     {
                         "limit": limit,
-                        "offset": offset,
+                        "cursor": cursor,
+                        "include_total": include_total,
                     },
                     connector_list_params.ConnectorListParams,
                 ),
             ),
-            model=DataSourceConnector,
+            cast_to=ConnectorListResponse,
         )
 
     async def delete(

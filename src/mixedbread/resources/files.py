@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Mapping, cast
+from typing import Mapping, Optional, cast
 
 import httpx
 
@@ -25,9 +25,9 @@ from .._response import (
     async_to_custom_raw_response_wrapper,
     async_to_custom_streamed_response_wrapper,
 )
-from ..pagination import SyncLimitOffset, AsyncLimitOffset
-from .._base_client import AsyncPaginator, make_request_options
+from .._base_client import make_request_options
 from ..types.file_object import FileObject
+from ..types.file_list_response import FileListResponse
 from ..types.file_delete_response import FileDeleteResponse
 
 __all__ = ["FilesResource", "AsyncFilesResource"]
@@ -191,14 +191,15 @@ class FilesResource(SyncAPIResource):
         self,
         *,
         limit: int | NotGiven = NOT_GIVEN,
-        offset: int | NotGiven = NOT_GIVEN,
+        cursor: Optional[str] | NotGiven = NOT_GIVEN,
+        include_total: bool | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> SyncLimitOffset[FileObject]:
+    ) -> FileListResponse:
         """
         List all files for the authenticated user.
 
@@ -209,7 +210,9 @@ class FilesResource(SyncAPIResource):
         Args:
           limit: Maximum number of items to return per page
 
-          offset: Offset of the first item to return
+          cursor: Cursor for pagination (base64 encoded cursor)
+
+          include_total: Whether to include the total number of items
 
           extra_headers: Send extra headers
 
@@ -219,9 +222,8 @@ class FilesResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return self._get_api_list(
+        return self._get(
             "/v1/files",
-            page=SyncLimitOffset[FileObject],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -230,12 +232,13 @@ class FilesResource(SyncAPIResource):
                 query=maybe_transform(
                     {
                         "limit": limit,
-                        "offset": offset,
+                        "cursor": cursor,
+                        "include_total": include_total,
                     },
                     file_list_params.FileListParams,
                 ),
             ),
-            model=FileObject,
+            cast_to=FileListResponse,
         )
 
     def delete(
@@ -472,18 +475,19 @@ class AsyncFilesResource(AsyncAPIResource):
             cast_to=FileObject,
         )
 
-    def list(
+    async def list(
         self,
         *,
         limit: int | NotGiven = NOT_GIVEN,
-        offset: int | NotGiven = NOT_GIVEN,
+        cursor: Optional[str] | NotGiven = NOT_GIVEN,
+        include_total: bool | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> AsyncPaginator[FileObject, AsyncLimitOffset[FileObject]]:
+    ) -> FileListResponse:
         """
         List all files for the authenticated user.
 
@@ -494,7 +498,9 @@ class AsyncFilesResource(AsyncAPIResource):
         Args:
           limit: Maximum number of items to return per page
 
-          offset: Offset of the first item to return
+          cursor: Cursor for pagination (base64 encoded cursor)
+
+          include_total: Whether to include the total number of items
 
           extra_headers: Send extra headers
 
@@ -504,23 +510,23 @@ class AsyncFilesResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return self._get_api_list(
+        return await self._get(
             "/v1/files",
-            page=AsyncLimitOffset[FileObject],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=maybe_transform(
+                query=await async_maybe_transform(
                     {
                         "limit": limit,
-                        "offset": offset,
+                        "cursor": cursor,
+                        "include_total": include_total,
                     },
                     file_list_params.FileListParams,
                 ),
             ),
-            model=FileObject,
+            cast_to=FileListResponse,
         )
 
     async def delete(

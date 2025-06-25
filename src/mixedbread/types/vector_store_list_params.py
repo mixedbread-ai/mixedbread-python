@@ -12,8 +12,11 @@ class VectorStoreListParams(TypedDict, total=False):
     limit: int
     """Maximum number of items to return per page"""
 
-    offset: int
-    """Offset of the first item to return"""
+    cursor: Optional[str]
+    """Cursor for pagination (base64 encoded cursor)"""
+
+    include_total: bool
+    """Whether to include the total number of items"""
 
     q: Optional[str]
     """Search query for fuzzy matching over name and description fields"""

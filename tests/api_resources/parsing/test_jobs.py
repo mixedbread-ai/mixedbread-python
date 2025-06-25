@@ -9,7 +9,6 @@ import pytest
 
 from mixedbread import Mixedbread, AsyncMixedbread
 from tests.utils import assert_matches_type
-from mixedbread.pagination import SyncLimitOffset, AsyncLimitOffset
 from mixedbread.types.parsing import (
     ParsingJob,
     JobListResponse,
@@ -105,15 +104,16 @@ class TestJobs:
     @parametrize
     def test_method_list(self, client: Mixedbread) -> None:
         job = client.parsing.jobs.list()
-        assert_matches_type(SyncLimitOffset[JobListResponse], job, path=["response"])
+        assert_matches_type(JobListResponse, job, path=["response"])
 
     @parametrize
     def test_method_list_with_all_params(self, client: Mixedbread) -> None:
         job = client.parsing.jobs.list(
             limit=1000,
-            offset=0,
+            cursor="cursor",
+            include_total=True,
         )
-        assert_matches_type(SyncLimitOffset[JobListResponse], job, path=["response"])
+        assert_matches_type(JobListResponse, job, path=["response"])
 
     @parametrize
     def test_raw_response_list(self, client: Mixedbread) -> None:
@@ -122,7 +122,7 @@ class TestJobs:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         job = response.parse()
-        assert_matches_type(SyncLimitOffset[JobListResponse], job, path=["response"])
+        assert_matches_type(JobListResponse, job, path=["response"])
 
     @parametrize
     def test_streaming_response_list(self, client: Mixedbread) -> None:
@@ -131,7 +131,7 @@ class TestJobs:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             job = response.parse()
-            assert_matches_type(SyncLimitOffset[JobListResponse], job, path=["response"])
+            assert_matches_type(JobListResponse, job, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -300,15 +300,16 @@ class TestAsyncJobs:
     @parametrize
     async def test_method_list(self, async_client: AsyncMixedbread) -> None:
         job = await async_client.parsing.jobs.list()
-        assert_matches_type(AsyncLimitOffset[JobListResponse], job, path=["response"])
+        assert_matches_type(JobListResponse, job, path=["response"])
 
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncMixedbread) -> None:
         job = await async_client.parsing.jobs.list(
             limit=1000,
-            offset=0,
+            cursor="cursor",
+            include_total=True,
         )
-        assert_matches_type(AsyncLimitOffset[JobListResponse], job, path=["response"])
+        assert_matches_type(JobListResponse, job, path=["response"])
 
     @parametrize
     async def test_raw_response_list(self, async_client: AsyncMixedbread) -> None:
@@ -317,7 +318,7 @@ class TestAsyncJobs:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         job = await response.parse()
-        assert_matches_type(AsyncLimitOffset[JobListResponse], job, path=["response"])
+        assert_matches_type(JobListResponse, job, path=["response"])
 
     @parametrize
     async def test_streaming_response_list(self, async_client: AsyncMixedbread) -> None:
@@ -326,7 +327,7 @@ class TestAsyncJobs:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             job = await response.parse()
-            assert_matches_type(AsyncLimitOffset[JobListResponse], job, path=["response"])
+            assert_matches_type(JobListResponse, job, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
