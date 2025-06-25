@@ -143,7 +143,7 @@ class TestFiles:
             limit=1000,
             cursor="cursor",
             include_total=True,
-            statuses=["pending"],
+            statuses=["pending", "in_progress"],
         )
         assert_matches_type(SyncCursor[VectorStoreFile], file, path=["response"])
 
@@ -445,7 +445,7 @@ class TestAsyncFiles:
             limit=1000,
             cursor="cursor",
             include_total=True,
-            statuses=["pending"],
+            statuses=["pending", "in_progress"],
         )
         assert_matches_type(AsyncCursor[VectorStoreFile], file, path=["response"])
 
