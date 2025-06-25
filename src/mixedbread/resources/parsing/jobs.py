@@ -19,7 +19,8 @@ from ..._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ..._base_client import make_request_options
+from ...pagination import SyncCursor, AsyncCursor
+from ..._base_client import AsyncPaginator, make_request_options
 from ...types.parsing import ReturnFormat, ChunkingStrategy, job_list_params, job_create_params
 from ...types.parsing.parsing_job import ParsingJob
 from ...types.parsing.element_type import ElementType
@@ -161,7 +162,7 @@ class JobsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> JobListResponse:
+    ) -> SyncCursor[JobListResponse]:
         """List parsing jobs with pagination.
 
         Args: limit: The number of items to return.
@@ -185,8 +186,9 @@ class JobsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return self._get(
+        return self._get_api_list(
             "/v1/parsing/jobs",
+            page=SyncCursor[JobListResponse],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -201,7 +203,7 @@ class JobsResource(SyncAPIResource):
                     job_list_params.JobListParams,
                 ),
             ),
-            cast_to=JobListResponse,
+            model=JobListResponse,
         )
 
     def delete(
@@ -558,7 +560,7 @@ class AsyncJobsResource(AsyncAPIResource):
             cast_to=ParsingJob,
         )
 
-    async def list(
+    def list(
         self,
         *,
         limit: int | NotGiven = NOT_GIVEN,
@@ -570,7 +572,7 @@ class AsyncJobsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> JobListResponse:
+    ) -> AsyncPaginator[JobListResponse, AsyncCursor[JobListResponse]]:
         """List parsing jobs with pagination.
 
         Args: limit: The number of items to return.
@@ -594,14 +596,15 @@ class AsyncJobsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return await self._get(
+        return self._get_api_list(
             "/v1/parsing/jobs",
+            page=AsyncCursor[JobListResponse],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=await async_maybe_transform(
+                query=maybe_transform(
                     {
                         "limit": limit,
                         "cursor": cursor,
@@ -610,7 +613,7 @@ class AsyncJobsResource(AsyncAPIResource):
                     job_list_params.JobListParams,
                 ),
             ),
-            cast_to=JobListResponse,
+            model=JobListResponse,
         )
 
     async def delete(
