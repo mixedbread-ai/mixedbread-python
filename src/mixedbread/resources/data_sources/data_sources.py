@@ -32,11 +32,11 @@ from ..._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ..._base_client import make_request_options
+from ...pagination import SyncCursor, AsyncCursor
+from ..._base_client import AsyncPaginator, make_request_options
 from ...types.data_source import DataSource
 from ...types.oauth2_params import Oauth2Params
 from ...types.data_source_type import DataSourceType
-from ...types.data_source_list_response import DataSourceListResponse
 from ...types.data_source_delete_response import DataSourceDeleteResponse
 
 __all__ = ["DataSourcesResource", "AsyncDataSourcesResource"]
@@ -364,7 +364,7 @@ class DataSourcesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> DataSourceListResponse:
+    ) -> SyncCursor[DataSource]:
         """
         Get all data sources.
 
@@ -385,8 +385,9 @@ class DataSourcesResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return self._get(
+        return self._get_api_list(
             "/v1/data_sources/",
+            page=SyncCursor[DataSource],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -401,7 +402,7 @@ class DataSourcesResource(SyncAPIResource):
                     data_source_list_params.DataSourceListParams,
                 ),
             ),
-            cast_to=DataSourceListResponse,
+            model=DataSource,
         )
 
     def delete(
@@ -752,7 +753,7 @@ class AsyncDataSourcesResource(AsyncAPIResource):
             cast_to=DataSource,
         )
 
-    async def list(
+    def list(
         self,
         *,
         limit: int | NotGiven = NOT_GIVEN,
@@ -764,7 +765,7 @@ class AsyncDataSourcesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> DataSourceListResponse:
+    ) -> AsyncPaginator[DataSource, AsyncCursor[DataSource]]:
         """
         Get all data sources.
 
@@ -785,14 +786,15 @@ class AsyncDataSourcesResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return await self._get(
+        return self._get_api_list(
             "/v1/data_sources/",
+            page=AsyncCursor[DataSource],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=await async_maybe_transform(
+                query=maybe_transform(
                     {
                         "limit": limit,
                         "cursor": cursor,
@@ -801,7 +803,7 @@ class AsyncDataSourcesResource(AsyncAPIResource):
                     data_source_list_params.DataSourceListParams,
                 ),
             ),
-            cast_to=DataSourceListResponse,
+            model=DataSource,
         )
 
     async def delete(

@@ -16,10 +16,10 @@ from ..._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ..._base_client import make_request_options
+from ...pagination import SyncCursor, AsyncCursor
+from ..._base_client import AsyncPaginator, make_request_options
 from ...types.data_sources import connector_list_params, connector_create_params, connector_update_params
 from ...types.data_sources.data_source_connector import DataSourceConnector
-from ...types.data_sources.connector_list_response import ConnectorListResponse
 from ...types.data_sources.connector_delete_response import ConnectorDeleteResponse
 
 __all__ = ["ConnectorsResource", "AsyncConnectorsResource"]
@@ -245,7 +245,7 @@ class ConnectorsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ConnectorListResponse:
+    ) -> SyncCursor[DataSourceConnector]:
         """
         Get all connectors for a data source.
 
@@ -273,8 +273,9 @@ class ConnectorsResource(SyncAPIResource):
         """
         if not data_source_id:
             raise ValueError(f"Expected a non-empty value for `data_source_id` but received {data_source_id!r}")
-        return self._get(
+        return self._get_api_list(
             f"/v1/data_sources/{data_source_id}/connectors",
+            page=SyncCursor[DataSourceConnector],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -289,7 +290,7 @@ class ConnectorsResource(SyncAPIResource):
                     connector_list_params.ConnectorListParams,
                 ),
             ),
-            cast_to=ConnectorListResponse,
+            model=DataSourceConnector,
         )
 
     def delete(
@@ -545,7 +546,7 @@ class AsyncConnectorsResource(AsyncAPIResource):
             cast_to=DataSourceConnector,
         )
 
-    async def list(
+    def list(
         self,
         data_source_id: str,
         *,
@@ -558,7 +559,7 @@ class AsyncConnectorsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ConnectorListResponse:
+    ) -> AsyncPaginator[DataSourceConnector, AsyncCursor[DataSourceConnector]]:
         """
         Get all connectors for a data source.
 
@@ -586,14 +587,15 @@ class AsyncConnectorsResource(AsyncAPIResource):
         """
         if not data_source_id:
             raise ValueError(f"Expected a non-empty value for `data_source_id` but received {data_source_id!r}")
-        return await self._get(
+        return self._get_api_list(
             f"/v1/data_sources/{data_source_id}/connectors",
+            page=AsyncCursor[DataSourceConnector],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=await async_maybe_transform(
+                query=maybe_transform(
                     {
                         "limit": limit,
                         "cursor": cursor,
@@ -602,7 +604,7 @@ class AsyncConnectorsResource(AsyncAPIResource):
                     connector_list_params.ConnectorListParams,
                 ),
             ),
-            cast_to=ConnectorListResponse,
+            model=DataSourceConnector,
         )
 
     async def delete(
