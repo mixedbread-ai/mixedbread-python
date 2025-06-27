@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.13.1 (2025-06-27)
+
+Full Changelog: [v0.13.0...v0.13.1](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.13.0...v0.13.1)
+
+### Bug Fixes
+
+* **ci:** release-doctor — report correct token name ([b7ee24b](https://github.com/mixedbread-ai/mixedbread-python/commit/b7ee24bdace2220daa236b36033fd5d35df5174b))
+
 ## 0.13.0 (2025-06-25)
 
 Full Changelog: [v0.12.0...v0.13.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.12.0...v0.13.0)
