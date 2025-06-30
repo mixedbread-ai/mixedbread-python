@@ -148,11 +148,9 @@ class TestFiles:
     @parametrize
     def test_method_list_with_all_params(self, client: Mixedbread) -> None:
         file = client.files.list(
-            limit=10,
-            after="eyJjcmVhdGVkX2F0IjoiMjAyNC0xMi0zMVQyMzo1OTo1OS4wMDBaIiwiaWQiOiJhYmMxMjMifQ==",
-            before="eyJjcmVhdGVkX2F0IjoiMjAyNC0xMi0zMVQyMzo1OTo1OS4wMDBaIiwiaWQiOiJhYmMxMjMifQ==",
-            include_total=False,
-            q="x",
+            limit=1000,
+            cursor="cursor",
+            include_total=True,
         )
         assert_matches_type(FileListResponse, file, path=["response"])
 
@@ -395,11 +393,9 @@ class TestAsyncFiles:
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncMixedbread) -> None:
         file = await async_client.files.list(
-            limit=10,
-            after="eyJjcmVhdGVkX2F0IjoiMjAyNC0xMi0zMVQyMzo1OTo1OS4wMDBaIiwiaWQiOiJhYmMxMjMifQ==",
-            before="eyJjcmVhdGVkX2F0IjoiMjAyNC0xMi0zMVQyMzo1OTo1OS4wMDBaIiwiaWQiOiJhYmMxMjMifQ==",
-            include_total=False,
-            q="x",
+            limit=1000,
+            cursor="cursor",
+            include_total=True,
         )
         assert_matches_type(FileListResponse, file, path=["response"])
 

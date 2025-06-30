@@ -194,10 +194,9 @@ class TestConnectors:
     def test_method_list_with_all_params(self, client: Mixedbread) -> None:
         connector = client.data_sources.connectors.list(
             data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            limit=10,
-            after="eyJjcmVhdGVkX2F0IjoiMjAyNC0xMi0zMVQyMzo1OTo1OS4wMDBaIiwiaWQiOiJhYmMxMjMifQ==",
-            before="eyJjcmVhdGVkX2F0IjoiMjAyNC0xMi0zMVQyMzo1OTo1OS4wMDBaIiwiaWQiOiJhYmMxMjMifQ==",
-            include_total=False,
+            limit=1000,
+            cursor="cursor",
+            include_total=True,
         )
         assert_matches_type(ConnectorListResponse, connector, path=["response"])
 
@@ -459,10 +458,9 @@ class TestAsyncConnectors:
     async def test_method_list_with_all_params(self, async_client: AsyncMixedbread) -> None:
         connector = await async_client.data_sources.connectors.list(
             data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            limit=10,
-            after="eyJjcmVhdGVkX2F0IjoiMjAyNC0xMi0zMVQyMzo1OTo1OS4wMDBaIiwiaWQiOiJhYmMxMjMifQ==",
-            before="eyJjcmVhdGVkX2F0IjoiMjAyNC0xMi0zMVQyMzo1OTo1OS4wMDBaIiwiaWQiOiJhYmMxMjMifQ==",
-            include_total=False,
+            limit=1000,
+            cursor="cursor",
+            include_total=True,
         )
         assert_matches_type(ConnectorListResponse, connector, path=["response"])
 
