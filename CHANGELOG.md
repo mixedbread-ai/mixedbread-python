@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.13.2 (2025-06-30)
+
+Full Changelog: [v0.13.1...v0.13.2](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.13.1...v0.13.2)
+
+### Bug Fixes
+
+* **ci:** correct conditional ([f56e421](https://github.com/mixedbread-ai/mixedbread-python/commit/f56e4217007685c24bb5e356b669dda48aace096))
+
+
+### Chores
+
+* **ci:** only run for pushes and fork pull requests ([915384d](https://github.com/mixedbread-ai/mixedbread-python/commit/915384dc3a436c0b16f000d52caee78b6f155091))
+
 ## 0.13.1 (2025-06-27)
 
 Full Changelog: [v0.13.0...v0.13.1](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.13.0...v0.13.1)
