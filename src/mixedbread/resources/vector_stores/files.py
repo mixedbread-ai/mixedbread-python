@@ -160,8 +160,7 @@ class FilesResource(SyncAPIResource):
         vector_store_identifier: str,
         *,
         limit: int | NotGiven = NOT_GIVEN,
-        after: Optional[str] | NotGiven = NOT_GIVEN,
-        before: Optional[str] | NotGiven = NOT_GIVEN,
+        cursor: Optional[str] | NotGiven = NOT_GIVEN,
         include_total: bool | NotGiven = NOT_GIVEN,
         statuses: Optional[List[VectorStoreFileStatus]] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -182,15 +181,11 @@ class FilesResource(SyncAPIResource):
         Args:
           vector_store_identifier: The ID or name of the vector store
 
-          limit: Maximum number of items to return per page (1-100)
+          limit: Maximum number of items to return per page
 
-          after: Cursor for forward pagination - get items after this position. Use last_cursor
-              from previous response.
+          cursor: Cursor for pagination (base64 encoded cursor)
 
-          before: Cursor for backward pagination - get items before this position. Use
-              first_cursor from previous response.
-
-          include_total: Whether to include total count in response (expensive operation)
+          include_total: Whether to include the total number of items
 
           statuses: Status to filter by
 
@@ -216,8 +211,7 @@ class FilesResource(SyncAPIResource):
                 query=maybe_transform(
                     {
                         "limit": limit,
-                        "after": after,
-                        "before": before,
+                        "cursor": cursor,
                         "include_total": include_total,
                         "statuses": statuses,
                     },
@@ -588,8 +582,7 @@ class AsyncFilesResource(AsyncAPIResource):
         vector_store_identifier: str,
         *,
         limit: int | NotGiven = NOT_GIVEN,
-        after: Optional[str] | NotGiven = NOT_GIVEN,
-        before: Optional[str] | NotGiven = NOT_GIVEN,
+        cursor: Optional[str] | NotGiven = NOT_GIVEN,
         include_total: bool | NotGiven = NOT_GIVEN,
         statuses: Optional[List[VectorStoreFileStatus]] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -610,15 +603,11 @@ class AsyncFilesResource(AsyncAPIResource):
         Args:
           vector_store_identifier: The ID or name of the vector store
 
-          limit: Maximum number of items to return per page (1-100)
+          limit: Maximum number of items to return per page
 
-          after: Cursor for forward pagination - get items after this position. Use last_cursor
-              from previous response.
+          cursor: Cursor for pagination (base64 encoded cursor)
 
-          before: Cursor for backward pagination - get items before this position. Use
-              first_cursor from previous response.
-
-          include_total: Whether to include total count in response (expensive operation)
+          include_total: Whether to include the total number of items
 
           statuses: Status to filter by
 
@@ -644,8 +633,7 @@ class AsyncFilesResource(AsyncAPIResource):
                 query=await async_maybe_transform(
                     {
                         "limit": limit,
-                        "after": after,
-                        "before": before,
+                        "cursor": cursor,
                         "include_total": include_total,
                         "statuses": statuses,
                     },

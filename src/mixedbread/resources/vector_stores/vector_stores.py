@@ -244,8 +244,7 @@ class VectorStoresResource(SyncAPIResource):
         self,
         *,
         limit: int | NotGiven = NOT_GIVEN,
-        after: Optional[str] | NotGiven = NOT_GIVEN,
-        before: Optional[str] | NotGiven = NOT_GIVEN,
+        cursor: Optional[str] | NotGiven = NOT_GIVEN,
         include_total: bool | NotGiven = NOT_GIVEN,
         q: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -264,15 +263,11 @@ class VectorStoresResource(SyncAPIResource):
         Returns: VectorStoreListResponse: The list of vector stores.
 
         Args:
-          limit: Maximum number of items to return per page (1-100)
+          limit: Maximum number of items to return per page
 
-          after: Cursor for forward pagination - get items after this position. Use last_cursor
-              from previous response.
+          cursor: Cursor for pagination (base64 encoded cursor)
 
-          before: Cursor for backward pagination - get items before this position. Use
-              first_cursor from previous response.
-
-          include_total: Whether to include total count in response (expensive operation)
+          include_total: Whether to include the total number of items
 
           q: Search query for fuzzy matching over name and description fields
 
@@ -294,8 +289,7 @@ class VectorStoresResource(SyncAPIResource):
                 query=maybe_transform(
                     {
                         "limit": limit,
-                        "after": after,
-                        "before": before,
+                        "cursor": cursor,
                         "include_total": include_total,
                         "q": q,
                     },
@@ -696,8 +690,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         self,
         *,
         limit: int | NotGiven = NOT_GIVEN,
-        after: Optional[str] | NotGiven = NOT_GIVEN,
-        before: Optional[str] | NotGiven = NOT_GIVEN,
+        cursor: Optional[str] | NotGiven = NOT_GIVEN,
         include_total: bool | NotGiven = NOT_GIVEN,
         q: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -716,15 +709,11 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         Returns: VectorStoreListResponse: The list of vector stores.
 
         Args:
-          limit: Maximum number of items to return per page (1-100)
+          limit: Maximum number of items to return per page
 
-          after: Cursor for forward pagination - get items after this position. Use last_cursor
-              from previous response.
+          cursor: Cursor for pagination (base64 encoded cursor)
 
-          before: Cursor for backward pagination - get items before this position. Use
-              first_cursor from previous response.
-
-          include_total: Whether to include total count in response (expensive operation)
+          include_total: Whether to include the total number of items
 
           q: Search query for fuzzy matching over name and description fields
 
@@ -746,8 +735,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
                 query=await async_maybe_transform(
                     {
                         "limit": limit,
-                        "after": after,
-                        "before": before,
+                        "cursor": cursor,
                         "include_total": include_total,
                         "q": q,
                     },

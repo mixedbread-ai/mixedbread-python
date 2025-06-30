@@ -12,22 +12,13 @@ __all__ = ["FileListParams"]
 
 class FileListParams(TypedDict, total=False):
     limit: int
-    """Maximum number of items to return per page (1-100)"""
+    """Maximum number of items to return per page"""
 
-    after: Optional[str]
-    """Cursor for forward pagination - get items after this position.
-
-    Use last_cursor from previous response.
-    """
-
-    before: Optional[str]
-    """Cursor for backward pagination - get items before this position.
-
-    Use first_cursor from previous response.
-    """
+    cursor: Optional[str]
+    """Cursor for pagination (base64 encoded cursor)"""
 
     include_total: bool
-    """Whether to include total count in response (expensive operation)"""
+    """Whether to include the total number of items"""
 
     statuses: Optional[List[VectorStoreFileStatus]]
     """Status to filter by"""
