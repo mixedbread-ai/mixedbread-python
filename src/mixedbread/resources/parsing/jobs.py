@@ -19,14 +19,14 @@ from ..._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ...pagination import SyncCursor, AsyncCursor
-from ..._base_client import AsyncPaginator, make_request_options
+from ..._base_client import make_request_options
 from ...types.parsing import ReturnFormat, ChunkingStrategy, job_list_params, job_create_params
 from ...types.parsing.parsing_job import ParsingJob
 from ...types.parsing.element_type import ElementType
 from ...types.parsing.return_format import ReturnFormat
 from ...types.parsing.chunking_strategy import ChunkingStrategy
 from ...types.parsing.job_list_response import JobListResponse
+from ...types.parsing.parsing_job_status import ParsingJobStatus
 from ...types.parsing.job_delete_response import JobDeleteResponse
 
 __all__ = ["JobsResource", "AsyncJobsResource"]
@@ -154,15 +154,17 @@ class JobsResource(SyncAPIResource):
         self,
         *,
         limit: int | NotGiven = NOT_GIVEN,
-        cursor: Optional[str] | NotGiven = NOT_GIVEN,
+        after: Optional[str] | NotGiven = NOT_GIVEN,
+        before: Optional[str] | NotGiven = NOT_GIVEN,
         include_total: bool | NotGiven = NOT_GIVEN,
+        statuses: Optional[List[ParsingJobStatus]] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> SyncCursor[JobListResponse]:
+    ) -> JobListResponse:
         """List parsing jobs with pagination.
 
         Args: limit: The number of items to return.
@@ -172,11 +174,17 @@ class JobsResource(SyncAPIResource):
         Returns: List of parsing jobs with pagination.
 
         Args:
-          limit: Maximum number of items to return per page
+          limit: Maximum number of items to return per page (1-100)
 
-          cursor: Cursor for pagination (base64 encoded cursor)
+          after: Cursor for forward pagination - get items after this position. Use last_cursor
+              from previous response.
 
-          include_total: Whether to include the total number of items
+          before: Cursor for backward pagination - get items before this position. Use
+              first_cursor from previous response.
+
+          include_total: Whether to include total count in response (expensive operation)
+
+          statuses: Status to filter by
 
           extra_headers: Send extra headers
 
@@ -186,9 +194,8 @@ class JobsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return self._get_api_list(
+        return self._get(
             "/v1/parsing/jobs",
-            page=SyncCursor[JobListResponse],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -197,13 +204,15 @@ class JobsResource(SyncAPIResource):
                 query=maybe_transform(
                     {
                         "limit": limit,
-                        "cursor": cursor,
+                        "after": after,
+                        "before": before,
                         "include_total": include_total,
+                        "statuses": statuses,
                     },
                     job_list_params.JobListParams,
                 ),
             ),
-            model=JobListResponse,
+            cast_to=JobListResponse,
         )
 
     def delete(
@@ -560,19 +569,21 @@ class AsyncJobsResource(AsyncAPIResource):
             cast_to=ParsingJob,
         )
 
-    def list(
+    async def list(
         self,
         *,
         limit: int | NotGiven = NOT_GIVEN,
-        cursor: Optional[str] | NotGiven = NOT_GIVEN,
+        after: Optional[str] | NotGiven = NOT_GIVEN,
+        before: Optional[str] | NotGiven = NOT_GIVEN,
         include_total: bool | NotGiven = NOT_GIVEN,
+        statuses: Optional[List[ParsingJobStatus]] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> AsyncPaginator[JobListResponse, AsyncCursor[JobListResponse]]:
+    ) -> JobListResponse:
         """List parsing jobs with pagination.
 
         Args: limit: The number of items to return.
@@ -582,11 +593,17 @@ class AsyncJobsResource(AsyncAPIResource):
         Returns: List of parsing jobs with pagination.
 
         Args:
-          limit: Maximum number of items to return per page
+          limit: Maximum number of items to return per page (1-100)
 
-          cursor: Cursor for pagination (base64 encoded cursor)
+          after: Cursor for forward pagination - get items after this position. Use last_cursor
+              from previous response.
 
-          include_total: Whether to include the total number of items
+          before: Cursor for backward pagination - get items before this position. Use
+              first_cursor from previous response.
+
+          include_total: Whether to include total count in response (expensive operation)
+
+          statuses: Status to filter by
 
           extra_headers: Send extra headers
 
@@ -596,24 +613,25 @@ class AsyncJobsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return self._get_api_list(
+        return await self._get(
             "/v1/parsing/jobs",
-            page=AsyncCursor[JobListResponse],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=maybe_transform(
+                query=await async_maybe_transform(
                     {
                         "limit": limit,
-                        "cursor": cursor,
+                        "after": after,
+                        "before": before,
                         "include_total": include_total,
+                        "statuses": statuses,
                     },
                     job_list_params.JobListParams,
                 ),
             ),
-            model=JobListResponse,
+            cast_to=JobListResponse,
         )
 
     async def delete(

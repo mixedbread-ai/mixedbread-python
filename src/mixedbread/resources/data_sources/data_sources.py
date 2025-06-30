@@ -32,11 +32,11 @@ from ..._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ...pagination import SyncCursor, AsyncCursor
-from ..._base_client import AsyncPaginator, make_request_options
+from ..._base_client import make_request_options
 from ...types.data_source import DataSource
 from ...types.oauth2_params import Oauth2Params
 from ...types.data_source_type import DataSourceType
+from ...types.data_source_list_response import DataSourceListResponse
 from ...types.data_source_delete_response import DataSourceDeleteResponse
 
 __all__ = ["DataSourcesResource", "AsyncDataSourcesResource"]
@@ -356,7 +356,8 @@ class DataSourcesResource(SyncAPIResource):
         self,
         *,
         limit: int | NotGiven = NOT_GIVEN,
-        cursor: Optional[str] | NotGiven = NOT_GIVEN,
+        after: Optional[str] | NotGiven = NOT_GIVEN,
+        before: Optional[str] | NotGiven = NOT_GIVEN,
         include_total: bool | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -364,18 +365,22 @@ class DataSourcesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> SyncCursor[DataSource]:
+    ) -> DataSourceListResponse:
         """
         Get all data sources.
 
         Returns: The list of data sources.
 
         Args:
-          limit: Maximum number of items to return per page
+          limit: Maximum number of items to return per page (1-100)
 
-          cursor: Cursor for pagination (base64 encoded cursor)
+          after: Cursor for forward pagination - get items after this position. Use last_cursor
+              from previous response.
 
-          include_total: Whether to include the total number of items
+          before: Cursor for backward pagination - get items before this position. Use
+              first_cursor from previous response.
+
+          include_total: Whether to include total count in response (expensive operation)
 
           extra_headers: Send extra headers
 
@@ -385,9 +390,8 @@ class DataSourcesResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return self._get_api_list(
+        return self._get(
             "/v1/data_sources/",
-            page=SyncCursor[DataSource],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -396,13 +400,14 @@ class DataSourcesResource(SyncAPIResource):
                 query=maybe_transform(
                     {
                         "limit": limit,
-                        "cursor": cursor,
+                        "after": after,
+                        "before": before,
                         "include_total": include_total,
                     },
                     data_source_list_params.DataSourceListParams,
                 ),
             ),
-            model=DataSource,
+            cast_to=DataSourceListResponse,
         )
 
     def delete(
@@ -753,11 +758,12 @@ class AsyncDataSourcesResource(AsyncAPIResource):
             cast_to=DataSource,
         )
 
-    def list(
+    async def list(
         self,
         *,
         limit: int | NotGiven = NOT_GIVEN,
-        cursor: Optional[str] | NotGiven = NOT_GIVEN,
+        after: Optional[str] | NotGiven = NOT_GIVEN,
+        before: Optional[str] | NotGiven = NOT_GIVEN,
         include_total: bool | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -765,18 +771,22 @@ class AsyncDataSourcesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> AsyncPaginator[DataSource, AsyncCursor[DataSource]]:
+    ) -> DataSourceListResponse:
         """
         Get all data sources.
 
         Returns: The list of data sources.
 
         Args:
-          limit: Maximum number of items to return per page
+          limit: Maximum number of items to return per page (1-100)
 
-          cursor: Cursor for pagination (base64 encoded cursor)
+          after: Cursor for forward pagination - get items after this position. Use last_cursor
+              from previous response.
 
-          include_total: Whether to include the total number of items
+          before: Cursor for backward pagination - get items before this position. Use
+              first_cursor from previous response.
+
+          include_total: Whether to include total count in response (expensive operation)
 
           extra_headers: Send extra headers
 
@@ -786,24 +796,24 @@ class AsyncDataSourcesResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return self._get_api_list(
+        return await self._get(
             "/v1/data_sources/",
-            page=AsyncCursor[DataSource],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=maybe_transform(
+                query=await async_maybe_transform(
                     {
                         "limit": limit,
-                        "cursor": cursor,
+                        "after": after,
+                        "before": before,
                         "include_total": include_total,
                     },
                     data_source_list_params.DataSourceListParams,
                 ),
             ),
-            model=DataSource,
+            cast_to=DataSourceListResponse,
         )
 
     async def delete(

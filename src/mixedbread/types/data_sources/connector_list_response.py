@@ -1,13 +1,12 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 from typing import List, Optional
-from datetime import datetime
 from typing_extensions import Literal
 
 from ..._models import BaseModel
-from .parsing_job_status import ParsingJobStatus
+from .data_source_connector import DataSourceConnector
 
-__all__ = ["JobListResponse", "Pagination", "Data"]
+__all__ = ["ConnectorListResponse", "Pagination"]
 
 
 class Pagination(BaseModel):
@@ -38,33 +37,7 @@ class Pagination(BaseModel):
     """
 
 
-class Data(BaseModel):
-    id: str
-    """The ID of the job"""
-
-    file_id: str
-    """The ID of the file to parse"""
-
-    status: ParsingJobStatus
-    """The status of the job"""
-
-    started_at: Optional[datetime] = None
-    """The started time of the job"""
-
-    finished_at: Optional[datetime] = None
-    """The finished time of the job"""
-
-    created_at: Optional[datetime] = None
-    """The creation time of the job"""
-
-    updated_at: Optional[datetime] = None
-    """The updated time of the job"""
-
-    object: Optional[Literal["parsing_job"]] = None
-    """The type of the object"""
-
-
-class JobListResponse(BaseModel):
+class ConnectorListResponse(BaseModel):
     pagination: Pagination
     """Response model for cursor-based pagination.
 
@@ -89,8 +62,8 @@ class JobListResponse(BaseModel):
             }
     """
 
-    data: List[Data]
-    """The list of parsing jobs"""
+    data: List[DataSourceConnector]
+    """The list of connectors"""
 
     object: Optional[Literal["list"]] = None
     """The object type of the response"""
