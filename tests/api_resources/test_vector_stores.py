@@ -166,9 +166,10 @@ class TestVectorStores:
     @parametrize
     def test_method_list_with_all_params(self, client: Mixedbread) -> None:
         vector_store = client.vector_stores.list(
-            limit=1000,
-            cursor="cursor",
-            include_total=True,
+            limit=10,
+            after="eyJjcmVhdGVkX2F0IjoiMjAyNC0xMi0zMVQyMzo1OTo1OS4wMDBaIiwiaWQiOiJhYmMxMjMifQ==",
+            before="eyJjcmVhdGVkX2F0IjoiMjAyNC0xMi0zMVQyMzo1OTo1OS4wMDBaIiwiaWQiOiJhYmMxMjMifQ==",
+            include_total=False,
             q="x",
         )
         assert_matches_type(VectorStoreListResponse, vector_store, path=["response"])
@@ -553,9 +554,10 @@ class TestAsyncVectorStores:
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncMixedbread) -> None:
         vector_store = await async_client.vector_stores.list(
-            limit=1000,
-            cursor="cursor",
-            include_total=True,
+            limit=10,
+            after="eyJjcmVhdGVkX2F0IjoiMjAyNC0xMi0zMVQyMzo1OTo1OS4wMDBaIiwiaWQiOiJhYmMxMjMifQ==",
+            before="eyJjcmVhdGVkX2F0IjoiMjAyNC0xMi0zMVQyMzo1OTo1OS4wMDBaIiwiaWQiOiJhYmMxMjMifQ==",
+            include_total=False,
             q="x",
         )
         assert_matches_type(VectorStoreListResponse, vector_store, path=["response"])
