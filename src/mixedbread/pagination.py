@@ -97,13 +97,11 @@ class AsyncLimitOffset(BaseAsyncPage[_T], BasePage[_T], Generic[_T]):
 
 
 class CursorPagination(BaseModel):
-    next_cursor: Optional[str] = None
+    first_cursor: Optional[str] = None
 
-    prev_cursor: Optional[str] = None
+    last_cursor: Optional[str] = None
 
     has_more: Optional[bool] = None
-
-    has_prev: Optional[bool] = None
 
     total: Optional[int] = None
 
@@ -132,14 +130,24 @@ class SyncCursor(BaseSyncPage[_T], BasePage[_T], Generic[_T]):
 
     @override
     def next_page_info(self) -> Optional[PageInfo]:
-        next_cursor = None
+        if self._options.params.get("before"):
+            first_cursor = None
+            if self.pagination is not None:
+                if self.pagination.first_cursor is not None:
+                    first_cursor = self.pagination.first_cursor
+            if not first_cursor:
+                return None
+
+            return PageInfo(params={"before": first_cursor})
+
+        last_cursor = None
         if self.pagination is not None:
-            if self.pagination.next_cursor is not None:
-                next_cursor = self.pagination.next_cursor
-        if not next_cursor:
+            if self.pagination.last_cursor is not None:
+                last_cursor = self.pagination.last_cursor
+        if not last_cursor:
             return None
 
-        return PageInfo(params={"cursor": next_cursor})
+        return PageInfo(params={"after": last_cursor})
 
 
 class AsyncCursor(BaseAsyncPage[_T], BasePage[_T], Generic[_T]):
@@ -166,11 +174,21 @@ class AsyncCursor(BaseAsyncPage[_T], BasePage[_T], Generic[_T]):
 
     @override
     def next_page_info(self) -> Optional[PageInfo]:
-        next_cursor = None
+        if self._options.params.get("before"):
+            first_cursor = None
+            if self.pagination is not None:
+                if self.pagination.first_cursor is not None:
+                    first_cursor = self.pagination.first_cursor
+            if not first_cursor:
+                return None
+
+            return PageInfo(params={"before": first_cursor})
+
+        last_cursor = None
         if self.pagination is not None:
-            if self.pagination.next_cursor is not None:
-                next_cursor = self.pagination.next_cursor
-        if not next_cursor:
+            if self.pagination.last_cursor is not None:
+                last_cursor = self.pagination.last_cursor
+        if not last_cursor:
             return None
 
-        return PageInfo(params={"cursor": next_cursor})
+        return PageInfo(params={"after": last_cursor})

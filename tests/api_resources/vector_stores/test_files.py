@@ -140,10 +140,9 @@ class TestFiles:
     def test_method_list_with_all_params(self, client: Mixedbread) -> None:
         file = client.vector_stores.files.list(
             vector_store_identifier="vector_store_identifier",
-            limit=10,
-            after="eyJjcmVhdGVkX2F0IjoiMjAyNC0xMi0zMVQyMzo1OTo1OS4wMDBaIiwiaWQiOiJhYmMxMjMifQ==",
-            before="eyJjcmVhdGVkX2F0IjoiMjAyNC0xMi0zMVQyMzo1OTo1OS4wMDBaIiwiaWQiOiJhYmMxMjMifQ==",
-            include_total=False,
+            limit=1000,
+            cursor="cursor",
+            include_total=True,
             statuses=["pending", "in_progress"],
         )
         assert_matches_type(FileListResponse, file, path=["response"])
@@ -443,10 +442,9 @@ class TestAsyncFiles:
     async def test_method_list_with_all_params(self, async_client: AsyncMixedbread) -> None:
         file = await async_client.vector_stores.files.list(
             vector_store_identifier="vector_store_identifier",
-            limit=10,
-            after="eyJjcmVhdGVkX2F0IjoiMjAyNC0xMi0zMVQyMzo1OTo1OS4wMDBaIiwiaWQiOiJhYmMxMjMifQ==",
-            before="eyJjcmVhdGVkX2F0IjoiMjAyNC0xMi0zMVQyMzo1OTo1OS4wMDBaIiwiaWQiOiJhYmMxMjMifQ==",
-            include_total=False,
+            limit=1000,
+            cursor="cursor",
+            include_total=True,
             statuses=["pending", "in_progress"],
         )
         assert_matches_type(FileListResponse, file, path=["response"])

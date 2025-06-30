@@ -24,7 +24,6 @@ from ...types.parsing.element_type import ElementType
 from ...types.parsing.return_format import ReturnFormat
 from ...types.parsing.chunking_strategy import ChunkingStrategy
 from ...types.parsing.job_list_response import JobListResponse
-from ...types.parsing.parsing_job_status import ParsingJobStatus
 from ...types.parsing.job_delete_response import JobDeleteResponse
 
 __all__ = ["JobsResource", "AsyncJobsResource"]
@@ -152,10 +151,8 @@ class JobsResource(SyncAPIResource):
         self,
         *,
         limit: int | NotGiven = NOT_GIVEN,
-        after: Optional[str] | NotGiven = NOT_GIVEN,
-        before: Optional[str] | NotGiven = NOT_GIVEN,
+        cursor: Optional[str] | NotGiven = NOT_GIVEN,
         include_total: bool | NotGiven = NOT_GIVEN,
-        statuses: Optional[List[ParsingJobStatus]] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -172,17 +169,11 @@ class JobsResource(SyncAPIResource):
         Returns: List of parsing jobs with pagination.
 
         Args:
-          limit: Maximum number of items to return per page (1-100)
+          limit: Maximum number of items to return per page
 
-          after: Cursor for forward pagination - get items after this position. Use last_cursor
-              from previous response.
+          cursor: Cursor for pagination (base64 encoded cursor)
 
-          before: Cursor for backward pagination - get items before this position. Use
-              first_cursor from previous response.
-
-          include_total: Whether to include total count in response (expensive operation)
-
-          statuses: Status to filter by
+          include_total: Whether to include the total number of items
 
           extra_headers: Send extra headers
 
@@ -202,10 +193,8 @@ class JobsResource(SyncAPIResource):
                 query=maybe_transform(
                     {
                         "limit": limit,
-                        "after": after,
-                        "before": before,
+                        "cursor": cursor,
                         "include_total": include_total,
-                        "statuses": statuses,
                     },
                     job_list_params.JobListParams,
                 ),
@@ -414,10 +403,8 @@ class AsyncJobsResource(AsyncAPIResource):
         self,
         *,
         limit: int | NotGiven = NOT_GIVEN,
-        after: Optional[str] | NotGiven = NOT_GIVEN,
-        before: Optional[str] | NotGiven = NOT_GIVEN,
+        cursor: Optional[str] | NotGiven = NOT_GIVEN,
         include_total: bool | NotGiven = NOT_GIVEN,
-        statuses: Optional[List[ParsingJobStatus]] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -434,17 +421,11 @@ class AsyncJobsResource(AsyncAPIResource):
         Returns: List of parsing jobs with pagination.
 
         Args:
-          limit: Maximum number of items to return per page (1-100)
+          limit: Maximum number of items to return per page
 
-          after: Cursor for forward pagination - get items after this position. Use last_cursor
-              from previous response.
+          cursor: Cursor for pagination (base64 encoded cursor)
 
-          before: Cursor for backward pagination - get items before this position. Use
-              first_cursor from previous response.
-
-          include_total: Whether to include total count in response (expensive operation)
-
-          statuses: Status to filter by
+          include_total: Whether to include the total number of items
 
           extra_headers: Send extra headers
 
@@ -464,10 +445,8 @@ class AsyncJobsResource(AsyncAPIResource):
                 query=await async_maybe_transform(
                     {
                         "limit": limit,
-                        "after": after,
-                        "before": before,
+                        "cursor": cursor,
                         "include_total": include_total,
-                        "statuses": statuses,
                     },
                     job_list_params.JobListParams,
                 ),
