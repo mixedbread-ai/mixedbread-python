@@ -25,9 +25,9 @@ from .._response import (
     async_to_custom_raw_response_wrapper,
     async_to_custom_streamed_response_wrapper,
 )
-from ..pagination import SyncCursor, AsyncCursor
-from .._base_client import AsyncPaginator, make_request_options
+from .._base_client import make_request_options
 from ..types.file_object import FileObject
+from ..types.file_list_response import FileListResponse
 from ..types.file_delete_response import FileDeleteResponse
 
 __all__ = ["FilesResource", "AsyncFilesResource"]
@@ -191,15 +191,17 @@ class FilesResource(SyncAPIResource):
         self,
         *,
         limit: int | NotGiven = NOT_GIVEN,
-        cursor: Optional[str] | NotGiven = NOT_GIVEN,
+        after: Optional[str] | NotGiven = NOT_GIVEN,
+        before: Optional[str] | NotGiven = NOT_GIVEN,
         include_total: bool | NotGiven = NOT_GIVEN,
+        q: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> SyncCursor[FileObject]:
+    ) -> FileListResponse:
         """
         List all files for the authenticated user.
 
@@ -208,11 +210,17 @@ class FilesResource(SyncAPIResource):
         Returns: A list of files belonging to the user.
 
         Args:
-          limit: Maximum number of items to return per page
+          limit: Maximum number of items to return per page (1-100)
 
-          cursor: Cursor for pagination (base64 encoded cursor)
+          after: Cursor for forward pagination - get items after this position. Use last_cursor
+              from previous response.
 
-          include_total: Whether to include the total number of items
+          before: Cursor for backward pagination - get items before this position. Use
+              first_cursor from previous response.
+
+          include_total: Whether to include total count in response (expensive operation)
+
+          q: Search query for fuzzy matching over name and description fields
 
           extra_headers: Send extra headers
 
@@ -222,9 +230,8 @@ class FilesResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return self._get_api_list(
+        return self._get(
             "/v1/files",
-            page=SyncCursor[FileObject],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -233,13 +240,15 @@ class FilesResource(SyncAPIResource):
                 query=maybe_transform(
                     {
                         "limit": limit,
-                        "cursor": cursor,
+                        "after": after,
+                        "before": before,
                         "include_total": include_total,
+                        "q": q,
                     },
                     file_list_params.FileListParams,
                 ),
             ),
-            model=FileObject,
+            cast_to=FileListResponse,
         )
 
     def delete(
@@ -476,19 +485,21 @@ class AsyncFilesResource(AsyncAPIResource):
             cast_to=FileObject,
         )
 
-    def list(
+    async def list(
         self,
         *,
         limit: int | NotGiven = NOT_GIVEN,
-        cursor: Optional[str] | NotGiven = NOT_GIVEN,
+        after: Optional[str] | NotGiven = NOT_GIVEN,
+        before: Optional[str] | NotGiven = NOT_GIVEN,
         include_total: bool | NotGiven = NOT_GIVEN,
+        q: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> AsyncPaginator[FileObject, AsyncCursor[FileObject]]:
+    ) -> FileListResponse:
         """
         List all files for the authenticated user.
 
@@ -497,11 +508,17 @@ class AsyncFilesResource(AsyncAPIResource):
         Returns: A list of files belonging to the user.
 
         Args:
-          limit: Maximum number of items to return per page
+          limit: Maximum number of items to return per page (1-100)
 
-          cursor: Cursor for pagination (base64 encoded cursor)
+          after: Cursor for forward pagination - get items after this position. Use last_cursor
+              from previous response.
 
-          include_total: Whether to include the total number of items
+          before: Cursor for backward pagination - get items before this position. Use
+              first_cursor from previous response.
+
+          include_total: Whether to include total count in response (expensive operation)
+
+          q: Search query for fuzzy matching over name and description fields
 
           extra_headers: Send extra headers
 
@@ -511,24 +528,25 @@ class AsyncFilesResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return self._get_api_list(
+        return await self._get(
             "/v1/files",
-            page=AsyncCursor[FileObject],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=maybe_transform(
+                query=await async_maybe_transform(
                     {
                         "limit": limit,
-                        "cursor": cursor,
+                        "after": after,
+                        "before": before,
                         "include_total": include_total,
+                        "q": q,
                     },
                     file_list_params.FileListParams,
                 ),
             ),
-            model=FileObject,
+            cast_to=FileListResponse,
         )
 
     async def delete(

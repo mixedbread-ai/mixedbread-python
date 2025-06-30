@@ -10,13 +10,22 @@ __all__ = ["VectorStoreListParams"]
 
 class VectorStoreListParams(TypedDict, total=False):
     limit: int
-    """Maximum number of items to return per page"""
+    """Maximum number of items to return per page (1-100)"""
 
-    cursor: Optional[str]
-    """Cursor for pagination (base64 encoded cursor)"""
+    after: Optional[str]
+    """Cursor for forward pagination - get items after this position.
+
+    Use last_cursor from previous response.
+    """
+
+    before: Optional[str]
+    """Cursor for backward pagination - get items before this position.
+
+    Use first_cursor from previous response.
+    """
 
     include_total: bool
-    """Whether to include the total number of items"""
+    """Whether to include total count in response (expensive operation)"""
 
     q: Optional[str]
     """Search query for fuzzy matching over name and description fields"""

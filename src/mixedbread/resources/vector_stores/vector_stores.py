@@ -31,10 +31,10 @@ from ..._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ...pagination import SyncCursor, AsyncCursor
-from ..._base_client import AsyncPaginator, make_request_options
+from ..._base_client import make_request_options
 from ...types.vector_store import VectorStore
 from ...types.expires_after_param import ExpiresAfterParam
+from ...types.vector_store_list_response import VectorStoreListResponse
 from ...types.vector_store_delete_response import VectorStoreDeleteResponse
 from ...types.vector_store_search_response import VectorStoreSearchResponse
 from ...types.vector_store_chunk_search_options_param import VectorStoreChunkSearchOptionsParam
@@ -244,7 +244,8 @@ class VectorStoresResource(SyncAPIResource):
         self,
         *,
         limit: int | NotGiven = NOT_GIVEN,
-        cursor: Optional[str] | NotGiven = NOT_GIVEN,
+        after: Optional[str] | NotGiven = NOT_GIVEN,
+        before: Optional[str] | NotGiven = NOT_GIVEN,
         include_total: bool | NotGiven = NOT_GIVEN,
         q: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -253,7 +254,7 @@ class VectorStoresResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> SyncCursor[VectorStore]:
+    ) -> VectorStoreListResponse:
         """
         List all vector stores with optional search.
 
@@ -263,11 +264,15 @@ class VectorStoresResource(SyncAPIResource):
         Returns: VectorStoreListResponse: The list of vector stores.
 
         Args:
-          limit: Maximum number of items to return per page
+          limit: Maximum number of items to return per page (1-100)
 
-          cursor: Cursor for pagination (base64 encoded cursor)
+          after: Cursor for forward pagination - get items after this position. Use last_cursor
+              from previous response.
 
-          include_total: Whether to include the total number of items
+          before: Cursor for backward pagination - get items before this position. Use
+              first_cursor from previous response.
+
+          include_total: Whether to include total count in response (expensive operation)
 
           q: Search query for fuzzy matching over name and description fields
 
@@ -279,9 +284,8 @@ class VectorStoresResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return self._get_api_list(
+        return self._get(
             "/v1/vector_stores",
-            page=SyncCursor[VectorStore],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -290,14 +294,15 @@ class VectorStoresResource(SyncAPIResource):
                 query=maybe_transform(
                     {
                         "limit": limit,
-                        "cursor": cursor,
+                        "after": after,
+                        "before": before,
                         "include_total": include_total,
                         "q": q,
                     },
                     vector_store_list_params.VectorStoreListParams,
                 ),
             ),
-            model=VectorStore,
+            cast_to=VectorStoreListResponse,
         )
 
     def delete(
@@ -687,11 +692,12 @@ class AsyncVectorStoresResource(AsyncAPIResource):
             cast_to=VectorStore,
         )
 
-    def list(
+    async def list(
         self,
         *,
         limit: int | NotGiven = NOT_GIVEN,
-        cursor: Optional[str] | NotGiven = NOT_GIVEN,
+        after: Optional[str] | NotGiven = NOT_GIVEN,
+        before: Optional[str] | NotGiven = NOT_GIVEN,
         include_total: bool | NotGiven = NOT_GIVEN,
         q: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -700,7 +706,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> AsyncPaginator[VectorStore, AsyncCursor[VectorStore]]:
+    ) -> VectorStoreListResponse:
         """
         List all vector stores with optional search.
 
@@ -710,11 +716,15 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         Returns: VectorStoreListResponse: The list of vector stores.
 
         Args:
-          limit: Maximum number of items to return per page
+          limit: Maximum number of items to return per page (1-100)
 
-          cursor: Cursor for pagination (base64 encoded cursor)
+          after: Cursor for forward pagination - get items after this position. Use last_cursor
+              from previous response.
 
-          include_total: Whether to include the total number of items
+          before: Cursor for backward pagination - get items before this position. Use
+              first_cursor from previous response.
+
+          include_total: Whether to include total count in response (expensive operation)
 
           q: Search query for fuzzy matching over name and description fields
 
@@ -726,25 +736,25 @@ class AsyncVectorStoresResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return self._get_api_list(
+        return await self._get(
             "/v1/vector_stores",
-            page=AsyncCursor[VectorStore],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=maybe_transform(
+                query=await async_maybe_transform(
                     {
                         "limit": limit,
-                        "cursor": cursor,
+                        "after": after,
+                        "before": before,
                         "include_total": include_total,
                         "q": q,
                     },
                     vector_store_list_params.VectorStoreListParams,
                 ),
             ),
-            model=VectorStore,
+            cast_to=VectorStoreListResponse,
         )
 
     async def delete(

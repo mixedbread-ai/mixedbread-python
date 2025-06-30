@@ -11,9 +11,9 @@ from mixedbread import Mixedbread, AsyncMixedbread
 from tests.utils import assert_matches_type
 from mixedbread.types import (
     DataSource,
+    DataSourceListResponse,
     DataSourceDeleteResponse,
 )
-from mixedbread.pagination import SyncCursor, AsyncCursor
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -250,16 +250,17 @@ class TestDataSources:
     @parametrize
     def test_method_list(self, client: Mixedbread) -> None:
         data_source = client.data_sources.list()
-        assert_matches_type(SyncCursor[DataSource], data_source, path=["response"])
+        assert_matches_type(DataSourceListResponse, data_source, path=["response"])
 
     @parametrize
     def test_method_list_with_all_params(self, client: Mixedbread) -> None:
         data_source = client.data_sources.list(
-            limit=1000,
-            cursor="cursor",
-            include_total=True,
+            limit=10,
+            after="eyJjcmVhdGVkX2F0IjoiMjAyNC0xMi0zMVQyMzo1OTo1OS4wMDBaIiwiaWQiOiJhYmMxMjMifQ==",
+            before="eyJjcmVhdGVkX2F0IjoiMjAyNC0xMi0zMVQyMzo1OTo1OS4wMDBaIiwiaWQiOiJhYmMxMjMifQ==",
+            include_total=False,
         )
-        assert_matches_type(SyncCursor[DataSource], data_source, path=["response"])
+        assert_matches_type(DataSourceListResponse, data_source, path=["response"])
 
     @parametrize
     def test_raw_response_list(self, client: Mixedbread) -> None:
@@ -268,7 +269,7 @@ class TestDataSources:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         data_source = response.parse()
-        assert_matches_type(SyncCursor[DataSource], data_source, path=["response"])
+        assert_matches_type(DataSourceListResponse, data_source, path=["response"])
 
     @parametrize
     def test_streaming_response_list(self, client: Mixedbread) -> None:
@@ -277,7 +278,7 @@ class TestDataSources:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             data_source = response.parse()
-            assert_matches_type(SyncCursor[DataSource], data_source, path=["response"])
+            assert_matches_type(DataSourceListResponse, data_source, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -554,16 +555,17 @@ class TestAsyncDataSources:
     @parametrize
     async def test_method_list(self, async_client: AsyncMixedbread) -> None:
         data_source = await async_client.data_sources.list()
-        assert_matches_type(AsyncCursor[DataSource], data_source, path=["response"])
+        assert_matches_type(DataSourceListResponse, data_source, path=["response"])
 
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncMixedbread) -> None:
         data_source = await async_client.data_sources.list(
-            limit=1000,
-            cursor="cursor",
-            include_total=True,
+            limit=10,
+            after="eyJjcmVhdGVkX2F0IjoiMjAyNC0xMi0zMVQyMzo1OTo1OS4wMDBaIiwiaWQiOiJhYmMxMjMifQ==",
+            before="eyJjcmVhdGVkX2F0IjoiMjAyNC0xMi0zMVQyMzo1OTo1OS4wMDBaIiwiaWQiOiJhYmMxMjMifQ==",
+            include_total=False,
         )
-        assert_matches_type(AsyncCursor[DataSource], data_source, path=["response"])
+        assert_matches_type(DataSourceListResponse, data_source, path=["response"])
 
     @parametrize
     async def test_raw_response_list(self, async_client: AsyncMixedbread) -> None:
@@ -572,7 +574,7 @@ class TestAsyncDataSources:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         data_source = await response.parse()
-        assert_matches_type(AsyncCursor[DataSource], data_source, path=["response"])
+        assert_matches_type(DataSourceListResponse, data_source, path=["response"])
 
     @parametrize
     async def test_streaming_response_list(self, async_client: AsyncMixedbread) -> None:
@@ -581,7 +583,7 @@ class TestAsyncDataSources:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             data_source = await response.parse()
-            assert_matches_type(AsyncCursor[DataSource], data_source, path=["response"])
+            assert_matches_type(DataSourceListResponse, data_source, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
