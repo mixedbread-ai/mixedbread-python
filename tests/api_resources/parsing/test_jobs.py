@@ -109,9 +109,11 @@ class TestJobs:
     @parametrize
     def test_method_list_with_all_params(self, client: Mixedbread) -> None:
         job = client.parsing.jobs.list(
-            limit=1000,
-            cursor="cursor",
-            include_total=True,
+            limit=10,
+            after="eyJjcmVhdGVkX2F0IjoiMjAyNC0xMi0zMVQyMzo1OTo1OS4wMDBaIiwiaWQiOiJhYmMxMjMifQ==",
+            before="eyJjcmVhdGVkX2F0IjoiMjAyNC0xMi0zMVQyMzo1OTo1OS4wMDBaIiwiaWQiOiJhYmMxMjMifQ==",
+            include_total=False,
+            statuses=["pending", "in_progress"],
         )
         assert_matches_type(JobListResponse, job, path=["response"])
 
@@ -305,9 +307,11 @@ class TestAsyncJobs:
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncMixedbread) -> None:
         job = await async_client.parsing.jobs.list(
-            limit=1000,
-            cursor="cursor",
-            include_total=True,
+            limit=10,
+            after="eyJjcmVhdGVkX2F0IjoiMjAyNC0xMi0zMVQyMzo1OTo1OS4wMDBaIiwiaWQiOiJhYmMxMjMifQ==",
+            before="eyJjcmVhdGVkX2F0IjoiMjAyNC0xMi0zMVQyMzo1OTo1OS4wMDBaIiwiaWQiOiJhYmMxMjMifQ==",
+            include_total=False,
+            statuses=["pending", "in_progress"],
         )
         assert_matches_type(JobListResponse, job, path=["response"])
 

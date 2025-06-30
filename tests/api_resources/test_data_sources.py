@@ -255,9 +255,10 @@ class TestDataSources:
     @parametrize
     def test_method_list_with_all_params(self, client: Mixedbread) -> None:
         data_source = client.data_sources.list(
-            limit=1000,
-            cursor="cursor",
-            include_total=True,
+            limit=10,
+            after="eyJjcmVhdGVkX2F0IjoiMjAyNC0xMi0zMVQyMzo1OTo1OS4wMDBaIiwiaWQiOiJhYmMxMjMifQ==",
+            before="eyJjcmVhdGVkX2F0IjoiMjAyNC0xMi0zMVQyMzo1OTo1OS4wMDBaIiwiaWQiOiJhYmMxMjMifQ==",
+            include_total=False,
         )
         assert_matches_type(DataSourceListResponse, data_source, path=["response"])
 
@@ -559,9 +560,10 @@ class TestAsyncDataSources:
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncMixedbread) -> None:
         data_source = await async_client.data_sources.list(
-            limit=1000,
-            cursor="cursor",
-            include_total=True,
+            limit=10,
+            after="eyJjcmVhdGVkX2F0IjoiMjAyNC0xMi0zMVQyMzo1OTo1OS4wMDBaIiwiaWQiOiJhYmMxMjMifQ==",
+            before="eyJjcmVhdGVkX2F0IjoiMjAyNC0xMi0zMVQyMzo1OTo1OS4wMDBaIiwiaWQiOiJhYmMxMjMifQ==",
+            include_total=False,
         )
         assert_matches_type(DataSourceListResponse, data_source, path=["response"])
 

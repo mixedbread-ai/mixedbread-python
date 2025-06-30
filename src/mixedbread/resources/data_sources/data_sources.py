@@ -356,7 +356,8 @@ class DataSourcesResource(SyncAPIResource):
         self,
         *,
         limit: int | NotGiven = NOT_GIVEN,
-        cursor: Optional[str] | NotGiven = NOT_GIVEN,
+        after: Optional[str] | NotGiven = NOT_GIVEN,
+        before: Optional[str] | NotGiven = NOT_GIVEN,
         include_total: bool | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -371,11 +372,15 @@ class DataSourcesResource(SyncAPIResource):
         Returns: The list of data sources.
 
         Args:
-          limit: Maximum number of items to return per page
+          limit: Maximum number of items to return per page (1-100)
 
-          cursor: Cursor for pagination (base64 encoded cursor)
+          after: Cursor for forward pagination - get items after this position. Use last_cursor
+              from previous response.
 
-          include_total: Whether to include the total number of items
+          before: Cursor for backward pagination - get items before this position. Use
+              first_cursor from previous response.
+
+          include_total: Whether to include total count in response (expensive operation)
 
           extra_headers: Send extra headers
 
@@ -395,7 +400,8 @@ class DataSourcesResource(SyncAPIResource):
                 query=maybe_transform(
                     {
                         "limit": limit,
-                        "cursor": cursor,
+                        "after": after,
+                        "before": before,
                         "include_total": include_total,
                     },
                     data_source_list_params.DataSourceListParams,
@@ -756,7 +762,8 @@ class AsyncDataSourcesResource(AsyncAPIResource):
         self,
         *,
         limit: int | NotGiven = NOT_GIVEN,
-        cursor: Optional[str] | NotGiven = NOT_GIVEN,
+        after: Optional[str] | NotGiven = NOT_GIVEN,
+        before: Optional[str] | NotGiven = NOT_GIVEN,
         include_total: bool | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -771,11 +778,15 @@ class AsyncDataSourcesResource(AsyncAPIResource):
         Returns: The list of data sources.
 
         Args:
-          limit: Maximum number of items to return per page
+          limit: Maximum number of items to return per page (1-100)
 
-          cursor: Cursor for pagination (base64 encoded cursor)
+          after: Cursor for forward pagination - get items after this position. Use last_cursor
+              from previous response.
 
-          include_total: Whether to include the total number of items
+          before: Cursor for backward pagination - get items before this position. Use
+              first_cursor from previous response.
+
+          include_total: Whether to include total count in response (expensive operation)
 
           extra_headers: Send extra headers
 
@@ -795,7 +806,8 @@ class AsyncDataSourcesResource(AsyncAPIResource):
                 query=await async_maybe_transform(
                     {
                         "limit": limit,
-                        "cursor": cursor,
+                        "after": after,
+                        "before": before,
                         "include_total": include_total,
                     },
                     data_source_list_params.DataSourceListParams,
