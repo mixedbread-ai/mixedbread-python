@@ -68,6 +68,9 @@ class ParsingJob(BaseModel):
     file_id: str
     """The ID of the file to parse"""
 
+    filename: Optional[str] = None
+    """The name of the file"""
+
     status: ParsingJobStatus
     """The status of the job"""
 
