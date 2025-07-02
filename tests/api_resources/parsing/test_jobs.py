@@ -114,6 +114,7 @@ class TestJobs:
             before="eyJjcmVhdGVkX2F0IjoiMjAyNC0xMi0zMVQyMzo1OTo1OS4wMDBaIiwiaWQiOiJhYmMxMjMifQ==",
             include_total=False,
             statuses=["pending", "in_progress"],
+            q="x",
         )
         assert_matches_type(JobListResponse, job, path=["response"])
 
@@ -312,6 +313,7 @@ class TestAsyncJobs:
             before="eyJjcmVhdGVkX2F0IjoiMjAyNC0xMi0zMVQyMzo1OTo1OS4wMDBaIiwiaWQiOiJhYmMxMjMifQ==",
             include_total=False,
             statuses=["pending", "in_progress"],
+            q="x",
         )
         assert_matches_type(JobListResponse, job, path=["response"])
 

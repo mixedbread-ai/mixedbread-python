@@ -31,3 +31,6 @@ class JobListParams(TypedDict, total=False):
 
     statuses: Optional[List[ParsingJobStatus]]
     """Status to filter by"""
+
+    q: Optional[str]
+    """Search query to filter by"""

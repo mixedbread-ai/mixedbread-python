@@ -156,6 +156,7 @@ class JobsResource(SyncAPIResource):
         before: Optional[str] | NotGiven = NOT_GIVEN,
         include_total: bool | NotGiven = NOT_GIVEN,
         statuses: Optional[List[ParsingJobStatus]] | NotGiven = NOT_GIVEN,
+        q: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -184,6 +185,8 @@ class JobsResource(SyncAPIResource):
 
           statuses: Status to filter by
 
+          q: Search query to filter by
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -206,6 +209,7 @@ class JobsResource(SyncAPIResource):
                         "before": before,
                         "include_total": include_total,
                         "statuses": statuses,
+                        "q": q,
                     },
                     job_list_params.JobListParams,
                 ),
@@ -418,6 +422,7 @@ class AsyncJobsResource(AsyncAPIResource):
         before: Optional[str] | NotGiven = NOT_GIVEN,
         include_total: bool | NotGiven = NOT_GIVEN,
         statuses: Optional[List[ParsingJobStatus]] | NotGiven = NOT_GIVEN,
+        q: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -446,6 +451,8 @@ class AsyncJobsResource(AsyncAPIResource):
 
           statuses: Status to filter by
 
+          q: Search query to filter by
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -468,6 +475,7 @@ class AsyncJobsResource(AsyncAPIResource):
                         "before": before,
                         "include_total": include_total,
                         "statuses": statuses,
+                        "q": q,
                     },
                     job_list_params.JobListParams,
                 ),
