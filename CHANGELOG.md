@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.16.0 (2025-07-02)
+
+Full Changelog: [v0.15.0...v0.16.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.15.0...v0.16.0)
+
+### Features
+
+* **api:** api update ([4ede5dc](https://github.com/mixedbread-ai/mixedbread-python/commit/4ede5dc339b9f37dd3a0be5dbf4c7f9ff1331e2e))
+
+
+### Chores
+
+* **ci:** change upload type ([b9599e2](https://github.com/mixedbread-ai/mixedbread-python/commit/b9599e29379e8637e27c97c0c5040aae83bb242c))
+
 ## 0.15.0 (2025-06-30)
 
 Full Changelog: [v0.14.0...v0.15.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.14.0...v0.15.0)
