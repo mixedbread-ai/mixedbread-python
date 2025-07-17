@@ -1,13 +1,119 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import Optional
+from typing import Dict, List, Union, Optional
 from datetime import datetime
-from typing_extensions import Literal
+from typing_extensions import Literal, Annotated, TypeAlias
 
+from ..._utils import PropertyInfo
 from ..._models import BaseModel
 from .vector_store_file_status import VectorStoreFileStatus
 
-__all__ = ["VectorStoreFile"]
+__all__ = [
+    "VectorStoreFile",
+    "Chunk",
+    "ChunkTextInputChunk",
+    "ChunkImageURLInputChunkBase",
+    "ChunkAudioURLInputChunkBase",
+    "ChunkVideoURLInputChunkBase",
+]
+
+
+class ChunkTextInputChunk(BaseModel):
+    chunk_index: int
+    """position of the chunk in a file"""
+
+    mime_type: Optional[str] = None
+    """mime type of the chunk"""
+
+    generated_metadata: Optional[Dict[str, object]] = None
+    """metadata of the chunk"""
+
+    model: Optional[str] = None
+    """model used for this chunk"""
+
+    type: Optional[Literal["text"]] = None
+    """Input type identifier"""
+
+    offset: Optional[int] = None
+    """The offset of the text in the file relative to the start of the file."""
+
+    text: str
+    """Text content to process"""
+
+
+class ChunkImageURLInputChunkBase(BaseModel):
+    chunk_index: int
+    """position of the chunk in a file"""
+
+    mime_type: Optional[str] = None
+    """mime type of the chunk"""
+
+    generated_metadata: Optional[Dict[str, object]] = None
+    """metadata of the chunk"""
+
+    model: Optional[str] = None
+    """model used for this chunk"""
+
+    type: Optional[Literal["image_url"]] = None
+    """Input type identifier"""
+
+    ocr_text: Optional[str] = None
+    """ocr text of the image"""
+
+    summary: Optional[str] = None
+    """summary of the image"""
+
+
+class ChunkAudioURLInputChunkBase(BaseModel):
+    chunk_index: int
+    """position of the chunk in a file"""
+
+    mime_type: Optional[str] = None
+    """mime type of the chunk"""
+
+    generated_metadata: Optional[Dict[str, object]] = None
+    """metadata of the chunk"""
+
+    model: Optional[str] = None
+    """model used for this chunk"""
+
+    type: Optional[Literal["audio_url"]] = None
+    """Input type identifier"""
+
+    transcription: Optional[str] = None
+    """speech recognition (sr) text of the audio"""
+
+    summary: Optional[str] = None
+    """summary of the audio"""
+
+
+class ChunkVideoURLInputChunkBase(BaseModel):
+    chunk_index: int
+    """position of the chunk in a file"""
+
+    mime_type: Optional[str] = None
+    """mime type of the chunk"""
+
+    generated_metadata: Optional[Dict[str, object]] = None
+    """metadata of the chunk"""
+
+    model: Optional[str] = None
+    """model used for this chunk"""
+
+    type: Optional[Literal["video_url"]] = None
+    """Input type identifier"""
+
+    transcription: Optional[str] = None
+    """speech recognition (sr) text of the video"""
+
+    summary: Optional[str] = None
+    """summary of the video"""
+
+
+Chunk: TypeAlias = Annotated[
+    Union[ChunkTextInputChunk, ChunkImageURLInputChunkBase, ChunkAudioURLInputChunkBase, ChunkVideoURLInputChunkBase],
+    PropertyInfo(discriminator="type"),
+]
 
 
 class VectorStoreFile(BaseModel):
@@ -40,3 +146,6 @@ class VectorStoreFile(BaseModel):
 
     object: Optional[Literal["vector_store.file"]] = None
     """Type of the object"""
+
+    chunks: Optional[List[Chunk]] = None
+    """chunks"""
