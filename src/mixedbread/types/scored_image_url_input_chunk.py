@@ -47,11 +47,11 @@ class ScoredImageURLInputChunk(BaseModel):
     type: Optional[Literal["image_url"]] = None
     """Input type identifier"""
 
-    image_url: ImageURL
-    """The image input specification."""
-
     ocr_text: Optional[str] = None
     """ocr text of the image"""
 
     summary: Optional[str] = None
     """summary of the image"""
+
+    image_url: ImageURL
+    """The image input specification."""

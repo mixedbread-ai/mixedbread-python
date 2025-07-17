@@ -44,11 +44,11 @@ class ScoredAudioURLInputChunk(BaseModel):
     type: Optional[Literal["audio_url"]] = None
     """Input type identifier"""
 
-    audio_url: AudioURL
-    """The audio input specification."""
-
     transcription: Optional[str] = None
     """speech recognition (sr) text of the audio"""
 
     summary: Optional[str] = None
     """summary of the audio"""
+
+    audio_url: AudioURL
+    """The audio input specification."""

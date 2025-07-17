@@ -39,5 +39,8 @@ class ScoredTextInputChunk(BaseModel):
     type: Optional[Literal["text"]] = None
     """Input type identifier"""
 
+    offset: Optional[int] = None
+    """The offset of the text in the file relative to the start of the file."""
+
     text: str
     """Text content to process"""
