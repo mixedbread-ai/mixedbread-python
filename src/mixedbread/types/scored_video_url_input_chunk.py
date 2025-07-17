@@ -44,11 +44,11 @@ class ScoredVideoURLInputChunk(BaseModel):
     type: Optional[Literal["video_url"]] = None
     """Input type identifier"""
 
-    video_url: VideoURL
-    """The video input specification."""
-
     transcription: Optional[str] = None
     """speech recognition (sr) text of the video"""
 
     summary: Optional[str] = None
     """summary of the video"""
+
+    video_url: VideoURL
+    """The video input specification."""

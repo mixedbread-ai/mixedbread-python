@@ -51,8 +51,8 @@ class ScoredVectorStoreFile(BaseModel):
     object: Optional[Literal["vector_store.file"]] = None
     """Type of the object"""
 
-    score: float
-    """score of the file"""
-
     chunks: Optional[List[Chunk]] = None
     """chunks"""
+
+    score: float
+    """score of the file"""

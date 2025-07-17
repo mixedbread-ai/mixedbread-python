@@ -88,6 +88,15 @@ class TestFiles:
         assert_matches_type(VectorStoreFile, file, path=["response"])
 
     @parametrize
+    def test_method_retrieve_with_all_params(self, client: Mixedbread) -> None:
+        file = client.vector_stores.files.retrieve(
+            file_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            vector_store_identifier="vector_store_identifier",
+            return_chunks=True,
+        )
+        assert_matches_type(VectorStoreFile, file, path=["response"])
+
+    @parametrize
     def test_raw_response_retrieve(self, client: Mixedbread) -> None:
         response = client.vector_stores.files.with_raw_response.retrieve(
             file_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
@@ -387,6 +396,15 @@ class TestAsyncFiles:
         file = await async_client.vector_stores.files.retrieve(
             file_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             vector_store_identifier="vector_store_identifier",
+        )
+        assert_matches_type(VectorStoreFile, file, path=["response"])
+
+    @parametrize
+    async def test_method_retrieve_with_all_params(self, async_client: AsyncMixedbread) -> None:
+        file = await async_client.vector_stores.files.retrieve(
+            file_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            vector_store_identifier="vector_store_identifier",
+            return_chunks=True,
         )
         assert_matches_type(VectorStoreFile, file, path=["response"])
 

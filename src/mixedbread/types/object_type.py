@@ -17,4 +17,5 @@ ObjectType: TypeAlias = Literal[
     "api_key",
     "data_source",
     "data_source.connector",
+    "vector_store.histogram",
 ]

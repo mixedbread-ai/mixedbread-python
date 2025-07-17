@@ -18,7 +18,7 @@ from ..._response import (
 )
 from ...pagination import SyncCursor, AsyncCursor
 from ..._base_client import AsyncPaginator, make_request_options
-from ...types.vector_stores import file_list_params, file_create_params, file_search_params
+from ...types.vector_stores import file_list_params, file_create_params, file_search_params, file_retrieve_params
 from ...types.vector_stores.vector_store_file import VectorStoreFile
 from ...types.vector_stores.file_delete_response import FileDeleteResponse
 from ...types.vector_stores.file_search_response import FileSearchResponse
@@ -111,6 +111,7 @@ class FilesResource(SyncAPIResource):
         file_id: str,
         *,
         vector_store_identifier: str,
+        return_chunks: bool | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -131,6 +132,8 @@ class FilesResource(SyncAPIResource):
 
           file_id: The ID of the file
 
+          return_chunks: Whether to return the chunks for the file
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -148,7 +151,11 @@ class FilesResource(SyncAPIResource):
         return self._get(
             f"/v1/vector_stores/{vector_store_identifier}/files/{file_id}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform({"return_chunks": return_chunks}, file_retrieve_params.FileRetrieveParams),
             ),
             cast_to=VectorStoreFile,
         )
@@ -434,6 +441,7 @@ class AsyncFilesResource(AsyncAPIResource):
         file_id: str,
         *,
         vector_store_identifier: str,
+        return_chunks: bool | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -454,6 +462,8 @@ class AsyncFilesResource(AsyncAPIResource):
 
           file_id: The ID of the file
 
+          return_chunks: Whether to return the chunks for the file
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -471,7 +481,13 @@ class AsyncFilesResource(AsyncAPIResource):
         return await self._get(
             f"/v1/vector_stores/{vector_store_identifier}/files/{file_id}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {"return_chunks": return_chunks}, file_retrieve_params.FileRetrieveParams
+                ),
             ),
             cast_to=VectorStoreFile,
         )
