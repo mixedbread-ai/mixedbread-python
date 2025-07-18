@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.20.0 (2025-07-18)
+
+Full Changelog: [v0.19.0...v0.20.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.19.0...v0.20.0)
+
+### Features
+
+* clean up environment call outs ([d0c1c5e](https://github.com/mixedbread-ai/mixedbread-python/commit/d0c1c5e3a871ec7f89a4ec1d0d29e4b4ba97f6e8))
+
+
+### Chores
+
+* **internal:** codegen related update ([b14dd64](https://github.com/mixedbread-ai/mixedbread-python/commit/b14dd6477262cb4611eca7d5a67aaad8f3694088))
+
 ## 0.19.0 (2025-07-17)
 
 Full Changelog: [v0.18.0...v0.19.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.18.0...v0.19.0)
