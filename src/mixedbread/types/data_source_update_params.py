@@ -6,7 +6,6 @@ from typing import Union, Optional
 from typing_extensions import Literal, Required, TypeAlias, TypedDict
 
 from .oauth2_params import Oauth2Params
-from .data_source_type import DataSourceType
 
 __all__ = [
     "DataSourceUpdateParams",
@@ -18,7 +17,7 @@ __all__ = [
 
 
 class NotionDataSource(TypedDict, total=False):
-    type: DataSourceType
+    type: Literal["notion"]
     """The type of data source to create"""
 
     name: Required[str]
@@ -45,7 +44,7 @@ NotionDataSourceAuthParams: TypeAlias = Union[Oauth2Params, NotionDataSourceAuth
 
 
 class LinearDataSource(TypedDict, total=False):
-    type: DataSourceType
+    type: Literal["linear"]
     """The type of data source to create"""
 
     name: Required[str]

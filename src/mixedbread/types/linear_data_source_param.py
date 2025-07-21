@@ -3,16 +3,15 @@
 from __future__ import annotations
 
 from typing import Optional
-from typing_extensions import Required, TypedDict
+from typing_extensions import Literal, Required, TypedDict
 
 from .oauth2_params import Oauth2Params
-from .data_source_type import DataSourceType
 
 __all__ = ["LinearDataSourceParam"]
 
 
 class LinearDataSourceParam(TypedDict, total=False):
-    type: DataSourceType
+    type: Literal["linear"]
     """The type of data source to create"""
 
     name: Required[str]
