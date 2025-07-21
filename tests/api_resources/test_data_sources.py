@@ -72,7 +72,7 @@ class TestDataSources:
     @parametrize
     def test_method_create_with_all_params_overload_2(self, client: Mixedbread) -> None:
         data_source = client.data_sources.create(
-            type="notion",
+            type="linear",
             name="name",
             metadata={},
             auth_params={"type": "oauth2"},
@@ -206,7 +206,7 @@ class TestDataSources:
     def test_method_update_with_all_params_overload_2(self, client: Mixedbread) -> None:
         data_source = client.data_sources.update(
             data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            type="notion",
+            type="linear",
             name="name",
             metadata={},
             auth_params={"type": "oauth2"},
@@ -377,7 +377,7 @@ class TestAsyncDataSources:
     @parametrize
     async def test_method_create_with_all_params_overload_2(self, async_client: AsyncMixedbread) -> None:
         data_source = await async_client.data_sources.create(
-            type="notion",
+            type="linear",
             name="name",
             metadata={},
             auth_params={"type": "oauth2"},
@@ -511,7 +511,7 @@ class TestAsyncDataSources:
     async def test_method_update_with_all_params_overload_2(self, async_client: AsyncMixedbread) -> None:
         data_source = await async_client.data_sources.update(
             data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            type="notion",
+            type="linear",
             name="name",
             metadata={},
             auth_params={"type": "oauth2"},

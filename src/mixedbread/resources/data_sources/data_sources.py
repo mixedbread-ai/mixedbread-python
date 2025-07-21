@@ -3,17 +3,11 @@
 from __future__ import annotations
 
 from typing import Optional
-from typing_extensions import overload
+from typing_extensions import Literal, overload
 
 import httpx
 
-from ...types import (
-    Oauth2Params,
-    DataSourceType,
-    data_source_list_params,
-    data_source_create_params,
-    data_source_update_params,
-)
+from ...types import Oauth2Params, data_source_list_params, data_source_create_params, data_source_update_params
 from ..._types import NOT_GIVEN, Body, Query, Headers, NotGiven
 from ..._utils import required_args, maybe_transform, async_maybe_transform
 from ..._compat import cached_property
@@ -36,7 +30,6 @@ from ...pagination import SyncCursor, AsyncCursor
 from ..._base_client import AsyncPaginator, make_request_options
 from ...types.data_source import DataSource
 from ...types.oauth2_params import Oauth2Params
-from ...types.data_source_type import DataSourceType
 from ...types.data_source_delete_response import DataSourceDeleteResponse
 
 __all__ = ["DataSourcesResource", "AsyncDataSourcesResource"]
@@ -70,7 +63,7 @@ class DataSourcesResource(SyncAPIResource):
     def create(
         self,
         *,
-        type: DataSourceType | NotGiven = NOT_GIVEN,
+        type: Literal["notion"] | NotGiven = NOT_GIVEN,
         name: str,
         metadata: object | NotGiven = NOT_GIVEN,
         auth_params: Optional[data_source_create_params.NotionDataSourceAuthParams] | NotGiven = NOT_GIVEN,
@@ -112,7 +105,7 @@ class DataSourcesResource(SyncAPIResource):
     def create(
         self,
         *,
-        type: DataSourceType | NotGiven = NOT_GIVEN,
+        type: Literal["linear"] | NotGiven = NOT_GIVEN,
         name: str,
         metadata: object | NotGiven = NOT_GIVEN,
         auth_params: Optional[Oauth2Params] | NotGiven = NOT_GIVEN,
@@ -153,7 +146,7 @@ class DataSourcesResource(SyncAPIResource):
     def create(
         self,
         *,
-        type: DataSourceType | NotGiven = NOT_GIVEN,
+        type: Literal["notion"] | Literal["linear"] | NotGiven = NOT_GIVEN,
         name: str,
         metadata: object | NotGiven = NOT_GIVEN,
         auth_params: Optional[data_source_create_params.NotionDataSourceAuthParams]
@@ -227,7 +220,7 @@ class DataSourcesResource(SyncAPIResource):
         self,
         data_source_id: str,
         *,
-        type: DataSourceType | NotGiven = NOT_GIVEN,
+        type: Literal["notion"] | NotGiven = NOT_GIVEN,
         name: str,
         metadata: object | NotGiven = NOT_GIVEN,
         auth_params: Optional[data_source_update_params.NotionDataSourceAuthParams] | NotGiven = NOT_GIVEN,
@@ -274,7 +267,7 @@ class DataSourcesResource(SyncAPIResource):
         self,
         data_source_id: str,
         *,
-        type: DataSourceType | NotGiven = NOT_GIVEN,
+        type: Literal["linear"] | NotGiven = NOT_GIVEN,
         name: str,
         metadata: object | NotGiven = NOT_GIVEN,
         auth_params: Optional[Oauth2Params] | NotGiven = NOT_GIVEN,
@@ -320,7 +313,7 @@ class DataSourcesResource(SyncAPIResource):
         self,
         data_source_id: str,
         *,
-        type: DataSourceType | NotGiven = NOT_GIVEN,
+        type: Literal["notion"] | Literal["linear"] | NotGiven = NOT_GIVEN,
         name: str,
         metadata: object | NotGiven = NOT_GIVEN,
         auth_params: Optional[data_source_update_params.NotionDataSourceAuthParams]
@@ -477,7 +470,7 @@ class AsyncDataSourcesResource(AsyncAPIResource):
     async def create(
         self,
         *,
-        type: DataSourceType | NotGiven = NOT_GIVEN,
+        type: Literal["notion"] | NotGiven = NOT_GIVEN,
         name: str,
         metadata: object | NotGiven = NOT_GIVEN,
         auth_params: Optional[data_source_create_params.NotionDataSourceAuthParams] | NotGiven = NOT_GIVEN,
@@ -519,7 +512,7 @@ class AsyncDataSourcesResource(AsyncAPIResource):
     async def create(
         self,
         *,
-        type: DataSourceType | NotGiven = NOT_GIVEN,
+        type: Literal["linear"] | NotGiven = NOT_GIVEN,
         name: str,
         metadata: object | NotGiven = NOT_GIVEN,
         auth_params: Optional[Oauth2Params] | NotGiven = NOT_GIVEN,
@@ -560,7 +553,7 @@ class AsyncDataSourcesResource(AsyncAPIResource):
     async def create(
         self,
         *,
-        type: DataSourceType | NotGiven = NOT_GIVEN,
+        type: Literal["notion"] | Literal["linear"] | NotGiven = NOT_GIVEN,
         name: str,
         metadata: object | NotGiven = NOT_GIVEN,
         auth_params: Optional[data_source_create_params.NotionDataSourceAuthParams]
@@ -634,7 +627,7 @@ class AsyncDataSourcesResource(AsyncAPIResource):
         self,
         data_source_id: str,
         *,
-        type: DataSourceType | NotGiven = NOT_GIVEN,
+        type: Literal["notion"] | NotGiven = NOT_GIVEN,
         name: str,
         metadata: object | NotGiven = NOT_GIVEN,
         auth_params: Optional[data_source_update_params.NotionDataSourceAuthParams] | NotGiven = NOT_GIVEN,
@@ -681,7 +674,7 @@ class AsyncDataSourcesResource(AsyncAPIResource):
         self,
         data_source_id: str,
         *,
-        type: DataSourceType | NotGiven = NOT_GIVEN,
+        type: Literal["linear"] | NotGiven = NOT_GIVEN,
         name: str,
         metadata: object | NotGiven = NOT_GIVEN,
         auth_params: Optional[Oauth2Params] | NotGiven = NOT_GIVEN,
@@ -727,7 +720,7 @@ class AsyncDataSourcesResource(AsyncAPIResource):
         self,
         data_source_id: str,
         *,
-        type: DataSourceType | NotGiven = NOT_GIVEN,
+        type: Literal["notion"] | Literal["linear"] | NotGiven = NOT_GIVEN,
         name: str,
         metadata: object | NotGiven = NOT_GIVEN,
         auth_params: Optional[data_source_update_params.NotionDataSourceAuthParams]

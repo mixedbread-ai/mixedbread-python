@@ -6,7 +6,6 @@ from typing import Union, Optional
 from typing_extensions import Literal, Required, TypeAlias, TypedDict
 
 from .oauth2_params import Oauth2Params
-from .data_source_type import DataSourceType
 
 __all__ = ["NotionDataSourceParam", "AuthParams", "AuthParamsAPIKeyCreateOrUpdateParams"]
 
@@ -22,7 +21,7 @@ AuthParams: TypeAlias = Union[Oauth2Params, AuthParamsAPIKeyCreateOrUpdateParams
 
 
 class NotionDataSourceParam(TypedDict, total=False):
-    type: DataSourceType
+    type: Literal["notion"]
     """The type of data source to create"""
 
     name: Required[str]
