@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from . import shared
+from .. import _compat
 from .shared import Usage as Usage, SearchFilter as SearchFilter, SearchFilterCondition as SearchFilterCondition
 from .api_key import APIKey as APIKey
 from .embedding import Embedding as Embedding
@@ -56,3 +58,12 @@ from .vector_store_chunk_search_options_param import (
 from .vector_store_question_answering_response import (
     VectorStoreQuestionAnsweringResponse as VectorStoreQuestionAnsweringResponse,
 )
+
+# Rebuild cyclical models only after all modules are imported.
+# This ensures that, when building the deferred (due to cyclical references) model schema,
+# Pydantic can resolve the necessary references.
+# See: https://github.com/pydantic/pydantic/issues/11250 for more context.
+if _compat.PYDANTIC_V2:
+    shared.search_filter.SearchFilter.model_rebuild(_parent_namespace_depth=0)
+else:
+    shared.search_filter.SearchFilter.update_forward_refs()  # type: ignore
