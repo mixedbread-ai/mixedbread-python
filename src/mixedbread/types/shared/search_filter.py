@@ -36,9 +36,3 @@ class SearchFilter(BaseModel):
 
     none: Optional[List[NoneType]] = None
     """List of conditions or filters to be NOTed"""
-
-
-if PYDANTIC_V2:
-    SearchFilter.model_rebuild()
-else:
-    SearchFilter.update_forward_refs()  # type: ignore
