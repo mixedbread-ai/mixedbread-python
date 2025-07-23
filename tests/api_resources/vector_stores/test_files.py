@@ -300,6 +300,7 @@ class TestFiles:
                 "return_metadata": True,
                 "return_chunks": True,
                 "chunks_per_file": 0,
+                "apply_search_rules": True,
             },
         )
         assert_matches_type(FileSearchResponse, file, path=["response"])
@@ -612,6 +613,7 @@ class TestAsyncFiles:
                 "return_metadata": True,
                 "return_chunks": True,
                 "chunks_per_file": 0,
+                "apply_search_rules": True,
             },
         )
         assert_matches_type(FileSearchResponse, file, path=["response"])

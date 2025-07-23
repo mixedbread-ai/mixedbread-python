@@ -290,6 +290,7 @@ class TestVectorStores:
                 "rewrite_query": True,
                 "rerank": True,
                 "return_metadata": True,
+                "apply_search_rules": True,
             },
             stream=True,
             qa_options={
@@ -377,6 +378,7 @@ class TestVectorStores:
                 "rewrite_query": True,
                 "rerank": True,
                 "return_metadata": True,
+                "apply_search_rules": True,
             },
         )
         assert_matches_type(VectorStoreSearchResponse, vector_store, path=["response"])
@@ -678,6 +680,7 @@ class TestAsyncVectorStores:
                 "rewrite_query": True,
                 "rerank": True,
                 "return_metadata": True,
+                "apply_search_rules": True,
             },
             stream=True,
             qa_options={
@@ -765,6 +768,7 @@ class TestAsyncVectorStores:
                 "rewrite_query": True,
                 "rerank": True,
                 "return_metadata": True,
+                "apply_search_rules": True,
             },
         )
         assert_matches_type(VectorStoreSearchResponse, vector_store, path=["response"])

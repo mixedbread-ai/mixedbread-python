@@ -59,5 +59,8 @@ class SearchOptions(TypedDict, total=False):
     chunks_per_file: int
     """Number of chunks to return for each file"""
 
+    apply_search_rules: bool
+    """Whether to apply search rules"""
+
 
 from ..shared_params.search_filter import SearchFilter
