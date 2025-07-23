@@ -24,3 +24,6 @@ class VectorStoreChunkSearchOptionsParam(TypedDict, total=False):
 
     return_metadata: bool
     """Whether to return file metadata"""
+
+    apply_search_rules: bool
+    """Whether to apply search rules"""
