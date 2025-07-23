@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.20.1 (2025-07-23)
+
+Full Changelog: [v0.20.0...v0.20.1](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.20.0...v0.20.1)
+
+### Bug Fixes
+
+* **parsing:** parse extra field types ([e496249](https://github.com/mixedbread-ai/mixedbread-python/commit/e4962497a2c08179d966708cc94aebe159888ed6))
+
 ## 0.20.0 (2025-07-22)
 
 Full Changelog: [v0.19.0...v0.20.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.19.0...v0.20.0)
