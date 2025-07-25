@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.21.1 (2025-07-25)
+
+Full Changelog: [v0.21.0...v0.21.1](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.21.0...v0.21.1)
+
+### Chores
+
+* **project:** add settings file for vscode ([bd31e87](https://github.com/mixedbread-ai/mixedbread-python/commit/bd31e87164a5da07bd649a22feb318d5ef64e0fe))
+
 ## 0.21.0 (2025-07-23)
 
 Full Changelog: [v0.20.1...v0.21.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.20.1...v0.21.0)
