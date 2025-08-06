@@ -247,9 +247,42 @@ class TestVectorStores:
             vector_store_ids=["string"],
             top_k=1,
             filters={
-                "all": [],
-                "any": [],
-                "none": [],
+                "all": [
+                    {
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
+                    },
+                    {
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
+                    },
+                ],
+                "any": [
+                    {
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
+                    },
+                    {
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
+                    },
+                ],
+                "none": [
+                    {
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
+                    },
+                    {
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
+                    },
+                ],
             },
             file_ids=["123e4567-e89b-12d3-a456-426614174000", "123e4567-e89b-12d3-a456-426614174001"],
             search_options={
@@ -302,9 +335,42 @@ class TestVectorStores:
             vector_store_ids=["string"],
             top_k=1,
             filters={
-                "all": [],
-                "any": [],
-                "none": [],
+                "all": [
+                    {
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
+                    },
+                    {
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
+                    },
+                ],
+                "any": [
+                    {
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
+                    },
+                    {
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
+                    },
+                ],
+                "none": [
+                    {
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
+                    },
+                    {
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
+                    },
+                ],
             },
             file_ids=["123e4567-e89b-12d3-a456-426614174000", "123e4567-e89b-12d3-a456-426614174001"],
             search_options={
@@ -571,9 +637,42 @@ class TestAsyncVectorStores:
             vector_store_ids=["string"],
             top_k=1,
             filters={
-                "all": [],
-                "any": [],
-                "none": [],
+                "all": [
+                    {
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
+                    },
+                    {
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
+                    },
+                ],
+                "any": [
+                    {
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
+                    },
+                    {
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
+                    },
+                ],
+                "none": [
+                    {
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
+                    },
+                    {
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
+                    },
+                ],
             },
             file_ids=["123e4567-e89b-12d3-a456-426614174000", "123e4567-e89b-12d3-a456-426614174001"],
             search_options={
@@ -626,9 +725,42 @@ class TestAsyncVectorStores:
             vector_store_ids=["string"],
             top_k=1,
             filters={
-                "all": [],
-                "any": [],
-                "none": [],
+                "all": [
+                    {
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
+                    },
+                    {
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
+                    },
+                ],
+                "any": [
+                    {
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
+                    },
+                    {
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
+                    },
+                ],
+                "none": [
+                    {
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
+                    },
+                    {
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
+                    },
+                ],
             },
             file_ids=["123e4567-e89b-12d3-a456-426614174000", "123e4567-e89b-12d3-a456-426614174001"],
             search_options={
