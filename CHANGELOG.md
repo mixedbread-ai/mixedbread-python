@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.22.0 (2025-08-06)
+
+Full Changelog: [v0.21.0...v0.22.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.21.0...v0.22.0)
+
+### Features
+
+* **api:** api update ([2c7f796](https://github.com/mixedbread-ai/mixedbread-python/commit/2c7f796de4143fd921495633b9726d81332aa57d))
+* **client:** support file upload requests ([42d18d6](https://github.com/mixedbread-ai/mixedbread-python/commit/42d18d6cd2e38cd4555dd6cc91a424951c8d8b48))
+
+
+### Chores
+
+* **internal:** fix ruff target version ([c1d947c](https://github.com/mixedbread-ai/mixedbread-python/commit/c1d947c8b2fd3862cf8cf281239ebf7b69adddab))
+* **internal:** update examples ([b57870e](https://github.com/mixedbread-ai/mixedbread-python/commit/b57870e1d3017a09d0f91dc4feed6e447b3f459d))
+* **project:** add settings file for vscode ([bd31e87](https://github.com/mixedbread-ai/mixedbread-python/commit/bd31e87164a5da07bd649a22feb318d5ef64e0fe))
+
 ## 0.21.0 (2025-07-23)
 
 Full Changelog: [v0.20.1...v0.21.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.20.1...v0.21.0)
