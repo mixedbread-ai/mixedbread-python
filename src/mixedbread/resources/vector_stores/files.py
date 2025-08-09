@@ -171,7 +171,6 @@ class FilesResource(SyncAPIResource):
         before: Optional[str] | NotGiven = NOT_GIVEN,
         include_total: bool | NotGiven = NOT_GIVEN,
         statuses: Optional[List[VectorStoreFileStatus]] | NotGiven = NOT_GIVEN,
-        metadata_filter: Optional[file_list_params.MetadataFilter] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -202,8 +201,6 @@ class FilesResource(SyncAPIResource):
 
           statuses: Status to filter by
 
-          metadata_filter: Metadata filter to apply to the query
-
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -231,7 +228,6 @@ class FilesResource(SyncAPIResource):
                         "before": before,
                         "include_total": include_total,
                         "statuses": statuses,
-                        "metadata_filter": metadata_filter,
                     },
                     file_list_params.FileListParams,
                 ),
@@ -613,7 +609,6 @@ class AsyncFilesResource(AsyncAPIResource):
         before: Optional[str] | NotGiven = NOT_GIVEN,
         include_total: bool | NotGiven = NOT_GIVEN,
         statuses: Optional[List[VectorStoreFileStatus]] | NotGiven = NOT_GIVEN,
-        metadata_filter: Optional[file_list_params.MetadataFilter] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -644,8 +639,6 @@ class AsyncFilesResource(AsyncAPIResource):
 
           statuses: Status to filter by
 
-          metadata_filter: Metadata filter to apply to the query
-
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -673,7 +666,6 @@ class AsyncFilesResource(AsyncAPIResource):
                         "before": before,
                         "include_total": include_total,
                         "statuses": statuses,
-                        "metadata_filter": metadata_filter,
                     },
                     file_list_params.FileListParams,
                 ),
