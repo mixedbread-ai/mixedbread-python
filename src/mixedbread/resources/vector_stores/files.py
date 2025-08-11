@@ -16,10 +16,10 @@ from ..._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ...pagination import SyncCursor, AsyncCursor
-from ..._base_client import AsyncPaginator, make_request_options
+from ..._base_client import make_request_options
 from ...types.vector_stores import file_list_params, file_create_params, file_search_params, file_retrieve_params
 from ...types.vector_stores.vector_store_file import VectorStoreFile
+from ...types.vector_stores.file_list_response import FileListResponse
 from ...types.vector_stores.file_delete_response import FileDeleteResponse
 from ...types.vector_stores.file_search_response import FileSearchResponse
 from ...types.vector_stores.vector_store_file_status import VectorStoreFileStatus
@@ -169,18 +169,19 @@ class FilesResource(SyncAPIResource):
         before: Optional[str] | NotGiven = NOT_GIVEN,
         include_total: bool | NotGiven = NOT_GIVEN,
         statuses: Optional[List[VectorStoreFileStatus]] | NotGiven = NOT_GIVEN,
+        metadata_filter: Optional[file_list_params.MetadataFilter] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> SyncCursor[VectorStoreFile]:
+    ) -> FileListResponse:
         """
-        List files indexed in a vector store with pagination.
+        List files indexed in a vector store with pagination and metadata filter.
 
         Args: vector_store_identifier: The ID or name of the vector store pagination:
-        Pagination parameters
+        Pagination parameters and metadata filter
 
         Returns: VectorStoreFileListResponse: Paginated list of vector store files
 
@@ -199,6 +200,8 @@ class FilesResource(SyncAPIResource):
 
           statuses: Status to filter by
 
+          metadata_filter: Metadata filter to apply to the query
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -211,26 +214,23 @@ class FilesResource(SyncAPIResource):
             raise ValueError(
                 f"Expected a non-empty value for `vector_store_identifier` but received {vector_store_identifier!r}"
             )
-        return self._get_api_list(
-            f"/v1/vector_stores/{vector_store_identifier}/files",
-            page=SyncCursor[VectorStoreFile],
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "limit": limit,
-                        "after": after,
-                        "before": before,
-                        "include_total": include_total,
-                        "statuses": statuses,
-                    },
-                    file_list_params.FileListParams,
-                ),
+        return self._post(
+            f"/v1/vector_stores/{vector_store_identifier}/files/list",
+            body=maybe_transform(
+                {
+                    "limit": limit,
+                    "after": after,
+                    "before": before,
+                    "include_total": include_total,
+                    "statuses": statuses,
+                    "metadata_filter": metadata_filter,
+                },
+                file_list_params.FileListParams,
             ),
-            model=VectorStoreFile,
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=FileListResponse,
         )
 
     def delete(
@@ -492,7 +492,7 @@ class AsyncFilesResource(AsyncAPIResource):
             cast_to=VectorStoreFile,
         )
 
-    def list(
+    async def list(
         self,
         vector_store_identifier: str,
         *,
@@ -501,18 +501,19 @@ class AsyncFilesResource(AsyncAPIResource):
         before: Optional[str] | NotGiven = NOT_GIVEN,
         include_total: bool | NotGiven = NOT_GIVEN,
         statuses: Optional[List[VectorStoreFileStatus]] | NotGiven = NOT_GIVEN,
+        metadata_filter: Optional[file_list_params.MetadataFilter] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> AsyncPaginator[VectorStoreFile, AsyncCursor[VectorStoreFile]]:
+    ) -> FileListResponse:
         """
-        List files indexed in a vector store with pagination.
+        List files indexed in a vector store with pagination and metadata filter.
 
         Args: vector_store_identifier: The ID or name of the vector store pagination:
-        Pagination parameters
+        Pagination parameters and metadata filter
 
         Returns: VectorStoreFileListResponse: Paginated list of vector store files
 
@@ -531,6 +532,8 @@ class AsyncFilesResource(AsyncAPIResource):
 
           statuses: Status to filter by
 
+          metadata_filter: Metadata filter to apply to the query
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -543,26 +546,23 @@ class AsyncFilesResource(AsyncAPIResource):
             raise ValueError(
                 f"Expected a non-empty value for `vector_store_identifier` but received {vector_store_identifier!r}"
             )
-        return self._get_api_list(
-            f"/v1/vector_stores/{vector_store_identifier}/files",
-            page=AsyncCursor[VectorStoreFile],
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "limit": limit,
-                        "after": after,
-                        "before": before,
-                        "include_total": include_total,
-                        "statuses": statuses,
-                    },
-                    file_list_params.FileListParams,
-                ),
+        return await self._post(
+            f"/v1/vector_stores/{vector_store_identifier}/files/list",
+            body=await async_maybe_transform(
+                {
+                    "limit": limit,
+                    "after": after,
+                    "before": before,
+                    "include_total": include_total,
+                    "statuses": statuses,
+                    "metadata_filter": metadata_filter,
+                },
+                file_list_params.FileListParams,
             ),
-            model=VectorStoreFile,
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=FileListResponse,
         )
 
     async def delete(
