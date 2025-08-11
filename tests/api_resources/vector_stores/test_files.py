@@ -11,7 +11,6 @@ from mixedbread import Mixedbread, AsyncMixedbread
 from tests.utils import assert_matches_type
 from mixedbread.types.vector_stores import (
     VectorStoreFile,
-    FileListResponse,
     FileDeleteResponse,
     FileSearchResponse,
 )
@@ -136,63 +135,6 @@ class TestFiles:
             client.vector_stores.files.with_raw_response.retrieve(
                 file_id="",
                 vector_store_identifier="vector_store_identifier",
-            )
-
-    @parametrize
-    def test_method_list(self, client: Mixedbread) -> None:
-        file = client.vector_stores.files.list(
-            vector_store_identifier="vector_store_identifier",
-        )
-        assert_matches_type(FileListResponse, file, path=["response"])
-
-    @parametrize
-    def test_method_list_with_all_params(self, client: Mixedbread) -> None:
-        file = client.vector_stores.files.list(
-            vector_store_identifier="vector_store_identifier",
-            limit=10,
-            after="eyJjcmVhdGVkX2F0IjoiMjAyNC0xMi0zMVQyMzo1OTo1OS4wMDBaIiwiaWQiOiJhYmMxMjMifQ==",
-            before="eyJjcmVhdGVkX2F0IjoiMjAyNC0xMi0zMVQyMzo1OTo1OS4wMDBaIiwiaWQiOiJhYmMxMjMifQ==",
-            include_total=False,
-            statuses=["pending"],
-            metadata_filter={
-                "all": [],
-                "any": [],
-                "none": [],
-            },
-        )
-        assert_matches_type(FileListResponse, file, path=["response"])
-
-    @parametrize
-    def test_raw_response_list(self, client: Mixedbread) -> None:
-        response = client.vector_stores.files.with_raw_response.list(
-            vector_store_identifier="vector_store_identifier",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        file = response.parse()
-        assert_matches_type(FileListResponse, file, path=["response"])
-
-    @parametrize
-    def test_streaming_response_list(self, client: Mixedbread) -> None:
-        with client.vector_stores.files.with_streaming_response.list(
-            vector_store_identifier="vector_store_identifier",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            file = response.parse()
-            assert_matches_type(FileListResponse, file, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @parametrize
-    def test_path_params_list(self, client: Mixedbread) -> None:
-        with pytest.raises(
-            ValueError, match=r"Expected a non-empty value for `vector_store_identifier` but received ''"
-        ):
-            client.vector_stores.files.with_raw_response.list(
-                vector_store_identifier="",
             )
 
     @parametrize
@@ -421,63 +363,6 @@ class TestAsyncFiles:
             await async_client.vector_stores.files.with_raw_response.retrieve(
                 file_id="",
                 vector_store_identifier="vector_store_identifier",
-            )
-
-    @parametrize
-    async def test_method_list(self, async_client: AsyncMixedbread) -> None:
-        file = await async_client.vector_stores.files.list(
-            vector_store_identifier="vector_store_identifier",
-        )
-        assert_matches_type(FileListResponse, file, path=["response"])
-
-    @parametrize
-    async def test_method_list_with_all_params(self, async_client: AsyncMixedbread) -> None:
-        file = await async_client.vector_stores.files.list(
-            vector_store_identifier="vector_store_identifier",
-            limit=10,
-            after="eyJjcmVhdGVkX2F0IjoiMjAyNC0xMi0zMVQyMzo1OTo1OS4wMDBaIiwiaWQiOiJhYmMxMjMifQ==",
-            before="eyJjcmVhdGVkX2F0IjoiMjAyNC0xMi0zMVQyMzo1OTo1OS4wMDBaIiwiaWQiOiJhYmMxMjMifQ==",
-            include_total=False,
-            statuses=["pending"],
-            metadata_filter={
-                "all": [],
-                "any": [],
-                "none": [],
-            },
-        )
-        assert_matches_type(FileListResponse, file, path=["response"])
-
-    @parametrize
-    async def test_raw_response_list(self, async_client: AsyncMixedbread) -> None:
-        response = await async_client.vector_stores.files.with_raw_response.list(
-            vector_store_identifier="vector_store_identifier",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        file = await response.parse()
-        assert_matches_type(FileListResponse, file, path=["response"])
-
-    @parametrize
-    async def test_streaming_response_list(self, async_client: AsyncMixedbread) -> None:
-        async with async_client.vector_stores.files.with_streaming_response.list(
-            vector_store_identifier="vector_store_identifier",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            file = await response.parse()
-            assert_matches_type(FileListResponse, file, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @parametrize
-    async def test_path_params_list(self, async_client: AsyncMixedbread) -> None:
-        with pytest.raises(
-            ValueError, match=r"Expected a non-empty value for `vector_store_identifier` but received ''"
-        ):
-            await async_client.vector_stores.files.with_raw_response.list(
-                vector_store_identifier="",
             )
 
     @parametrize

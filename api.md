@@ -63,7 +63,6 @@ from mixedbread.types.vector_stores import (
     ScoredVectorStoreFile,
     VectorStoreFileStatus,
     VectorStoreFile,
-    FileListResponse,
     FileDeleteResponse,
     FileSearchResponse,
 )
@@ -73,7 +72,6 @@ Methods:
 
 - <code title="post /v1/vector_stores/{vector_store_identifier}/files">client.vector_stores.files.<a href="./src/mixedbread/resources/vector_stores/files.py">create</a>(vector_store_identifier, \*\*<a href="src/mixedbread/types/vector_stores/file_create_params.py">params</a>) -> <a href="./src/mixedbread/types/vector_stores/vector_store_file.py">VectorStoreFile</a></code>
 - <code title="get /v1/vector_stores/{vector_store_identifier}/files/{file_id}">client.vector_stores.files.<a href="./src/mixedbread/resources/vector_stores/files.py">retrieve</a>(file_id, \*, vector_store_identifier, \*\*<a href="src/mixedbread/types/vector_stores/file_retrieve_params.py">params</a>) -> <a href="./src/mixedbread/types/vector_stores/vector_store_file.py">VectorStoreFile</a></code>
-- <code title="post /v1/vector_stores/{vector_store_identifier}/files/list">client.vector_stores.files.<a href="./src/mixedbread/resources/vector_stores/files.py">list</a>(vector_store_identifier, \*\*<a href="src/mixedbread/types/vector_stores/file_list_params.py">params</a>) -> <a href="./src/mixedbread/types/vector_stores/file_list_response.py">FileListResponse</a></code>
 - <code title="delete /v1/vector_stores/{vector_store_identifier}/files/{file_id}">client.vector_stores.files.<a href="./src/mixedbread/resources/vector_stores/files.py">delete</a>(file_id, \*, vector_store_identifier) -> <a href="./src/mixedbread/types/vector_stores/file_delete_response.py">FileDeleteResponse</a></code>
 - <code title="post /v1/vector_stores/files/search">client.vector_stores.files.<a href="./src/mixedbread/resources/vector_stores/files.py">search</a>(\*\*<a href="src/mixedbread/types/vector_stores/file_search_params.py">params</a>) -> <a href="./src/mixedbread/types/vector_stores/file_search_response.py">FileSearchResponse</a></code>
 
