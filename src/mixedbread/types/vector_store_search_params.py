@@ -8,7 +8,19 @@ from typing_extensions import Required, TypeAlias, TypedDict
 from .shared_params.search_filter_condition import SearchFilterCondition
 from .vector_store_chunk_search_options_param import VectorStoreChunkSearchOptionsParam
 
-__all__ = ["VectorStoreSearchParams", "Filters", "FiltersUnionMember2"]
+__all__ = [
+    "VectorStoreSearchParams",
+    "Filters",
+    "FiltersMxbaiOmniCoreVectorStoreModelsSearchFilter1",
+    "FiltersMxbaiOmniCoreVectorStoreModelsSearchFilter1All",
+    "FiltersMxbaiOmniCoreVectorStoreModelsSearchFilter1Any",
+    "FiltersMxbaiOmniCoreVectorStoreModelsSearchFilter1None",
+    "FiltersUnionMember2",
+    "FiltersUnionMember2MxbaiOmniCoreVectorStoreModelsSearchFilter1",
+    "FiltersUnionMember2MxbaiOmniCoreVectorStoreModelsSearchFilter1All",
+    "FiltersUnionMember2MxbaiOmniCoreVectorStoreModelsSearchFilter1Any",
+    "FiltersUnionMember2MxbaiOmniCoreVectorStoreModelsSearchFilter1None",
+]
 
 
 class VectorStoreSearchParams(TypedDict, total=False):
@@ -33,8 +45,46 @@ class VectorStoreSearchParams(TypedDict, total=False):
     """Search configuration options"""
 
 
-FiltersUnionMember2: TypeAlias = Union["SearchFilter", SearchFilterCondition]
+FiltersMxbaiOmniCoreVectorStoreModelsSearchFilter1All: TypeAlias = Union[SearchFilterCondition, object]
 
-Filters: TypeAlias = Union["SearchFilter", SearchFilterCondition, Iterable[FiltersUnionMember2]]
+FiltersMxbaiOmniCoreVectorStoreModelsSearchFilter1Any: TypeAlias = Union[SearchFilterCondition, object]
 
-from .shared_params.search_filter import SearchFilter
+FiltersMxbaiOmniCoreVectorStoreModelsSearchFilter1None: TypeAlias = Union[SearchFilterCondition, object]
+
+
+class FiltersMxbaiOmniCoreVectorStoreModelsSearchFilter1(TypedDict, total=False):
+    all: Optional[Iterable[FiltersMxbaiOmniCoreVectorStoreModelsSearchFilter1All]]
+    """List of conditions or filters to be ANDed together"""
+
+    any: Optional[Iterable[FiltersMxbaiOmniCoreVectorStoreModelsSearchFilter1Any]]
+    """List of conditions or filters to be ORed together"""
+
+    none: Optional[Iterable[FiltersMxbaiOmniCoreVectorStoreModelsSearchFilter1None]]
+    """List of conditions or filters to be NOTed"""
+
+
+FiltersUnionMember2MxbaiOmniCoreVectorStoreModelsSearchFilter1All: TypeAlias = Union[SearchFilterCondition, object]
+
+FiltersUnionMember2MxbaiOmniCoreVectorStoreModelsSearchFilter1Any: TypeAlias = Union[SearchFilterCondition, object]
+
+FiltersUnionMember2MxbaiOmniCoreVectorStoreModelsSearchFilter1None: TypeAlias = Union[SearchFilterCondition, object]
+
+
+class FiltersUnionMember2MxbaiOmniCoreVectorStoreModelsSearchFilter1(TypedDict, total=False):
+    all: Optional[Iterable[FiltersUnionMember2MxbaiOmniCoreVectorStoreModelsSearchFilter1All]]
+    """List of conditions or filters to be ANDed together"""
+
+    any: Optional[Iterable[FiltersUnionMember2MxbaiOmniCoreVectorStoreModelsSearchFilter1Any]]
+    """List of conditions or filters to be ORed together"""
+
+    none: Optional[Iterable[FiltersUnionMember2MxbaiOmniCoreVectorStoreModelsSearchFilter1None]]
+    """List of conditions or filters to be NOTed"""
+
+
+FiltersUnionMember2: TypeAlias = Union[
+    FiltersUnionMember2MxbaiOmniCoreVectorStoreModelsSearchFilter1, SearchFilterCondition
+]
+
+Filters: TypeAlias = Union[
+    FiltersMxbaiOmniCoreVectorStoreModelsSearchFilter1, SearchFilterCondition, Iterable[FiltersUnionMember2]
+]
