@@ -2,12 +2,13 @@
 
 from __future__ import annotations
 
-from typing import List, Optional
-from typing_extensions import TypedDict
+from typing import List, Union, Iterable, Optional
+from typing_extensions import TypeAlias, TypedDict
 
 from .vector_store_file_status import VectorStoreFileStatus
+from ..shared_params.search_filter_condition import SearchFilterCondition
 
-__all__ = ["FileListParams"]
+__all__ = ["FileListParams", "MetadataFilter", "MetadataFilterUnionMember2"]
 
 
 class FileListParams(TypedDict, total=False):
@@ -31,3 +32,13 @@ class FileListParams(TypedDict, total=False):
 
     statuses: Optional[List[VectorStoreFileStatus]]
     """Status to filter by"""
+
+    metadata_filter: Optional[MetadataFilter]
+    """Metadata filter to apply to the query"""
+
+
+MetadataFilterUnionMember2: TypeAlias = Union["SearchFilter", SearchFilterCondition]
+
+MetadataFilter: TypeAlias = Union["SearchFilter", SearchFilterCondition, Iterable[MetadataFilterUnionMember2]]
+
+from ..shared_params.search_filter import SearchFilter
