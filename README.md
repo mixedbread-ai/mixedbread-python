@@ -30,8 +30,8 @@ from mixedbread import Mixedbread
 
 client = Mixedbread(
     api_key=os.environ.get("MXBAI_API_KEY"),  # This is the default and can be omitted
-    # defaults to "production".
-    environment="local",
+    # or 'production' | 'local'; defaults to "production".
+    environment="development",
 )
 
 vector_store = client.vector_stores.create()
@@ -54,8 +54,8 @@ from mixedbread import AsyncMixedbread
 
 client = AsyncMixedbread(
     api_key=os.environ.get("MXBAI_API_KEY"),  # This is the default and can be omitted
-    # defaults to "production".
-    environment="local",
+    # or 'production' | 'local'; defaults to "production".
+    environment="development",
 )
 
 
