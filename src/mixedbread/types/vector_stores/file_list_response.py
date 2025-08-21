@@ -39,28 +39,7 @@ class Pagination(BaseModel):
 
 class FileListResponse(BaseModel):
     pagination: Pagination
-    """Response model for cursor-based pagination.
-
-    Examples: Forward pagination response: { "has_more": true, "first_cursor":
-    "eyJjcmVhdGVkX2F0IjoiMjAyNC0xMi0zMSIsImlkIjoiYWJjMTIzIn0=", "last_cursor":
-    "eyJjcmVhdGVkX2F0IjoiMjAyNC0xMi0zMCIsImlkIjoieHl6Nzg5In0=", "total": null }
-
-        Final page response:
-            {
-                "has_more": false,
-                "first_cursor": "eyJjcmVhdGVkX2F0IjoiMjAyNC0xMi0yOSIsImlkIjoibGFzdDEyMyJ9",
-                "last_cursor": "eyJjcmVhdGVkX2F0IjoiMjAyNC0xMi0yOCIsImlkIjoiZmluYWw0NTYifQ==",
-                "total": 42
-            }
-
-        Empty results:
-            {
-                "has_more": false,
-                "first_cursor": null,
-                "last_cursor": null,
-                "total": 0
-            }
-    """
+    """Response model for cursor-based pagination."""
 
     object: Optional[Literal["list"]] = None
     """The object type of the response"""

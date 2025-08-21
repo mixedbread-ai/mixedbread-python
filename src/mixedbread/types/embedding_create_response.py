@@ -1,10 +1,10 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 from typing import List, Union, Optional
+from typing_extensions import Literal
 
 from .._models import BaseModel
 from .embedding import Embedding
-from .object_type import ObjectType
 from .shared.usage import Usage
 from .encoding_format import EncodingFormat
 from .multi_encoding_embedding import MultiEncodingEmbedding
@@ -22,7 +22,7 @@ class EmbeddingCreateResponse(BaseModel):
     data: Union[List[Embedding], List[MultiEncodingEmbedding]]
     """The created embeddings."""
 
-    object: Optional[ObjectType] = None
+    object: Optional[Literal["list"]] = None
     """The object type of the response"""
 
     normalized: bool

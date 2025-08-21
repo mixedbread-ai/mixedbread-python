@@ -51,9 +51,9 @@ class FilesResource(SyncAPIResource):
         self,
         vector_store_identifier: str,
         *,
-        file_id: str,
         metadata: object | NotGiven = NOT_GIVEN,
         experimental: file_create_params.Experimental | NotGiven = NOT_GIVEN,
+        file_id: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -62,21 +62,21 @@ class FilesResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> VectorStoreFile:
         """
-        Upload a new file to a vector store for indexing.
+        Add an already uploaded file to a vector store.
 
-        Args: vector_store_identifier: The ID or name of the vector store to upload to
-        file: The file to upload and index
+        Args: vector_store_identifier: The ID or name of the vector store to add the
+        file to file: The file to add and index
 
-        Returns: VectorStoreFile: Details of the uploaded and indexed file
+        Returns: VectorStoreFile: Details of the added and indexed file
 
         Args:
           vector_store_identifier: The ID or name of the vector store
 
-          file_id: ID of the file to add
-
           metadata: Optional metadata for the file
 
           experimental: Strategy for adding the file
+
+          file_id: ID of the file to add
 
           extra_headers: Send extra headers
 
@@ -94,9 +94,9 @@ class FilesResource(SyncAPIResource):
             f"/v1/vector_stores/{vector_store_identifier}/files",
             body=maybe_transform(
                 {
-                    "file_id": file_id,
                     "metadata": metadata,
                     "experimental": experimental,
+                    "file_id": file_id,
                 },
                 file_create_params.FileCreateParams,
             ),
@@ -284,8 +284,7 @@ class FilesResource(SyncAPIResource):
         self,
         *,
         query: str,
-        vector_store_identifiers: Optional[List[str]] | NotGiven = NOT_GIVEN,
-        vector_store_ids: Optional[List[str]] | NotGiven = NOT_GIVEN,
+        vector_store_identifiers: List[str],
         top_k: int | NotGiven = NOT_GIVEN,
         filters: Optional[file_search_params.Filters] | NotGiven = NOT_GIVEN,
         file_ids: Union[Iterable[object], List[str], None] | NotGiven = NOT_GIVEN,
@@ -342,7 +341,6 @@ class FilesResource(SyncAPIResource):
                 {
                     "query": query,
                     "vector_store_identifiers": vector_store_identifiers,
-                    "vector_store_ids": vector_store_ids,
                     "top_k": top_k,
                     "filters": filters,
                     "file_ids": file_ids,
@@ -381,9 +379,9 @@ class AsyncFilesResource(AsyncAPIResource):
         self,
         vector_store_identifier: str,
         *,
-        file_id: str,
         metadata: object | NotGiven = NOT_GIVEN,
         experimental: file_create_params.Experimental | NotGiven = NOT_GIVEN,
+        file_id: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -392,21 +390,21 @@ class AsyncFilesResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> VectorStoreFile:
         """
-        Upload a new file to a vector store for indexing.
+        Add an already uploaded file to a vector store.
 
-        Args: vector_store_identifier: The ID or name of the vector store to upload to
-        file: The file to upload and index
+        Args: vector_store_identifier: The ID or name of the vector store to add the
+        file to file: The file to add and index
 
-        Returns: VectorStoreFile: Details of the uploaded and indexed file
+        Returns: VectorStoreFile: Details of the added and indexed file
 
         Args:
           vector_store_identifier: The ID or name of the vector store
 
-          file_id: ID of the file to add
-
           metadata: Optional metadata for the file
 
           experimental: Strategy for adding the file
+
+          file_id: ID of the file to add
 
           extra_headers: Send extra headers
 
@@ -424,9 +422,9 @@ class AsyncFilesResource(AsyncAPIResource):
             f"/v1/vector_stores/{vector_store_identifier}/files",
             body=await async_maybe_transform(
                 {
-                    "file_id": file_id,
                     "metadata": metadata,
                     "experimental": experimental,
+                    "file_id": file_id,
                 },
                 file_create_params.FileCreateParams,
             ),
@@ -616,8 +614,7 @@ class AsyncFilesResource(AsyncAPIResource):
         self,
         *,
         query: str,
-        vector_store_identifiers: Optional[List[str]] | NotGiven = NOT_GIVEN,
-        vector_store_ids: Optional[List[str]] | NotGiven = NOT_GIVEN,
+        vector_store_identifiers: List[str],
         top_k: int | NotGiven = NOT_GIVEN,
         filters: Optional[file_search_params.Filters] | NotGiven = NOT_GIVEN,
         file_ids: Union[Iterable[object], List[str], None] | NotGiven = NOT_GIVEN,
@@ -674,7 +671,6 @@ class AsyncFilesResource(AsyncAPIResource):
                 {
                     "query": query,
                     "vector_store_identifiers": vector_store_identifiers,
-                    "vector_store_ids": vector_store_ids,
                     "top_k": top_k,
                     "filters": filters,
                     "file_ids": file_ids,

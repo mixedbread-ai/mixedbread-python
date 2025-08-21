@@ -236,7 +236,9 @@ class TestVectorStores:
 
     @parametrize
     def test_method_question_answering(self, client: Mixedbread) -> None:
-        vector_store = client.vector_stores.question_answering()
+        vector_store = client.vector_stores.question_answering(
+            vector_store_identifiers=["string"],
+        )
         assert_matches_type(VectorStoreQuestionAnsweringResponse, vector_store, path=["response"])
 
     @parametrize
@@ -244,7 +246,6 @@ class TestVectorStores:
         vector_store = client.vector_stores.question_answering(
             query="x",
             vector_store_identifiers=["string"],
-            vector_store_ids=["string"],
             top_k=1,
             filters={
                 "all": [],
@@ -269,7 +270,9 @@ class TestVectorStores:
 
     @parametrize
     def test_raw_response_question_answering(self, client: Mixedbread) -> None:
-        response = client.vector_stores.with_raw_response.question_answering()
+        response = client.vector_stores.with_raw_response.question_answering(
+            vector_store_identifiers=["string"],
+        )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -278,7 +281,9 @@ class TestVectorStores:
 
     @parametrize
     def test_streaming_response_question_answering(self, client: Mixedbread) -> None:
-        with client.vector_stores.with_streaming_response.question_answering() as response:
+        with client.vector_stores.with_streaming_response.question_answering(
+            vector_store_identifiers=["string"],
+        ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
@@ -291,6 +296,7 @@ class TestVectorStores:
     def test_method_search(self, client: Mixedbread) -> None:
         vector_store = client.vector_stores.search(
             query="how to configure SSL",
+            vector_store_identifiers=["string"],
         )
         assert_matches_type(VectorStoreSearchResponse, vector_store, path=["response"])
 
@@ -299,7 +305,6 @@ class TestVectorStores:
         vector_store = client.vector_stores.search(
             query="how to configure SSL",
             vector_store_identifiers=["string"],
-            vector_store_ids=["string"],
             top_k=1,
             filters={
                 "all": [],
@@ -321,6 +326,7 @@ class TestVectorStores:
     def test_raw_response_search(self, client: Mixedbread) -> None:
         response = client.vector_stores.with_raw_response.search(
             query="how to configure SSL",
+            vector_store_identifiers=["string"],
         )
 
         assert response.is_closed is True
@@ -332,6 +338,7 @@ class TestVectorStores:
     def test_streaming_response_search(self, client: Mixedbread) -> None:
         with client.vector_stores.with_streaming_response.search(
             query="how to configure SSL",
+            vector_store_identifiers=["string"],
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -560,7 +567,9 @@ class TestAsyncVectorStores:
 
     @parametrize
     async def test_method_question_answering(self, async_client: AsyncMixedbread) -> None:
-        vector_store = await async_client.vector_stores.question_answering()
+        vector_store = await async_client.vector_stores.question_answering(
+            vector_store_identifiers=["string"],
+        )
         assert_matches_type(VectorStoreQuestionAnsweringResponse, vector_store, path=["response"])
 
     @parametrize
@@ -568,7 +577,6 @@ class TestAsyncVectorStores:
         vector_store = await async_client.vector_stores.question_answering(
             query="x",
             vector_store_identifiers=["string"],
-            vector_store_ids=["string"],
             top_k=1,
             filters={
                 "all": [],
@@ -593,7 +601,9 @@ class TestAsyncVectorStores:
 
     @parametrize
     async def test_raw_response_question_answering(self, async_client: AsyncMixedbread) -> None:
-        response = await async_client.vector_stores.with_raw_response.question_answering()
+        response = await async_client.vector_stores.with_raw_response.question_answering(
+            vector_store_identifiers=["string"],
+        )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -602,7 +612,9 @@ class TestAsyncVectorStores:
 
     @parametrize
     async def test_streaming_response_question_answering(self, async_client: AsyncMixedbread) -> None:
-        async with async_client.vector_stores.with_streaming_response.question_answering() as response:
+        async with async_client.vector_stores.with_streaming_response.question_answering(
+            vector_store_identifiers=["string"],
+        ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
@@ -615,6 +627,7 @@ class TestAsyncVectorStores:
     async def test_method_search(self, async_client: AsyncMixedbread) -> None:
         vector_store = await async_client.vector_stores.search(
             query="how to configure SSL",
+            vector_store_identifiers=["string"],
         )
         assert_matches_type(VectorStoreSearchResponse, vector_store, path=["response"])
 
@@ -623,7 +636,6 @@ class TestAsyncVectorStores:
         vector_store = await async_client.vector_stores.search(
             query="how to configure SSL",
             vector_store_identifiers=["string"],
-            vector_store_ids=["string"],
             top_k=1,
             filters={
                 "all": [],
@@ -645,6 +657,7 @@ class TestAsyncVectorStores:
     async def test_raw_response_search(self, async_client: AsyncMixedbread) -> None:
         response = await async_client.vector_stores.with_raw_response.search(
             query="how to configure SSL",
+            vector_store_identifiers=["string"],
         )
 
         assert response.is_closed is True
@@ -656,6 +669,7 @@ class TestAsyncVectorStores:
     async def test_streaming_response_search(self, async_client: AsyncMixedbread) -> None:
         async with async_client.vector_stores.with_streaming_response.search(
             query="how to configure SSL",
+            vector_store_identifiers=["string"],
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"

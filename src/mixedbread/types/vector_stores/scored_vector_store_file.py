@@ -52,7 +52,7 @@ class ScoredVectorStoreFile(BaseModel):
     """Type of the object"""
 
     chunks: Optional[List[Chunk]] = None
-    """chunks"""
+    """Array of scored file chunks"""
 
     score: float
     """score of the file"""
