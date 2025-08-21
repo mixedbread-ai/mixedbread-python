@@ -8,14 +8,14 @@ __all__ = ["FileCreateParams", "Experimental"]
 
 
 class FileCreateParams(TypedDict, total=False):
-    file_id: Required[str]
-    """ID of the file to add"""
-
     metadata: object
     """Optional metadata for the file"""
 
     experimental: Experimental
     """Strategy for adding the file"""
+
+    file_id: Required[str]
+    """ID of the file to add"""
 
 
 class Experimental(TypedDict, total=False):

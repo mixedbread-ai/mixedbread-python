@@ -34,12 +34,12 @@ class TestFiles:
     def test_method_create_with_all_params(self, client: Mixedbread) -> None:
         file = client.vector_stores.files.create(
             vector_store_identifier="vector_store_identifier",
-            file_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             metadata={},
             experimental={
                 "parsing_strategy": "fast",
                 "contextualization": True,
             },
+            file_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(VectorStoreFile, file, path=["response"])
 
@@ -249,6 +249,7 @@ class TestFiles:
     def test_method_search(self, client: Mixedbread) -> None:
         file = client.vector_stores.files.search(
             query="how to configure SSL",
+            vector_store_identifiers=["string"],
         )
         assert_matches_type(FileSearchResponse, file, path=["response"])
 
@@ -257,7 +258,6 @@ class TestFiles:
         file = client.vector_stores.files.search(
             query="how to configure SSL",
             vector_store_identifiers=["string"],
-            vector_store_ids=["string"],
             top_k=1,
             filters={
                 "all": [],
@@ -281,6 +281,7 @@ class TestFiles:
     def test_raw_response_search(self, client: Mixedbread) -> None:
         response = client.vector_stores.files.with_raw_response.search(
             query="how to configure SSL",
+            vector_store_identifiers=["string"],
         )
 
         assert response.is_closed is True
@@ -292,6 +293,7 @@ class TestFiles:
     def test_streaming_response_search(self, client: Mixedbread) -> None:
         with client.vector_stores.files.with_streaming_response.search(
             query="how to configure SSL",
+            vector_store_identifiers=["string"],
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -319,12 +321,12 @@ class TestAsyncFiles:
     async def test_method_create_with_all_params(self, async_client: AsyncMixedbread) -> None:
         file = await async_client.vector_stores.files.create(
             vector_store_identifier="vector_store_identifier",
-            file_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             metadata={},
             experimental={
                 "parsing_strategy": "fast",
                 "contextualization": True,
             },
+            file_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(VectorStoreFile, file, path=["response"])
 
@@ -534,6 +536,7 @@ class TestAsyncFiles:
     async def test_method_search(self, async_client: AsyncMixedbread) -> None:
         file = await async_client.vector_stores.files.search(
             query="how to configure SSL",
+            vector_store_identifiers=["string"],
         )
         assert_matches_type(FileSearchResponse, file, path=["response"])
 
@@ -542,7 +545,6 @@ class TestAsyncFiles:
         file = await async_client.vector_stores.files.search(
             query="how to configure SSL",
             vector_store_identifiers=["string"],
-            vector_store_ids=["string"],
             top_k=1,
             filters={
                 "all": [],
@@ -566,6 +568,7 @@ class TestAsyncFiles:
     async def test_raw_response_search(self, async_client: AsyncMixedbread) -> None:
         response = await async_client.vector_stores.files.with_raw_response.search(
             query="how to configure SSL",
+            vector_store_identifiers=["string"],
         )
 
         assert response.is_closed is True
@@ -577,6 +580,7 @@ class TestAsyncFiles:
     async def test_streaming_response_search(self, async_client: AsyncMixedbread) -> None:
         async with async_client.vector_stores.files.with_streaming_response.search(
             query="how to configure SSL",
+            vector_store_identifiers=["string"],
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
