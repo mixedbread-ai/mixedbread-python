@@ -166,7 +166,7 @@ Methods:
 Types:
 
 ```python
-from mixedbread.types import EncodingFormat, ObjectType
+from mixedbread.types import EncodingFormat
 ```
 
 Methods:

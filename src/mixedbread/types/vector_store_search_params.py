@@ -15,10 +15,8 @@ class VectorStoreSearchParams(TypedDict, total=False):
     query: Required[str]
     """Search query text"""
 
-    vector_store_identifiers: Optional[List[str]]
+    vector_store_identifiers: Required[List[str]]
     """IDs or names of vector stores to search"""
-
-    vector_store_ids: Optional[List[str]]
 
     top_k: int
     """Number of results to return"""

@@ -9,7 +9,6 @@ from .api_key import APIKey as APIKey
 from .embedding import Embedding as Embedding
 from .data_source import DataSource as DataSource
 from .file_object import FileObject as FileObject
-from .object_type import ObjectType as ObjectType
 from .vector_store import VectorStore as VectorStore
 from .expires_after import ExpiresAfter as ExpiresAfter
 from .info_response import InfoResponse as InfoResponse
