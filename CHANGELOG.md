@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.28.1 (2025-08-25)
+
+Full Changelog: [v0.28.0...v0.28.1](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.28.0...v0.28.1)
+
+### Chores
+
+* update github action ([c4ae559](https://github.com/mixedbread-ai/mixedbread-python/commit/c4ae55998996b4a58bc386a7fd2df527d169c0b0))
+
 ## 0.28.0 (2025-08-21)
 
 Full Changelog: [v0.27.0...v0.28.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.27.0...v0.28.0)
