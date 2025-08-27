@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.28.1 (2025-08-27)
+
+Full Changelog: [v0.28.0...v0.28.1](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.28.0...v0.28.1)
+
+### Bug Fixes
+
+* avoid newer type syntax ([2a6db66](https://github.com/mixedbread-ai/mixedbread-python/commit/2a6db66daa688b9971785f8bccec32dcc068569d))
+
+
+### Chores
+
+* **internal:** change ci workflow machines ([b9cdd3f](https://github.com/mixedbread-ai/mixedbread-python/commit/b9cdd3fa837aad4a4f860f250298843424797f5b))
+* update github action ([c4ae559](https://github.com/mixedbread-ai/mixedbread-python/commit/c4ae55998996b4a58bc386a7fd2df527d169c0b0))
+
 ## 0.28.0 (2025-08-21)
 
 Full Changelog: [v0.27.0...v0.28.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.27.0...v0.28.0)
