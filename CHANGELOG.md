@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.29.0 (2025-09-01)
+
+Full Changelog: [v0.28.1...v0.29.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.28.1...v0.29.0)
+
+### Features
+
+* **api:** api update ([9869487](https://github.com/mixedbread-ai/mixedbread-python/commit/986948712a20dd99f1e5e3c40e8180ab11a727dd))
+
+
+### Chores
+
+* **internal:** add Sequence related utils ([cc3f90d](https://github.com/mixedbread-ai/mixedbread-python/commit/cc3f90d4f28cc313c2a20acd628149d56b7be6bd))
+* **internal:** update pyright exclude list ([8d57f64](https://github.com/mixedbread-ai/mixedbread-python/commit/8d57f64f771bfec95fad5f0d481ce4538fabeb1e))
+
 ## 0.28.1 (2025-08-27)
 
 Full Changelog: [v0.28.0...v0.28.1](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.28.0...v0.28.1)
