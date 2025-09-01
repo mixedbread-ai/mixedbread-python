@@ -12,9 +12,12 @@ __all__ = [
     "VectorStoreFile",
     "Chunk",
     "ChunkTextInputChunk",
-    "ChunkImageURLInputChunkBase",
-    "ChunkAudioURLInputChunkBase",
-    "ChunkVideoURLInputChunkBase",
+    "ChunkImageURLInputChunk",
+    "ChunkImageURLInputChunkImageURL",
+    "ChunkAudioURLInputChunk",
+    "ChunkAudioURLInputChunkAudioURL",
+    "ChunkVideoURLInputChunk",
+    "ChunkVideoURLInputChunkVideoURL",
 ]
 
 
@@ -41,7 +44,15 @@ class ChunkTextInputChunk(BaseModel):
     """Text content to process"""
 
 
-class ChunkImageURLInputChunkBase(BaseModel):
+class ChunkImageURLInputChunkImageURL(BaseModel):
+    url: str
+    """The image URL. Can be either a URL or a Data URI."""
+
+    format: Optional[str] = None
+    """The image format/mimetype"""
+
+
+class ChunkImageURLInputChunk(BaseModel):
     chunk_index: int
     """position of the chunk in a file"""
 
@@ -63,8 +74,16 @@ class ChunkImageURLInputChunkBase(BaseModel):
     summary: Optional[str] = None
     """summary of the image"""
 
+    image_url: ChunkImageURLInputChunkImageURL
+    """The image input specification."""
 
-class ChunkAudioURLInputChunkBase(BaseModel):
+
+class ChunkAudioURLInputChunkAudioURL(BaseModel):
+    url: str
+    """The audio URL. Can be either a URL or a Data URI."""
+
+
+class ChunkAudioURLInputChunk(BaseModel):
     chunk_index: int
     """position of the chunk in a file"""
 
@@ -86,8 +105,16 @@ class ChunkAudioURLInputChunkBase(BaseModel):
     summary: Optional[str] = None
     """summary of the audio"""
 
+    audio_url: ChunkAudioURLInputChunkAudioURL
+    """The audio input specification."""
 
-class ChunkVideoURLInputChunkBase(BaseModel):
+
+class ChunkVideoURLInputChunkVideoURL(BaseModel):
+    url: str
+    """The video URL. Can be either a URL or a Data URI."""
+
+
+class ChunkVideoURLInputChunk(BaseModel):
     chunk_index: int
     """position of the chunk in a file"""
 
@@ -109,9 +136,12 @@ class ChunkVideoURLInputChunkBase(BaseModel):
     summary: Optional[str] = None
     """summary of the video"""
 
+    video_url: ChunkVideoURLInputChunkVideoURL
+    """The video input specification."""
+
 
 Chunk: TypeAlias = Annotated[
-    Union[ChunkTextInputChunk, ChunkImageURLInputChunkBase, ChunkAudioURLInputChunkBase, ChunkVideoURLInputChunkBase],
+    Union[ChunkTextInputChunk, ChunkImageURLInputChunk, ChunkAudioURLInputChunk, ChunkVideoURLInputChunk],
     PropertyInfo(discriminator="type"),
 ]
 
