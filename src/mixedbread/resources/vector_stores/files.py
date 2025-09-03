@@ -6,7 +6,7 @@ from typing import List, Union, Iterable, Optional
 
 import httpx
 
-from ..._types import NOT_GIVEN, Body, Query, Headers, NotGiven
+from ..._types import NOT_GIVEN, Body, Query, Headers, NotGiven, SequenceNotStr
 from ..._utils import maybe_transform, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
@@ -284,10 +284,10 @@ class FilesResource(SyncAPIResource):
         self,
         *,
         query: str,
-        vector_store_identifiers: List[str],
+        vector_store_identifiers: SequenceNotStr[str],
         top_k: int | NotGiven = NOT_GIVEN,
         filters: Optional[file_search_params.Filters] | NotGiven = NOT_GIVEN,
-        file_ids: Union[Iterable[object], List[str], None] | NotGiven = NOT_GIVEN,
+        file_ids: Union[Iterable[object], SequenceNotStr[str], None] | NotGiven = NOT_GIVEN,
         search_options: file_search_params.SearchOptions | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -614,10 +614,10 @@ class AsyncFilesResource(AsyncAPIResource):
         self,
         *,
         query: str,
-        vector_store_identifiers: List[str],
+        vector_store_identifiers: SequenceNotStr[str],
         top_k: int | NotGiven = NOT_GIVEN,
         filters: Optional[file_search_params.Filters] | NotGiven = NOT_GIVEN,
-        file_ids: Union[Iterable[object], List[str], None] | NotGiven = NOT_GIVEN,
+        file_ids: Union[Iterable[object], SequenceNotStr[str], None] | NotGiven = NOT_GIVEN,
         search_options: file_search_params.SearchOptions | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
