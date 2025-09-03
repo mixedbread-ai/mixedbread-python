@@ -7,7 +7,7 @@ from typing import List, Union, Optional
 import httpx
 
 from ..types import embedding_create_params
-from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
+from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven, SequenceNotStr
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
@@ -48,7 +48,7 @@ class EmbeddingsResource(SyncAPIResource):
         self,
         *,
         model: str,
-        input: Union[str, List[str]],
+        input: Union[str, SequenceNotStr[str]],
         dimensions: Optional[int] | NotGiven = NOT_GIVEN,
         prompt: Optional[str] | NotGiven = NOT_GIVEN,
         normalized: bool | NotGiven = NOT_GIVEN,
@@ -134,7 +134,7 @@ class AsyncEmbeddingsResource(AsyncAPIResource):
         self,
         *,
         model: str,
-        input: Union[str, List[str]],
+        input: Union[str, SequenceNotStr[str]],
         dimensions: Optional[int] | NotGiven = NOT_GIVEN,
         prompt: Optional[str] | NotGiven = NOT_GIVEN,
         normalized: bool | NotGiven = NOT_GIVEN,

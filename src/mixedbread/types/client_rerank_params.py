@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 
-from typing import List, Union, Iterable, Optional
+from typing import Union, Iterable, Optional
 from typing_extensions import Required, TypedDict
+
+from .._types import SequenceNotStr
 
 __all__ = ["ClientRerankParams"]
 
@@ -15,10 +17,10 @@ class ClientRerankParams(TypedDict, total=False):
     query: Required[str]
     """The query to rerank the documents."""
 
-    input: Required[List[Union[str, Iterable[object], object]]]
+    input: Required[SequenceNotStr[Union[str, Iterable[object], object]]]
     """The input documents to rerank."""
 
-    rank_fields: Optional[List[str]]
+    rank_fields: Optional[SequenceNotStr[str]]
     """The fields of the documents to rank."""
 
     top_k: int

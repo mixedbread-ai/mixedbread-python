@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import List, Union, Iterable, Optional
+from typing import Union, Iterable, Optional
 
 import httpx
 
@@ -21,7 +21,7 @@ from ...types import (
     vector_store_update_params,
     vector_store_question_answering_params,
 )
-from ..._types import NOT_GIVEN, Body, Query, Headers, NotGiven
+from ..._types import NOT_GIVEN, Body, Query, Headers, NotGiven, SequenceNotStr
 from ..._utils import maybe_transform, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
@@ -75,7 +75,7 @@ class VectorStoresResource(SyncAPIResource):
         is_public: bool | NotGiven = NOT_GIVEN,
         expires_after: Optional[ExpiresAfterParam] | NotGiven = NOT_GIVEN,
         metadata: object | NotGiven = NOT_GIVEN,
-        file_ids: Optional[List[str]] | NotGiven = NOT_GIVEN,
+        file_ids: Optional[SequenceNotStr[str]] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -351,10 +351,10 @@ class VectorStoresResource(SyncAPIResource):
         self,
         *,
         query: str | NotGiven = NOT_GIVEN,
-        vector_store_identifiers: List[str],
+        vector_store_identifiers: SequenceNotStr[str],
         top_k: int | NotGiven = NOT_GIVEN,
         filters: Optional[vector_store_question_answering_params.Filters] | NotGiven = NOT_GIVEN,
-        file_ids: Union[Iterable[object], List[str], None] | NotGiven = NOT_GIVEN,
+        file_ids: Union[Iterable[object], SequenceNotStr[str], None] | NotGiven = NOT_GIVEN,
         search_options: VectorStoreChunkSearchOptionsParam | NotGiven = NOT_GIVEN,
         stream: bool | NotGiven = NOT_GIVEN,
         qa_options: vector_store_question_answering_params.QaOptions | NotGiven = NOT_GIVEN,
@@ -420,10 +420,10 @@ class VectorStoresResource(SyncAPIResource):
         self,
         *,
         query: str,
-        vector_store_identifiers: List[str],
+        vector_store_identifiers: SequenceNotStr[str],
         top_k: int | NotGiven = NOT_GIVEN,
         filters: Optional[vector_store_search_params.Filters] | NotGiven = NOT_GIVEN,
-        file_ids: Union[Iterable[object], List[str], None] | NotGiven = NOT_GIVEN,
+        file_ids: Union[Iterable[object], SequenceNotStr[str], None] | NotGiven = NOT_GIVEN,
         search_options: VectorStoreChunkSearchOptionsParam | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -524,7 +524,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         is_public: bool | NotGiven = NOT_GIVEN,
         expires_after: Optional[ExpiresAfterParam] | NotGiven = NOT_GIVEN,
         metadata: object | NotGiven = NOT_GIVEN,
-        file_ids: Optional[List[str]] | NotGiven = NOT_GIVEN,
+        file_ids: Optional[SequenceNotStr[str]] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -800,10 +800,10 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         self,
         *,
         query: str | NotGiven = NOT_GIVEN,
-        vector_store_identifiers: List[str],
+        vector_store_identifiers: SequenceNotStr[str],
         top_k: int | NotGiven = NOT_GIVEN,
         filters: Optional[vector_store_question_answering_params.Filters] | NotGiven = NOT_GIVEN,
-        file_ids: Union[Iterable[object], List[str], None] | NotGiven = NOT_GIVEN,
+        file_ids: Union[Iterable[object], SequenceNotStr[str], None] | NotGiven = NOT_GIVEN,
         search_options: VectorStoreChunkSearchOptionsParam | NotGiven = NOT_GIVEN,
         stream: bool | NotGiven = NOT_GIVEN,
         qa_options: vector_store_question_answering_params.QaOptions | NotGiven = NOT_GIVEN,
@@ -869,10 +869,10 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         self,
         *,
         query: str,
-        vector_store_identifiers: List[str],
+        vector_store_identifiers: SequenceNotStr[str],
         top_k: int | NotGiven = NOT_GIVEN,
         filters: Optional[vector_store_search_params.Filters] | NotGiven = NOT_GIVEN,
-        file_ids: Union[Iterable[object], List[str], None] | NotGiven = NOT_GIVEN,
+        file_ids: Union[Iterable[object], SequenceNotStr[str], None] | NotGiven = NOT_GIVEN,
         search_options: VectorStoreChunkSearchOptionsParam | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
