@@ -108,6 +108,9 @@ class ChunkAudioURLInputChunk(BaseModel):
     audio_url: ChunkAudioURLInputChunkAudioURL
     """The audio input specification."""
 
+    sampling_rate: int
+    """The sampling rate of the audio."""
+
 
 class ChunkVideoURLInputChunkVideoURL(BaseModel):
     url: str
