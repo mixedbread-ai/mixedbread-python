@@ -52,3 +52,6 @@ class ScoredAudioURLInputChunk(BaseModel):
 
     audio_url: AudioURL
     """The audio input specification."""
+
+    sampling_rate: int
+    """The sampling rate of the audio."""
