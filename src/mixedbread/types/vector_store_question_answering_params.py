@@ -2,9 +2,10 @@
 
 from __future__ import annotations
 
-from typing import List, Union, Iterable, Optional
+from typing import Union, Iterable, Optional
 from typing_extensions import Required, TypeAlias, TypedDict
 
+from .._types import SequenceNotStr
 from .shared_params.search_filter_condition import SearchFilterCondition
 from .vector_store_chunk_search_options_param import VectorStoreChunkSearchOptionsParam
 
@@ -18,7 +19,7 @@ class VectorStoreQuestionAnsweringParams(TypedDict, total=False):
     If not provided, the question will be extracted from the passed messages.
     """
 
-    vector_store_identifiers: Required[List[str]]
+    vector_store_identifiers: Required[SequenceNotStr[str]]
     """IDs or names of vector stores to search"""
 
     top_k: int
@@ -27,7 +28,7 @@ class VectorStoreQuestionAnsweringParams(TypedDict, total=False):
     filters: Optional[Filters]
     """Optional filter conditions"""
 
-    file_ids: Union[Iterable[object], List[str], None]
+    file_ids: Union[Iterable[object], SequenceNotStr[str], None]
     """Optional list of file IDs to filter chunks by (inclusion filter)"""
 
     search_options: VectorStoreChunkSearchOptionsParam

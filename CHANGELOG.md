@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.30.0 (2025-09-08)
+
+Full Changelog: [v0.29.0...v0.30.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.29.0...v0.30.0)
+
+### Features
+
+* **api:** api update ([09480a0](https://github.com/mixedbread-ai/mixedbread-python/commit/09480a071cec478a591f9dd7e5d6d5ca673ad708))
+* improve future compat with pydantic v3 ([80527ad](https://github.com/mixedbread-ai/mixedbread-python/commit/80527ad19edc22e8fa6d7af97ef52bbfdba065c4))
+* **types:** replace List[str] with SequenceNotStr in params ([6fe239a](https://github.com/mixedbread-ai/mixedbread-python/commit/6fe239a678839b57e0808e99285d2c6cb8711b6e))
+
+
+### Chores
+
+* **internal:** move mypy configurations to `pyproject.toml` file ([67670ee](https://github.com/mixedbread-ai/mixedbread-python/commit/67670eebcb917d8c81e481265e9003b2e39e0eb2))
+* **tests:** simplify `get_platform` test ([216116c](https://github.com/mixedbread-ai/mixedbread-python/commit/216116c7a3a508fb9c9d3761376ba9f5791a7602))
+
 ## 0.29.0 (2025-09-01)
 
 Full Changelog: [v0.28.1...v0.29.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.28.1...v0.29.0)

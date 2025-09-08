@@ -5,6 +5,7 @@ from __future__ import annotations
 from typing import List, Union, Optional
 from typing_extensions import Required, TypedDict
 
+from .._types import SequenceNotStr
 from .encoding_format import EncodingFormat
 
 __all__ = ["ClientEmbedParams"]
@@ -14,7 +15,7 @@ class ClientEmbedParams(TypedDict, total=False):
     model: Required[str]
     """The model to use for creating embeddings."""
 
-    input: Required[Union[str, List[str]]]
+    input: Required[Union[str, SequenceNotStr[str]]]
     """The input to create embeddings for."""
 
     dimensions: Optional[int]

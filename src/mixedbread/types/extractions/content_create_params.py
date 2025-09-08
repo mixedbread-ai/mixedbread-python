@@ -2,9 +2,10 @@
 
 from __future__ import annotations
 
-from typing import Dict, List, Union, Iterable, Optional
+from typing import Dict, Union, Iterable, Optional
 from typing_extensions import Required, TypeAlias, TypedDict
 
+from ..._types import SequenceNotStr
 from .text_input_param import TextInputParam
 from .image_url_input_param import ImageURLInputParam
 
@@ -12,7 +13,7 @@ __all__ = ["ContentCreateParams", "ContentUnionMember2"]
 
 
 class ContentCreateParams(TypedDict, total=False):
-    content: Required[Union[str, List[str], Iterable[ContentUnionMember2]]]
+    content: Required[Union[str, SequenceNotStr[str], Iterable[ContentUnionMember2]]]
     """The content to extract from"""
 
     json_schema: Required[Dict[str, object]]

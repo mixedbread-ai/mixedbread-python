@@ -2,9 +2,10 @@
 
 from __future__ import annotations
 
-from typing import List, Optional
+from typing import Optional
 from typing_extensions import TypedDict
 
+from .._types import SequenceNotStr
 from .expires_after_param import ExpiresAfterParam
 
 __all__ = ["VectorStoreCreateParams"]
@@ -26,5 +27,5 @@ class VectorStoreCreateParams(TypedDict, total=False):
     metadata: object
     """Optional metadata key-value pairs"""
 
-    file_ids: Optional[List[str]]
+    file_ids: Optional[SequenceNotStr[str]]
     """Optional list of file IDs"""
