@@ -9,7 +9,7 @@ from typing_extensions import Literal
 import httpx
 
 from ...lib import polling
-from ..._types import NOT_GIVEN, Body, Query, Headers, NotGiven, FileTypes
+from ..._types import Body, Omit, Query, Headers, NotGiven, FileTypes, omit, not_given
 from ..._utils import maybe_transform, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
@@ -57,16 +57,16 @@ class JobsResource(SyncAPIResource):
         self,
         *,
         file_id: str,
-        element_types: Optional[List[ElementType]] | NotGiven = NOT_GIVEN,
-        chunking_strategy: ChunkingStrategy | NotGiven = NOT_GIVEN,
-        return_format: ReturnFormat | NotGiven = NOT_GIVEN,
-        mode: Literal["fast", "high_quality"] | NotGiven = NOT_GIVEN,
+        element_types: Optional[List[ElementType]] | Omit = omit,
+        chunking_strategy: ChunkingStrategy | Omit = omit,
+        return_format: ReturnFormat | Omit = omit,
+        mode: Literal["fast", "high_quality"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ParsingJob:
         """
         Start a parse job for the provided file.
@@ -121,7 +121,7 @@ class JobsResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ParsingJob:
         """
         Get detailed information about a specific parse job.
@@ -154,18 +154,18 @@ class JobsResource(SyncAPIResource):
     def list(
         self,
         *,
-        limit: int | NotGiven = NOT_GIVEN,
-        after: Optional[str] | NotGiven = NOT_GIVEN,
-        before: Optional[str] | NotGiven = NOT_GIVEN,
-        include_total: bool | NotGiven = NOT_GIVEN,
-        statuses: Optional[List[ParsingJobStatus]] | NotGiven = NOT_GIVEN,
-        q: Optional[str] | NotGiven = NOT_GIVEN,
+        limit: int | Omit = omit,
+        after: Optional[str] | Omit = omit,
+        before: Optional[str] | Omit = omit,
+        include_total: bool | Omit = omit,
+        statuses: Optional[List[ParsingJobStatus]] | Omit = omit,
+        q: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SyncCursor[JobListResponse]:
         """List parsing jobs with pagination.
 
@@ -230,7 +230,7 @@ class JobsResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> JobDeleteResponse:
         """
         Delete a specific parse job.
@@ -269,7 +269,7 @@ class JobsResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ParsingJob:
         """
         Cancel a specific parse job.
@@ -481,16 +481,16 @@ class AsyncJobsResource(AsyncAPIResource):
         self,
         *,
         file_id: str,
-        element_types: Optional[List[ElementType]] | NotGiven = NOT_GIVEN,
-        chunking_strategy: ChunkingStrategy | NotGiven = NOT_GIVEN,
-        return_format: ReturnFormat | NotGiven = NOT_GIVEN,
-        mode: Literal["fast", "high_quality"] | NotGiven = NOT_GIVEN,
+        element_types: Optional[List[ElementType]] | Omit = omit,
+        chunking_strategy: ChunkingStrategy | Omit = omit,
+        return_format: ReturnFormat | Omit = omit,
+        mode: Literal["fast", "high_quality"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ParsingJob:
         """
         Start a parse job for the provided file.
@@ -545,7 +545,7 @@ class AsyncJobsResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ParsingJob:
         """
         Get detailed information about a specific parse job.
@@ -578,18 +578,18 @@ class AsyncJobsResource(AsyncAPIResource):
     def list(
         self,
         *,
-        limit: int | NotGiven = NOT_GIVEN,
-        after: Optional[str] | NotGiven = NOT_GIVEN,
-        before: Optional[str] | NotGiven = NOT_GIVEN,
-        include_total: bool | NotGiven = NOT_GIVEN,
-        statuses: Optional[List[ParsingJobStatus]] | NotGiven = NOT_GIVEN,
-        q: Optional[str] | NotGiven = NOT_GIVEN,
+        limit: int | Omit = omit,
+        after: Optional[str] | Omit = omit,
+        before: Optional[str] | Omit = omit,
+        include_total: bool | Omit = omit,
+        statuses: Optional[List[ParsingJobStatus]] | Omit = omit,
+        q: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AsyncPaginator[JobListResponse, AsyncCursor[JobListResponse]]:
         """List parsing jobs with pagination.
 
@@ -654,7 +654,7 @@ class AsyncJobsResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> JobDeleteResponse:
         """
         Delete a specific parse job.
@@ -693,7 +693,7 @@ class AsyncJobsResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ParsingJob:
         """
         Cancel a specific parse job.

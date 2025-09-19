@@ -8,7 +8,7 @@ from typing import Any, List, Union, Iterable, Optional
 import httpx
 
 from ...lib import polling
-from ..._types import NOT_GIVEN, Body, Query, Headers, NotGiven, FileTypes, SequenceNotStr
+from ..._types import Body, Omit, Query, Headers, NotGiven, FileTypes, SequenceNotStr, omit, not_given
 from ..._utils import maybe_transform, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
@@ -53,15 +53,15 @@ class FilesResource(SyncAPIResource):
         self,
         vector_store_identifier: str,
         *,
-        metadata: object | NotGiven = NOT_GIVEN,
-        experimental: file_create_params.Experimental | NotGiven = NOT_GIVEN,
+        metadata: object | Omit = omit,
+        experimental: file_create_params.Experimental | Omit = omit,
         file_id: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> VectorStoreFile:
         """
         Add an already uploaded file to a vector store.
@@ -113,13 +113,13 @@ class FilesResource(SyncAPIResource):
         file_id: str,
         *,
         vector_store_identifier: str,
-        return_chunks: bool | NotGiven = NOT_GIVEN,
+        return_chunks: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> VectorStoreFile:
         """
         Get details of a specific file in a vector store.
@@ -166,18 +166,18 @@ class FilesResource(SyncAPIResource):
         self,
         vector_store_identifier: str,
         *,
-        limit: int | NotGiven = NOT_GIVEN,
-        after: Optional[str] | NotGiven = NOT_GIVEN,
-        before: Optional[str] | NotGiven = NOT_GIVEN,
-        include_total: bool | NotGiven = NOT_GIVEN,
-        statuses: Optional[List[VectorStoreFileStatus]] | NotGiven = NOT_GIVEN,
-        metadata_filter: Optional[file_list_params.MetadataFilter] | NotGiven = NOT_GIVEN,
+        limit: int | Omit = omit,
+        after: Optional[str] | Omit = omit,
+        before: Optional[str] | Omit = omit,
+        include_total: bool | Omit = omit,
+        statuses: Optional[List[VectorStoreFileStatus]] | Omit = omit,
+        metadata_filter: Optional[file_list_params.MetadataFilter] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> FileListResponse:
         """
         List files indexed in a vector store with pagination and metadata filter.
@@ -245,7 +245,7 @@ class FilesResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> FileDeleteResponse:
         """
         Delete a file from a vector store.
@@ -287,16 +287,16 @@ class FilesResource(SyncAPIResource):
         *,
         query: str,
         vector_store_identifiers: SequenceNotStr[str],
-        top_k: int | NotGiven = NOT_GIVEN,
-        filters: Optional[file_search_params.Filters] | NotGiven = NOT_GIVEN,
-        file_ids: Union[Iterable[object], SequenceNotStr[str], None] | NotGiven = NOT_GIVEN,
-        search_options: file_search_params.SearchOptions | NotGiven = NOT_GIVEN,
+        top_k: int | Omit = omit,
+        filters: Optional[file_search_params.Filters] | Omit = omit,
+        file_ids: Union[Iterable[object], SequenceNotStr[str], None] | Omit = omit,
+        search_options: file_search_params.SearchOptions | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> FileSearchResponse:
         """
         Perform semantic search across complete vector store files.
@@ -487,15 +487,15 @@ class AsyncFilesResource(AsyncAPIResource):
         self,
         vector_store_identifier: str,
         *,
-        metadata: object | NotGiven = NOT_GIVEN,
-        experimental: file_create_params.Experimental | NotGiven = NOT_GIVEN,
+        metadata: object | Omit = omit,
+        experimental: file_create_params.Experimental | Omit = omit,
         file_id: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> VectorStoreFile:
         """
         Add an already uploaded file to a vector store.
@@ -547,13 +547,13 @@ class AsyncFilesResource(AsyncAPIResource):
         file_id: str,
         *,
         vector_store_identifier: str,
-        return_chunks: bool | NotGiven = NOT_GIVEN,
+        return_chunks: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> VectorStoreFile:
         """
         Get details of a specific file in a vector store.
@@ -602,18 +602,18 @@ class AsyncFilesResource(AsyncAPIResource):
         self,
         vector_store_identifier: str,
         *,
-        limit: int | NotGiven = NOT_GIVEN,
-        after: Optional[str] | NotGiven = NOT_GIVEN,
-        before: Optional[str] | NotGiven = NOT_GIVEN,
-        include_total: bool | NotGiven = NOT_GIVEN,
-        statuses: Optional[List[VectorStoreFileStatus]] | NotGiven = NOT_GIVEN,
-        metadata_filter: Optional[file_list_params.MetadataFilter] | NotGiven = NOT_GIVEN,
+        limit: int | Omit = omit,
+        after: Optional[str] | Omit = omit,
+        before: Optional[str] | Omit = omit,
+        include_total: bool | Omit = omit,
+        statuses: Optional[List[VectorStoreFileStatus]] | Omit = omit,
+        metadata_filter: Optional[file_list_params.MetadataFilter] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> FileListResponse:
         """
         List files indexed in a vector store with pagination and metadata filter.
@@ -681,7 +681,7 @@ class AsyncFilesResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> FileDeleteResponse:
         """
         Delete a file from a vector store.
@@ -723,16 +723,16 @@ class AsyncFilesResource(AsyncAPIResource):
         *,
         query: str,
         vector_store_identifiers: SequenceNotStr[str],
-        top_k: int | NotGiven = NOT_GIVEN,
-        filters: Optional[file_search_params.Filters] | NotGiven = NOT_GIVEN,
-        file_ids: Union[Iterable[object], SequenceNotStr[str], None] | NotGiven = NOT_GIVEN,
-        search_options: file_search_params.SearchOptions | NotGiven = NOT_GIVEN,
+        top_k: int | Omit = omit,
+        filters: Optional[file_search_params.Filters] | Omit = omit,
+        file_ids: Union[Iterable[object], SequenceNotStr[str], None] | Omit = omit,
+        search_options: file_search_params.SearchOptions | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> FileSearchResponse:
         """
         Perform semantic search across complete vector store files.

@@ -7,7 +7,7 @@ from typing import List, Union, Optional
 import httpx
 
 from ..types import embedding_create_params
-from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven, SequenceNotStr
+from .._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
@@ -49,16 +49,16 @@ class EmbeddingsResource(SyncAPIResource):
         *,
         model: str,
         input: Union[str, SequenceNotStr[str]],
-        dimensions: Optional[int] | NotGiven = NOT_GIVEN,
-        prompt: Optional[str] | NotGiven = NOT_GIVEN,
-        normalized: bool | NotGiven = NOT_GIVEN,
-        encoding_format: Union[EncodingFormat, List[EncodingFormat]] | NotGiven = NOT_GIVEN,
+        dimensions: Optional[int] | Omit = omit,
+        prompt: Optional[str] | Omit = omit,
+        normalized: bool | Omit = omit,
+        encoding_format: Union[EncodingFormat, List[EncodingFormat]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> EmbeddingCreateResponse:
         """
         Create embeddings for text or images using the specified model, encoding format,
@@ -135,16 +135,16 @@ class AsyncEmbeddingsResource(AsyncAPIResource):
         *,
         model: str,
         input: Union[str, SequenceNotStr[str]],
-        dimensions: Optional[int] | NotGiven = NOT_GIVEN,
-        prompt: Optional[str] | NotGiven = NOT_GIVEN,
-        normalized: bool | NotGiven = NOT_GIVEN,
-        encoding_format: Union[EncodingFormat, List[EncodingFormat]] | NotGiven = NOT_GIVEN,
+        dimensions: Optional[int] | Omit = omit,
+        prompt: Optional[str] | Omit = omit,
+        normalized: bool | Omit = omit,
+        encoding_format: Union[EncodingFormat, List[EncodingFormat]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> EmbeddingCreateResponse:
         """
         Create embeddings for text or images using the specified model, encoding format,

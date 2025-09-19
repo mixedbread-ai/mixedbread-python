@@ -12,7 +12,6 @@ from . import _exceptions
 from ._qs import Querystring
 from .types import client_embed_params, client_rerank_params
 from ._types import (
-    NOT_GIVEN,
     Body,
     Omit,
     Query,
@@ -23,6 +22,8 @@ from ._types import (
     ProxiesTypes,
     RequestOptions,
     SequenceNotStr,
+    omit,
+    not_given,
 )
 from ._utils import (
     is_given,
@@ -95,9 +96,9 @@ class Mixedbread(SyncAPIClient):
         self,
         *,
         api_key: str | None = None,
-        environment: Literal["production", "development", "local"] | NotGiven = NOT_GIVEN,
-        base_url: str | httpx.URL | None | NotGiven = NOT_GIVEN,
-        timeout: Union[float, Timeout, None, NotGiven] = NOT_GIVEN,
+        environment: Literal["production", "development", "local"] | NotGiven = not_given,
+        base_url: str | httpx.URL | None | NotGiven = not_given,
+        timeout: float | Timeout | None | NotGiven = not_given,
         max_retries: int = DEFAULT_MAX_RETRIES,
         default_headers: Mapping[str, str] | None = None,
         default_query: Mapping[str, object] | None = None,
@@ -201,9 +202,9 @@ class Mixedbread(SyncAPIClient):
         api_key: str | None = None,
         environment: Literal["production", "development", "local"] | None = None,
         base_url: str | httpx.URL | None = None,
-        timeout: float | Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | Timeout | None | NotGiven = not_given,
         http_client: httpx.Client | None = None,
-        max_retries: int | NotGiven = NOT_GIVEN,
+        max_retries: int | NotGiven = not_given,
         default_headers: Mapping[str, str] | None = None,
         set_default_headers: Mapping[str, str] | None = None,
         default_query: Mapping[str, object] | None = None,
@@ -253,16 +254,16 @@ class Mixedbread(SyncAPIClient):
         *,
         model: str,
         input: Union[str, SequenceNotStr[str]],
-        dimensions: Optional[int] | NotGiven = NOT_GIVEN,
-        prompt: Optional[str] | NotGiven = NOT_GIVEN,
-        normalized: bool | NotGiven = NOT_GIVEN,
-        encoding_format: Union[EncodingFormat, List[EncodingFormat]] | NotGiven = NOT_GIVEN,
+        dimensions: Optional[int] | Omit = omit,
+        prompt: Optional[str] | Omit = omit,
+        normalized: bool | Omit = omit,
+        encoding_format: Union[EncodingFormat, List[EncodingFormat]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> EmbeddingCreateResponse:
         """
         Create embeddings for text or images using the specified model, encoding format,
@@ -321,7 +322,7 @@ class Mixedbread(SyncAPIClient):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> InfoResponse:
         """
         Returns service information, including name and version.
@@ -339,19 +340,19 @@ class Mixedbread(SyncAPIClient):
     def rerank(
         self,
         *,
-        model: str | NotGiven = NOT_GIVEN,
+        model: str | Omit = omit,
         query: str,
         input: SequenceNotStr[Union[str, Iterable[object], object]],
-        rank_fields: Optional[SequenceNotStr[str]] | NotGiven = NOT_GIVEN,
-        top_k: int | NotGiven = NOT_GIVEN,
-        return_input: bool | NotGiven = NOT_GIVEN,
-        rewrite_query: bool | NotGiven = NOT_GIVEN,
+        rank_fields: Optional[SequenceNotStr[str]] | Omit = omit,
+        top_k: int | Omit = omit,
+        return_input: bool | Omit = omit,
+        rewrite_query: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> RerankResponse:
         """
         Rerank different kind of documents for a given query.
@@ -458,9 +459,9 @@ class AsyncMixedbread(AsyncAPIClient):
         self,
         *,
         api_key: str | None = None,
-        environment: Literal["production", "development", "local"] | NotGiven = NOT_GIVEN,
-        base_url: str | httpx.URL | None | NotGiven = NOT_GIVEN,
-        timeout: Union[float, Timeout, None, NotGiven] = NOT_GIVEN,
+        environment: Literal["production", "development", "local"] | NotGiven = not_given,
+        base_url: str | httpx.URL | None | NotGiven = not_given,
+        timeout: float | Timeout | None | NotGiven = not_given,
         max_retries: int = DEFAULT_MAX_RETRIES,
         default_headers: Mapping[str, str] | None = None,
         default_query: Mapping[str, object] | None = None,
@@ -564,9 +565,9 @@ class AsyncMixedbread(AsyncAPIClient):
         api_key: str | None = None,
         environment: Literal["production", "development", "local"] | None = None,
         base_url: str | httpx.URL | None = None,
-        timeout: float | Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | Timeout | None | NotGiven = not_given,
         http_client: httpx.AsyncClient | None = None,
-        max_retries: int | NotGiven = NOT_GIVEN,
+        max_retries: int | NotGiven = not_given,
         default_headers: Mapping[str, str] | None = None,
         set_default_headers: Mapping[str, str] | None = None,
         default_query: Mapping[str, object] | None = None,
@@ -616,16 +617,16 @@ class AsyncMixedbread(AsyncAPIClient):
         *,
         model: str,
         input: Union[str, SequenceNotStr[str]],
-        dimensions: Optional[int] | NotGiven = NOT_GIVEN,
-        prompt: Optional[str] | NotGiven = NOT_GIVEN,
-        normalized: bool | NotGiven = NOT_GIVEN,
-        encoding_format: Union[EncodingFormat, List[EncodingFormat]] | NotGiven = NOT_GIVEN,
+        dimensions: Optional[int] | Omit = omit,
+        prompt: Optional[str] | Omit = omit,
+        normalized: bool | Omit = omit,
+        encoding_format: Union[EncodingFormat, List[EncodingFormat]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> EmbeddingCreateResponse:
         """
         Create embeddings for text or images using the specified model, encoding format,
@@ -684,7 +685,7 @@ class AsyncMixedbread(AsyncAPIClient):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> InfoResponse:
         """
         Returns service information, including name and version.
@@ -702,19 +703,19 @@ class AsyncMixedbread(AsyncAPIClient):
     async def rerank(
         self,
         *,
-        model: str | NotGiven = NOT_GIVEN,
+        model: str | Omit = omit,
         query: str,
         input: SequenceNotStr[Union[str, Iterable[object], object]],
-        rank_fields: Optional[SequenceNotStr[str]] | NotGiven = NOT_GIVEN,
-        top_k: int | NotGiven = NOT_GIVEN,
-        return_input: bool | NotGiven = NOT_GIVEN,
-        rewrite_query: bool | NotGiven = NOT_GIVEN,
+        rank_fields: Optional[SequenceNotStr[str]] | Omit = omit,
+        top_k: int | Omit = omit,
+        return_input: bool | Omit = omit,
+        rewrite_query: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> RerankResponse:
         """
         Rerank different kind of documents for a given query.
