@@ -155,9 +155,36 @@ class TestFiles:
             include_total=False,
             statuses=["pending"],
             metadata_filter={
-                "all": [],
-                "any": [],
-                "none": [],
+                "all": [
+                    {
+                        "any": [{"none": [{}, {}]}, {"none": [{}, {}]}],
+                        "none": [{"any": [{}, {}]}, {"any": [{}, {}]}],
+                    },
+                    {
+                        "any": [{"none": [{}, {}]}, {"none": [{}, {}]}],
+                        "none": [{"any": [{}, {}]}, {"any": [{}, {}]}],
+                    },
+                ],
+                "any": [
+                    {
+                        "all": [{"none": [{}, {}]}, {"none": [{}, {}]}],
+                        "none": [{"all": [{}, {}]}, {"all": [{}, {}]}],
+                    },
+                    {
+                        "all": [{"none": [{}, {}]}, {"none": [{}, {}]}],
+                        "none": [{"all": [{}, {}]}, {"all": [{}, {}]}],
+                    },
+                ],
+                "none": [
+                    {
+                        "all": [{"any": [{}, {}]}, {"any": [{}, {}]}],
+                        "any": [{"all": [{}, {}]}, {"all": [{}, {}]}],
+                    },
+                    {
+                        "all": [{"any": [{}, {}]}, {"any": [{}, {}]}],
+                        "any": [{"all": [{}, {}]}, {"all": [{}, {}]}],
+                    },
+                ],
             },
         )
         assert_matches_type(FileListResponse, file, path=["response"])
@@ -260,9 +287,36 @@ class TestFiles:
             vector_store_identifiers=["string"],
             top_k=1,
             filters={
-                "all": [],
-                "any": [],
-                "none": [],
+                "all": [
+                    {
+                        "any": [{"none": [{}, {}]}, {"none": [{}, {}]}],
+                        "none": [{"any": [{}, {}]}, {"any": [{}, {}]}],
+                    },
+                    {
+                        "any": [{"none": [{}, {}]}, {"none": [{}, {}]}],
+                        "none": [{"any": [{}, {}]}, {"any": [{}, {}]}],
+                    },
+                ],
+                "any": [
+                    {
+                        "all": [{"none": [{}, {}]}, {"none": [{}, {}]}],
+                        "none": [{"all": [{}, {}]}, {"all": [{}, {}]}],
+                    },
+                    {
+                        "all": [{"none": [{}, {}]}, {"none": [{}, {}]}],
+                        "none": [{"all": [{}, {}]}, {"all": [{}, {}]}],
+                    },
+                ],
+                "none": [
+                    {
+                        "all": [{"any": [{}, {}]}, {"any": [{}, {}]}],
+                        "any": [{"all": [{}, {}]}, {"all": [{}, {}]}],
+                    },
+                    {
+                        "all": [{"any": [{}, {}]}, {"any": [{}, {}]}],
+                        "any": [{"all": [{}, {}]}, {"all": [{}, {}]}],
+                    },
+                ],
             },
             file_ids=["123e4567-e89b-12d3-a456-426614174000", "123e4567-e89b-12d3-a456-426614174001"],
             search_options={
@@ -442,9 +496,36 @@ class TestAsyncFiles:
             include_total=False,
             statuses=["pending"],
             metadata_filter={
-                "all": [],
-                "any": [],
-                "none": [],
+                "all": [
+                    {
+                        "any": [{"none": [{}, {}]}, {"none": [{}, {}]}],
+                        "none": [{"any": [{}, {}]}, {"any": [{}, {}]}],
+                    },
+                    {
+                        "any": [{"none": [{}, {}]}, {"none": [{}, {}]}],
+                        "none": [{"any": [{}, {}]}, {"any": [{}, {}]}],
+                    },
+                ],
+                "any": [
+                    {
+                        "all": [{"none": [{}, {}]}, {"none": [{}, {}]}],
+                        "none": [{"all": [{}, {}]}, {"all": [{}, {}]}],
+                    },
+                    {
+                        "all": [{"none": [{}, {}]}, {"none": [{}, {}]}],
+                        "none": [{"all": [{}, {}]}, {"all": [{}, {}]}],
+                    },
+                ],
+                "none": [
+                    {
+                        "all": [{"any": [{}, {}]}, {"any": [{}, {}]}],
+                        "any": [{"all": [{}, {}]}, {"all": [{}, {}]}],
+                    },
+                    {
+                        "all": [{"any": [{}, {}]}, {"any": [{}, {}]}],
+                        "any": [{"all": [{}, {}]}, {"all": [{}, {}]}],
+                    },
+                ],
             },
         )
         assert_matches_type(FileListResponse, file, path=["response"])
@@ -547,9 +628,36 @@ class TestAsyncFiles:
             vector_store_identifiers=["string"],
             top_k=1,
             filters={
-                "all": [],
-                "any": [],
-                "none": [],
+                "all": [
+                    {
+                        "any": [{"none": [{}, {}]}, {"none": [{}, {}]}],
+                        "none": [{"any": [{}, {}]}, {"any": [{}, {}]}],
+                    },
+                    {
+                        "any": [{"none": [{}, {}]}, {"none": [{}, {}]}],
+                        "none": [{"any": [{}, {}]}, {"any": [{}, {}]}],
+                    },
+                ],
+                "any": [
+                    {
+                        "all": [{"none": [{}, {}]}, {"none": [{}, {}]}],
+                        "none": [{"all": [{}, {}]}, {"all": [{}, {}]}],
+                    },
+                    {
+                        "all": [{"none": [{}, {}]}, {"none": [{}, {}]}],
+                        "none": [{"all": [{}, {}]}, {"all": [{}, {}]}],
+                    },
+                ],
+                "none": [
+                    {
+                        "all": [{"any": [{}, {}]}, {"any": [{}, {}]}],
+                        "any": [{"all": [{}, {}]}, {"all": [{}, {}]}],
+                    },
+                    {
+                        "all": [{"any": [{}, {}]}, {"any": [{}, {}]}],
+                        "any": [{"all": [{}, {}]}, {"all": [{}, {}]}],
+                    },
+                ],
             },
             file_ids=["123e4567-e89b-12d3-a456-426614174000", "123e4567-e89b-12d3-a456-426614174001"],
             search_options={
