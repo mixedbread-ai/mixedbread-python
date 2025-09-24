@@ -250,32 +250,38 @@ class TestVectorStores:
             filters={
                 "all": [
                     {
-                        "any": [{"none": [{}, {}]}, {"none": [{}, {}]}],
-                        "none": [{"any": [{}, {}]}, {"any": [{}, {}]}],
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
                     },
                     {
-                        "any": [{"none": [{}, {}]}, {"none": [{}, {}]}],
-                        "none": [{"any": [{}, {}]}, {"any": [{}, {}]}],
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
                     },
                 ],
                 "any": [
                     {
-                        "all": [{"none": [{}, {}]}, {"none": [{}, {}]}],
-                        "none": [{"all": [{}, {}]}, {"all": [{}, {}]}],
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
                     },
                     {
-                        "all": [{"none": [{}, {}]}, {"none": [{}, {}]}],
-                        "none": [{"all": [{}, {}]}, {"all": [{}, {}]}],
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
                     },
                 ],
                 "none": [
                     {
-                        "all": [{"any": [{}, {}]}, {"any": [{}, {}]}],
-                        "any": [{"all": [{}, {}]}, {"all": [{}, {}]}],
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
                     },
                     {
-                        "all": [{"any": [{}, {}]}, {"any": [{}, {}]}],
-                        "any": [{"all": [{}, {}]}, {"all": [{}, {}]}],
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
                     },
                 ],
             },
@@ -336,32 +342,38 @@ class TestVectorStores:
             filters={
                 "all": [
                     {
-                        "any": [{"none": [{}, {}]}, {"none": [{}, {}]}],
-                        "none": [{"any": [{}, {}]}, {"any": [{}, {}]}],
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
                     },
                     {
-                        "any": [{"none": [{}, {}]}, {"none": [{}, {}]}],
-                        "none": [{"any": [{}, {}]}, {"any": [{}, {}]}],
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
                     },
                 ],
                 "any": [
                     {
-                        "all": [{"none": [{}, {}]}, {"none": [{}, {}]}],
-                        "none": [{"all": [{}, {}]}, {"all": [{}, {}]}],
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
                     },
                     {
-                        "all": [{"none": [{}, {}]}, {"none": [{}, {}]}],
-                        "none": [{"all": [{}, {}]}, {"all": [{}, {}]}],
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
                     },
                 ],
                 "none": [
                     {
-                        "all": [{"any": [{}, {}]}, {"any": [{}, {}]}],
-                        "any": [{"all": [{}, {}]}, {"all": [{}, {}]}],
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
                     },
                     {
-                        "all": [{"any": [{}, {}]}, {"any": [{}, {}]}],
-                        "any": [{"all": [{}, {}]}, {"all": [{}, {}]}],
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
                     },
                 ],
             },
@@ -635,32 +647,38 @@ class TestAsyncVectorStores:
             filters={
                 "all": [
                     {
-                        "any": [{"none": [{}, {}]}, {"none": [{}, {}]}],
-                        "none": [{"any": [{}, {}]}, {"any": [{}, {}]}],
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
                     },
                     {
-                        "any": [{"none": [{}, {}]}, {"none": [{}, {}]}],
-                        "none": [{"any": [{}, {}]}, {"any": [{}, {}]}],
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
                     },
                 ],
                 "any": [
                     {
-                        "all": [{"none": [{}, {}]}, {"none": [{}, {}]}],
-                        "none": [{"all": [{}, {}]}, {"all": [{}, {}]}],
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
                     },
                     {
-                        "all": [{"none": [{}, {}]}, {"none": [{}, {}]}],
-                        "none": [{"all": [{}, {}]}, {"all": [{}, {}]}],
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
                     },
                 ],
                 "none": [
                     {
-                        "all": [{"any": [{}, {}]}, {"any": [{}, {}]}],
-                        "any": [{"all": [{}, {}]}, {"all": [{}, {}]}],
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
                     },
                     {
-                        "all": [{"any": [{}, {}]}, {"any": [{}, {}]}],
-                        "any": [{"all": [{}, {}]}, {"all": [{}, {}]}],
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
                     },
                 ],
             },
@@ -721,32 +739,38 @@ class TestAsyncVectorStores:
             filters={
                 "all": [
                     {
-                        "any": [{"none": [{}, {}]}, {"none": [{}, {}]}],
-                        "none": [{"any": [{}, {}]}, {"any": [{}, {}]}],
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
                     },
                     {
-                        "any": [{"none": [{}, {}]}, {"none": [{}, {}]}],
-                        "none": [{"any": [{}, {}]}, {"any": [{}, {}]}],
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
                     },
                 ],
                 "any": [
                     {
-                        "all": [{"none": [{}, {}]}, {"none": [{}, {}]}],
-                        "none": [{"all": [{}, {}]}, {"all": [{}, {}]}],
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
                     },
                     {
-                        "all": [{"none": [{}, {}]}, {"none": [{}, {}]}],
-                        "none": [{"all": [{}, {}]}, {"all": [{}, {}]}],
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
                     },
                 ],
                 "none": [
                     {
-                        "all": [{"any": [{}, {}]}, {"any": [{}, {}]}],
-                        "any": [{"all": [{}, {}]}, {"all": [{}, {}]}],
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
                     },
                     {
-                        "all": [{"any": [{}, {}]}, {"any": [{}, {}]}],
-                        "any": [{"all": [{}, {}]}, {"all": [{}, {}]}],
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
                     },
                 ],
             },

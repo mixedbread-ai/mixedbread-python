@@ -157,32 +157,38 @@ class TestFiles:
             metadata_filter={
                 "all": [
                     {
-                        "any": [{"none": [{}, {}]}, {"none": [{}, {}]}],
-                        "none": [{"any": [{}, {}]}, {"any": [{}, {}]}],
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
                     },
                     {
-                        "any": [{"none": [{}, {}]}, {"none": [{}, {}]}],
-                        "none": [{"any": [{}, {}]}, {"any": [{}, {}]}],
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
                     },
                 ],
                 "any": [
                     {
-                        "all": [{"none": [{}, {}]}, {"none": [{}, {}]}],
-                        "none": [{"all": [{}, {}]}, {"all": [{}, {}]}],
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
                     },
                     {
-                        "all": [{"none": [{}, {}]}, {"none": [{}, {}]}],
-                        "none": [{"all": [{}, {}]}, {"all": [{}, {}]}],
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
                     },
                 ],
                 "none": [
                     {
-                        "all": [{"any": [{}, {}]}, {"any": [{}, {}]}],
-                        "any": [{"all": [{}, {}]}, {"all": [{}, {}]}],
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
                     },
                     {
-                        "all": [{"any": [{}, {}]}, {"any": [{}, {}]}],
-                        "any": [{"all": [{}, {}]}, {"all": [{}, {}]}],
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
                     },
                 ],
             },
@@ -289,32 +295,38 @@ class TestFiles:
             filters={
                 "all": [
                     {
-                        "any": [{"none": [{}, {}]}, {"none": [{}, {}]}],
-                        "none": [{"any": [{}, {}]}, {"any": [{}, {}]}],
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
                     },
                     {
-                        "any": [{"none": [{}, {}]}, {"none": [{}, {}]}],
-                        "none": [{"any": [{}, {}]}, {"any": [{}, {}]}],
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
                     },
                 ],
                 "any": [
                     {
-                        "all": [{"none": [{}, {}]}, {"none": [{}, {}]}],
-                        "none": [{"all": [{}, {}]}, {"all": [{}, {}]}],
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
                     },
                     {
-                        "all": [{"none": [{}, {}]}, {"none": [{}, {}]}],
-                        "none": [{"all": [{}, {}]}, {"all": [{}, {}]}],
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
                     },
                 ],
                 "none": [
                     {
-                        "all": [{"any": [{}, {}]}, {"any": [{}, {}]}],
-                        "any": [{"all": [{}, {}]}, {"all": [{}, {}]}],
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
                     },
                     {
-                        "all": [{"any": [{}, {}]}, {"any": [{}, {}]}],
-                        "any": [{"all": [{}, {}]}, {"all": [{}, {}]}],
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
                     },
                 ],
             },
@@ -498,32 +510,38 @@ class TestAsyncFiles:
             metadata_filter={
                 "all": [
                     {
-                        "any": [{"none": [{}, {}]}, {"none": [{}, {}]}],
-                        "none": [{"any": [{}, {}]}, {"any": [{}, {}]}],
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
                     },
                     {
-                        "any": [{"none": [{}, {}]}, {"none": [{}, {}]}],
-                        "none": [{"any": [{}, {}]}, {"any": [{}, {}]}],
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
                     },
                 ],
                 "any": [
                     {
-                        "all": [{"none": [{}, {}]}, {"none": [{}, {}]}],
-                        "none": [{"all": [{}, {}]}, {"all": [{}, {}]}],
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
                     },
                     {
-                        "all": [{"none": [{}, {}]}, {"none": [{}, {}]}],
-                        "none": [{"all": [{}, {}]}, {"all": [{}, {}]}],
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
                     },
                 ],
                 "none": [
                     {
-                        "all": [{"any": [{}, {}]}, {"any": [{}, {}]}],
-                        "any": [{"all": [{}, {}]}, {"all": [{}, {}]}],
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
                     },
                     {
-                        "all": [{"any": [{}, {}]}, {"any": [{}, {}]}],
-                        "any": [{"all": [{}, {}]}, {"all": [{}, {}]}],
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
                     },
                 ],
             },
@@ -630,32 +648,38 @@ class TestAsyncFiles:
             filters={
                 "all": [
                     {
-                        "any": [{"none": [{}, {}]}, {"none": [{}, {}]}],
-                        "none": [{"any": [{}, {}]}, {"any": [{}, {}]}],
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
                     },
                     {
-                        "any": [{"none": [{}, {}]}, {"none": [{}, {}]}],
-                        "none": [{"any": [{}, {}]}, {"any": [{}, {}]}],
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
                     },
                 ],
                 "any": [
                     {
-                        "all": [{"none": [{}, {}]}, {"none": [{}, {}]}],
-                        "none": [{"all": [{}, {}]}, {"all": [{}, {}]}],
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
                     },
                     {
-                        "all": [{"none": [{}, {}]}, {"none": [{}, {}]}],
-                        "none": [{"all": [{}, {}]}, {"all": [{}, {}]}],
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
                     },
                 ],
                 "none": [
                     {
-                        "all": [{"any": [{}, {}]}, {"any": [{}, {}]}],
-                        "any": [{"all": [{}, {}]}, {"all": [{}, {}]}],
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
                     },
                     {
-                        "all": [{"any": [{}, {}]}, {"any": [{}, {}]}],
-                        "any": [{"all": [{}, {}]}, {"all": [{}, {}]}],
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
                     },
                 ],
             },
