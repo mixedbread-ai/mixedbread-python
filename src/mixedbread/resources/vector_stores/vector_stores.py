@@ -258,10 +258,10 @@ class VectorStoresResource(SyncAPIResource):
         """
         List all vector stores with optional search.
 
-        Args: pagination: The pagination options. q: Optional search query to filter
-        vector stores.
+        Args: options: The pagination options including limit, cursor, and optional
+        search query (q)
 
-        Returns: VectorStoreListResponse: The list of vector stores.
+        Returns: VectorStoreListResponse: The list of vector stores
 
         Args:
           limit: Maximum number of items to return per page (1-100)
@@ -707,10 +707,10 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         """
         List all vector stores with optional search.
 
-        Args: pagination: The pagination options. q: Optional search query to filter
-        vector stores.
+        Args: options: The pagination options including limit, cursor, and optional
+        search query (q)
 
-        Returns: VectorStoreListResponse: The list of vector stores.
+        Returns: VectorStoreListResponse: The list of vector stores
 
         Args:
           limit: Maximum number of items to return per page (1-100)
