@@ -12,7 +12,7 @@ __all__ = ["VectorStoreUpdateParams"]
 
 class VectorStoreUpdateParams(TypedDict, total=False):
     name: Optional[str]
-    """New name for the vector store"""
+    """New name for the store"""
 
     description: Optional[str]
     """New description"""
@@ -21,7 +21,7 @@ class VectorStoreUpdateParams(TypedDict, total=False):
     """Whether the vector store can be accessed by anyone with valid login credentials"""
 
     expires_after: Optional[ExpiresAfterParam]
-    """Represents an expiration policy for a vector store."""
+    """Represents an expiration policy for a store."""
 
     metadata: object
     """Optional metadata key-value pairs"""

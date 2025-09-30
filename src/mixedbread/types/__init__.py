@@ -30,7 +30,6 @@ from .pagination_with_total import PaginationWithTotal as PaginationWithTotal
 from .api_key_delete_response import APIKeyDeleteResponse as APIKeyDeleteResponse
 from .data_source_list_params import DataSourceListParams as DataSourceListParams
 from .embedding_create_params import EmbeddingCreateParams as EmbeddingCreateParams
-from .scored_text_input_chunk import ScoredTextInputChunk as ScoredTextInputChunk
 from .linear_data_source_param import LinearDataSourceParam as LinearDataSourceParam
 from .multi_encoding_embedding import MultiEncodingEmbedding as MultiEncodingEmbedding
 from .notion_data_source_param import NotionDataSourceParam as NotionDataSourceParam
@@ -43,9 +42,6 @@ from .vector_store_create_params import VectorStoreCreateParams as VectorStoreCr
 from .vector_store_search_params import VectorStoreSearchParams as VectorStoreSearchParams
 from .vector_store_update_params import VectorStoreUpdateParams as VectorStoreUpdateParams
 from .data_source_delete_response import DataSourceDeleteResponse as DataSourceDeleteResponse
-from .scored_audio_url_input_chunk import ScoredAudioURLInputChunk as ScoredAudioURLInputChunk
-from .scored_image_url_input_chunk import ScoredImageURLInputChunk as ScoredImageURLInputChunk
-from .scored_video_url_input_chunk import ScoredVideoURLInputChunk as ScoredVideoURLInputChunk
 from .vector_store_delete_response import VectorStoreDeleteResponse as VectorStoreDeleteResponse
 from .vector_store_search_response import VectorStoreSearchResponse as VectorStoreSearchResponse
 from .vector_store_question_answering_params import (

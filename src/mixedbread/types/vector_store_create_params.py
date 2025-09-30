@@ -22,7 +22,7 @@ class VectorStoreCreateParams(TypedDict, total=False):
     """Whether the vector store can be accessed by anyone with valid login credentials"""
 
     expires_after: Optional[ExpiresAfterParam]
-    """Represents an expiration policy for a vector store."""
+    """Represents an expiration policy for a store."""
 
     metadata: object
     """Optional metadata key-value pairs"""

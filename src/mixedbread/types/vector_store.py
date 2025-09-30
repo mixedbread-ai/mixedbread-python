@@ -50,7 +50,7 @@ class VectorStore(BaseModel):
     """Counts of files in different states"""
 
     expires_after: Optional[ExpiresAfter] = None
-    """Represents an expiration policy for a vector store."""
+    """Represents an expiration policy for a store."""
 
     status: Optional[Literal["expired", "in_progress", "completed"]] = None
     """Processing status of the vector store"""

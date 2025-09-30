@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 import functools
+import typing_extensions
 from typing import Any, List, Union, Iterable, Optional
+from typing_extensions import Literal
 
 import httpx
 
@@ -24,7 +26,6 @@ from ...types.vector_stores.vector_store_file import VectorStoreFile
 from ...types.vector_stores.file_list_response import FileListResponse
 from ...types.vector_stores.file_delete_response import FileDeleteResponse
 from ...types.vector_stores.file_search_response import FileSearchResponse
-from ...types.vector_stores.vector_store_file_status import VectorStoreFileStatus
 
 __all__ = ["FilesResource", "AsyncFilesResource"]
 
@@ -49,6 +50,7 @@ class FilesResource(SyncAPIResource):
         """
         return FilesResourceWithStreamingResponse(self)
 
+    @typing_extensions.deprecated("deprecated")
     def create(
         self,
         vector_store_identifier: str,
@@ -64,12 +66,7 @@ class FilesResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> VectorStoreFile:
         """
-        Add an already uploaded file to a vector store.
-
-        Args: vector_store_identifier: The ID or name of the vector store to add the
-        file to file: The file to add and index
-
-        Returns: VectorStoreFile: Details of the added and indexed file
+        DEPRECATED: Use POST /stores/{store_identifier}/files instead
 
         Args:
           vector_store_identifier: The ID or name of the vector store
@@ -108,6 +105,7 @@ class FilesResource(SyncAPIResource):
             cast_to=VectorStoreFile,
         )
 
+    @typing_extensions.deprecated("deprecated")
     def retrieve(
         self,
         file_id: str,
@@ -122,17 +120,12 @@ class FilesResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> VectorStoreFile:
         """
-        Get details of a specific file in a vector store.
-
-        Args: vector_store_identifier: The ID or name of the vector store file_id: The
-        ID of the file
-
-        Returns: VectorStoreFile: Details of the vector store file
+        DEPRECATED: Use GET /stores/{store_identifier}/files/{file_id} instead
 
         Args:
           vector_store_identifier: The ID or name of the vector store
 
-          file_id: The ID of the file
+          file_id: The ID or name of the file
 
           return_chunks: Whether to return the chunks for the file
 
@@ -162,6 +155,7 @@ class FilesResource(SyncAPIResource):
             cast_to=VectorStoreFile,
         )
 
+    @typing_extensions.deprecated("deprecated")
     def list(
         self,
         vector_store_identifier: str,
@@ -170,7 +164,7 @@ class FilesResource(SyncAPIResource):
         after: Optional[str] | Omit = omit,
         before: Optional[str] | Omit = omit,
         include_total: bool | Omit = omit,
-        statuses: Optional[List[VectorStoreFileStatus]] | Omit = omit,
+        statuses: Optional[List[Literal["pending", "in_progress", "cancelled", "completed", "failed"]]] | Omit = omit,
         metadata_filter: Optional[file_list_params.MetadataFilter] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -180,12 +174,7 @@ class FilesResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> FileListResponse:
         """
-        List files indexed in a vector store with pagination and metadata filter.
-
-        Args: vector_store_identifier: The ID or name of the vector store pagination:
-        Pagination parameters and metadata filter
-
-        Returns: VectorStoreFileListResponse: Paginated list of vector store files
+        DEPRECATED: Use POST /stores/{store_identifier}/files/list instead
 
         Args:
           vector_store_identifier: The ID or name of the vector store
@@ -235,6 +224,7 @@ class FilesResource(SyncAPIResource):
             cast_to=FileListResponse,
         )
 
+    @typing_extensions.deprecated("deprecated")
     def delete(
         self,
         file_id: str,
@@ -248,17 +238,12 @@ class FilesResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> FileDeleteResponse:
         """
-        Delete a file from a vector store.
-
-        Args: vector_store_identifier: The ID or name of the vector store file_id: The
-        ID of the file to delete
-
-        Returns: VectorStoreFileDeleted: The deleted file
+        DEPRECATED: Use DELETE /stores/{store_identifier}/files/{file_id} instead
 
         Args:
           vector_store_identifier: The ID or name of the vector store
 
-          file_id: The ID of the file to delete
+          file_id: The ID or name of the file to delete
 
           extra_headers: Send extra headers
 
@@ -282,6 +267,7 @@ class FilesResource(SyncAPIResource):
             cast_to=FileDeleteResponse,
         )
 
+    @typing_extensions.deprecated("deprecated")
     def search(
         self,
         *,
@@ -299,22 +285,7 @@ class FilesResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> FileSearchResponse:
         """
-        Perform semantic search across complete vector store files.
-
-        This endpoint searches through vector store files using semantic similarity
-        matching. Unlike chunk search, it returns complete matching files rather than
-        individual chunks. Supports complex search queries with filters and returns
-        relevance-scored results.
-
-        Args: search_params: Search configuration including: - query text or
-        embeddings - metadata filters - pagination parameters - sorting preferences
-        \\__state: API state dependency \\__ctx: Service context dependency
-
-        Returns: VectorStoreSearchFileResponse containing: - List of matched files with
-        relevance scores - Pagination details including total result count
-
-        Raises: HTTPException (400): If search parameters are invalid HTTPException
-        (404): If no vector stores are found to search
+        DEPRECATED: Use POST /stores/{store_identifier}/files/search instead
 
         Args:
           query: Search query text
@@ -483,6 +454,7 @@ class AsyncFilesResource(AsyncAPIResource):
         """
         return AsyncFilesResourceWithStreamingResponse(self)
 
+    @typing_extensions.deprecated("deprecated")
     async def create(
         self,
         vector_store_identifier: str,
@@ -498,12 +470,7 @@ class AsyncFilesResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> VectorStoreFile:
         """
-        Add an already uploaded file to a vector store.
-
-        Args: vector_store_identifier: The ID or name of the vector store to add the
-        file to file: The file to add and index
-
-        Returns: VectorStoreFile: Details of the added and indexed file
+        DEPRECATED: Use POST /stores/{store_identifier}/files instead
 
         Args:
           vector_store_identifier: The ID or name of the vector store
@@ -542,6 +509,7 @@ class AsyncFilesResource(AsyncAPIResource):
             cast_to=VectorStoreFile,
         )
 
+    @typing_extensions.deprecated("deprecated")
     async def retrieve(
         self,
         file_id: str,
@@ -556,17 +524,12 @@ class AsyncFilesResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> VectorStoreFile:
         """
-        Get details of a specific file in a vector store.
-
-        Args: vector_store_identifier: The ID or name of the vector store file_id: The
-        ID of the file
-
-        Returns: VectorStoreFile: Details of the vector store file
+        DEPRECATED: Use GET /stores/{store_identifier}/files/{file_id} instead
 
         Args:
           vector_store_identifier: The ID or name of the vector store
 
-          file_id: The ID of the file
+          file_id: The ID or name of the file
 
           return_chunks: Whether to return the chunks for the file
 
@@ -598,6 +561,7 @@ class AsyncFilesResource(AsyncAPIResource):
             cast_to=VectorStoreFile,
         )
 
+    @typing_extensions.deprecated("deprecated")
     async def list(
         self,
         vector_store_identifier: str,
@@ -606,7 +570,7 @@ class AsyncFilesResource(AsyncAPIResource):
         after: Optional[str] | Omit = omit,
         before: Optional[str] | Omit = omit,
         include_total: bool | Omit = omit,
-        statuses: Optional[List[VectorStoreFileStatus]] | Omit = omit,
+        statuses: Optional[List[Literal["pending", "in_progress", "cancelled", "completed", "failed"]]] | Omit = omit,
         metadata_filter: Optional[file_list_params.MetadataFilter] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -616,12 +580,7 @@ class AsyncFilesResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> FileListResponse:
         """
-        List files indexed in a vector store with pagination and metadata filter.
-
-        Args: vector_store_identifier: The ID or name of the vector store pagination:
-        Pagination parameters and metadata filter
-
-        Returns: VectorStoreFileListResponse: Paginated list of vector store files
+        DEPRECATED: Use POST /stores/{store_identifier}/files/list instead
 
         Args:
           vector_store_identifier: The ID or name of the vector store
@@ -671,6 +630,7 @@ class AsyncFilesResource(AsyncAPIResource):
             cast_to=FileListResponse,
         )
 
+    @typing_extensions.deprecated("deprecated")
     async def delete(
         self,
         file_id: str,
@@ -684,17 +644,12 @@ class AsyncFilesResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> FileDeleteResponse:
         """
-        Delete a file from a vector store.
-
-        Args: vector_store_identifier: The ID or name of the vector store file_id: The
-        ID of the file to delete
-
-        Returns: VectorStoreFileDeleted: The deleted file
+        DEPRECATED: Use DELETE /stores/{store_identifier}/files/{file_id} instead
 
         Args:
           vector_store_identifier: The ID or name of the vector store
 
-          file_id: The ID of the file to delete
+          file_id: The ID or name of the file to delete
 
           extra_headers: Send extra headers
 
@@ -718,6 +673,7 @@ class AsyncFilesResource(AsyncAPIResource):
             cast_to=FileDeleteResponse,
         )
 
+    @typing_extensions.deprecated("deprecated")
     async def search(
         self,
         *,
@@ -735,22 +691,7 @@ class AsyncFilesResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> FileSearchResponse:
         """
-        Perform semantic search across complete vector store files.
-
-        This endpoint searches through vector store files using semantic similarity
-        matching. Unlike chunk search, it returns complete matching files rather than
-        individual chunks. Supports complex search queries with filters and returns
-        relevance-scored results.
-
-        Args: search_params: Search configuration including: - query text or
-        embeddings - metadata filters - pagination parameters - sorting preferences
-        \\__state: API state dependency \\__ctx: Service context dependency
-
-        Returns: VectorStoreSearchFileResponse containing: - List of matched files with
-        relevance scores - Pagination details including total result count
-
-        Raises: HTTPException (400): If search parameters are invalid HTTPException
-        (404): If no vector stores are found to search
+        DEPRECATED: Use POST /stores/{store_identifier}/files/search instead
 
         Args:
           query: Search query text
@@ -907,20 +848,30 @@ class FilesResourceWithRawResponse:
     def __init__(self, files: FilesResource) -> None:
         self._files = files
 
-        self.create = to_raw_response_wrapper(
-            files.create,
+        self.create = (  # pyright: ignore[reportDeprecated]
+            to_raw_response_wrapper(
+                files.create,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.retrieve = to_raw_response_wrapper(
-            files.retrieve,
+        self.retrieve = (  # pyright: ignore[reportDeprecated]
+            to_raw_response_wrapper(
+                files.retrieve,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.list = to_raw_response_wrapper(
-            files.list,
+        self.list = (  # pyright: ignore[reportDeprecated]
+            to_raw_response_wrapper(
+                files.list,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.delete = to_raw_response_wrapper(
-            files.delete,
+        self.delete = (  # pyright: ignore[reportDeprecated]
+            to_raw_response_wrapper(
+                files.delete,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.search = to_raw_response_wrapper(
-            files.search,
+        self.search = (  # pyright: ignore[reportDeprecated]
+            to_raw_response_wrapper(
+                files.search,  # pyright: ignore[reportDeprecated],
+            )
         )
 
 
@@ -928,20 +879,30 @@ class AsyncFilesResourceWithRawResponse:
     def __init__(self, files: AsyncFilesResource) -> None:
         self._files = files
 
-        self.create = async_to_raw_response_wrapper(
-            files.create,
+        self.create = (  # pyright: ignore[reportDeprecated]
+            async_to_raw_response_wrapper(
+                files.create,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.retrieve = async_to_raw_response_wrapper(
-            files.retrieve,
+        self.retrieve = (  # pyright: ignore[reportDeprecated]
+            async_to_raw_response_wrapper(
+                files.retrieve,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.list = async_to_raw_response_wrapper(
-            files.list,
+        self.list = (  # pyright: ignore[reportDeprecated]
+            async_to_raw_response_wrapper(
+                files.list,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.delete = async_to_raw_response_wrapper(
-            files.delete,
+        self.delete = (  # pyright: ignore[reportDeprecated]
+            async_to_raw_response_wrapper(
+                files.delete,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.search = async_to_raw_response_wrapper(
-            files.search,
+        self.search = (  # pyright: ignore[reportDeprecated]
+            async_to_raw_response_wrapper(
+                files.search,  # pyright: ignore[reportDeprecated],
+            )
         )
 
 
@@ -949,20 +910,30 @@ class FilesResourceWithStreamingResponse:
     def __init__(self, files: FilesResource) -> None:
         self._files = files
 
-        self.create = to_streamed_response_wrapper(
-            files.create,
+        self.create = (  # pyright: ignore[reportDeprecated]
+            to_streamed_response_wrapper(
+                files.create,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.retrieve = to_streamed_response_wrapper(
-            files.retrieve,
+        self.retrieve = (  # pyright: ignore[reportDeprecated]
+            to_streamed_response_wrapper(
+                files.retrieve,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.list = to_streamed_response_wrapper(
-            files.list,
+        self.list = (  # pyright: ignore[reportDeprecated]
+            to_streamed_response_wrapper(
+                files.list,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.delete = to_streamed_response_wrapper(
-            files.delete,
+        self.delete = (  # pyright: ignore[reportDeprecated]
+            to_streamed_response_wrapper(
+                files.delete,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.search = to_streamed_response_wrapper(
-            files.search,
+        self.search = (  # pyright: ignore[reportDeprecated]
+            to_streamed_response_wrapper(
+                files.search,  # pyright: ignore[reportDeprecated],
+            )
         )
 
 
@@ -970,18 +941,28 @@ class AsyncFilesResourceWithStreamingResponse:
     def __init__(self, files: AsyncFilesResource) -> None:
         self._files = files
 
-        self.create = async_to_streamed_response_wrapper(
-            files.create,
+        self.create = (  # pyright: ignore[reportDeprecated]
+            async_to_streamed_response_wrapper(
+                files.create,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.retrieve = async_to_streamed_response_wrapper(
-            files.retrieve,
+        self.retrieve = (  # pyright: ignore[reportDeprecated]
+            async_to_streamed_response_wrapper(
+                files.retrieve,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.list = async_to_streamed_response_wrapper(
-            files.list,
+        self.list = (  # pyright: ignore[reportDeprecated]
+            async_to_streamed_response_wrapper(
+                files.list,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.delete = async_to_streamed_response_wrapper(
-            files.delete,
+        self.delete = (  # pyright: ignore[reportDeprecated]
+            async_to_streamed_response_wrapper(
+                files.delete,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.search = async_to_streamed_response_wrapper(
-            files.search,
+        self.search = (  # pyright: ignore[reportDeprecated]
+            async_to_streamed_response_wrapper(
+                files.search,  # pyright: ignore[reportDeprecated],
+            )
         )

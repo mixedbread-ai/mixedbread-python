@@ -9,8 +9,8 @@ __all__ = ["ConnectorCreateParams"]
 
 
 class ConnectorCreateParams(TypedDict, total=False):
-    vector_store_id: Required[str]
-    """The ID of the vector store"""
+    store_id: Required[str]
+    """The ID of the store"""
 
     name: str
     """The name of the connector"""
