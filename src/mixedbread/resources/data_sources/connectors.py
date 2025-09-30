@@ -49,7 +49,7 @@ class ConnectorsResource(SyncAPIResource):
         self,
         data_source_id: str,
         *,
-        vector_store_id: str,
+        store_id: str,
         name: str | Omit = omit,
         trigger_sync: bool | Omit = omit,
         metadata: object | Omit = omit,
@@ -72,7 +72,7 @@ class ConnectorsResource(SyncAPIResource):
         Args:
           data_source_id: The ID of the data source to create a connector for
 
-          vector_store_id: The ID of the vector store
+          store_id: The ID of the store
 
           name: The name of the connector
 
@@ -101,7 +101,7 @@ class ConnectorsResource(SyncAPIResource):
             f"/v1/data_sources/{data_source_id}/connectors",
             body=maybe_transform(
                 {
-                    "vector_store_id": vector_store_id,
+                    "store_id": store_id,
                     "name": name,
                     "trigger_sync": trigger_sync,
                     "metadata": metadata,
@@ -369,7 +369,7 @@ class AsyncConnectorsResource(AsyncAPIResource):
         self,
         data_source_id: str,
         *,
-        vector_store_id: str,
+        store_id: str,
         name: str | Omit = omit,
         trigger_sync: bool | Omit = omit,
         metadata: object | Omit = omit,
@@ -392,7 +392,7 @@ class AsyncConnectorsResource(AsyncAPIResource):
         Args:
           data_source_id: The ID of the data source to create a connector for
 
-          vector_store_id: The ID of the vector store
+          store_id: The ID of the store
 
           name: The name of the connector
 
@@ -421,7 +421,7 @@ class AsyncConnectorsResource(AsyncAPIResource):
             f"/v1/data_sources/{data_source_id}/connectors",
             body=await async_maybe_transform(
                 {
-                    "vector_store_id": vector_store_id,
+                    "store_id": store_id,
                     "name": name,
                     "trigger_sync": trigger_sync,
                     "metadata": metadata,

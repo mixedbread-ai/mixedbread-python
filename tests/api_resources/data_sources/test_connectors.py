@@ -25,7 +25,7 @@ class TestConnectors:
     def test_method_create(self, client: Mixedbread) -> None:
         connector = client.data_sources.connectors.create(
             data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            vector_store_id="vector_store_id",
+            store_id="store_id",
         )
         assert_matches_type(DataSourceConnector, connector, path=["response"])
 
@@ -33,7 +33,7 @@ class TestConnectors:
     def test_method_create_with_all_params(self, client: Mixedbread) -> None:
         connector = client.data_sources.connectors.create(
             data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            vector_store_id="vector_store_id",
+            store_id="store_id",
             name="name",
             trigger_sync=True,
             metadata={},
@@ -45,7 +45,7 @@ class TestConnectors:
     def test_raw_response_create(self, client: Mixedbread) -> None:
         response = client.data_sources.connectors.with_raw_response.create(
             data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            vector_store_id="vector_store_id",
+            store_id="store_id",
         )
 
         assert response.is_closed is True
@@ -57,7 +57,7 @@ class TestConnectors:
     def test_streaming_response_create(self, client: Mixedbread) -> None:
         with client.data_sources.connectors.with_streaming_response.create(
             data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            vector_store_id="vector_store_id",
+            store_id="store_id",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -72,7 +72,7 @@ class TestConnectors:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `data_source_id` but received ''"):
             client.data_sources.connectors.with_raw_response.create(
                 data_source_id="",
-                vector_store_id="vector_store_id",
+                store_id="store_id",
             )
 
     @parametrize
@@ -290,7 +290,7 @@ class TestAsyncConnectors:
     async def test_method_create(self, async_client: AsyncMixedbread) -> None:
         connector = await async_client.data_sources.connectors.create(
             data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            vector_store_id="vector_store_id",
+            store_id="store_id",
         )
         assert_matches_type(DataSourceConnector, connector, path=["response"])
 
@@ -298,7 +298,7 @@ class TestAsyncConnectors:
     async def test_method_create_with_all_params(self, async_client: AsyncMixedbread) -> None:
         connector = await async_client.data_sources.connectors.create(
             data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            vector_store_id="vector_store_id",
+            store_id="store_id",
             name="name",
             trigger_sync=True,
             metadata={},
@@ -310,7 +310,7 @@ class TestAsyncConnectors:
     async def test_raw_response_create(self, async_client: AsyncMixedbread) -> None:
         response = await async_client.data_sources.connectors.with_raw_response.create(
             data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            vector_store_id="vector_store_id",
+            store_id="store_id",
         )
 
         assert response.is_closed is True
@@ -322,7 +322,7 @@ class TestAsyncConnectors:
     async def test_streaming_response_create(self, async_client: AsyncMixedbread) -> None:
         async with async_client.data_sources.connectors.with_streaming_response.create(
             data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            vector_store_id="vector_store_id",
+            store_id="store_id",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -337,7 +337,7 @@ class TestAsyncConnectors:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `data_source_id` but received ''"):
             await async_client.data_sources.connectors.with_raw_response.create(
                 data_source_id="",
-                vector_store_id="vector_store_id",
+                store_id="store_id",
             )
 
     @parametrize

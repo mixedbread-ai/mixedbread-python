@@ -3,9 +3,8 @@
 from __future__ import annotations
 
 from typing import List, Union, Iterable, Optional
-from typing_extensions import TypeAlias, TypedDict
+from typing_extensions import Literal, TypeAlias, TypedDict
 
-from .vector_store_file_status import VectorStoreFileStatus
 from ..shared_params.search_filter_condition import SearchFilterCondition
 
 __all__ = ["FileListParams", "MetadataFilter", "MetadataFilterUnionMember2"]
@@ -30,7 +29,7 @@ class FileListParams(TypedDict, total=False):
     include_total: bool
     """Whether to include total count in response (expensive operation)"""
 
-    statuses: Optional[List[VectorStoreFileStatus]]
+    statuses: Optional[List[Literal["pending", "in_progress", "cancelled", "completed", "failed"]]]
     """Status to filter by"""
 
     metadata_filter: Optional[MetadataFilter]

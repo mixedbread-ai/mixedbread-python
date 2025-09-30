@@ -12,4 +12,4 @@ class ExpiresAfterParam(TypedDict, total=False):
     """Anchor date for the expiration policy"""
 
     days: int
-    """Number of days after which the vector store expires"""
+    """Number of days after which the store expires"""
