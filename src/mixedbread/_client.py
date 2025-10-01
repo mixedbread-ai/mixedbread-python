@@ -47,6 +47,7 @@ from ._base_client import (
     AsyncAPIClient,
     make_request_options,
 )
+from .resources.stores import stores
 from .resources.parsing import parsing
 from .types.info_response import InfoResponse
 from .resources.extractions import extractions
@@ -77,6 +78,7 @@ ENVIRONMENTS: Dict[str, str] = {
 
 class Mixedbread(SyncAPIClient):
     vector_stores: vector_stores.VectorStoresResource
+    stores: stores.StoresResource
     parsing: parsing.ParsingResource
     files: files.FilesResource
     extractions: extractions.ExtractionsResource
@@ -166,6 +168,7 @@ class Mixedbread(SyncAPIClient):
         )
 
         self.vector_stores = vector_stores.VectorStoresResource(self)
+        self.stores = stores.StoresResource(self)
         self.parsing = parsing.ParsingResource(self)
         self.files = files.FilesResource(self)
         self.extractions = extractions.ExtractionsResource(self)
@@ -440,6 +443,7 @@ class Mixedbread(SyncAPIClient):
 
 class AsyncMixedbread(AsyncAPIClient):
     vector_stores: vector_stores.AsyncVectorStoresResource
+    stores: stores.AsyncStoresResource
     parsing: parsing.AsyncParsingResource
     files: files.AsyncFilesResource
     extractions: extractions.AsyncExtractionsResource
@@ -529,6 +533,7 @@ class AsyncMixedbread(AsyncAPIClient):
         )
 
         self.vector_stores = vector_stores.AsyncVectorStoresResource(self)
+        self.stores = stores.AsyncStoresResource(self)
         self.parsing = parsing.AsyncParsingResource(self)
         self.files = files.AsyncFilesResource(self)
         self.extractions = extractions.AsyncExtractionsResource(self)
@@ -804,6 +809,7 @@ class AsyncMixedbread(AsyncAPIClient):
 class MixedbreadWithRawResponse:
     def __init__(self, client: Mixedbread) -> None:
         self.vector_stores = vector_stores.VectorStoresResourceWithRawResponse(client.vector_stores)
+        self.stores = stores.StoresResourceWithRawResponse(client.stores)
         self.parsing = parsing.ParsingResourceWithRawResponse(client.parsing)
         self.files = files.FilesResourceWithRawResponse(client.files)
         self.extractions = extractions.ExtractionsResourceWithRawResponse(client.extractions)
@@ -826,6 +832,7 @@ class MixedbreadWithRawResponse:
 class AsyncMixedbreadWithRawResponse:
     def __init__(self, client: AsyncMixedbread) -> None:
         self.vector_stores = vector_stores.AsyncVectorStoresResourceWithRawResponse(client.vector_stores)
+        self.stores = stores.AsyncStoresResourceWithRawResponse(client.stores)
         self.parsing = parsing.AsyncParsingResourceWithRawResponse(client.parsing)
         self.files = files.AsyncFilesResourceWithRawResponse(client.files)
         self.extractions = extractions.AsyncExtractionsResourceWithRawResponse(client.extractions)
@@ -848,6 +855,7 @@ class AsyncMixedbreadWithRawResponse:
 class MixedbreadWithStreamedResponse:
     def __init__(self, client: Mixedbread) -> None:
         self.vector_stores = vector_stores.VectorStoresResourceWithStreamingResponse(client.vector_stores)
+        self.stores = stores.StoresResourceWithStreamingResponse(client.stores)
         self.parsing = parsing.ParsingResourceWithStreamingResponse(client.parsing)
         self.files = files.FilesResourceWithStreamingResponse(client.files)
         self.extractions = extractions.ExtractionsResourceWithStreamingResponse(client.extractions)
@@ -870,6 +878,7 @@ class MixedbreadWithStreamedResponse:
 class AsyncMixedbreadWithStreamedResponse:
     def __init__(self, client: AsyncMixedbread) -> None:
         self.vector_stores = vector_stores.AsyncVectorStoresResourceWithStreamingResponse(client.vector_stores)
+        self.stores = stores.AsyncStoresResourceWithStreamingResponse(client.stores)
         self.parsing = parsing.AsyncParsingResourceWithStreamingResponse(client.parsing)
         self.files = files.AsyncFilesResourceWithStreamingResponse(client.files)
         self.extractions = extractions.AsyncExtractionsResourceWithStreamingResponse(client.extractions)

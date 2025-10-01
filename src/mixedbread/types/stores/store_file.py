@@ -6,22 +6,22 @@ from typing_extensions import Literal, Annotated, TypeAlias
 
 from ..._utils import PropertyInfo
 from ..._models import BaseModel
-from ..stores.store_file_status import StoreFileStatus
+from .store_file_status import StoreFileStatus
 
 __all__ = [
-    "ScoredVectorStoreFile",
+    "StoreFile",
     "Chunk",
-    "ChunkMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredTextInputChunk",
-    "ChunkMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredImageURLInputChunk",
-    "ChunkMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredImageURLInputChunkImageURL",
-    "ChunkMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredAudioURLInputChunk",
-    "ChunkMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredAudioURLInputChunkAudioURL",
-    "ChunkMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredVideoURLInputChunk",
-    "ChunkMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredVideoURLInputChunkVideoURL",
+    "ChunkTextInputChunk",
+    "ChunkImageURLInputChunk",
+    "ChunkImageURLInputChunkImageURL",
+    "ChunkAudioURLInputChunk",
+    "ChunkAudioURLInputChunkAudioURL",
+    "ChunkVideoURLInputChunk",
+    "ChunkVideoURLInputChunkVideoURL",
 ]
 
 
-class ChunkMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredTextInputChunk(BaseModel):
+class ChunkTextInputChunk(BaseModel):
     chunk_index: int
     """position of the chunk in a file"""
 
@@ -33,21 +33,6 @@ class ChunkMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredTextInputChunk(
 
     model: Optional[str] = None
     """model used for this chunk"""
-
-    score: float
-    """score of the chunk"""
-
-    file_id: str
-    """file id"""
-
-    filename: str
-    """filename"""
-
-    vector_store_id: str
-    """store id"""
-
-    metadata: Optional[object] = None
-    """file metadata"""
 
     type: Optional[Literal["text"]] = None
     """Input type identifier"""
@@ -59,7 +44,7 @@ class ChunkMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredTextInputChunk(
     """Text content to process"""
 
 
-class ChunkMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredImageURLInputChunkImageURL(BaseModel):
+class ChunkImageURLInputChunkImageURL(BaseModel):
     url: str
     """The image URL. Can be either a URL or a Data URI."""
 
@@ -67,7 +52,7 @@ class ChunkMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredImageURLInputCh
     """The image format/mimetype"""
 
 
-class ChunkMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredImageURLInputChunk(BaseModel):
+class ChunkImageURLInputChunk(BaseModel):
     chunk_index: int
     """position of the chunk in a file"""
 
@@ -79,21 +64,6 @@ class ChunkMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredImageURLInputCh
 
     model: Optional[str] = None
     """model used for this chunk"""
-
-    score: float
-    """score of the chunk"""
-
-    file_id: str
-    """file id"""
-
-    filename: str
-    """filename"""
-
-    vector_store_id: str
-    """store id"""
-
-    metadata: Optional[object] = None
-    """file metadata"""
 
     type: Optional[Literal["image_url"]] = None
     """Input type identifier"""
@@ -104,16 +74,16 @@ class ChunkMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredImageURLInputCh
     summary: Optional[str] = None
     """summary of the image"""
 
-    image_url: ChunkMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredImageURLInputChunkImageURL
+    image_url: ChunkImageURLInputChunkImageURL
     """The image input specification."""
 
 
-class ChunkMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredAudioURLInputChunkAudioURL(BaseModel):
+class ChunkAudioURLInputChunkAudioURL(BaseModel):
     url: str
     """The audio URL. Can be either a URL or a Data URI."""
 
 
-class ChunkMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredAudioURLInputChunk(BaseModel):
+class ChunkAudioURLInputChunk(BaseModel):
     chunk_index: int
     """position of the chunk in a file"""
 
@@ -125,21 +95,6 @@ class ChunkMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredAudioURLInputCh
 
     model: Optional[str] = None
     """model used for this chunk"""
-
-    score: float
-    """score of the chunk"""
-
-    file_id: str
-    """file id"""
-
-    filename: str
-    """filename"""
-
-    vector_store_id: str
-    """store id"""
-
-    metadata: Optional[object] = None
-    """file metadata"""
 
     type: Optional[Literal["audio_url"]] = None
     """Input type identifier"""
@@ -150,19 +105,19 @@ class ChunkMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredAudioURLInputCh
     summary: Optional[str] = None
     """summary of the audio"""
 
-    audio_url: ChunkMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredAudioURLInputChunkAudioURL
+    audio_url: ChunkAudioURLInputChunkAudioURL
     """The audio input specification."""
 
     sampling_rate: int
     """The sampling rate of the audio."""
 
 
-class ChunkMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredVideoURLInputChunkVideoURL(BaseModel):
+class ChunkVideoURLInputChunkVideoURL(BaseModel):
     url: str
     """The video URL. Can be either a URL or a Data URI."""
 
 
-class ChunkMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredVideoURLInputChunk(BaseModel):
+class ChunkVideoURLInputChunk(BaseModel):
     chunk_index: int
     """position of the chunk in a file"""
 
@@ -175,21 +130,6 @@ class ChunkMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredVideoURLInputCh
     model: Optional[str] = None
     """model used for this chunk"""
 
-    score: float
-    """score of the chunk"""
-
-    file_id: str
-    """file id"""
-
-    filename: str
-    """filename"""
-
-    vector_store_id: str
-    """store id"""
-
-    metadata: Optional[object] = None
-    """file metadata"""
-
     type: Optional[Literal["video_url"]] = None
     """Input type identifier"""
 
@@ -199,22 +139,17 @@ class ChunkMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredVideoURLInputCh
     summary: Optional[str] = None
     """summary of the video"""
 
-    video_url: ChunkMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredVideoURLInputChunkVideoURL
+    video_url: ChunkVideoURLInputChunkVideoURL
     """The video input specification."""
 
 
 Chunk: TypeAlias = Annotated[
-    Union[
-        ChunkMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredTextInputChunk,
-        ChunkMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredImageURLInputChunk,
-        ChunkMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredAudioURLInputChunk,
-        ChunkMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredVideoURLInputChunk,
-    ],
+    Union[ChunkTextInputChunk, ChunkImageURLInputChunk, ChunkAudioURLInputChunk, ChunkVideoURLInputChunk],
     PropertyInfo(discriminator="type"),
 ]
 
 
-class ScoredVectorStoreFile(BaseModel):
+class StoreFile(BaseModel):
     id: str
     """Unique identifier for the file"""
 
@@ -230,7 +165,7 @@ class ScoredVectorStoreFile(BaseModel):
     last_error: Optional[object] = None
     """Last error message if processing failed"""
 
-    vector_store_id: str
+    store_id: str
     """ID of the containing store"""
 
     created_at: datetime
@@ -242,11 +177,8 @@ class ScoredVectorStoreFile(BaseModel):
     usage_bytes: Optional[int] = None
     """Storage usage in bytes"""
 
-    object: Optional[Literal["vector_store.file"]] = None
+    object: Optional[Literal["store.file"]] = None
     """Type of the object"""
 
     chunks: Optional[List[Chunk]] = None
-    """Array of scored file chunks"""
-
-    score: float
-    """score of the file"""
+    """chunks"""

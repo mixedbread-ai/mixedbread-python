@@ -5,7 +5,7 @@ from __future__ import annotations
 from typing import List, Union, Iterable, Optional
 from typing_extensions import TypeAlias, TypedDict
 
-from ..stores.store_file_status import StoreFileStatus
+from .store_file_status import StoreFileStatus
 from ..shared_params.search_filter_condition import SearchFilterCondition
 
 __all__ = ["FileListParams", "MetadataFilter", "MetadataFilterUnionMember2"]
