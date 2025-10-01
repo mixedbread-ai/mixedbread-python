@@ -6,7 +6,7 @@ from typing import Dict, Union, Optional
 
 import httpx
 
-from ..._types import NOT_GIVEN, Body, Query, Headers, NotGiven
+from ..._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
 from ..._utils import maybe_transform, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
@@ -49,17 +49,17 @@ class ConnectorsResource(SyncAPIResource):
         self,
         data_source_id: str,
         *,
-        vector_store_id: str,
-        name: str | NotGiven = NOT_GIVEN,
-        trigger_sync: bool | NotGiven = NOT_GIVEN,
-        metadata: object | NotGiven = NOT_GIVEN,
-        polling_interval: Union[int, str, None] | NotGiven = NOT_GIVEN,
+        store_id: str,
+        name: str | Omit = omit,
+        trigger_sync: bool | Omit = omit,
+        metadata: object | Omit = omit,
+        polling_interval: Union[int, str, None] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DataSourceConnector:
         """
         Create a new connector.
@@ -72,7 +72,7 @@ class ConnectorsResource(SyncAPIResource):
         Args:
           data_source_id: The ID of the data source to create a connector for
 
-          vector_store_id: The ID of the vector store
+          store_id: The ID of the store
 
           name: The name of the connector
 
@@ -101,7 +101,7 @@ class ConnectorsResource(SyncAPIResource):
             f"/v1/data_sources/{data_source_id}/connectors",
             body=maybe_transform(
                 {
-                    "vector_store_id": vector_store_id,
+                    "store_id": store_id,
                     "name": name,
                     "trigger_sync": trigger_sync,
                     "metadata": metadata,
@@ -125,7 +125,7 @@ class ConnectorsResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DataSourceConnector:
         """
         Get a connector by ID.
@@ -165,16 +165,16 @@ class ConnectorsResource(SyncAPIResource):
         connector_id: str,
         *,
         data_source_id: str,
-        name: Optional[str] | NotGiven = NOT_GIVEN,
-        metadata: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
-        trigger_sync: Optional[bool] | NotGiven = NOT_GIVEN,
-        polling_interval: Union[int, str, None] | NotGiven = NOT_GIVEN,
+        name: Optional[str] | Omit = omit,
+        metadata: Optional[Dict[str, object]] | Omit = omit,
+        trigger_sync: Optional[bool] | Omit = omit,
+        polling_interval: Union[int, str, None] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DataSourceConnector:
         """
         Update a connector.
@@ -236,16 +236,16 @@ class ConnectorsResource(SyncAPIResource):
         self,
         data_source_id: str,
         *,
-        limit: int | NotGiven = NOT_GIVEN,
-        after: Optional[str] | NotGiven = NOT_GIVEN,
-        before: Optional[str] | NotGiven = NOT_GIVEN,
-        include_total: bool | NotGiven = NOT_GIVEN,
+        limit: int | Omit = omit,
+        after: Optional[str] | Omit = omit,
+        before: Optional[str] | Omit = omit,
+        include_total: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SyncCursor[DataSourceConnector]:
         """
         Get all connectors for a data source.
@@ -309,7 +309,7 @@ class ConnectorsResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ConnectorDeleteResponse:
         """
         Delete a connector.
@@ -369,17 +369,17 @@ class AsyncConnectorsResource(AsyncAPIResource):
         self,
         data_source_id: str,
         *,
-        vector_store_id: str,
-        name: str | NotGiven = NOT_GIVEN,
-        trigger_sync: bool | NotGiven = NOT_GIVEN,
-        metadata: object | NotGiven = NOT_GIVEN,
-        polling_interval: Union[int, str, None] | NotGiven = NOT_GIVEN,
+        store_id: str,
+        name: str | Omit = omit,
+        trigger_sync: bool | Omit = omit,
+        metadata: object | Omit = omit,
+        polling_interval: Union[int, str, None] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DataSourceConnector:
         """
         Create a new connector.
@@ -392,7 +392,7 @@ class AsyncConnectorsResource(AsyncAPIResource):
         Args:
           data_source_id: The ID of the data source to create a connector for
 
-          vector_store_id: The ID of the vector store
+          store_id: The ID of the store
 
           name: The name of the connector
 
@@ -421,7 +421,7 @@ class AsyncConnectorsResource(AsyncAPIResource):
             f"/v1/data_sources/{data_source_id}/connectors",
             body=await async_maybe_transform(
                 {
-                    "vector_store_id": vector_store_id,
+                    "store_id": store_id,
                     "name": name,
                     "trigger_sync": trigger_sync,
                     "metadata": metadata,
@@ -445,7 +445,7 @@ class AsyncConnectorsResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DataSourceConnector:
         """
         Get a connector by ID.
@@ -485,16 +485,16 @@ class AsyncConnectorsResource(AsyncAPIResource):
         connector_id: str,
         *,
         data_source_id: str,
-        name: Optional[str] | NotGiven = NOT_GIVEN,
-        metadata: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
-        trigger_sync: Optional[bool] | NotGiven = NOT_GIVEN,
-        polling_interval: Union[int, str, None] | NotGiven = NOT_GIVEN,
+        name: Optional[str] | Omit = omit,
+        metadata: Optional[Dict[str, object]] | Omit = omit,
+        trigger_sync: Optional[bool] | Omit = omit,
+        polling_interval: Union[int, str, None] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DataSourceConnector:
         """
         Update a connector.
@@ -556,16 +556,16 @@ class AsyncConnectorsResource(AsyncAPIResource):
         self,
         data_source_id: str,
         *,
-        limit: int | NotGiven = NOT_GIVEN,
-        after: Optional[str] | NotGiven = NOT_GIVEN,
-        before: Optional[str] | NotGiven = NOT_GIVEN,
-        include_total: bool | NotGiven = NOT_GIVEN,
+        limit: int | Omit = omit,
+        after: Optional[str] | Omit = omit,
+        before: Optional[str] | Omit = omit,
+        include_total: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AsyncPaginator[DataSourceConnector, AsyncCursor[DataSourceConnector]]:
         """
         Get all connectors for a data source.
@@ -629,7 +629,7 @@ class AsyncConnectorsResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ConnectorDeleteResponse:
         """
         Delete a connector.

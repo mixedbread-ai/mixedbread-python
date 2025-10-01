@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import typing_extensions
 from typing import Union, Iterable, Optional
 
 import httpx
@@ -21,7 +22,7 @@ from ...types import (
     vector_store_update_params,
     vector_store_question_answering_params,
 )
-from ..._types import NOT_GIVEN, Body, Query, Headers, NotGiven, SequenceNotStr
+from ..._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
 from ..._utils import maybe_transform, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
@@ -67,29 +68,25 @@ class VectorStoresResource(SyncAPIResource):
         """
         return VectorStoresResourceWithStreamingResponse(self)
 
+    @typing_extensions.deprecated("deprecated")
     def create(
         self,
         *,
-        name: Optional[str] | NotGiven = NOT_GIVEN,
-        description: Optional[str] | NotGiven = NOT_GIVEN,
-        is_public: bool | NotGiven = NOT_GIVEN,
-        expires_after: Optional[ExpiresAfterParam] | NotGiven = NOT_GIVEN,
-        metadata: object | NotGiven = NOT_GIVEN,
-        file_ids: Optional[SequenceNotStr[str]] | NotGiven = NOT_GIVEN,
+        name: Optional[str] | Omit = omit,
+        description: Optional[str] | Omit = omit,
+        is_public: bool | Omit = omit,
+        expires_after: Optional[ExpiresAfterParam] | Omit = omit,
+        metadata: object | Omit = omit,
+        file_ids: Optional[SequenceNotStr[str]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> VectorStore:
         """
-        Create a new vector store.
-
-        Args: vector_store_create: VectorStoreCreate object containing the name,
-        description, and metadata.
-
-        Returns: VectorStore: The response containing the created vector store details.
+        DEPRECATED: Use POST /stores instead
 
         Args:
           name: Name for the new vector store
@@ -98,7 +95,7 @@ class VectorStoresResource(SyncAPIResource):
 
           is_public: Whether the vector store can be accessed by anyone with valid login credentials
 
-          expires_after: Represents an expiration policy for a vector store.
+          expires_after: Represents an expiration policy for a store.
 
           metadata: Optional metadata key-value pairs
 
@@ -131,6 +128,7 @@ class VectorStoresResource(SyncAPIResource):
             cast_to=VectorStore,
         )
 
+    @typing_extensions.deprecated("deprecated")
     def retrieve(
         self,
         vector_store_identifier: str,
@@ -140,14 +138,10 @@ class VectorStoresResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> VectorStore:
         """
-        Get a vector store by ID or name.
-
-        Args: vector_store_identifier: The ID or name of the vector store to retrieve.
-
-        Returns: VectorStore: The response containing the vector store details.
+        DEPRECATED: Use GET /stores/{store_identifier} instead
 
         Args:
           vector_store_identifier: The ID or name of the vector store
@@ -172,41 +166,36 @@ class VectorStoresResource(SyncAPIResource):
             cast_to=VectorStore,
         )
 
+    @typing_extensions.deprecated("deprecated")
     def update(
         self,
         vector_store_identifier: str,
         *,
-        name: Optional[str] | NotGiven = NOT_GIVEN,
-        description: Optional[str] | NotGiven = NOT_GIVEN,
-        is_public: Optional[bool] | NotGiven = NOT_GIVEN,
-        expires_after: Optional[ExpiresAfterParam] | NotGiven = NOT_GIVEN,
-        metadata: object | NotGiven = NOT_GIVEN,
+        name: Optional[str] | Omit = omit,
+        description: Optional[str] | Omit = omit,
+        is_public: Optional[bool] | Omit = omit,
+        expires_after: Optional[ExpiresAfterParam] | Omit = omit,
+        metadata: object | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> VectorStore:
         """
-        Update a vector store by ID or name.
-
-        Args: vector_store_identifier: The ID or name of the vector store to update.
-        vector_store_update: VectorStoreCreate object containing the name, description,
-        and metadata.
-
-        Returns: VectorStore: The response containing the updated vector store details.
+        DEPRECATED: Use PUT /stores/{store_identifier} instead
 
         Args:
           vector_store_identifier: The ID or name of the vector store
 
-          name: New name for the vector store
+          name: New name for the store
 
           description: New description
 
           is_public: Whether the vector store can be accessed by anyone with valid login credentials
 
-          expires_after: Represents an expiration policy for a vector store.
+          expires_after: Represents an expiration policy for a store.
 
           metadata: Optional metadata key-value pairs
 
@@ -240,28 +229,24 @@ class VectorStoresResource(SyncAPIResource):
             cast_to=VectorStore,
         )
 
+    @typing_extensions.deprecated("deprecated")
     def list(
         self,
         *,
-        limit: int | NotGiven = NOT_GIVEN,
-        after: Optional[str] | NotGiven = NOT_GIVEN,
-        before: Optional[str] | NotGiven = NOT_GIVEN,
-        include_total: bool | NotGiven = NOT_GIVEN,
-        q: Optional[str] | NotGiven = NOT_GIVEN,
+        limit: int | Omit = omit,
+        after: Optional[str] | Omit = omit,
+        before: Optional[str] | Omit = omit,
+        include_total: bool | Omit = omit,
+        q: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SyncCursor[VectorStore]:
         """
-        List all vector stores with optional search.
-
-        Args: pagination: The pagination options. q: Optional search query to filter
-        vector stores.
-
-        Returns: VectorStoreListResponse: The list of vector stores.
+        DEPRECATED: Use GET /stores instead
 
         Args:
           limit: Maximum number of items to return per page (1-100)
@@ -306,6 +291,7 @@ class VectorStoresResource(SyncAPIResource):
             model=VectorStore,
         )
 
+    @typing_extensions.deprecated("deprecated")
     def delete(
         self,
         vector_store_identifier: str,
@@ -315,14 +301,10 @@ class VectorStoresResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> VectorStoreDeleteResponse:
         """
-        Delete a vector store by ID or name.
-
-        Args: vector_store_identifier: The ID or name of the vector store to delete.
-
-        Returns: VectorStore: The response containing the deleted vector store details.
+        DEPRECATED: Use DELETE /stores/{store_identifier} instead
 
         Args:
           vector_store_identifier: The ID or name of the vector store to delete
@@ -347,30 +329,30 @@ class VectorStoresResource(SyncAPIResource):
             cast_to=VectorStoreDeleteResponse,
         )
 
+    @typing_extensions.deprecated("deprecated")
     def question_answering(
         self,
         *,
-        query: str | NotGiven = NOT_GIVEN,
+        query: str | Omit = omit,
         vector_store_identifiers: SequenceNotStr[str],
-        top_k: int | NotGiven = NOT_GIVEN,
-        filters: Optional[vector_store_question_answering_params.Filters] | NotGiven = NOT_GIVEN,
-        file_ids: Union[Iterable[object], SequenceNotStr[str], None] | NotGiven = NOT_GIVEN,
-        search_options: VectorStoreChunkSearchOptionsParam | NotGiven = NOT_GIVEN,
-        stream: bool | NotGiven = NOT_GIVEN,
-        qa_options: vector_store_question_answering_params.QaOptions | NotGiven = NOT_GIVEN,
+        top_k: int | Omit = omit,
+        filters: Optional[vector_store_question_answering_params.Filters] | Omit = omit,
+        file_ids: Union[Iterable[object], SequenceNotStr[str], None] | Omit = omit,
+        search_options: VectorStoreChunkSearchOptionsParam | Omit = omit,
+        stream: bool | Omit = omit,
+        qa_options: vector_store_question_answering_params.QaOptions | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> VectorStoreQuestionAnsweringResponse:
-        """Question answering
+        """
+        DEPRECATED: Use POST /stores/question-answering instead
 
         Args:
-          query: Question to answer.
-
-        If not provided, the question will be extracted from the
+          query: Question to answer. If not provided, the question will be extracted from the
               passed messages.
 
           vector_store_identifiers: IDs or names of vector stores to search
@@ -416,40 +398,25 @@ class VectorStoresResource(SyncAPIResource):
             cast_to=VectorStoreQuestionAnsweringResponse,
         )
 
+    @typing_extensions.deprecated("deprecated")
     def search(
         self,
         *,
         query: str,
         vector_store_identifiers: SequenceNotStr[str],
-        top_k: int | NotGiven = NOT_GIVEN,
-        filters: Optional[vector_store_search_params.Filters] | NotGiven = NOT_GIVEN,
-        file_ids: Union[Iterable[object], SequenceNotStr[str], None] | NotGiven = NOT_GIVEN,
-        search_options: VectorStoreChunkSearchOptionsParam | NotGiven = NOT_GIVEN,
+        top_k: int | Omit = omit,
+        filters: Optional[vector_store_search_params.Filters] | Omit = omit,
+        file_ids: Union[Iterable[object], SequenceNotStr[str], None] | Omit = omit,
+        search_options: VectorStoreChunkSearchOptionsParam | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> VectorStoreSearchResponse:
         """
-        Perform semantic search across vector store chunks.
-
-        This endpoint searches through vector store chunks using semantic similarity
-        matching. It supports complex search queries with filters and returns
-        relevance-scored results.
-
-        Args: search_params: Search configuration including: - query text or
-        embeddings - vector_store_ids: List of vector stores to search - file_ids:
-        Optional list of file IDs to filter chunks by (or tuple of list and condition
-        operator) - metadata filters - pagination parameters - sorting preferences
-        \\__state: API state dependency \\__ctx: Service context dependency
-
-        Returns: VectorStoreSearchChunkResponse containing: - List of matched chunks
-        with relevance scores - Pagination details including total result count
-
-        Raises: HTTPException (400): If search parameters are invalid HTTPException
-        (404): If no vector stores are found to search
+        DEPRECATED: Use POST /stores/search instead
 
         Args:
           query: Search query text
@@ -516,29 +483,25 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         """
         return AsyncVectorStoresResourceWithStreamingResponse(self)
 
+    @typing_extensions.deprecated("deprecated")
     async def create(
         self,
         *,
-        name: Optional[str] | NotGiven = NOT_GIVEN,
-        description: Optional[str] | NotGiven = NOT_GIVEN,
-        is_public: bool | NotGiven = NOT_GIVEN,
-        expires_after: Optional[ExpiresAfterParam] | NotGiven = NOT_GIVEN,
-        metadata: object | NotGiven = NOT_GIVEN,
-        file_ids: Optional[SequenceNotStr[str]] | NotGiven = NOT_GIVEN,
+        name: Optional[str] | Omit = omit,
+        description: Optional[str] | Omit = omit,
+        is_public: bool | Omit = omit,
+        expires_after: Optional[ExpiresAfterParam] | Omit = omit,
+        metadata: object | Omit = omit,
+        file_ids: Optional[SequenceNotStr[str]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> VectorStore:
         """
-        Create a new vector store.
-
-        Args: vector_store_create: VectorStoreCreate object containing the name,
-        description, and metadata.
-
-        Returns: VectorStore: The response containing the created vector store details.
+        DEPRECATED: Use POST /stores instead
 
         Args:
           name: Name for the new vector store
@@ -547,7 +510,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
 
           is_public: Whether the vector store can be accessed by anyone with valid login credentials
 
-          expires_after: Represents an expiration policy for a vector store.
+          expires_after: Represents an expiration policy for a store.
 
           metadata: Optional metadata key-value pairs
 
@@ -580,6 +543,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
             cast_to=VectorStore,
         )
 
+    @typing_extensions.deprecated("deprecated")
     async def retrieve(
         self,
         vector_store_identifier: str,
@@ -589,14 +553,10 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> VectorStore:
         """
-        Get a vector store by ID or name.
-
-        Args: vector_store_identifier: The ID or name of the vector store to retrieve.
-
-        Returns: VectorStore: The response containing the vector store details.
+        DEPRECATED: Use GET /stores/{store_identifier} instead
 
         Args:
           vector_store_identifier: The ID or name of the vector store
@@ -621,41 +581,36 @@ class AsyncVectorStoresResource(AsyncAPIResource):
             cast_to=VectorStore,
         )
 
+    @typing_extensions.deprecated("deprecated")
     async def update(
         self,
         vector_store_identifier: str,
         *,
-        name: Optional[str] | NotGiven = NOT_GIVEN,
-        description: Optional[str] | NotGiven = NOT_GIVEN,
-        is_public: Optional[bool] | NotGiven = NOT_GIVEN,
-        expires_after: Optional[ExpiresAfterParam] | NotGiven = NOT_GIVEN,
-        metadata: object | NotGiven = NOT_GIVEN,
+        name: Optional[str] | Omit = omit,
+        description: Optional[str] | Omit = omit,
+        is_public: Optional[bool] | Omit = omit,
+        expires_after: Optional[ExpiresAfterParam] | Omit = omit,
+        metadata: object | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> VectorStore:
         """
-        Update a vector store by ID or name.
-
-        Args: vector_store_identifier: The ID or name of the vector store to update.
-        vector_store_update: VectorStoreCreate object containing the name, description,
-        and metadata.
-
-        Returns: VectorStore: The response containing the updated vector store details.
+        DEPRECATED: Use PUT /stores/{store_identifier} instead
 
         Args:
           vector_store_identifier: The ID or name of the vector store
 
-          name: New name for the vector store
+          name: New name for the store
 
           description: New description
 
           is_public: Whether the vector store can be accessed by anyone with valid login credentials
 
-          expires_after: Represents an expiration policy for a vector store.
+          expires_after: Represents an expiration policy for a store.
 
           metadata: Optional metadata key-value pairs
 
@@ -689,28 +644,24 @@ class AsyncVectorStoresResource(AsyncAPIResource):
             cast_to=VectorStore,
         )
 
+    @typing_extensions.deprecated("deprecated")
     def list(
         self,
         *,
-        limit: int | NotGiven = NOT_GIVEN,
-        after: Optional[str] | NotGiven = NOT_GIVEN,
-        before: Optional[str] | NotGiven = NOT_GIVEN,
-        include_total: bool | NotGiven = NOT_GIVEN,
-        q: Optional[str] | NotGiven = NOT_GIVEN,
+        limit: int | Omit = omit,
+        after: Optional[str] | Omit = omit,
+        before: Optional[str] | Omit = omit,
+        include_total: bool | Omit = omit,
+        q: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AsyncPaginator[VectorStore, AsyncCursor[VectorStore]]:
         """
-        List all vector stores with optional search.
-
-        Args: pagination: The pagination options. q: Optional search query to filter
-        vector stores.
-
-        Returns: VectorStoreListResponse: The list of vector stores.
+        DEPRECATED: Use GET /stores instead
 
         Args:
           limit: Maximum number of items to return per page (1-100)
@@ -755,6 +706,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
             model=VectorStore,
         )
 
+    @typing_extensions.deprecated("deprecated")
     async def delete(
         self,
         vector_store_identifier: str,
@@ -764,14 +716,10 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> VectorStoreDeleteResponse:
         """
-        Delete a vector store by ID or name.
-
-        Args: vector_store_identifier: The ID or name of the vector store to delete.
-
-        Returns: VectorStore: The response containing the deleted vector store details.
+        DEPRECATED: Use DELETE /stores/{store_identifier} instead
 
         Args:
           vector_store_identifier: The ID or name of the vector store to delete
@@ -796,30 +744,30 @@ class AsyncVectorStoresResource(AsyncAPIResource):
             cast_to=VectorStoreDeleteResponse,
         )
 
+    @typing_extensions.deprecated("deprecated")
     async def question_answering(
         self,
         *,
-        query: str | NotGiven = NOT_GIVEN,
+        query: str | Omit = omit,
         vector_store_identifiers: SequenceNotStr[str],
-        top_k: int | NotGiven = NOT_GIVEN,
-        filters: Optional[vector_store_question_answering_params.Filters] | NotGiven = NOT_GIVEN,
-        file_ids: Union[Iterable[object], SequenceNotStr[str], None] | NotGiven = NOT_GIVEN,
-        search_options: VectorStoreChunkSearchOptionsParam | NotGiven = NOT_GIVEN,
-        stream: bool | NotGiven = NOT_GIVEN,
-        qa_options: vector_store_question_answering_params.QaOptions | NotGiven = NOT_GIVEN,
+        top_k: int | Omit = omit,
+        filters: Optional[vector_store_question_answering_params.Filters] | Omit = omit,
+        file_ids: Union[Iterable[object], SequenceNotStr[str], None] | Omit = omit,
+        search_options: VectorStoreChunkSearchOptionsParam | Omit = omit,
+        stream: bool | Omit = omit,
+        qa_options: vector_store_question_answering_params.QaOptions | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> VectorStoreQuestionAnsweringResponse:
-        """Question answering
+        """
+        DEPRECATED: Use POST /stores/question-answering instead
 
         Args:
-          query: Question to answer.
-
-        If not provided, the question will be extracted from the
+          query: Question to answer. If not provided, the question will be extracted from the
               passed messages.
 
           vector_store_identifiers: IDs or names of vector stores to search
@@ -865,40 +813,25 @@ class AsyncVectorStoresResource(AsyncAPIResource):
             cast_to=VectorStoreQuestionAnsweringResponse,
         )
 
+    @typing_extensions.deprecated("deprecated")
     async def search(
         self,
         *,
         query: str,
         vector_store_identifiers: SequenceNotStr[str],
-        top_k: int | NotGiven = NOT_GIVEN,
-        filters: Optional[vector_store_search_params.Filters] | NotGiven = NOT_GIVEN,
-        file_ids: Union[Iterable[object], SequenceNotStr[str], None] | NotGiven = NOT_GIVEN,
-        search_options: VectorStoreChunkSearchOptionsParam | NotGiven = NOT_GIVEN,
+        top_k: int | Omit = omit,
+        filters: Optional[vector_store_search_params.Filters] | Omit = omit,
+        file_ids: Union[Iterable[object], SequenceNotStr[str], None] | Omit = omit,
+        search_options: VectorStoreChunkSearchOptionsParam | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> VectorStoreSearchResponse:
         """
-        Perform semantic search across vector store chunks.
-
-        This endpoint searches through vector store chunks using semantic similarity
-        matching. It supports complex search queries with filters and returns
-        relevance-scored results.
-
-        Args: search_params: Search configuration including: - query text or
-        embeddings - vector_store_ids: List of vector stores to search - file_ids:
-        Optional list of file IDs to filter chunks by (or tuple of list and condition
-        operator) - metadata filters - pagination parameters - sorting preferences
-        \\__state: API state dependency \\__ctx: Service context dependency
-
-        Returns: VectorStoreSearchChunkResponse containing: - List of matched chunks
-        with relevance scores - Pagination details including total result count
-
-        Raises: HTTPException (400): If search parameters are invalid HTTPException
-        (404): If no vector stores are found to search
+        DEPRECATED: Use POST /stores/search instead
 
         Args:
           query: Search query text
@@ -945,26 +878,40 @@ class VectorStoresResourceWithRawResponse:
     def __init__(self, vector_stores: VectorStoresResource) -> None:
         self._vector_stores = vector_stores
 
-        self.create = to_raw_response_wrapper(
-            vector_stores.create,
+        self.create = (  # pyright: ignore[reportDeprecated]
+            to_raw_response_wrapper(
+                vector_stores.create,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.retrieve = to_raw_response_wrapper(
-            vector_stores.retrieve,
+        self.retrieve = (  # pyright: ignore[reportDeprecated]
+            to_raw_response_wrapper(
+                vector_stores.retrieve,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.update = to_raw_response_wrapper(
-            vector_stores.update,
+        self.update = (  # pyright: ignore[reportDeprecated]
+            to_raw_response_wrapper(
+                vector_stores.update,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.list = to_raw_response_wrapper(
-            vector_stores.list,
+        self.list = (  # pyright: ignore[reportDeprecated]
+            to_raw_response_wrapper(
+                vector_stores.list,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.delete = to_raw_response_wrapper(
-            vector_stores.delete,
+        self.delete = (  # pyright: ignore[reportDeprecated]
+            to_raw_response_wrapper(
+                vector_stores.delete,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.question_answering = to_raw_response_wrapper(
-            vector_stores.question_answering,
+        self.question_answering = (  # pyright: ignore[reportDeprecated]
+            to_raw_response_wrapper(
+                vector_stores.question_answering,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.search = to_raw_response_wrapper(
-            vector_stores.search,
+        self.search = (  # pyright: ignore[reportDeprecated]
+            to_raw_response_wrapper(
+                vector_stores.search,  # pyright: ignore[reportDeprecated],
+            )
         )
 
     @cached_property
@@ -976,26 +923,40 @@ class AsyncVectorStoresResourceWithRawResponse:
     def __init__(self, vector_stores: AsyncVectorStoresResource) -> None:
         self._vector_stores = vector_stores
 
-        self.create = async_to_raw_response_wrapper(
-            vector_stores.create,
+        self.create = (  # pyright: ignore[reportDeprecated]
+            async_to_raw_response_wrapper(
+                vector_stores.create,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.retrieve = async_to_raw_response_wrapper(
-            vector_stores.retrieve,
+        self.retrieve = (  # pyright: ignore[reportDeprecated]
+            async_to_raw_response_wrapper(
+                vector_stores.retrieve,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.update = async_to_raw_response_wrapper(
-            vector_stores.update,
+        self.update = (  # pyright: ignore[reportDeprecated]
+            async_to_raw_response_wrapper(
+                vector_stores.update,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.list = async_to_raw_response_wrapper(
-            vector_stores.list,
+        self.list = (  # pyright: ignore[reportDeprecated]
+            async_to_raw_response_wrapper(
+                vector_stores.list,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.delete = async_to_raw_response_wrapper(
-            vector_stores.delete,
+        self.delete = (  # pyright: ignore[reportDeprecated]
+            async_to_raw_response_wrapper(
+                vector_stores.delete,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.question_answering = async_to_raw_response_wrapper(
-            vector_stores.question_answering,
+        self.question_answering = (  # pyright: ignore[reportDeprecated]
+            async_to_raw_response_wrapper(
+                vector_stores.question_answering,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.search = async_to_raw_response_wrapper(
-            vector_stores.search,
+        self.search = (  # pyright: ignore[reportDeprecated]
+            async_to_raw_response_wrapper(
+                vector_stores.search,  # pyright: ignore[reportDeprecated],
+            )
         )
 
     @cached_property
@@ -1007,26 +968,40 @@ class VectorStoresResourceWithStreamingResponse:
     def __init__(self, vector_stores: VectorStoresResource) -> None:
         self._vector_stores = vector_stores
 
-        self.create = to_streamed_response_wrapper(
-            vector_stores.create,
+        self.create = (  # pyright: ignore[reportDeprecated]
+            to_streamed_response_wrapper(
+                vector_stores.create,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.retrieve = to_streamed_response_wrapper(
-            vector_stores.retrieve,
+        self.retrieve = (  # pyright: ignore[reportDeprecated]
+            to_streamed_response_wrapper(
+                vector_stores.retrieve,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.update = to_streamed_response_wrapper(
-            vector_stores.update,
+        self.update = (  # pyright: ignore[reportDeprecated]
+            to_streamed_response_wrapper(
+                vector_stores.update,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.list = to_streamed_response_wrapper(
-            vector_stores.list,
+        self.list = (  # pyright: ignore[reportDeprecated]
+            to_streamed_response_wrapper(
+                vector_stores.list,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.delete = to_streamed_response_wrapper(
-            vector_stores.delete,
+        self.delete = (  # pyright: ignore[reportDeprecated]
+            to_streamed_response_wrapper(
+                vector_stores.delete,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.question_answering = to_streamed_response_wrapper(
-            vector_stores.question_answering,
+        self.question_answering = (  # pyright: ignore[reportDeprecated]
+            to_streamed_response_wrapper(
+                vector_stores.question_answering,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.search = to_streamed_response_wrapper(
-            vector_stores.search,
+        self.search = (  # pyright: ignore[reportDeprecated]
+            to_streamed_response_wrapper(
+                vector_stores.search,  # pyright: ignore[reportDeprecated],
+            )
         )
 
     @cached_property
@@ -1038,26 +1013,40 @@ class AsyncVectorStoresResourceWithStreamingResponse:
     def __init__(self, vector_stores: AsyncVectorStoresResource) -> None:
         self._vector_stores = vector_stores
 
-        self.create = async_to_streamed_response_wrapper(
-            vector_stores.create,
+        self.create = (  # pyright: ignore[reportDeprecated]
+            async_to_streamed_response_wrapper(
+                vector_stores.create,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.retrieve = async_to_streamed_response_wrapper(
-            vector_stores.retrieve,
+        self.retrieve = (  # pyright: ignore[reportDeprecated]
+            async_to_streamed_response_wrapper(
+                vector_stores.retrieve,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.update = async_to_streamed_response_wrapper(
-            vector_stores.update,
+        self.update = (  # pyright: ignore[reportDeprecated]
+            async_to_streamed_response_wrapper(
+                vector_stores.update,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.list = async_to_streamed_response_wrapper(
-            vector_stores.list,
+        self.list = (  # pyright: ignore[reportDeprecated]
+            async_to_streamed_response_wrapper(
+                vector_stores.list,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.delete = async_to_streamed_response_wrapper(
-            vector_stores.delete,
+        self.delete = (  # pyright: ignore[reportDeprecated]
+            async_to_streamed_response_wrapper(
+                vector_stores.delete,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.question_answering = async_to_streamed_response_wrapper(
-            vector_stores.question_answering,
+        self.question_answering = (  # pyright: ignore[reportDeprecated]
+            async_to_streamed_response_wrapper(
+                vector_stores.question_answering,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.search = async_to_streamed_response_wrapper(
-            vector_stores.search,
+        self.search = (  # pyright: ignore[reportDeprecated]
+            async_to_streamed_response_wrapper(
+                vector_stores.search,  # pyright: ignore[reportDeprecated],
+            )
         )
 
     @cached_property

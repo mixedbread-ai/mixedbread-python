@@ -13,4 +13,4 @@ class ExpiresAfter(BaseModel):
     """Anchor date for the expiration policy"""
 
     days: Optional[int] = None
-    """Number of days after which the vector store expires"""
+    """Number of days after which the store expires"""

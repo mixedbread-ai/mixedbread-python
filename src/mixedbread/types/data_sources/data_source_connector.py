@@ -19,8 +19,8 @@ class DataSourceConnector(BaseModel):
     updated_at: datetime
     """The last update time of the connector"""
 
-    vector_store_id: str
-    """The ID of the vector store"""
+    store_id: str
+    """The ID of the store"""
 
     data_source_id: str
     """The ID of the data source"""
