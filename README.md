@@ -34,8 +34,8 @@ client = Mixedbread(
     environment="development",
 )
 
-vector_store = client.vector_stores.create()
-print(vector_store.id)
+store = client.stores.create()
+print(store.id)
 ```
 
 While you can provide an `api_key` keyword argument,
@@ -60,8 +60,8 @@ client = AsyncMixedbread(
 
 
 async def main() -> None:
-    vector_store = await client.vector_stores.create()
-    print(vector_store.id)
+    store = await client.stores.create()
+    print(store.id)
 
 
 asyncio.run(main())
@@ -93,8 +93,8 @@ async def main() -> None:
         api_key="My API Key",
         http_client=DefaultAioHttpClient(),
     ) as client:
-        vector_store = await client.vector_stores.create()
-        print(vector_store.id)
+        store = await client.stores.create()
+        print(store.id)
 
 
 asyncio.run(main())
@@ -120,12 +120,12 @@ from mixedbread import Mixedbread
 
 client = Mixedbread()
 
-all_vector_stores = []
+all_stores = []
 # Automatically fetches more pages as needed.
-for vector_store in client.vector_stores.list():
-    # Do something with vector_store here
-    all_vector_stores.append(vector_store)
-print(all_vector_stores)
+for store in client.stores.list():
+    # Do something with store here
+    all_stores.append(store)
+print(all_stores)
 ```
 
 Or, asynchronously:
@@ -138,11 +138,11 @@ client = AsyncMixedbread()
 
 
 async def main() -> None:
-    all_vector_stores = []
+    all_stores = []
     # Iterate through items across all pages, issuing requests as needed.
-    async for vector_store in client.vector_stores.list():
-        all_vector_stores.append(vector_store)
-    print(all_vector_stores)
+    async for store in client.stores.list():
+        all_stores.append(store)
+    print(all_stores)
 
 
 asyncio.run(main())
@@ -151,7 +151,7 @@ asyncio.run(main())
 Alternatively, you can use the `.has_next_page()`, `.next_page_info()`, or `.get_next_page()` methods for more granular control working with pages:
 
 ```python
-first_page = await client.vector_stores.list()
+first_page = await client.stores.list()
 if first_page.has_next_page():
     print(f"will fetch next page using these details: {first_page.next_page_info()}")
     next_page = await first_page.get_next_page()
@@ -163,11 +163,11 @@ if first_page.has_next_page():
 Or just work directly with the returned data:
 
 ```python
-first_page = await client.vector_stores.list()
+first_page = await client.stores.list()
 
 print(f"next page cursor: {first_page.pagination.last_cursor}")  # => "next page cursor: ..."
-for vector_store in first_page.data:
-    print(vector_store.id)
+for store in first_page.data:
+    print(store.id)
 
 # Remove `await` for non-async usage.
 ```
@@ -181,10 +181,10 @@ from mixedbread import Mixedbread
 
 client = Mixedbread()
 
-vector_store = client.vector_stores.create(
+store = client.stores.create(
     expires_after={},
 )
-print(vector_store.expires_after)
+print(store.expires_after)
 ```
 
 ## File uploads
@@ -220,7 +220,7 @@ from mixedbread import Mixedbread
 client = Mixedbread()
 
 try:
-    client.vector_stores.create()
+    client.stores.create()
 except mixedbread.APIConnectionError as e:
     print("The server could not be reached")
     print(e.__cause__)  # an underlying Exception, likely raised within httpx.
@@ -263,7 +263,7 @@ client = Mixedbread(
 )
 
 # Or, configure per-request:
-client.with_options(max_retries=5).vector_stores.create()
+client.with_options(max_retries=5).stores.create()
 ```
 
 ### Timeouts
@@ -286,7 +286,7 @@ client = Mixedbread(
 )
 
 # Override per-request:
-client.with_options(timeout=5.0).vector_stores.create()
+client.with_options(timeout=5.0).stores.create()
 ```
 
 On timeout, an `APITimeoutError` is thrown.
@@ -327,11 +327,11 @@ The "raw" Response object can be accessed by prefixing `.with_raw_response.` to 
 from mixedbread import Mixedbread
 
 client = Mixedbread()
-response = client.vector_stores.with_raw_response.create()
+response = client.stores.with_raw_response.create()
 print(response.headers.get('X-My-Header'))
 
-vector_store = response.parse()  # get the object that `vector_stores.create()` would have returned
-print(vector_store.id)
+store = response.parse()  # get the object that `stores.create()` would have returned
+print(store.id)
 ```
 
 These methods return an [`APIResponse`](https://github.com/mixedbread-ai/mixedbread-python/tree/main/src/mixedbread/_response.py) object.
@@ -345,7 +345,7 @@ The above interface eagerly reads the full response body when you make the reque
 To stream the response body, use `.with_streaming_response` instead, which requires a context manager and only reads the response body once you call `.read()`, `.text()`, `.json()`, `.iter_bytes()`, `.iter_text()`, `.iter_lines()` or `.parse()`. In the async client, these are async methods.
 
 ```python
-with client.vector_stores.with_streaming_response.create() as response:
+with client.stores.with_streaming_response.create() as response:
     print(response.headers.get("X-My-Header"))
 
     for line in response.iter_lines():
