@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.32.1 (2025-10-01)
+
+Full Changelog: [v0.32.0...v0.32.1](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.32.0...v0.32.1)
+
+### Chores
+
+* add the stores helper functions ([153269e](https://github.com/mixedbread-ai/mixedbread-python/commit/153269ec4c3f5ae1d4d7353d592b1a6bdcc58b01))
+
 ## 0.32.0 (2025-10-01)
 
 Full Changelog: [v0.31.0...v0.32.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.31.0...v0.32.0)
