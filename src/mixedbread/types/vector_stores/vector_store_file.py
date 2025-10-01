@@ -6,6 +6,7 @@ from typing_extensions import Literal, Annotated, TypeAlias
 
 from ..._utils import PropertyInfo
 from ..._models import BaseModel
+from ..stores.store_file_status import StoreFileStatus
 
 __all__ = [
     "VectorStoreFile",
@@ -158,7 +159,7 @@ class VectorStoreFile(BaseModel):
     metadata: Optional[object] = None
     """Optional file metadata"""
 
-    status: Optional[Literal["pending", "in_progress", "cancelled", "completed", "failed"]] = None
+    status: Optional[StoreFileStatus] = None
     """Processing status of the file"""
 
     last_error: Optional[object] = None

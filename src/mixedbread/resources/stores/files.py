@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import typing_extensions
 from typing import List, Union, Iterable, Optional
 
 import httpx
@@ -18,12 +17,12 @@ from ..._response import (
     async_to_streamed_response_wrapper,
 )
 from ..._base_client import make_request_options
-from ...types.vector_stores import file_list_params, file_create_params, file_search_params, file_retrieve_params
+from ...types.stores import file_list_params, file_create_params, file_search_params, file_retrieve_params
+from ...types.stores.store_file import StoreFile
 from ...types.stores.store_file_status import StoreFileStatus
-from ...types.vector_stores.vector_store_file import VectorStoreFile
-from ...types.vector_stores.file_list_response import FileListResponse
-from ...types.vector_stores.file_delete_response import FileDeleteResponse
-from ...types.vector_stores.file_search_response import FileSearchResponse
+from ...types.stores.file_list_response import FileListResponse
+from ...types.stores.file_delete_response import FileDeleteResponse
+from ...types.stores.file_search_response import FileSearchResponse
 
 __all__ = ["FilesResource", "AsyncFilesResource"]
 
@@ -48,10 +47,9 @@ class FilesResource(SyncAPIResource):
         """
         return FilesResourceWithStreamingResponse(self)
 
-    @typing_extensions.deprecated("Use post stores.files instead")
     def create(
         self,
-        vector_store_identifier: str,
+        store_identifier: str,
         *,
         metadata: object | Omit = omit,
         experimental: file_create_params.Experimental | Omit = omit,
@@ -62,12 +60,18 @@ class FilesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> VectorStoreFile:
-        """
-        DEPRECATED: Use POST /stores/{store_identifier}/files instead
+    ) -> StoreFile:
+        """Upload a file to a store.
+
+        Args: store_identifier: The ID or name of the store.
+
+        file_add_params: The file
+        to add to the store.
+
+        Returns: VectorStoreFile: The uploaded file details.
 
         Args:
-          vector_store_identifier: The ID or name of the vector store
+          store_identifier: The ID or name of the store
 
           metadata: Optional metadata for the file
 
@@ -83,12 +87,10 @@ class FilesResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not vector_store_identifier:
-            raise ValueError(
-                f"Expected a non-empty value for `vector_store_identifier` but received {vector_store_identifier!r}"
-            )
+        if not store_identifier:
+            raise ValueError(f"Expected a non-empty value for `store_identifier` but received {store_identifier!r}")
         return self._post(
-            f"/v1/vector_stores/{vector_store_identifier}/files",
+            f"/v1/stores/{store_identifier}/files",
             body=maybe_transform(
                 {
                     "metadata": metadata,
@@ -100,15 +102,14 @@ class FilesResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=VectorStoreFile,
+            cast_to=StoreFile,
         )
 
-    @typing_extensions.deprecated("Use stores.files instead")
     def retrieve(
         self,
         file_id: str,
         *,
-        vector_store_identifier: str,
+        store_identifier: str,
         return_chunks: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -116,12 +117,18 @@ class FilesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> VectorStoreFile:
-        """
-        DEPRECATED: Use GET /stores/{store_identifier}/files/{file_id} instead
+    ) -> StoreFile:
+        """Get a file from a store.
+
+        Args: store_identifier: The ID or name of the store.
+
+        file_id: The ID or name of
+        the file. options: Get file options.
+
+        Returns: VectorStoreFile: The file details.
 
         Args:
-          vector_store_identifier: The ID or name of the vector store
+          store_identifier: The ID or name of the store
 
           file_id: The ID or name of the file
 
@@ -135,14 +142,12 @@ class FilesResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not vector_store_identifier:
-            raise ValueError(
-                f"Expected a non-empty value for `vector_store_identifier` but received {vector_store_identifier!r}"
-            )
+        if not store_identifier:
+            raise ValueError(f"Expected a non-empty value for `store_identifier` but received {store_identifier!r}")
         if not file_id:
             raise ValueError(f"Expected a non-empty value for `file_id` but received {file_id!r}")
         return self._get(
-            f"/v1/vector_stores/{vector_store_identifier}/files/{file_id}",
+            f"/v1/stores/{store_identifier}/files/{file_id}",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -150,13 +155,12 @@ class FilesResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform({"return_chunks": return_chunks}, file_retrieve_params.FileRetrieveParams),
             ),
-            cast_to=VectorStoreFile,
+            cast_to=StoreFile,
         )
 
-    @typing_extensions.deprecated("Use post stores.files.list instead")
     def list(
         self,
-        vector_store_identifier: str,
+        store_identifier: str,
         *,
         limit: int | Omit = omit,
         after: Optional[str] | Omit = omit,
@@ -172,10 +176,15 @@ class FilesResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> FileListResponse:
         """
-        DEPRECATED: Use POST /stores/{store_identifier}/files/list instead
+        List files indexed in a vector store with pagination and metadata filter.
+
+        Args: vector_store_identifier: The ID or name of the vector store pagination:
+        Pagination parameters and metadata filter
+
+        Returns: VectorStoreFileListResponse: Paginated list of vector store files
 
         Args:
-          vector_store_identifier: The ID or name of the vector store
+          store_identifier: The ID or name of the store
 
           limit: Maximum number of items to return per page (1-100)
 
@@ -199,12 +208,10 @@ class FilesResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not vector_store_identifier:
-            raise ValueError(
-                f"Expected a non-empty value for `vector_store_identifier` but received {vector_store_identifier!r}"
-            )
+        if not store_identifier:
+            raise ValueError(f"Expected a non-empty value for `store_identifier` but received {store_identifier!r}")
         return self._post(
-            f"/v1/vector_stores/{vector_store_identifier}/files/list",
+            f"/v1/stores/{store_identifier}/files/list",
             body=maybe_transform(
                 {
                     "limit": limit,
@@ -222,12 +229,11 @@ class FilesResource(SyncAPIResource):
             cast_to=FileListResponse,
         )
 
-    @typing_extensions.deprecated("Use stores.files instead")
     def delete(
         self,
         file_id: str,
         *,
-        vector_store_identifier: str,
+        store_identifier: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -235,11 +241,17 @@ class FilesResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> FileDeleteResponse:
-        """
-        DEPRECATED: Use DELETE /stores/{store_identifier}/files/{file_id} instead
+        """Delete a file from a store.
+
+        Args: store_identifier: The ID or name of the store.
+
+        file_id: The ID or name of
+        the file to delete.
+
+        Returns: VectorStoreFileDeleted: The deleted file details.
 
         Args:
-          vector_store_identifier: The ID or name of the vector store
+          store_identifier: The ID or name of the store
 
           file_id: The ID or name of the file to delete
 
@@ -251,26 +263,23 @@ class FilesResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not vector_store_identifier:
-            raise ValueError(
-                f"Expected a non-empty value for `vector_store_identifier` but received {vector_store_identifier!r}"
-            )
+        if not store_identifier:
+            raise ValueError(f"Expected a non-empty value for `store_identifier` but received {store_identifier!r}")
         if not file_id:
             raise ValueError(f"Expected a non-empty value for `file_id` but received {file_id!r}")
         return self._delete(
-            f"/v1/vector_stores/{vector_store_identifier}/files/{file_id}",
+            f"/v1/stores/{store_identifier}/files/{file_id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=FileDeleteResponse,
         )
 
-    @typing_extensions.deprecated("Use stores.files.search instead")
     def search(
         self,
         *,
         query: str,
-        vector_store_identifiers: SequenceNotStr[str],
+        store_identifiers: SequenceNotStr[str],
         top_k: int | Omit = omit,
         filters: Optional[file_search_params.Filters] | Omit = omit,
         file_ids: Union[Iterable[object], SequenceNotStr[str], None] | Omit = omit,
@@ -283,12 +292,18 @@ class FilesResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> FileSearchResponse:
         """
-        DEPRECATED: Use POST /stores/{store_identifier}/files/search instead
+        Search for files within a store based on semantic similarity.
+
+        Args: store_identifier: The ID or name of the store to search within
+        search_params: Search configuration including query text, pagination, and
+        filters
+
+        Returns: StoreFileSearchResponse: List of matching files with relevance scores
 
         Args:
           query: Search query text
 
-          vector_store_identifiers: IDs or names of vector stores to search
+          store_identifiers: IDs or names of stores to search
 
           top_k: Number of results to return
 
@@ -307,11 +322,11 @@ class FilesResource(SyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return self._post(
-            "/v1/vector_stores/files/search",
+            "/v1/stores/files/search",
             body=maybe_transform(
                 {
                     "query": query,
-                    "vector_store_identifiers": vector_store_identifiers,
+                    "store_identifiers": store_identifiers,
                     "top_k": top_k,
                     "filters": filters,
                     "file_ids": file_ids,
@@ -346,10 +361,9 @@ class AsyncFilesResource(AsyncAPIResource):
         """
         return AsyncFilesResourceWithStreamingResponse(self)
 
-    @typing_extensions.deprecated("Use post stores.files instead")
     async def create(
         self,
-        vector_store_identifier: str,
+        store_identifier: str,
         *,
         metadata: object | Omit = omit,
         experimental: file_create_params.Experimental | Omit = omit,
@@ -360,12 +374,18 @@ class AsyncFilesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> VectorStoreFile:
-        """
-        DEPRECATED: Use POST /stores/{store_identifier}/files instead
+    ) -> StoreFile:
+        """Upload a file to a store.
+
+        Args: store_identifier: The ID or name of the store.
+
+        file_add_params: The file
+        to add to the store.
+
+        Returns: VectorStoreFile: The uploaded file details.
 
         Args:
-          vector_store_identifier: The ID or name of the vector store
+          store_identifier: The ID or name of the store
 
           metadata: Optional metadata for the file
 
@@ -381,12 +401,10 @@ class AsyncFilesResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not vector_store_identifier:
-            raise ValueError(
-                f"Expected a non-empty value for `vector_store_identifier` but received {vector_store_identifier!r}"
-            )
+        if not store_identifier:
+            raise ValueError(f"Expected a non-empty value for `store_identifier` but received {store_identifier!r}")
         return await self._post(
-            f"/v1/vector_stores/{vector_store_identifier}/files",
+            f"/v1/stores/{store_identifier}/files",
             body=await async_maybe_transform(
                 {
                     "metadata": metadata,
@@ -398,15 +416,14 @@ class AsyncFilesResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=VectorStoreFile,
+            cast_to=StoreFile,
         )
 
-    @typing_extensions.deprecated("Use stores.files instead")
     async def retrieve(
         self,
         file_id: str,
         *,
-        vector_store_identifier: str,
+        store_identifier: str,
         return_chunks: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -414,12 +431,18 @@ class AsyncFilesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> VectorStoreFile:
-        """
-        DEPRECATED: Use GET /stores/{store_identifier}/files/{file_id} instead
+    ) -> StoreFile:
+        """Get a file from a store.
+
+        Args: store_identifier: The ID or name of the store.
+
+        file_id: The ID or name of
+        the file. options: Get file options.
+
+        Returns: VectorStoreFile: The file details.
 
         Args:
-          vector_store_identifier: The ID or name of the vector store
+          store_identifier: The ID or name of the store
 
           file_id: The ID or name of the file
 
@@ -433,14 +456,12 @@ class AsyncFilesResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not vector_store_identifier:
-            raise ValueError(
-                f"Expected a non-empty value for `vector_store_identifier` but received {vector_store_identifier!r}"
-            )
+        if not store_identifier:
+            raise ValueError(f"Expected a non-empty value for `store_identifier` but received {store_identifier!r}")
         if not file_id:
             raise ValueError(f"Expected a non-empty value for `file_id` but received {file_id!r}")
         return await self._get(
-            f"/v1/vector_stores/{vector_store_identifier}/files/{file_id}",
+            f"/v1/stores/{store_identifier}/files/{file_id}",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -450,13 +471,12 @@ class AsyncFilesResource(AsyncAPIResource):
                     {"return_chunks": return_chunks}, file_retrieve_params.FileRetrieveParams
                 ),
             ),
-            cast_to=VectorStoreFile,
+            cast_to=StoreFile,
         )
 
-    @typing_extensions.deprecated("Use post stores.files.list instead")
     async def list(
         self,
-        vector_store_identifier: str,
+        store_identifier: str,
         *,
         limit: int | Omit = omit,
         after: Optional[str] | Omit = omit,
@@ -472,10 +492,15 @@ class AsyncFilesResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> FileListResponse:
         """
-        DEPRECATED: Use POST /stores/{store_identifier}/files/list instead
+        List files indexed in a vector store with pagination and metadata filter.
+
+        Args: vector_store_identifier: The ID or name of the vector store pagination:
+        Pagination parameters and metadata filter
+
+        Returns: VectorStoreFileListResponse: Paginated list of vector store files
 
         Args:
-          vector_store_identifier: The ID or name of the vector store
+          store_identifier: The ID or name of the store
 
           limit: Maximum number of items to return per page (1-100)
 
@@ -499,12 +524,10 @@ class AsyncFilesResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not vector_store_identifier:
-            raise ValueError(
-                f"Expected a non-empty value for `vector_store_identifier` but received {vector_store_identifier!r}"
-            )
+        if not store_identifier:
+            raise ValueError(f"Expected a non-empty value for `store_identifier` but received {store_identifier!r}")
         return await self._post(
-            f"/v1/vector_stores/{vector_store_identifier}/files/list",
+            f"/v1/stores/{store_identifier}/files/list",
             body=await async_maybe_transform(
                 {
                     "limit": limit,
@@ -522,12 +545,11 @@ class AsyncFilesResource(AsyncAPIResource):
             cast_to=FileListResponse,
         )
 
-    @typing_extensions.deprecated("Use stores.files instead")
     async def delete(
         self,
         file_id: str,
         *,
-        vector_store_identifier: str,
+        store_identifier: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -535,11 +557,17 @@ class AsyncFilesResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> FileDeleteResponse:
-        """
-        DEPRECATED: Use DELETE /stores/{store_identifier}/files/{file_id} instead
+        """Delete a file from a store.
+
+        Args: store_identifier: The ID or name of the store.
+
+        file_id: The ID or name of
+        the file to delete.
+
+        Returns: VectorStoreFileDeleted: The deleted file details.
 
         Args:
-          vector_store_identifier: The ID or name of the vector store
+          store_identifier: The ID or name of the store
 
           file_id: The ID or name of the file to delete
 
@@ -551,26 +579,23 @@ class AsyncFilesResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not vector_store_identifier:
-            raise ValueError(
-                f"Expected a non-empty value for `vector_store_identifier` but received {vector_store_identifier!r}"
-            )
+        if not store_identifier:
+            raise ValueError(f"Expected a non-empty value for `store_identifier` but received {store_identifier!r}")
         if not file_id:
             raise ValueError(f"Expected a non-empty value for `file_id` but received {file_id!r}")
         return await self._delete(
-            f"/v1/vector_stores/{vector_store_identifier}/files/{file_id}",
+            f"/v1/stores/{store_identifier}/files/{file_id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=FileDeleteResponse,
         )
 
-    @typing_extensions.deprecated("Use stores.files.search instead")
     async def search(
         self,
         *,
         query: str,
-        vector_store_identifiers: SequenceNotStr[str],
+        store_identifiers: SequenceNotStr[str],
         top_k: int | Omit = omit,
         filters: Optional[file_search_params.Filters] | Omit = omit,
         file_ids: Union[Iterable[object], SequenceNotStr[str], None] | Omit = omit,
@@ -583,12 +608,18 @@ class AsyncFilesResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> FileSearchResponse:
         """
-        DEPRECATED: Use POST /stores/{store_identifier}/files/search instead
+        Search for files within a store based on semantic similarity.
+
+        Args: store_identifier: The ID or name of the store to search within
+        search_params: Search configuration including query text, pagination, and
+        filters
+
+        Returns: StoreFileSearchResponse: List of matching files with relevance scores
 
         Args:
           query: Search query text
 
-          vector_store_identifiers: IDs or names of vector stores to search
+          store_identifiers: IDs or names of stores to search
 
           top_k: Number of results to return
 
@@ -607,11 +638,11 @@ class AsyncFilesResource(AsyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return await self._post(
-            "/v1/vector_stores/files/search",
+            "/v1/stores/files/search",
             body=await async_maybe_transform(
                 {
                     "query": query,
-                    "vector_store_identifiers": vector_store_identifiers,
+                    "store_identifiers": store_identifiers,
                     "top_k": top_k,
                     "filters": filters,
                     "file_ids": file_ids,
@@ -630,30 +661,20 @@ class FilesResourceWithRawResponse:
     def __init__(self, files: FilesResource) -> None:
         self._files = files
 
-        self.create = (  # pyright: ignore[reportDeprecated]
-            to_raw_response_wrapper(
-                files.create,  # pyright: ignore[reportDeprecated],
-            )
+        self.create = to_raw_response_wrapper(
+            files.create,
         )
-        self.retrieve = (  # pyright: ignore[reportDeprecated]
-            to_raw_response_wrapper(
-                files.retrieve,  # pyright: ignore[reportDeprecated],
-            )
+        self.retrieve = to_raw_response_wrapper(
+            files.retrieve,
         )
-        self.list = (  # pyright: ignore[reportDeprecated]
-            to_raw_response_wrapper(
-                files.list,  # pyright: ignore[reportDeprecated],
-            )
+        self.list = to_raw_response_wrapper(
+            files.list,
         )
-        self.delete = (  # pyright: ignore[reportDeprecated]
-            to_raw_response_wrapper(
-                files.delete,  # pyright: ignore[reportDeprecated],
-            )
+        self.delete = to_raw_response_wrapper(
+            files.delete,
         )
-        self.search = (  # pyright: ignore[reportDeprecated]
-            to_raw_response_wrapper(
-                files.search,  # pyright: ignore[reportDeprecated],
-            )
+        self.search = to_raw_response_wrapper(
+            files.search,
         )
 
 
@@ -661,30 +682,20 @@ class AsyncFilesResourceWithRawResponse:
     def __init__(self, files: AsyncFilesResource) -> None:
         self._files = files
 
-        self.create = (  # pyright: ignore[reportDeprecated]
-            async_to_raw_response_wrapper(
-                files.create,  # pyright: ignore[reportDeprecated],
-            )
+        self.create = async_to_raw_response_wrapper(
+            files.create,
         )
-        self.retrieve = (  # pyright: ignore[reportDeprecated]
-            async_to_raw_response_wrapper(
-                files.retrieve,  # pyright: ignore[reportDeprecated],
-            )
+        self.retrieve = async_to_raw_response_wrapper(
+            files.retrieve,
         )
-        self.list = (  # pyright: ignore[reportDeprecated]
-            async_to_raw_response_wrapper(
-                files.list,  # pyright: ignore[reportDeprecated],
-            )
+        self.list = async_to_raw_response_wrapper(
+            files.list,
         )
-        self.delete = (  # pyright: ignore[reportDeprecated]
-            async_to_raw_response_wrapper(
-                files.delete,  # pyright: ignore[reportDeprecated],
-            )
+        self.delete = async_to_raw_response_wrapper(
+            files.delete,
         )
-        self.search = (  # pyright: ignore[reportDeprecated]
-            async_to_raw_response_wrapper(
-                files.search,  # pyright: ignore[reportDeprecated],
-            )
+        self.search = async_to_raw_response_wrapper(
+            files.search,
         )
 
 
@@ -692,30 +703,20 @@ class FilesResourceWithStreamingResponse:
     def __init__(self, files: FilesResource) -> None:
         self._files = files
 
-        self.create = (  # pyright: ignore[reportDeprecated]
-            to_streamed_response_wrapper(
-                files.create,  # pyright: ignore[reportDeprecated],
-            )
+        self.create = to_streamed_response_wrapper(
+            files.create,
         )
-        self.retrieve = (  # pyright: ignore[reportDeprecated]
-            to_streamed_response_wrapper(
-                files.retrieve,  # pyright: ignore[reportDeprecated],
-            )
+        self.retrieve = to_streamed_response_wrapper(
+            files.retrieve,
         )
-        self.list = (  # pyright: ignore[reportDeprecated]
-            to_streamed_response_wrapper(
-                files.list,  # pyright: ignore[reportDeprecated],
-            )
+        self.list = to_streamed_response_wrapper(
+            files.list,
         )
-        self.delete = (  # pyright: ignore[reportDeprecated]
-            to_streamed_response_wrapper(
-                files.delete,  # pyright: ignore[reportDeprecated],
-            )
+        self.delete = to_streamed_response_wrapper(
+            files.delete,
         )
-        self.search = (  # pyright: ignore[reportDeprecated]
-            to_streamed_response_wrapper(
-                files.search,  # pyright: ignore[reportDeprecated],
-            )
+        self.search = to_streamed_response_wrapper(
+            files.search,
         )
 
 
@@ -723,28 +724,18 @@ class AsyncFilesResourceWithStreamingResponse:
     def __init__(self, files: AsyncFilesResource) -> None:
         self._files = files
 
-        self.create = (  # pyright: ignore[reportDeprecated]
-            async_to_streamed_response_wrapper(
-                files.create,  # pyright: ignore[reportDeprecated],
-            )
+        self.create = async_to_streamed_response_wrapper(
+            files.create,
         )
-        self.retrieve = (  # pyright: ignore[reportDeprecated]
-            async_to_streamed_response_wrapper(
-                files.retrieve,  # pyright: ignore[reportDeprecated],
-            )
+        self.retrieve = async_to_streamed_response_wrapper(
+            files.retrieve,
         )
-        self.list = (  # pyright: ignore[reportDeprecated]
-            async_to_streamed_response_wrapper(
-                files.list,  # pyright: ignore[reportDeprecated],
-            )
+        self.list = async_to_streamed_response_wrapper(
+            files.list,
         )
-        self.delete = (  # pyright: ignore[reportDeprecated]
-            async_to_streamed_response_wrapper(
-                files.delete,  # pyright: ignore[reportDeprecated],
-            )
+        self.delete = async_to_streamed_response_wrapper(
+            files.delete,
         )
-        self.search = (  # pyright: ignore[reportDeprecated]
-            async_to_streamed_response_wrapper(
-                files.search,  # pyright: ignore[reportDeprecated],
-            )
+        self.search = async_to_streamed_response_wrapper(
+            files.search,
         )

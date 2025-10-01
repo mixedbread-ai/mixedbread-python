@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from . import shared
 from .. import _compat
+from .store import Store as Store
 from .shared import Usage as Usage, SearchFilter as SearchFilter, SearchFilterCondition as SearchFilterCondition
 from .api_key import APIKey as APIKey
 from .embedding import Embedding as Embedding
@@ -18,18 +19,25 @@ from .encoding_format import EncodingFormat as EncodingFormat
 from .rerank_response import RerankResponse as RerankResponse
 from .data_source_type import DataSourceType as DataSourceType
 from .file_list_params import FileListParams as FileListParams
+from .store_list_params import StoreListParams as StoreListParams
 from .file_create_params import FileCreateParams as FileCreateParams
 from .file_update_params import FileUpdateParams as FileUpdateParams
 from .api_key_list_params import APIKeyListParams as APIKeyListParams
 from .client_embed_params import ClientEmbedParams as ClientEmbedParams
 from .expires_after_param import ExpiresAfterParam as ExpiresAfterParam
+from .store_create_params import StoreCreateParams as StoreCreateParams
+from .store_search_params import StoreSearchParams as StoreSearchParams
+from .store_update_params import StoreUpdateParams as StoreUpdateParams
 from .client_rerank_params import ClientRerankParams as ClientRerankParams
 from .file_delete_response import FileDeleteResponse as FileDeleteResponse
 from .api_key_create_params import APIKeyCreateParams as APIKeyCreateParams
 from .pagination_with_total import PaginationWithTotal as PaginationWithTotal
+from .store_delete_response import StoreDeleteResponse as StoreDeleteResponse
+from .store_search_response import StoreSearchResponse as StoreSearchResponse
 from .api_key_delete_response import APIKeyDeleteResponse as APIKeyDeleteResponse
 from .data_source_list_params import DataSourceListParams as DataSourceListParams
 from .embedding_create_params import EmbeddingCreateParams as EmbeddingCreateParams
+from .scored_text_input_chunk import ScoredTextInputChunk as ScoredTextInputChunk
 from .linear_data_source_param import LinearDataSourceParam as LinearDataSourceParam
 from .multi_encoding_embedding import MultiEncodingEmbedding as MultiEncodingEmbedding
 from .notion_data_source_param import NotionDataSourceParam as NotionDataSourceParam
@@ -42,8 +50,14 @@ from .vector_store_create_params import VectorStoreCreateParams as VectorStoreCr
 from .vector_store_search_params import VectorStoreSearchParams as VectorStoreSearchParams
 from .vector_store_update_params import VectorStoreUpdateParams as VectorStoreUpdateParams
 from .data_source_delete_response import DataSourceDeleteResponse as DataSourceDeleteResponse
+from .scored_audio_url_input_chunk import ScoredAudioURLInputChunk as ScoredAudioURLInputChunk
+from .scored_image_url_input_chunk import ScoredImageURLInputChunk as ScoredImageURLInputChunk
+from .scored_video_url_input_chunk import ScoredVideoURLInputChunk as ScoredVideoURLInputChunk
 from .vector_store_delete_response import VectorStoreDeleteResponse as VectorStoreDeleteResponse
 from .vector_store_search_response import VectorStoreSearchResponse as VectorStoreSearchResponse
+from .store_question_answering_params import StoreQuestionAnsweringParams as StoreQuestionAnsweringParams
+from .store_chunk_search_options_param import StoreChunkSearchOptionsParam as StoreChunkSearchOptionsParam
+from .store_question_answering_response import StoreQuestionAnsweringResponse as StoreQuestionAnsweringResponse
 from .vector_store_question_answering_params import (
     VectorStoreQuestionAnsweringParams as VectorStoreQuestionAnsweringParams,
 )
