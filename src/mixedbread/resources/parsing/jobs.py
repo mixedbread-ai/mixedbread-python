@@ -9,7 +9,7 @@ from typing_extensions import Literal
 import httpx
 
 from ...lib import polling
-from ..._types import Body, Omit, Query, Headers, NotGiven, FileTypes, omit, not_given, NOT_GIVEN
+from ..._types import Body, Omit, Query, Headers, NotGiven, FileTypes, omit, not_given
 from ..._utils import maybe_transform, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
@@ -303,8 +303,8 @@ class JobsResource(SyncAPIResource):
         self,
         job_id: str,
         *,
-        poll_interval_ms: int | NotGiven = NOT_GIVEN,
-        poll_timeout_ms: float | NotGiven = NOT_GIVEN,
+        poll_interval_ms: int | NotGiven = not_given,
+        poll_timeout_ms: float | NotGiven = not_given,
         **kwargs: Any,
     ) -> ParsingJob:
         """
@@ -329,7 +329,7 @@ class JobsResource(SyncAPIResource):
         self,
         *,
         file_id: str,
-        chunking_strategy: Literal["page"] | NotGiven = NOT_GIVEN,
+        chunking_strategy: Literal["page"] | NotGiven = not_given,
         element_types: Optional[
             List[
                 Literal[
@@ -347,10 +347,10 @@ class JobsResource(SyncAPIResource):
                 ]
             ]
         ]
-        | NotGiven = NOT_GIVEN,
-        return_format: Literal["html", "markdown", "plain"] | NotGiven = NOT_GIVEN,
-        poll_interval_ms: int | NotGiven = NOT_GIVEN,
-        poll_timeout_ms: float | NotGiven = NOT_GIVEN,
+        | NotGiven = not_given,
+        return_format: Literal["html", "markdown", "plain"] | NotGiven = not_given,
+        poll_interval_ms: int | NotGiven = not_given,
+        poll_timeout_ms: float | NotGiven = not_given,
         **kwargs: Any,
     ) -> ParsingJob:
         """
@@ -383,7 +383,7 @@ class JobsResource(SyncAPIResource):
         self,
         *,
         file: FileTypes,
-        chunking_strategy: Literal["page"] | NotGiven = NOT_GIVEN,
+        chunking_strategy: Literal["page"] | NotGiven = not_given,
         element_types: Optional[
             List[
                 Literal[
@@ -401,8 +401,8 @@ class JobsResource(SyncAPIResource):
                 ]
             ]
         ]
-        | NotGiven = NOT_GIVEN,
-        return_format: Literal["html", "markdown", "plain"] | NotGiven = NOT_GIVEN,
+        | NotGiven = not_given,
+        return_format: Literal["html", "markdown", "plain"] | NotGiven = not_given,
         **kwargs: Any,
     ) -> ParsingJob:
         """Upload a file to the `files` API and then create a parsing job for it.
@@ -422,7 +422,7 @@ class JobsResource(SyncAPIResource):
         self,
         *,
         file: FileTypes,
-        chunking_strategy: Literal["page"] | NotGiven = NOT_GIVEN,
+        chunking_strategy: Literal["page"] | NotGiven = not_given,
         element_types: Optional[
             List[
                 Literal[
@@ -440,9 +440,9 @@ class JobsResource(SyncAPIResource):
                 ]
             ]
         ]
-        | NotGiven = NOT_GIVEN,
-        return_format: Literal["html", "markdown", "plain"] | NotGiven = NOT_GIVEN,
-        poll_interval_ms: int | NotGiven = NOT_GIVEN,
+        | NotGiven = not_given,
+        return_format: Literal["html", "markdown", "plain"] | NotGiven = not_given,
+        poll_interval_ms: int | NotGiven = not_given,
         **kwargs: Any,
     ) -> ParsingJob:
         """Upload a file and create a parsing job, then poll until processing is complete."""
@@ -727,8 +727,8 @@ class AsyncJobsResource(AsyncAPIResource):
         self,
         job_id: str,
         *,
-        poll_interval_ms: int | NotGiven = NOT_GIVEN,
-        poll_timeout_ms: float | NotGiven = NOT_GIVEN,
+        poll_interval_ms: int | NotGiven = not_given,
+        poll_timeout_ms: float | NotGiven = not_given,
         **kwargs: Any,
     ) -> ParsingJob:
         """
@@ -753,7 +753,7 @@ class AsyncJobsResource(AsyncAPIResource):
         self,
         *,
         file_id: str,
-        chunking_strategy: Literal["page"] | NotGiven = NOT_GIVEN,
+        chunking_strategy: Literal["page"] | NotGiven = not_given,
         element_types: Optional[
             List[
                 Literal[
@@ -771,10 +771,10 @@ class AsyncJobsResource(AsyncAPIResource):
                 ]
             ]
         ]
-        | NotGiven = NOT_GIVEN,
-        return_format: Literal["html", "markdown", "plain"] | NotGiven = NOT_GIVEN,
-        poll_interval_ms: int | NotGiven = NOT_GIVEN,
-        poll_timeout_ms: float | NotGiven = NOT_GIVEN,
+        | NotGiven = not_given,
+        return_format: Literal["html", "markdown", "plain"] | NotGiven = not_given,
+        poll_interval_ms: int | NotGiven = not_given,
+        poll_timeout_ms: float | NotGiven = not_given,
         **kwargs: Any,
     ) -> ParsingJob:
         """
@@ -807,7 +807,7 @@ class AsyncJobsResource(AsyncAPIResource):
         self,
         *,
         file: FileTypes,
-        chunking_strategy: Literal["page"] | NotGiven = NOT_GIVEN,
+        chunking_strategy: Literal["page"] | NotGiven = not_given,
         element_types: Optional[
             List[
                 Literal[
@@ -825,8 +825,8 @@ class AsyncJobsResource(AsyncAPIResource):
                 ]
             ]
         ]
-        | NotGiven = NOT_GIVEN,
-        return_format: Literal["html", "markdown", "plain"] | NotGiven = NOT_GIVEN,
+        | NotGiven = not_given,
+        return_format: Literal["html", "markdown", "plain"] | NotGiven = not_given,
         **kwargs: Any,
     ) -> ParsingJob:
         """Upload a file to the `files` API and then create a parsing job for it.
@@ -846,7 +846,7 @@ class AsyncJobsResource(AsyncAPIResource):
         self,
         *,
         file: FileTypes,
-        chunking_strategy: Literal["page"] | NotGiven = NOT_GIVEN,
+        chunking_strategy: Literal["page"] | NotGiven = not_given,
         element_types: Optional[
             List[
                 Literal[
@@ -864,9 +864,9 @@ class AsyncJobsResource(AsyncAPIResource):
                 ]
             ]
         ]
-        | NotGiven = NOT_GIVEN,
-        return_format: Literal["html", "markdown", "plain"] | NotGiven = NOT_GIVEN,
-        poll_interval_ms: int | NotGiven = NOT_GIVEN,
+        | NotGiven = not_given,
+        return_format: Literal["html", "markdown", "plain"] | NotGiven = not_given,
+        poll_interval_ms: int | NotGiven = not_given,
         **kwargs: Any,
     ) -> ParsingJob:
         """Upload a file and create a parsing job, then poll until processing is complete."""

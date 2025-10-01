@@ -332,8 +332,8 @@ class FilesResource(SyncAPIResource):
         file_id: str,
         *,
         vector_store_identifier: str,
-        poll_interval_ms: int | NotGiven = NOT_GIVEN,
-        poll_timeout_ms: float | NotGiven = NOT_GIVEN,
+        poll_interval_ms: int | NotGiven = not_given,
+        poll_timeout_ms: float | NotGiven = not_given,
         **kwargs: Any,
     ) -> VectorStoreFile:
         """
@@ -360,10 +360,10 @@ class FilesResource(SyncAPIResource):
         file_id: str,
         *,
         vector_store_identifier: str,
-        metadata: Optional[object] | NotGiven = NOT_GIVEN,
-        experimental: file_create_params.Experimental | NotGiven = NOT_GIVEN,
-        poll_interval_ms: int | NotGiven = NOT_GIVEN,
-        poll_timeout_ms: float | NotGiven = NOT_GIVEN,
+        metadata: Optional[object] | NotGiven = not_given,
+        experimental: file_create_params.Experimental | NotGiven = not_given,
+        poll_interval_ms: int | NotGiven = not_given,
+        poll_timeout_ms: float | NotGiven = not_given,
         **kwargs: Any,
     ) -> VectorStoreFile:
         """
@@ -393,8 +393,8 @@ class FilesResource(SyncAPIResource):
         *,
         vector_store_identifier: str,
         file: FileTypes,
-        metadata: Optional[object] | NotGiven = NOT_GIVEN,
-        experimental: file_create_params.Experimental | NotGiven = NOT_GIVEN,
+        metadata: Optional[object] | NotGiven = not_given,
+        experimental: file_create_params.Experimental | NotGiven = not_given,
         **kwargs: Any,
     ) -> VectorStoreFile:
         """Upload a file to the `files` API and then attach it to the given vector store.
@@ -415,10 +415,10 @@ class FilesResource(SyncAPIResource):
         *,
         vector_store_identifier: str,
         file: FileTypes,
-        metadata: Optional[object] | NotGiven = NOT_GIVEN,
-        experimental: file_create_params.Experimental | NotGiven = NOT_GIVEN,
-        poll_interval_ms: int | NotGiven = NOT_GIVEN,
-        poll_timeout_ms: float | NotGiven = NOT_GIVEN,
+        metadata: Optional[object] | NotGiven = not_given,
+        experimental: file_create_params.Experimental | NotGiven = not_given,
+        poll_interval_ms: int | NotGiven = not_given,
+        poll_timeout_ms: float | NotGiven = not_given,
         **kwargs: Any,
     ) -> VectorStoreFile:
         """Add a file to a vector store and poll until processing is complete."""
@@ -738,8 +738,8 @@ class AsyncFilesResource(AsyncAPIResource):
         file_id: str,
         *,
         vector_store_identifier: str,
-        poll_interval_ms: int | NotGiven = NOT_GIVEN,
-        poll_timeout_ms: float | NotGiven = NOT_GIVEN,
+        poll_interval_ms: int | NotGiven = not_given,
+        poll_timeout_ms: float | NotGiven = not_given,
         **kwargs: Any,
     ) -> VectorStoreFile:
         """
@@ -766,10 +766,10 @@ class AsyncFilesResource(AsyncAPIResource):
         file_id: str,
         *,
         vector_store_identifier: str,
-        metadata: Optional[object] | NotGiven = NOT_GIVEN,
-        experimental: file_create_params.Experimental | NotGiven = NOT_GIVEN,
-        poll_interval_ms: int | NotGiven = NOT_GIVEN,
-        poll_timeout_ms: float | NotGiven = NOT_GIVEN,
+        metadata: Optional[object] | NotGiven = not_given,
+        experimental: file_create_params.Experimental | NotGiven = not_given,
+        poll_interval_ms: int | NotGiven = not_given,
+        poll_timeout_ms: float | NotGiven = not_given,
         **kwargs: Any,
     ) -> VectorStoreFile:
         """
@@ -803,8 +803,8 @@ class AsyncFilesResource(AsyncAPIResource):
         *,
         vector_store_identifier: str,
         file: FileTypes,
-        metadata: Optional[object] | NotGiven = NOT_GIVEN,
-        experimental: file_create_params.Experimental | NotGiven = NOT_GIVEN,
+        metadata: Optional[object] | NotGiven = not_given,
+        experimental: file_create_params.Experimental | NotGiven = not_given,
         **kwargs: Any,
     ) -> VectorStoreFile:
         """Upload a file to the `files` API and then attach it to the given vector store.
@@ -825,10 +825,10 @@ class AsyncFilesResource(AsyncAPIResource):
         *,
         vector_store_identifier: str,
         file: FileTypes,
-        metadata: Optional[object] | NotGiven = NOT_GIVEN,
-        experimental: file_create_params.Experimental | NotGiven = NOT_GIVEN,
-        poll_interval_ms: int | NotGiven = NOT_GIVEN,
-        poll_timeout_ms: float | NotGiven = NOT_GIVEN,
+        metadata: Optional[object] | NotGiven = not_given,
+        experimental: file_create_params.Experimental | NotGiven = not_given,
+        poll_interval_ms: int | NotGiven = not_given,
+        poll_timeout_ms: float | NotGiven = not_given,
         **kwargs: Any,
     ) -> VectorStoreFile:
         """Add a file to a vector store and poll until processing is complete."""
