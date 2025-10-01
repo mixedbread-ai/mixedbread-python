@@ -9,7 +9,7 @@ from typing_extensions import Literal
 import httpx
 
 from ...lib import polling
-from ..._types import Body, Omit, Query, Headers, NotGiven, FileTypes, omit, not_given
+from ..._types import Body, Omit, Query, Headers, NotGiven, FileTypes, omit, not_given, NOT_GIVEN
 from ..._utils import maybe_transform, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
