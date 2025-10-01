@@ -31,6 +31,10 @@ Types:
 ```python
 from mixedbread.types import (
     ExpiresAfter,
+    ScoredAudioURLInputChunk,
+    ScoredImageURLInputChunk,
+    ScoredTextInputChunk,
+    ScoredVideoURLInputChunk,
     VectorStore,
     VectorStoreChunkSearchOptions,
     VectorStoreDeleteResponse,
