@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.31.0 (2025-10-01)
+
+Full Changelog: [v0.30.0...v0.31.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.30.0...v0.31.0)
+
+### Features
+
+* **api:** api update ([26ce1c1](https://github.com/mixedbread-ai/mixedbread-python/commit/26ce1c1583f2eef287cdf5383398326d755428c4))
+* **api:** api update ([91f4c77](https://github.com/mixedbread-ai/mixedbread-python/commit/91f4c77e0679065d375bb70b6f4618683aa7d77d))
+* **api:** api update ([cea8399](https://github.com/mixedbread-ai/mixedbread-python/commit/cea83993a41231f4351dba325e798122660dabc3))
+* **api:** update via SDK Studio ([0031d74](https://github.com/mixedbread-ai/mixedbread-python/commit/0031d74491330b7ecbd7965ff88837e1da71fb22))
+
+
+### Chores
+
+* do not install brew dependencies in ./scripts/bootstrap by default ([3dab10e](https://github.com/mixedbread-ai/mixedbread-python/commit/3dab10eca037653e15743682f304859d491202aa))
+* **internal:** improve examples ([3edbd38](https://github.com/mixedbread-ai/mixedbread-python/commit/3edbd387ef7fa62afc255a80b9ac0a385f2cef29))
+* **internal:** update pydantic dependency ([90fe5a9](https://github.com/mixedbread-ai/mixedbread-python/commit/90fe5a9b7626b6fefeb720058ce08eee191687eb))
+* **internal:** use some smaller example values ([7566937](https://github.com/mixedbread-ai/mixedbread-python/commit/7566937f6cc6e0d777294adb70963f06023d4358))
+* **types:** change optional parameter type from NotGiven to Omit ([402891b](https://github.com/mixedbread-ai/mixedbread-python/commit/402891b4bc2a09b774827338509bd730747d210c))
+
 ## 0.30.0 (2025-09-08)
 
 Full Changelog: [v0.29.0...v0.30.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.29.0...v0.30.0)
