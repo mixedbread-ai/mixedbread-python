@@ -2,11 +2,13 @@
 
 from __future__ import annotations
 
-from typing import List, Union, Iterable, Optional
+import functools
+from typing import Any, List, Union, Iterable, Optional
 
 import httpx
 
-from ..._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
+from ...lib import polling
+from ..._types import Body, FileTypes, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
 from ..._utils import maybe_transform, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
@@ -340,6 +342,112 @@ class FilesResource(SyncAPIResource):
             cast_to=FileSearchResponse,
         )
 
+    def poll(
+        self,
+        file_id: str,
+        *,
+        store_identifier: str,
+        poll_interval_ms: int | NotGiven = not_given,
+        poll_timeout_ms: float | NotGiven = not_given,
+        **kwargs: Any,
+    ) -> StoreFile:
+        """
+        Poll for a file's status until it reaches a terminal state.
+        Args:
+            file_id: The ID of the file to poll
+            store_identifier: The ID of the store
+            poll_interval_ms: The interval between polls in milliseconds
+            poll_timeout_ms: The maximum time to poll for in milliseconds
+        Returns:
+            The file object once it reaches a terminal state
+        """
+        polling_interval_ms = poll_interval_ms or 500
+        polling_timeout_ms = poll_timeout_ms or None
+        return polling.poll(
+            fn=functools.partial(self.retrieve, file_id, store_identifier=store_identifier, **kwargs),
+            condition=lambda res: res.status == "completed" or res.status == "failed" or res.status == "cancelled",
+            interval_seconds=polling_interval_ms / 1000,
+            timeout_seconds=polling_timeout_ms / 1000 if polling_timeout_ms else None,
+        )
+
+    def create_and_poll(
+        self,
+        file_id: str,
+        *,
+        store_identifier: str,
+        metadata: Optional[object] | NotGiven = not_given,
+        experimental: file_create_params.Experimental | Omit = omit,
+        poll_interval_ms: int | NotGiven = not_given,
+        poll_timeout_ms: float | NotGiven = not_given,
+        **kwargs: Any,
+    ) -> StoreFile:
+        """
+        Attach a file to the given store and wait for it to be processed.
+        Args:
+            file_id: The ID of the file to poll
+            store_identifier: The ID of the store
+            metadata: The metadata to attach to the file
+            poll_interval_ms: The interval between polls in milliseconds
+            poll_timeout_ms: The maximum time to poll for in milliseconds
+        Returns:
+            The file object once it reaches a terminal state
+        """
+        self.create(
+            store_identifier=store_identifier, file_id=file_id, metadata=metadata, experimental=experimental, **kwargs
+        )
+        return self.poll(
+            file_id,
+            store_identifier=store_identifier,
+            poll_interval_ms=poll_interval_ms,
+            poll_timeout_ms=poll_timeout_ms,
+            **kwargs,
+        )
+
+    def upload(
+        self,
+        *,
+        store_identifier: str,
+        file: FileTypes,
+        metadata: Optional[object] | Omit = omit,
+        experimental: file_create_params.Experimental | Omit = omit,
+        **kwargs: Any,
+    ) -> StoreFile:
+        """Upload a file to the `files` API and then attach it to the given store.
+        Note the file will be asynchronously processed (you can use the alternative
+        polling helper method to wait for processing to complete).
+        """
+        file_obj = self._client.files.create(file=file, **kwargs)
+        return self.create(
+            store_identifier=store_identifier,
+            file_id=file_obj.id,
+            metadata=metadata,
+            experimental=experimental,
+            **kwargs,
+        )
+
+    def upload_and_poll(
+        self,
+        *,
+        store_identifier: str,
+        file: FileTypes,
+        metadata: Optional[object] | NotGiven = not_given,
+        experimental: file_create_params.Experimental | Omit = omit,
+        poll_interval_ms: int | NotGiven = not_given,
+        poll_timeout_ms: float | NotGiven = not_given,
+        **kwargs: Any,
+    ) -> StoreFile:
+        """Add a file to a store and poll until processing is complete."""
+        file_obj = self._client.files.create(file=file, **kwargs)
+        return self.create_and_poll(
+            store_identifier=store_identifier,
+            file_id=file_obj.id,
+            metadata=metadata,
+            experimental=experimental,
+            poll_interval_ms=poll_interval_ms,
+            poll_timeout_ms=poll_timeout_ms,
+            **kwargs,
+        )
+
 
 class AsyncFilesResource(AsyncAPIResource):
     @cached_property
@@ -654,6 +762,116 @@ class AsyncFilesResource(AsyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=FileSearchResponse,
+        )
+
+    async def poll(
+        self,
+        file_id: str,
+        *,
+        store_identifier: str,
+        poll_interval_ms: int | NotGiven = not_given,
+        poll_timeout_ms: float | NotGiven = not_given,
+        **kwargs: Any,
+    ) -> StoreFile:
+        """
+        Poll for a file's status until it reaches a terminal state.
+        Args:
+            file_id: The ID of the file to poll
+            store_identifier: The ID of the store
+            poll_interval_ms: The interval between polls in milliseconds
+            poll_timeout_ms: The maximum time to poll for in milliseconds
+        Returns:
+            The file object once it reaches a terminal state
+        """
+        polling_interval_ms = poll_interval_ms or 500
+        polling_timeout_ms = poll_timeout_ms or None
+        return await polling.poll_async(
+            fn=functools.partial(self.retrieve, file_id, store_identifier=store_identifier, **kwargs),
+            condition=lambda res: res.status == "completed" or res.status == "failed" or res.status == "cancelled",
+            interval_seconds=polling_interval_ms / 1000,
+            timeout_seconds=polling_timeout_ms / 1000 if polling_timeout_ms else None,
+        )
+
+    async def create_and_poll(
+        self,
+        file_id: str,
+        *,
+        store_identifier: str,
+        metadata: Optional[object] | NotGiven = not_given,
+        experimental: file_create_params.Experimental | Omit = omit,
+        poll_interval_ms: int | NotGiven = not_given,
+        poll_timeout_ms: float | NotGiven = not_given,
+        **kwargs: Any,
+    ) -> StoreFile:
+        """
+        Attach a file to the given vector store and wait for it to be processed.
+        Args:
+            file_id: The ID of the file to poll
+            store_identifier: The ID of the store
+            metadata: The metadata to attach to the file
+            poll_interval_ms: The interval between polls in milliseconds
+            poll_timeout_ms: The maximum time to poll for in milliseconds
+        Returns:
+            The file object once it reaches a terminal state
+        """
+        await self.create(
+            store_identifier=store_identifier,
+            file_id=file_id,
+            metadata=metadata,
+            experimental=experimental,
+            **kwargs,
+        )
+        return await self.poll(
+            file_id,
+            store_identifier=store_identifier,
+            poll_interval_ms=poll_interval_ms,
+            poll_timeout_ms=poll_timeout_ms,
+            **kwargs,
+        )
+
+    async def upload(
+        self,
+        *,
+        store_identifier: str,
+        file: FileTypes,
+        metadata: Optional[object] | NotGiven = not_given,
+        experimental: file_create_params.Experimental | Omit = omit,
+        **kwargs: Any,
+    ) -> StoreFile:
+        """Upload a file to the `files` API and then attach it to the given vector store.
+        Note the file will be asynchronously processed (you can use the alternative
+        polling helper method to wait for processing to complete).
+        """
+        file_obj = await self._client.files.create(file=file, **kwargs)
+        return await self.create(
+            store_identifier=store_identifier,
+            file_id=file_obj.id,
+            metadata=metadata,
+            experimental=experimental,
+            **kwargs,
+        )
+
+    async def upload_and_poll(
+        self,
+        *,
+        store_identifier: str,
+        file: FileTypes,
+        metadata: Optional[object] | NotGiven = not_given,
+        experimental: file_create_params.Experimental | Omit = omit,
+        poll_interval_ms: int | NotGiven = not_given,
+        poll_timeout_ms: float | NotGiven = not_given,
+        **kwargs: Any,
+    ) -> StoreFile:
+        """Add a file to a store and poll until processing is complete."""
+        file_obj = await self._client.files.create(file=file, **kwargs)
+        return await self.create_and_poll(
+            store_identifier=store_identifier,
+            file_id=file_obj.id,
+            metadata=metadata,
+            experimental=experimental,
+            poll_interval_ms=poll_interval_ms,
+            poll_timeout_ms=poll_timeout_ms,
+            **kwargs,
         )
 
 
