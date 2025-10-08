@@ -12,7 +12,16 @@ from ..scored_audio_url_input_chunk import ScoredAudioURLInputChunk
 from ..scored_image_url_input_chunk import ScoredImageURLInputChunk
 from ..scored_video_url_input_chunk import ScoredVideoURLInputChunk
 
-__all__ = ["ScoredStoreFile", "Chunk"]
+__all__ = ["ScoredStoreFile", "Config", "Chunk"]
+
+
+class Config(BaseModel):
+    parsing_strategy: Optional[Literal["fast", "high_quality"]] = None
+    """Strategy for adding the file"""
+
+    contextualization: Optional[bool] = None
+    """Whether to contextualize the file"""
+
 
 Chunk: TypeAlias = Annotated[
     Union[ScoredTextInputChunk, ScoredImageURLInputChunk, ScoredAudioURLInputChunk, ScoredVideoURLInputChunk],
@@ -47,6 +56,9 @@ class ScoredStoreFile(BaseModel):
 
     usage_bytes: Optional[int] = None
     """Storage usage in bytes"""
+
+    config: Optional[Config] = None
+    """Configuration for a file."""
 
     object: Optional[Literal["store.file"]] = None
     """Type of the object"""

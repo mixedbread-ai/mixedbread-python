@@ -12,6 +12,7 @@ from .store_file_status import StoreFileStatus
 
 __all__ = [
     "StoreFile",
+    "Config",
     "Chunk",
     "ChunkTextInputChunk",
     "ChunkTextInputChunkGeneratedMetadata",
@@ -53,6 +54,14 @@ __all__ = [
     "ChunkVideoURLInputChunkGeneratedMetadataAudioChunkGeneratedMetadata",
     "ChunkVideoURLInputChunkVideoURL",
 ]
+
+
+class Config(BaseModel):
+    parsing_strategy: Optional[Literal["fast", "high_quality"]] = None
+    """Strategy for adding the file"""
+
+    contextualization: Optional[bool] = None
+    """Whether to contextualize the file"""
 
 
 class ChunkTextInputChunkGeneratedMetadataMarkdownChunkGeneratedMetadataChunkHeading(BaseModel):
@@ -830,6 +839,9 @@ class StoreFile(BaseModel):
 
     usage_bytes: Optional[int] = None
     """Storage usage in bytes"""
+
+    config: Optional[Config] = None
+    """Configuration for a file."""
 
     object: Optional[Literal["store.file"]] = None
     """Type of the object"""

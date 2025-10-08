@@ -54,8 +54,9 @@ class FilesResource(SyncAPIResource):
         store_identifier: str,
         *,
         metadata: object | Omit = omit,
-        experimental: file_create_params.Experimental | Omit = omit,
+        config: file_create_params.Config | Omit = omit,
         file_id: str,
+        experimental: Optional[file_create_params.Experimental] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -77,9 +78,11 @@ class FilesResource(SyncAPIResource):
 
           metadata: Optional metadata for the file
 
-          experimental: Strategy for adding the file
+          config: Configuration for adding the file
 
           file_id: ID of the file to add
+
+          experimental: Configuration for a file.
 
           extra_headers: Send extra headers
 
@@ -96,8 +99,9 @@ class FilesResource(SyncAPIResource):
             body=maybe_transform(
                 {
                     "metadata": metadata,
-                    "experimental": experimental,
+                    "config": config,
                     "file_id": file_id,
+                    "experimental": experimental,
                 },
                 file_create_params.FileCreateParams,
             ),
@@ -474,8 +478,9 @@ class AsyncFilesResource(AsyncAPIResource):
         store_identifier: str,
         *,
         metadata: object | Omit = omit,
-        experimental: file_create_params.Experimental | Omit = omit,
+        config: file_create_params.Config | Omit = omit,
         file_id: str,
+        experimental: Optional[file_create_params.Experimental] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -497,9 +502,11 @@ class AsyncFilesResource(AsyncAPIResource):
 
           metadata: Optional metadata for the file
 
-          experimental: Strategy for adding the file
+          config: Configuration for adding the file
 
           file_id: ID of the file to add
+
+          experimental: Configuration for a file.
 
           extra_headers: Send extra headers
 
@@ -516,8 +523,9 @@ class AsyncFilesResource(AsyncAPIResource):
             body=await async_maybe_transform(
                 {
                     "metadata": metadata,
-                    "experimental": experimental,
+                    "config": config,
                     "file_id": file_id,
+                    "experimental": experimental,
                 },
                 file_create_params.FileCreateParams,
             ),

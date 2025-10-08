@@ -40,11 +40,15 @@ class TestFiles:
             file = client.vector_stores.files.create(
                 vector_store_identifier="vector_store_identifier",
                 metadata={},
-                experimental={
+                config={
                     "parsing_strategy": "fast",
                     "contextualization": True,
                 },
                 file_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+                experimental={
+                    "parsing_strategy": "fast",
+                    "contextualization": True,
+                },
             )
 
         assert_matches_type(VectorStoreFile, file, path=["response"])
@@ -425,11 +429,15 @@ class TestAsyncFiles:
             file = await async_client.vector_stores.files.create(
                 vector_store_identifier="vector_store_identifier",
                 metadata={},
-                experimental={
+                config={
                     "parsing_strategy": "fast",
                     "contextualization": True,
                 },
                 file_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+                experimental={
+                    "parsing_strategy": "fast",
+                    "contextualization": True,
+                },
             )
 
         assert_matches_type(VectorStoreFile, file, path=["response"])
