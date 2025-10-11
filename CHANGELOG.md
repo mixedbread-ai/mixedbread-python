@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.34.1 (2025-10-11)
+
+Full Changelog: [v0.34.0...v0.34.1](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.34.0...v0.34.1)
+
+### Chores
+
+* **internal:** detect missing future annotations with ruff ([7683f5b](https://github.com/mixedbread-ai/mixedbread-python/commit/7683f5b7fc7aa498218782ef170645d2484f655c))
+
 ## 0.34.0 (2025-10-08)
 
 Full Changelog: [v0.33.0...v0.34.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.33.0...v0.34.0)
