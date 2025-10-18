@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.35.0 (2025-10-18)
+
+Full Changelog: [v0.34.0...v0.35.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.34.0...v0.35.0)
+
+### Features
+
+* **api:** api update ([26a066f](https://github.com/mixedbread-ai/mixedbread-python/commit/26a066f062d33164f0105c470c3fbfd3a1e0d3e1))
+
+
+### Chores
+
+* bump `httpx-aiohttp` version to 0.1.9 ([305ea76](https://github.com/mixedbread-ai/mixedbread-python/commit/305ea7688a2e04ffef03dabd815e0a0c28613b5e))
+* **internal:** detect missing future annotations with ruff ([7683f5b](https://github.com/mixedbread-ai/mixedbread-python/commit/7683f5b7fc7aa498218782ef170645d2484f655c))
+
 ## 0.34.0 (2025-10-08)
 
 Full Changelog: [v0.33.0...v0.34.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.33.0...v0.34.0)
