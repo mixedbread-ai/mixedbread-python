@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Union
+from typing import Union, Iterable, Optional
 from datetime import datetime
 
 import httpx
@@ -51,6 +51,7 @@ class APIKeysResource(SyncAPIResource):
         self,
         *,
         name: str | Omit = omit,
+        scope: Optional[Iterable[api_key_create_params.Scope]] | Omit = omit,
         expires_at: Union[str, datetime, None] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -70,6 +71,8 @@ class APIKeysResource(SyncAPIResource):
         Args:
           name: A name/description for the API key
 
+          scope: The scope of the API key
+
           expires_at: Optional expiration datetime
 
           extra_headers: Send extra headers
@@ -85,6 +88,7 @@ class APIKeysResource(SyncAPIResource):
             body=maybe_transform(
                 {
                     "name": name,
+                    "scope": scope,
                     "expires_at": expires_at,
                 },
                 api_key_create_params.APIKeyCreateParams,
@@ -331,6 +335,7 @@ class AsyncAPIKeysResource(AsyncAPIResource):
         self,
         *,
         name: str | Omit = omit,
+        scope: Optional[Iterable[api_key_create_params.Scope]] | Omit = omit,
         expires_at: Union[str, datetime, None] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -350,6 +355,8 @@ class AsyncAPIKeysResource(AsyncAPIResource):
         Args:
           name: A name/description for the API key
 
+          scope: The scope of the API key
+
           expires_at: Optional expiration datetime
 
           extra_headers: Send extra headers
@@ -365,6 +372,7 @@ class AsyncAPIKeysResource(AsyncAPIResource):
             body=await async_maybe_transform(
                 {
                     "name": name,
+                    "scope": scope,
                     "expires_at": expires_at,
                 },
                 api_key_create_params.APIKeyCreateParams,

@@ -28,6 +28,13 @@ class TestAPIKeys:
     def test_method_create_with_all_params(self, client: Mixedbread) -> None:
         api_key = client.api_keys.create(
             name="name",
+            scope=[
+                {
+                    "method": "read",
+                    "resource_type": "store",
+                    "resource_id": "resource_id",
+                }
+            ],
             expires_at=parse_datetime("2019-12-27T18:11:19.117Z"),
         )
         assert_matches_type(APIKeyCreated, api_key, path=["response"])
@@ -252,6 +259,13 @@ class TestAsyncAPIKeys:
     async def test_method_create_with_all_params(self, async_client: AsyncMixedbread) -> None:
         api_key = await async_client.api_keys.create(
             name="name",
+            scope=[
+                {
+                    "method": "read",
+                    "resource_type": "store",
+                    "resource_id": "resource_id",
+                }
+            ],
             expires_at=parse_datetime("2019-12-27T18:11:19.117Z"),
         )
         assert_matches_type(APIKeyCreated, api_key, path=["response"])
