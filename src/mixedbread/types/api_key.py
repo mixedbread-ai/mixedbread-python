@@ -1,12 +1,20 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import Optional
+from typing import List, Optional
 from datetime import datetime
 from typing_extensions import Literal
 
 from .._models import BaseModel
 
-__all__ = ["APIKey"]
+__all__ = ["APIKey", "Scope"]
+
+
+class Scope(BaseModel):
+    method: Literal["read", "write", "delete", "list", "create"]
+
+    resource_type: Optional[Literal["store"]] = None
+
+    resource_id: Optional[str] = None
 
 
 class APIKey(BaseModel):
@@ -33,3 +41,6 @@ class APIKey(BaseModel):
 
     object: Optional[Literal["api_key"]] = None
     """The type of the object"""
+
+    scope: Optional[List[Scope]] = None
+    """The scope of the API key"""
