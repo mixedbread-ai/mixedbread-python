@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.36.1 (2025-10-31)
+
+Full Changelog: [v0.36.0...v0.36.1](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.36.0...v0.36.1)
+
+### Chores
+
+* **internal/tests:** avoid race condition with implicit client cleanup ([8685562](https://github.com/mixedbread-ai/mixedbread-python/commit/86855629693a450a3049d94bf91592e5b30af1a8))
+
 ## 0.36.0 (2025-10-30)
 
 Full Changelog: [v0.35.0...v0.36.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.35.0...v0.36.0)
