@@ -20,7 +20,7 @@ class ConfigContextualizationContextualizationConfig(BaseModel):
     """
 
 
-ConfigContextualization: TypeAlias = Union[bool, ConfigContextualizationContextualizationConfig, None]
+ConfigContextualization: TypeAlias = Union[bool, ConfigContextualizationContextualizationConfig]
 
 
 class Config(BaseModel):
