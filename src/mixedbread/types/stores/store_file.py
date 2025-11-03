@@ -58,10 +58,7 @@ __all__ = [
 
 class Config(BaseModel):
     parsing_strategy: Optional[Literal["fast", "high_quality"]] = None
-    """Strategy for adding the file"""
-
-    contextualization: Optional[bool] = None
-    """Whether to contextualize the file"""
+    """Strategy for adding the file, this overrides the store-level default"""
 
 
 class ChunkTextInputChunkGeneratedMetadataMarkdownChunkGeneratedMetadataChunkHeading(BaseModel):
@@ -821,6 +818,9 @@ class StoreFile(BaseModel):
 
     metadata: Optional[object] = None
     """Optional file metadata"""
+
+    external_id: Optional[str] = None
+    """External identifier for this file in the store"""
 
     status: Optional[StoreFileStatus] = None
     """Processing status of the file"""

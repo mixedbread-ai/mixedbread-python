@@ -15,6 +15,12 @@ class FileCreateParams(TypedDict, total=False):
     config: Config
     """Configuration for adding the file"""
 
+    external_id: Optional[str]
+    """External identifier for this file in the store"""
+
+    overwrite: bool
+    """If true, overwrite an existing file with the same external_id"""
+
     file_id: Required[str]
     """ID of the file to add"""
 
@@ -24,15 +30,9 @@ class FileCreateParams(TypedDict, total=False):
 
 class Config(TypedDict, total=False):
     parsing_strategy: Literal["fast", "high_quality"]
-    """Strategy for adding the file"""
-
-    contextualization: bool
-    """Whether to contextualize the file"""
+    """Strategy for adding the file, this overrides the store-level default"""
 
 
 class Experimental(TypedDict, total=False):
     parsing_strategy: Literal["fast", "high_quality"]
-    """Strategy for adding the file"""
-
-    contextualization: bool
-    """Whether to contextualize the file"""
+    """Strategy for adding the file, this overrides the store-level default"""

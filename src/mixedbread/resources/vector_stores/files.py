@@ -55,6 +55,8 @@ class FilesResource(SyncAPIResource):
         *,
         metadata: object | Omit = omit,
         config: file_create_params.Config | Omit = omit,
+        external_id: Optional[str] | Omit = omit,
+        overwrite: bool | Omit = omit,
         file_id: str,
         experimental: Optional[file_create_params.Experimental] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -73,6 +75,10 @@ class FilesResource(SyncAPIResource):
           metadata: Optional metadata for the file
 
           config: Configuration for adding the file
+
+          external_id: External identifier for this file in the store
+
+          overwrite: If true, overwrite an existing file with the same external_id
 
           file_id: ID of the file to add
 
@@ -96,6 +102,8 @@ class FilesResource(SyncAPIResource):
                 {
                     "metadata": metadata,
                     "config": config,
+                    "external_id": external_id,
+                    "overwrite": overwrite,
                     "file_id": file_id,
                     "experimental": experimental,
                 },
@@ -357,6 +365,8 @@ class AsyncFilesResource(AsyncAPIResource):
         *,
         metadata: object | Omit = omit,
         config: file_create_params.Config | Omit = omit,
+        external_id: Optional[str] | Omit = omit,
+        overwrite: bool | Omit = omit,
         file_id: str,
         experimental: Optional[file_create_params.Experimental] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -375,6 +385,10 @@ class AsyncFilesResource(AsyncAPIResource):
           metadata: Optional metadata for the file
 
           config: Configuration for adding the file
+
+          external_id: External identifier for this file in the store
+
+          overwrite: If true, overwrite an existing file with the same external_id
 
           file_id: ID of the file to add
 
@@ -398,6 +412,8 @@ class AsyncFilesResource(AsyncAPIResource):
                 {
                     "metadata": metadata,
                     "config": config,
+                    "external_id": external_id,
+                    "overwrite": overwrite,
                     "file_id": file_id,
                     "experimental": experimental,
                 },

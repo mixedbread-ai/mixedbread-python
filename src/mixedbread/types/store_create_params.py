@@ -2,13 +2,13 @@
 
 from __future__ import annotations
 
-from typing import Optional
-from typing_extensions import TypedDict
+from typing import Union, Optional
+from typing_extensions import TypeAlias, TypedDict
 
 from .._types import SequenceNotStr
 from .expires_after_param import ExpiresAfterParam
 
-__all__ = ["StoreCreateParams"]
+__all__ = ["StoreCreateParams", "Config", "ConfigContextualization", "ConfigContextualizationContextualizationConfig"]
 
 
 class StoreCreateParams(TypedDict, total=False):
@@ -27,5 +27,26 @@ class StoreCreateParams(TypedDict, total=False):
     metadata: object
     """Optional metadata key-value pairs"""
 
+    config: Optional[Config]
+    """Configuration for a store."""
+
     file_ids: Optional[SequenceNotStr[str]]
     """Optional list of file IDs"""
+
+
+class ConfigContextualizationContextualizationConfig(TypedDict, total=False):
+    with_metadata: Union[bool, SequenceNotStr[str]]
+    """Include all metadata or specific fields in the contextualization.
+
+    Supports dot notation for nested fields (e.g., 'author.name'). When True, all
+    metadata is included (flattened). When a list, only specified fields are
+    included.
+    """
+
+
+ConfigContextualization: TypeAlias = Union[bool, ConfigContextualizationContextualizationConfig]
+
+
+class Config(TypedDict, total=False):
+    contextualization: ConfigContextualization
+    """Contextualize files with metadata"""
