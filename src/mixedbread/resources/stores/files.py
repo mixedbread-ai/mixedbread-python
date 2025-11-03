@@ -19,7 +19,7 @@ from ..._response import (
     async_to_streamed_response_wrapper,
 )
 from ..._base_client import make_request_options
-from ...types.stores import file_list_params, file_create_params, file_search_params
+from ...types.stores import file_list_params, file_create_params, file_search_params, file_retrieve_params
 from ...types.stores.store_file import StoreFile
 from ...types.stores.store_file_status import StoreFileStatus
 from ...types.stores.file_list_response import FileListResponse
@@ -115,6 +115,59 @@ class FilesResource(SyncAPIResource):
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=StoreFile,
+        )
+
+    def retrieve(
+        self,
+        file_identifier: str,
+        *,
+        store_identifier: str,
+        return_chunks: bool | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> StoreFile:
+        """Get a file from a store.
+
+        Args: store_identifier: The ID or name of the store.
+
+        file_id: The ID or name of
+        the file. options: Get file options.
+
+        Returns: VectorStoreFile: The file details.
+
+        Args:
+          store_identifier: The ID or name of the store
+
+          file_identifier: The ID or name of the file
+
+          return_chunks: Whether to return the chunks for the file
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not store_identifier:
+            raise ValueError(f"Expected a non-empty value for `store_identifier` but received {store_identifier!r}")
+        if not file_identifier:
+            raise ValueError(f"Expected a non-empty value for `file_identifier` but received {file_identifier!r}")
+        return self._get(
+            f"/v1/stores/{store_identifier}/files/{file_identifier}",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform({"return_chunks": return_chunks}, file_retrieve_params.FileRetrieveParams),
             ),
             cast_to=StoreFile,
         )
@@ -498,6 +551,61 @@ class AsyncFilesResource(AsyncAPIResource):
             cast_to=StoreFile,
         )
 
+    async def retrieve(
+        self,
+        file_identifier: str,
+        *,
+        store_identifier: str,
+        return_chunks: bool | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> StoreFile:
+        """Get a file from a store.
+
+        Args: store_identifier: The ID or name of the store.
+
+        file_id: The ID or name of
+        the file. options: Get file options.
+
+        Returns: VectorStoreFile: The file details.
+
+        Args:
+          store_identifier: The ID or name of the store
+
+          file_identifier: The ID or name of the file
+
+          return_chunks: Whether to return the chunks for the file
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not store_identifier:
+            raise ValueError(f"Expected a non-empty value for `store_identifier` but received {store_identifier!r}")
+        if not file_identifier:
+            raise ValueError(f"Expected a non-empty value for `file_identifier` but received {file_identifier!r}")
+        return await self._get(
+            f"/v1/stores/{store_identifier}/files/{file_identifier}",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {"return_chunks": return_chunks}, file_retrieve_params.FileRetrieveParams
+                ),
+            ),
+            cast_to=StoreFile,
+        )
+
     async def list(
         self,
         store_identifier: str,
@@ -798,6 +906,9 @@ class FilesResourceWithRawResponse:
         self.create = to_raw_response_wrapper(
             files.create,
         )
+        self.retrieve = to_raw_response_wrapper(
+            files.retrieve,
+        )
         self.list = to_raw_response_wrapper(
             files.list,
         )
@@ -815,6 +926,9 @@ class AsyncFilesResourceWithRawResponse:
 
         self.create = async_to_raw_response_wrapper(
             files.create,
+        )
+        self.retrieve = async_to_raw_response_wrapper(
+            files.retrieve,
         )
         self.list = async_to_raw_response_wrapper(
             files.list,
@@ -834,6 +948,9 @@ class FilesResourceWithStreamingResponse:
         self.create = to_streamed_response_wrapper(
             files.create,
         )
+        self.retrieve = to_streamed_response_wrapper(
+            files.retrieve,
+        )
         self.list = to_streamed_response_wrapper(
             files.list,
         )
@@ -851,6 +968,9 @@ class AsyncFilesResourceWithStreamingResponse:
 
         self.create = async_to_streamed_response_wrapper(
             files.create,
+        )
+        self.retrieve = async_to_streamed_response_wrapper(
+            files.retrieve,
         )
         self.list = async_to_streamed_response_wrapper(
             files.list,

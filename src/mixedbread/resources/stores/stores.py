@@ -19,6 +19,7 @@ from ...types import (
     store_create_params,
     store_search_params,
     store_update_params,
+    store_metadata_facets_params,
     store_question_answering_params,
 )
 from ..._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
@@ -37,6 +38,7 @@ from ..._base_client import AsyncPaginator, make_request_options
 from ...types.expires_after_param import ExpiresAfterParam
 from ...types.store_delete_response import StoreDeleteResponse
 from ...types.store_search_response import StoreSearchResponse
+from ...types.store_metadata_facets_response import StoreMetadataFacetsResponse
 from ...types.store_chunk_search_options_param import StoreChunkSearchOptionsParam
 from ...types.store_question_answering_response import StoreQuestionAnsweringResponse
 
@@ -343,6 +345,69 @@ class StoresResource(SyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=StoreDeleteResponse,
+        )
+
+    def metadata_facets(
+        self,
+        *,
+        query: Optional[str] | Omit = omit,
+        store_identifiers: SequenceNotStr[str],
+        top_k: int | Omit = omit,
+        filters: Optional[store_metadata_facets_params.Filters] | Omit = omit,
+        file_ids: Union[Iterable[object], SequenceNotStr[str], None] | Omit = omit,
+        search_options: StoreChunkSearchOptionsParam | Omit = omit,
+        facets: Optional[SequenceNotStr[str]] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> StoreMetadataFacetsResponse:
+        """
+        Get metadata facets
+
+        Args:
+          query: Search query text
+
+          store_identifiers: IDs or names of stores to search
+
+          top_k: Number of results to return
+
+          filters: Optional filter conditions
+
+          file_ids: Optional list of file IDs to filter chunks by (inclusion filter)
+
+          search_options: Search configuration options
+
+          facets: Optional list of facets to return. Use dot for nested fields.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._post(
+            "/v1/stores/metadata-facets",
+            body=maybe_transform(
+                {
+                    "query": query,
+                    "store_identifiers": store_identifiers,
+                    "top_k": top_k,
+                    "filters": filters,
+                    "file_ids": file_ids,
+                    "search_options": search_options,
+                    "facets": facets,
+                },
+                store_metadata_facets_params.StoreMetadataFacetsParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=StoreMetadataFacetsResponse,
         )
 
     def question_answering(
@@ -792,6 +857,69 @@ class AsyncStoresResource(AsyncAPIResource):
             cast_to=StoreDeleteResponse,
         )
 
+    async def metadata_facets(
+        self,
+        *,
+        query: Optional[str] | Omit = omit,
+        store_identifiers: SequenceNotStr[str],
+        top_k: int | Omit = omit,
+        filters: Optional[store_metadata_facets_params.Filters] | Omit = omit,
+        file_ids: Union[Iterable[object], SequenceNotStr[str], None] | Omit = omit,
+        search_options: StoreChunkSearchOptionsParam | Omit = omit,
+        facets: Optional[SequenceNotStr[str]] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> StoreMetadataFacetsResponse:
+        """
+        Get metadata facets
+
+        Args:
+          query: Search query text
+
+          store_identifiers: IDs or names of stores to search
+
+          top_k: Number of results to return
+
+          filters: Optional filter conditions
+
+          file_ids: Optional list of file IDs to filter chunks by (inclusion filter)
+
+          search_options: Search configuration options
+
+          facets: Optional list of facets to return. Use dot for nested fields.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._post(
+            "/v1/stores/metadata-facets",
+            body=await async_maybe_transform(
+                {
+                    "query": query,
+                    "store_identifiers": store_identifiers,
+                    "top_k": top_k,
+                    "filters": filters,
+                    "file_ids": file_ids,
+                    "search_options": search_options,
+                    "facets": facets,
+                },
+                store_metadata_facets_params.StoreMetadataFacetsParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=StoreMetadataFacetsResponse,
+        )
+
     async def question_answering(
         self,
         *,
@@ -956,6 +1084,9 @@ class StoresResourceWithRawResponse:
         self.delete = to_raw_response_wrapper(
             stores.delete,
         )
+        self.metadata_facets = to_raw_response_wrapper(
+            stores.metadata_facets,
+        )
         self.question_answering = to_raw_response_wrapper(
             stores.question_answering,
         )
@@ -986,6 +1117,9 @@ class AsyncStoresResourceWithRawResponse:
         )
         self.delete = async_to_raw_response_wrapper(
             stores.delete,
+        )
+        self.metadata_facets = async_to_raw_response_wrapper(
+            stores.metadata_facets,
         )
         self.question_answering = async_to_raw_response_wrapper(
             stores.question_answering,
@@ -1018,6 +1152,9 @@ class StoresResourceWithStreamingResponse:
         self.delete = to_streamed_response_wrapper(
             stores.delete,
         )
+        self.metadata_facets = to_streamed_response_wrapper(
+            stores.metadata_facets,
+        )
         self.question_answering = to_streamed_response_wrapper(
             stores.question_answering,
         )
@@ -1048,6 +1185,9 @@ class AsyncStoresResourceWithStreamingResponse:
         )
         self.delete = async_to_streamed_response_wrapper(
             stores.delete,
+        )
+        self.metadata_facets = async_to_streamed_response_wrapper(
+            stores.metadata_facets,
         )
         self.question_answering = async_to_streamed_response_wrapper(
             stores.question_answering,

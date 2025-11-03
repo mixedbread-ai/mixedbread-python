@@ -86,6 +86,7 @@ from mixedbread.types import (
     Store,
     StoreChunkSearchOptions,
     StoreDeleteResponse,
+    StoreMetadataFacetsResponse,
     StoreQuestionAnsweringResponse,
     StoreSearchResponse,
 )
@@ -98,6 +99,7 @@ Methods:
 - <code title="put /v1/stores/{store_identifier}">client.stores.<a href="./src/mixedbread/resources/stores/stores.py">update</a>(store_identifier, \*\*<a href="src/mixedbread/types/store_update_params.py">params</a>) -> <a href="./src/mixedbread/types/store.py">Store</a></code>
 - <code title="get /v1/stores">client.stores.<a href="./src/mixedbread/resources/stores/stores.py">list</a>(\*\*<a href="src/mixedbread/types/store_list_params.py">params</a>) -> <a href="./src/mixedbread/types/store.py">SyncCursor[Store]</a></code>
 - <code title="delete /v1/stores/{store_identifier}">client.stores.<a href="./src/mixedbread/resources/stores/stores.py">delete</a>(store_identifier) -> <a href="./src/mixedbread/types/store_delete_response.py">StoreDeleteResponse</a></code>
+- <code title="post /v1/stores/metadata-facets">client.stores.<a href="./src/mixedbread/resources/stores/stores.py">metadata_facets</a>(\*\*<a href="src/mixedbread/types/store_metadata_facets_params.py">params</a>) -> <a href="./src/mixedbread/types/store_metadata_facets_response.py">StoreMetadataFacetsResponse</a></code>
 - <code title="post /v1/stores/question-answering">client.stores.<a href="./src/mixedbread/resources/stores/stores.py">question_answering</a>(\*\*<a href="src/mixedbread/types/store_question_answering_params.py">params</a>) -> <a href="./src/mixedbread/types/store_question_answering_response.py">StoreQuestionAnsweringResponse</a></code>
 - <code title="post /v1/stores/search">client.stores.<a href="./src/mixedbread/resources/stores/stores.py">search</a>(\*\*<a href="src/mixedbread/types/store_search_params.py">params</a>) -> <a href="./src/mixedbread/types/store_search_response.py">StoreSearchResponse</a></code>
 
@@ -119,6 +121,7 @@ from mixedbread.types.stores import (
 Methods:
 
 - <code title="post /v1/stores/{store_identifier}/files">client.stores.files.<a href="./src/mixedbread/resources/stores/files.py">create</a>(store_identifier, \*\*<a href="src/mixedbread/types/stores/file_create_params.py">params</a>) -> <a href="./src/mixedbread/types/stores/store_file.py">StoreFile</a></code>
+- <code title="get /v1/stores/{store_identifier}/files/{file_identifier}">client.stores.files.<a href="./src/mixedbread/resources/stores/files.py">retrieve</a>(file_identifier, \*, store_identifier, \*\*<a href="src/mixedbread/types/stores/file_retrieve_params.py">params</a>) -> <a href="./src/mixedbread/types/stores/store_file.py">StoreFile</a></code>
 - <code title="post /v1/stores/{store_identifier}/files/list">client.stores.files.<a href="./src/mixedbread/resources/stores/files.py">list</a>(store_identifier, \*\*<a href="src/mixedbread/types/stores/file_list_params.py">params</a>) -> <a href="./src/mixedbread/types/stores/file_list_response.py">FileListResponse</a></code>
 - <code title="delete /v1/stores/{store_identifier}/files/{file_id}">client.stores.files.<a href="./src/mixedbread/resources/stores/files.py">delete</a>(file_id, \*, store_identifier) -> <a href="./src/mixedbread/types/stores/file_delete_response.py">FileDeleteResponse</a></code>
 - <code title="post /v1/stores/files/search">client.stores.files.<a href="./src/mixedbread/resources/stores/files.py">search</a>(\*\*<a href="src/mixedbread/types/stores/file_search_params.py">params</a>) -> <a href="./src/mixedbread/types/stores/file_search_response.py">FileSearchResponse</a></code>
