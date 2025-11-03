@@ -1,13 +1,31 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import Optional
+from typing import List, Union, Optional
 from datetime import datetime
-from typing_extensions import Literal
+from typing_extensions import Literal, TypeAlias
 
 from .._models import BaseModel
 from .expires_after import ExpiresAfter
 
-__all__ = ["Store", "FileCounts"]
+__all__ = ["Store", "Config", "ConfigContextualization", "ConfigContextualizationContextualizationConfig", "FileCounts"]
+
+
+class ConfigContextualizationContextualizationConfig(BaseModel):
+    with_metadata: Union[bool, List[str], None] = None
+    """Include all metadata or specific fields in the contextualization.
+
+    Supports dot notation for nested fields (e.g., 'author.name'). When True, all
+    metadata is included (flattened). When a list, only specified fields are
+    included.
+    """
+
+
+ConfigContextualization: TypeAlias = Union[bool, ConfigContextualizationContextualizationConfig]
+
+
+class Config(BaseModel):
+    contextualization: Optional[ConfigContextualization] = None
+    """Contextualize files with metadata"""
 
 
 class FileCounts(BaseModel):
@@ -45,6 +63,9 @@ class Store(BaseModel):
 
     metadata: Optional[object] = None
     """Additional metadata associated with the store"""
+
+    config: Optional[Config] = None
+    """Configuration for a store."""
 
     file_counts: Optional[FileCounts] = None
     """Counts of files in different states"""
