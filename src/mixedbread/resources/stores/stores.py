@@ -77,6 +77,7 @@ class StoresResource(SyncAPIResource):
         is_public: bool | Omit = omit,
         expires_after: Optional[ExpiresAfterParam] | Omit = omit,
         metadata: object | Omit = omit,
+        config: Optional[store_create_params.Config] | Omit = omit,
         file_ids: Optional[SequenceNotStr[str]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -104,6 +105,8 @@ class StoresResource(SyncAPIResource):
 
           metadata: Optional metadata key-value pairs
 
+          config: Configuration for a store.
+
           file_ids: Optional list of file IDs
 
           extra_headers: Send extra headers
@@ -123,6 +126,7 @@ class StoresResource(SyncAPIResource):
                     "is_public": is_public,
                     "expires_after": expires_after,
                     "metadata": metadata,
+                    "config": config,
                     "file_ids": file_ids,
                 },
                 store_create_params.StoreCreateParams,
@@ -345,9 +349,13 @@ class StoresResource(SyncAPIResource):
 
     def metadata_facets(
         self,
-        store_identifier: str,
         *,
+        query: Optional[str] | Omit = omit,
+        store_identifiers: SequenceNotStr[str],
+        top_k: int | Omit = omit,
         filters: Optional[store_metadata_facets_params.Filters] | Omit = omit,
+        file_ids: Union[Iterable[object], SequenceNotStr[str], None] | Omit = omit,
+        search_options: StoreChunkSearchOptionsParam | Omit = omit,
         facets: Optional[SequenceNotStr[str]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -360,9 +368,17 @@ class StoresResource(SyncAPIResource):
         Get metadata facets
 
         Args:
-          store_identifier: The ID or name of the store
+          query: Search query text
+
+          store_identifiers: IDs or names of stores to search
+
+          top_k: Number of results to return
 
           filters: Optional filter conditions
+
+          file_ids: Optional list of file IDs to filter chunks by (inclusion filter)
+
+          search_options: Search configuration options
 
           facets: Optional list of facets to return. Use dot for nested fields.
 
@@ -374,13 +390,16 @@ class StoresResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not store_identifier:
-            raise ValueError(f"Expected a non-empty value for `store_identifier` but received {store_identifier!r}")
         return self._post(
-            f"/v1/stores/{store_identifier}/metadata-facets",
+            "/v1/stores/metadata-facets",
             body=maybe_transform(
                 {
+                    "query": query,
+                    "store_identifiers": store_identifiers,
+                    "top_k": top_k,
                     "filters": filters,
+                    "file_ids": file_ids,
+                    "search_options": search_options,
                     "facets": facets,
                 },
                 store_metadata_facets_params.StoreMetadataFacetsParams,
@@ -568,6 +587,7 @@ class AsyncStoresResource(AsyncAPIResource):
         is_public: bool | Omit = omit,
         expires_after: Optional[ExpiresAfterParam] | Omit = omit,
         metadata: object | Omit = omit,
+        config: Optional[store_create_params.Config] | Omit = omit,
         file_ids: Optional[SequenceNotStr[str]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -595,6 +615,8 @@ class AsyncStoresResource(AsyncAPIResource):
 
           metadata: Optional metadata key-value pairs
 
+          config: Configuration for a store.
+
           file_ids: Optional list of file IDs
 
           extra_headers: Send extra headers
@@ -614,6 +636,7 @@ class AsyncStoresResource(AsyncAPIResource):
                     "is_public": is_public,
                     "expires_after": expires_after,
                     "metadata": metadata,
+                    "config": config,
                     "file_ids": file_ids,
                 },
                 store_create_params.StoreCreateParams,
@@ -836,9 +859,13 @@ class AsyncStoresResource(AsyncAPIResource):
 
     async def metadata_facets(
         self,
-        store_identifier: str,
         *,
+        query: Optional[str] | Omit = omit,
+        store_identifiers: SequenceNotStr[str],
+        top_k: int | Omit = omit,
         filters: Optional[store_metadata_facets_params.Filters] | Omit = omit,
+        file_ids: Union[Iterable[object], SequenceNotStr[str], None] | Omit = omit,
+        search_options: StoreChunkSearchOptionsParam | Omit = omit,
         facets: Optional[SequenceNotStr[str]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -851,9 +878,17 @@ class AsyncStoresResource(AsyncAPIResource):
         Get metadata facets
 
         Args:
-          store_identifier: The ID or name of the store
+          query: Search query text
+
+          store_identifiers: IDs or names of stores to search
+
+          top_k: Number of results to return
 
           filters: Optional filter conditions
+
+          file_ids: Optional list of file IDs to filter chunks by (inclusion filter)
+
+          search_options: Search configuration options
 
           facets: Optional list of facets to return. Use dot for nested fields.
 
@@ -865,13 +900,16 @@ class AsyncStoresResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not store_identifier:
-            raise ValueError(f"Expected a non-empty value for `store_identifier` but received {store_identifier!r}")
         return await self._post(
-            f"/v1/stores/{store_identifier}/metadata-facets",
+            "/v1/stores/metadata-facets",
             body=await async_maybe_transform(
                 {
+                    "query": query,
+                    "store_identifiers": store_identifiers,
+                    "top_k": top_k,
                     "filters": filters,
+                    "file_ids": file_ids,
+                    "search_options": search_options,
                     "facets": facets,
                 },
                 store_metadata_facets_params.StoreMetadataFacetsParams,

@@ -55,6 +55,8 @@ class FilesResource(SyncAPIResource):
         *,
         metadata: object | Omit = omit,
         config: file_create_params.Config | Omit = omit,
+        external_id: Optional[str] | Omit = omit,
+        overwrite: bool | Omit = omit,
         file_id: str,
         experimental: Optional[file_create_params.Experimental] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -80,6 +82,10 @@ class FilesResource(SyncAPIResource):
 
           config: Configuration for adding the file
 
+          external_id: External identifier for this file in the store
+
+          overwrite: If true, overwrite an existing file with the same external_id
+
           file_id: ID of the file to add
 
           experimental: Configuration for a file.
@@ -100,6 +106,8 @@ class FilesResource(SyncAPIResource):
                 {
                     "metadata": metadata,
                     "config": config,
+                    "external_id": external_id,
+                    "overwrite": overwrite,
                     "file_id": file_id,
                     "experimental": experimental,
                 },
@@ -113,7 +121,7 @@ class FilesResource(SyncAPIResource):
 
     def retrieve(
         self,
-        file_id: str,
+        file_identifier: str,
         *,
         store_identifier: str,
         return_chunks: bool | Omit = omit,
@@ -136,7 +144,7 @@ class FilesResource(SyncAPIResource):
         Args:
           store_identifier: The ID or name of the store
 
-          file_id: The ID or name of the file
+          file_identifier: The ID or name of the file
 
           return_chunks: Whether to return the chunks for the file
 
@@ -150,10 +158,10 @@ class FilesResource(SyncAPIResource):
         """
         if not store_identifier:
             raise ValueError(f"Expected a non-empty value for `store_identifier` but received {store_identifier!r}")
-        if not file_id:
-            raise ValueError(f"Expected a non-empty value for `file_id` but received {file_id!r}")
+        if not file_identifier:
+            raise ValueError(f"Expected a non-empty value for `file_identifier` but received {file_identifier!r}")
         return self._get(
-            f"/v1/stores/{store_identifier}/files/{file_id}",
+            f"/v1/stores/{store_identifier}/files/{file_identifier}",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -479,6 +487,8 @@ class AsyncFilesResource(AsyncAPIResource):
         *,
         metadata: object | Omit = omit,
         config: file_create_params.Config | Omit = omit,
+        external_id: Optional[str] | Omit = omit,
+        overwrite: bool | Omit = omit,
         file_id: str,
         experimental: Optional[file_create_params.Experimental] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -504,6 +514,10 @@ class AsyncFilesResource(AsyncAPIResource):
 
           config: Configuration for adding the file
 
+          external_id: External identifier for this file in the store
+
+          overwrite: If true, overwrite an existing file with the same external_id
+
           file_id: ID of the file to add
 
           experimental: Configuration for a file.
@@ -524,6 +538,8 @@ class AsyncFilesResource(AsyncAPIResource):
                 {
                     "metadata": metadata,
                     "config": config,
+                    "external_id": external_id,
+                    "overwrite": overwrite,
                     "file_id": file_id,
                     "experimental": experimental,
                 },
@@ -537,7 +553,7 @@ class AsyncFilesResource(AsyncAPIResource):
 
     async def retrieve(
         self,
-        file_id: str,
+        file_identifier: str,
         *,
         store_identifier: str,
         return_chunks: bool | Omit = omit,
@@ -560,7 +576,7 @@ class AsyncFilesResource(AsyncAPIResource):
         Args:
           store_identifier: The ID or name of the store
 
-          file_id: The ID or name of the file
+          file_identifier: The ID or name of the file
 
           return_chunks: Whether to return the chunks for the file
 
@@ -574,10 +590,10 @@ class AsyncFilesResource(AsyncAPIResource):
         """
         if not store_identifier:
             raise ValueError(f"Expected a non-empty value for `store_identifier` but received {store_identifier!r}")
-        if not file_id:
-            raise ValueError(f"Expected a non-empty value for `file_id` but received {file_id!r}")
+        if not file_identifier:
+            raise ValueError(f"Expected a non-empty value for `file_identifier` but received {file_identifier!r}")
         return await self._get(
-            f"/v1/stores/{store_identifier}/files/{file_id}",
+            f"/v1/stores/{store_identifier}/files/{file_identifier}",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,

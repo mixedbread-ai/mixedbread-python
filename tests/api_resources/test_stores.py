@@ -40,6 +40,7 @@ class TestStores:
                 "days": 0,
             },
             metadata={},
+            config={"contextualization": True},
             file_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
         )
         assert_matches_type(Store, store, path=["response"])
@@ -232,14 +233,16 @@ class TestStores:
     @parametrize
     def test_method_metadata_facets(self, client: Mixedbread) -> None:
         store = client.stores.metadata_facets(
-            store_identifier="store_identifier",
+            store_identifiers=["string"],
         )
         assert_matches_type(StoreMetadataFacetsResponse, store, path=["response"])
 
     @parametrize
     def test_method_metadata_facets_with_all_params(self, client: Mixedbread) -> None:
         store = client.stores.metadata_facets(
-            store_identifier="store_identifier",
+            query="how to configure SSL",
+            store_identifiers=["string"],
+            top_k=1,
             filters={
                 "all": [
                     {
@@ -278,6 +281,14 @@ class TestStores:
                     },
                 ],
             },
+            file_ids=["123e4567-e89b-12d3-a456-426614174000", "123e4567-e89b-12d3-a456-426614174001"],
+            search_options={
+                "score_threshold": 0,
+                "rewrite_query": True,
+                "rerank": True,
+                "return_metadata": True,
+                "apply_search_rules": True,
+            },
             facets=["string"],
         )
         assert_matches_type(StoreMetadataFacetsResponse, store, path=["response"])
@@ -285,7 +296,7 @@ class TestStores:
     @parametrize
     def test_raw_response_metadata_facets(self, client: Mixedbread) -> None:
         response = client.stores.with_raw_response.metadata_facets(
-            store_identifier="store_identifier",
+            store_identifiers=["string"],
         )
 
         assert response.is_closed is True
@@ -296,7 +307,7 @@ class TestStores:
     @parametrize
     def test_streaming_response_metadata_facets(self, client: Mixedbread) -> None:
         with client.stores.with_streaming_response.metadata_facets(
-            store_identifier="store_identifier",
+            store_identifiers=["string"],
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -305,13 +316,6 @@ class TestStores:
             assert_matches_type(StoreMetadataFacetsResponse, store, path=["response"])
 
         assert cast(Any, response.is_closed) is True
-
-    @parametrize
-    def test_path_params_metadata_facets(self, client: Mixedbread) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `store_identifier` but received ''"):
-            client.stores.with_raw_response.metadata_facets(
-                store_identifier="",
-            )
 
     @parametrize
     def test_method_question_answering(self, client: Mixedbread) -> None:
@@ -515,6 +519,7 @@ class TestAsyncStores:
                 "days": 0,
             },
             metadata={},
+            config={"contextualization": True},
             file_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
         )
         assert_matches_type(Store, store, path=["response"])
@@ -707,14 +712,16 @@ class TestAsyncStores:
     @parametrize
     async def test_method_metadata_facets(self, async_client: AsyncMixedbread) -> None:
         store = await async_client.stores.metadata_facets(
-            store_identifier="store_identifier",
+            store_identifiers=["string"],
         )
         assert_matches_type(StoreMetadataFacetsResponse, store, path=["response"])
 
     @parametrize
     async def test_method_metadata_facets_with_all_params(self, async_client: AsyncMixedbread) -> None:
         store = await async_client.stores.metadata_facets(
-            store_identifier="store_identifier",
+            query="how to configure SSL",
+            store_identifiers=["string"],
+            top_k=1,
             filters={
                 "all": [
                     {
@@ -753,6 +760,14 @@ class TestAsyncStores:
                     },
                 ],
             },
+            file_ids=["123e4567-e89b-12d3-a456-426614174000", "123e4567-e89b-12d3-a456-426614174001"],
+            search_options={
+                "score_threshold": 0,
+                "rewrite_query": True,
+                "rerank": True,
+                "return_metadata": True,
+                "apply_search_rules": True,
+            },
             facets=["string"],
         )
         assert_matches_type(StoreMetadataFacetsResponse, store, path=["response"])
@@ -760,7 +775,7 @@ class TestAsyncStores:
     @parametrize
     async def test_raw_response_metadata_facets(self, async_client: AsyncMixedbread) -> None:
         response = await async_client.stores.with_raw_response.metadata_facets(
-            store_identifier="store_identifier",
+            store_identifiers=["string"],
         )
 
         assert response.is_closed is True
@@ -771,7 +786,7 @@ class TestAsyncStores:
     @parametrize
     async def test_streaming_response_metadata_facets(self, async_client: AsyncMixedbread) -> None:
         async with async_client.stores.with_streaming_response.metadata_facets(
-            store_identifier="store_identifier",
+            store_identifiers=["string"],
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -780,13 +795,6 @@ class TestAsyncStores:
             assert_matches_type(StoreMetadataFacetsResponse, store, path=["response"])
 
         assert cast(Any, response.is_closed) is True
-
-    @parametrize
-    async def test_path_params_metadata_facets(self, async_client: AsyncMixedbread) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `store_identifier` but received ''"):
-            await async_client.stores.with_raw_response.metadata_facets(
-                store_identifier="",
-            )
 
     @parametrize
     async def test_method_question_answering(self, async_client: AsyncMixedbread) -> None:
