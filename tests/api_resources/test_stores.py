@@ -13,6 +13,7 @@ from mixedbread.types import (
     Store,
     StoreDeleteResponse,
     StoreSearchResponse,
+    StoreMetadataFacetsResponse,
     StoreQuestionAnsweringResponse,
 )
 from mixedbread.pagination import SyncCursor, AsyncCursor
@@ -228,6 +229,93 @@ class TestStores:
             client.stores.with_raw_response.delete(
                 "",
             )
+
+    @parametrize
+    def test_method_metadata_facets(self, client: Mixedbread) -> None:
+        store = client.stores.metadata_facets(
+            store_identifiers=["string"],
+        )
+        assert_matches_type(StoreMetadataFacetsResponse, store, path=["response"])
+
+    @parametrize
+    def test_method_metadata_facets_with_all_params(self, client: Mixedbread) -> None:
+        store = client.stores.metadata_facets(
+            query="how to configure SSL",
+            store_identifiers=["string"],
+            top_k=1,
+            filters={
+                "all": [
+                    {
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
+                    },
+                    {
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
+                    },
+                ],
+                "any": [
+                    {
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
+                    },
+                    {
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
+                    },
+                ],
+                "none": [
+                    {
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
+                    },
+                    {
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
+                    },
+                ],
+            },
+            file_ids=["123e4567-e89b-12d3-a456-426614174000", "123e4567-e89b-12d3-a456-426614174001"],
+            search_options={
+                "score_threshold": 0,
+                "rewrite_query": True,
+                "rerank": True,
+                "return_metadata": True,
+                "apply_search_rules": True,
+            },
+            facets=["string"],
+        )
+        assert_matches_type(StoreMetadataFacetsResponse, store, path=["response"])
+
+    @parametrize
+    def test_raw_response_metadata_facets(self, client: Mixedbread) -> None:
+        response = client.stores.with_raw_response.metadata_facets(
+            store_identifiers=["string"],
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        store = response.parse()
+        assert_matches_type(StoreMetadataFacetsResponse, store, path=["response"])
+
+    @parametrize
+    def test_streaming_response_metadata_facets(self, client: Mixedbread) -> None:
+        with client.stores.with_streaming_response.metadata_facets(
+            store_identifiers=["string"],
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            store = response.parse()
+            assert_matches_type(StoreMetadataFacetsResponse, store, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
 
     @parametrize
     def test_method_question_answering(self, client: Mixedbread) -> None:
@@ -620,6 +708,93 @@ class TestAsyncStores:
             await async_client.stores.with_raw_response.delete(
                 "",
             )
+
+    @parametrize
+    async def test_method_metadata_facets(self, async_client: AsyncMixedbread) -> None:
+        store = await async_client.stores.metadata_facets(
+            store_identifiers=["string"],
+        )
+        assert_matches_type(StoreMetadataFacetsResponse, store, path=["response"])
+
+    @parametrize
+    async def test_method_metadata_facets_with_all_params(self, async_client: AsyncMixedbread) -> None:
+        store = await async_client.stores.metadata_facets(
+            query="how to configure SSL",
+            store_identifiers=["string"],
+            top_k=1,
+            filters={
+                "all": [
+                    {
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
+                    },
+                    {
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
+                    },
+                ],
+                "any": [
+                    {
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
+                    },
+                    {
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
+                    },
+                ],
+                "none": [
+                    {
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
+                    },
+                    {
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
+                    },
+                ],
+            },
+            file_ids=["123e4567-e89b-12d3-a456-426614174000", "123e4567-e89b-12d3-a456-426614174001"],
+            search_options={
+                "score_threshold": 0,
+                "rewrite_query": True,
+                "rerank": True,
+                "return_metadata": True,
+                "apply_search_rules": True,
+            },
+            facets=["string"],
+        )
+        assert_matches_type(StoreMetadataFacetsResponse, store, path=["response"])
+
+    @parametrize
+    async def test_raw_response_metadata_facets(self, async_client: AsyncMixedbread) -> None:
+        response = await async_client.stores.with_raw_response.metadata_facets(
+            store_identifiers=["string"],
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        store = await response.parse()
+        assert_matches_type(StoreMetadataFacetsResponse, store, path=["response"])
+
+    @parametrize
+    async def test_streaming_response_metadata_facets(self, async_client: AsyncMixedbread) -> None:
+        async with async_client.stores.with_streaming_response.metadata_facets(
+            store_identifiers=["string"],
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            store = await response.parse()
+            assert_matches_type(StoreMetadataFacetsResponse, store, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
 
     @parametrize
     async def test_method_question_answering(self, async_client: AsyncMixedbread) -> None:
