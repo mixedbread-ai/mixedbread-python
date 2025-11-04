@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.38.0 (2025-11-04)
+
+Full Changelog: [v0.37.0...v0.38.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.37.0...v0.38.0)
+
+### Features
+
+* **api:** api update ([77d72b7](https://github.com/mixedbread-ai/mixedbread-python/commit/77d72b73d9cec032f145b8c4813f479c608b29d2))
+* **api:** update via SDK Studio ([86d3699](https://github.com/mixedbread-ai/mixedbread-python/commit/86d36996c249024a6488d84c39150899ed8f5d97))
+
+
+### Chores
+
+* add the external id and parsing strategy ([6aa3886](https://github.com/mixedbread-ai/mixedbread-python/commit/6aa3886a760680bc28b3483ee614c687e4622d80))
+* **internal:** grammar fix (it's -&gt; its) ([ec7828b](https://github.com/mixedbread-ai/mixedbread-python/commit/ec7828bf0ef4e93eeccb2b734d0a9308ff366498))
+* sort import block ([31187b0](https://github.com/mixedbread-ai/mixedbread-python/commit/31187b03a29b146c4ab68b6e471a85d64f927521))
+
 ## 0.37.0 (2025-11-03)
 
 Full Changelog: [v0.36.1...v0.37.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.36.1...v0.37.0)
