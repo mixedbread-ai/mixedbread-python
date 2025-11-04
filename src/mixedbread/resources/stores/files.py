@@ -8,7 +8,7 @@ from typing import Any, List, Union, Iterable, Optional
 import httpx
 
 from ...lib import polling
-from ..._types import Body, FileTypes, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
+from ..._types import Body, Omit, Query, Headers, NotGiven, FileTypes, SequenceNotStr, omit, not_given
 from ..._utils import maybe_transform, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
