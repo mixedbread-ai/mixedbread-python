@@ -225,7 +225,7 @@ class TestFiles:
     @parametrize
     def test_method_delete(self, client: Mixedbread) -> None:
         file = client.stores.files.delete(
-            file_id="file_id",
+            file_identifier="file_identifier",
             store_identifier="store_identifier",
         )
         assert_matches_type(FileDeleteResponse, file, path=["response"])
@@ -233,7 +233,7 @@ class TestFiles:
     @parametrize
     def test_raw_response_delete(self, client: Mixedbread) -> None:
         response = client.stores.files.with_raw_response.delete(
-            file_id="file_id",
+            file_identifier="file_identifier",
             store_identifier="store_identifier",
         )
 
@@ -245,7 +245,7 @@ class TestFiles:
     @parametrize
     def test_streaming_response_delete(self, client: Mixedbread) -> None:
         with client.stores.files.with_streaming_response.delete(
-            file_id="file_id",
+            file_identifier="file_identifier",
             store_identifier="store_identifier",
         ) as response:
             assert not response.is_closed
@@ -260,13 +260,13 @@ class TestFiles:
     def test_path_params_delete(self, client: Mixedbread) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `store_identifier` but received ''"):
             client.stores.files.with_raw_response.delete(
-                file_id="file_id",
+                file_identifier="file_identifier",
                 store_identifier="",
             )
 
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `file_id` but received ''"):
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `file_identifier` but received ''"):
             client.stores.files.with_raw_response.delete(
-                file_id="",
+                file_identifier="",
                 store_identifier="store_identifier",
             )
 
@@ -570,7 +570,7 @@ class TestAsyncFiles:
     @parametrize
     async def test_method_delete(self, async_client: AsyncMixedbread) -> None:
         file = await async_client.stores.files.delete(
-            file_id="file_id",
+            file_identifier="file_identifier",
             store_identifier="store_identifier",
         )
         assert_matches_type(FileDeleteResponse, file, path=["response"])
@@ -578,7 +578,7 @@ class TestAsyncFiles:
     @parametrize
     async def test_raw_response_delete(self, async_client: AsyncMixedbread) -> None:
         response = await async_client.stores.files.with_raw_response.delete(
-            file_id="file_id",
+            file_identifier="file_identifier",
             store_identifier="store_identifier",
         )
 
@@ -590,7 +590,7 @@ class TestAsyncFiles:
     @parametrize
     async def test_streaming_response_delete(self, async_client: AsyncMixedbread) -> None:
         async with async_client.stores.files.with_streaming_response.delete(
-            file_id="file_id",
+            file_identifier="file_identifier",
             store_identifier="store_identifier",
         ) as response:
             assert not response.is_closed
@@ -605,13 +605,13 @@ class TestAsyncFiles:
     async def test_path_params_delete(self, async_client: AsyncMixedbread) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `store_identifier` but received ''"):
             await async_client.stores.files.with_raw_response.delete(
-                file_id="file_id",
+                file_identifier="file_identifier",
                 store_identifier="",
             )
 
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `file_id` but received ''"):
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `file_identifier` but received ''"):
             await async_client.stores.files.with_raw_response.delete(
-                file_id="",
+                file_identifier="",
                 store_identifier="store_identifier",
             )
 

@@ -245,7 +245,7 @@ class FilesResource(SyncAPIResource):
 
     def delete(
         self,
-        file_id: str,
+        file_identifier: str,
         *,
         store_identifier: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -267,7 +267,7 @@ class FilesResource(SyncAPIResource):
         Args:
           store_identifier: The ID or name of the store
 
-          file_id: The ID or name of the file to delete
+          file_identifier: The ID or name of the file to delete
 
           extra_headers: Send extra headers
 
@@ -279,10 +279,10 @@ class FilesResource(SyncAPIResource):
         """
         if not store_identifier:
             raise ValueError(f"Expected a non-empty value for `store_identifier` but received {store_identifier!r}")
-        if not file_id:
-            raise ValueError(f"Expected a non-empty value for `file_id` but received {file_id!r}")
+        if not file_identifier:
+            raise ValueError(f"Expected a non-empty value for `file_identifier` but received {file_identifier!r}")
         return self._delete(
-            f"/v1/stores/{store_identifier}/files/{file_id}",
+            f"/v1/stores/{store_identifier}/files/{file_identifier}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -730,7 +730,7 @@ class AsyncFilesResource(AsyncAPIResource):
 
     async def delete(
         self,
-        file_id: str,
+        file_identifier: str,
         *,
         store_identifier: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -752,7 +752,7 @@ class AsyncFilesResource(AsyncAPIResource):
         Args:
           store_identifier: The ID or name of the store
 
-          file_id: The ID or name of the file to delete
+          file_identifier: The ID or name of the file to delete
 
           extra_headers: Send extra headers
 
@@ -764,10 +764,10 @@ class AsyncFilesResource(AsyncAPIResource):
         """
         if not store_identifier:
             raise ValueError(f"Expected a non-empty value for `store_identifier` but received {store_identifier!r}")
-        if not file_id:
-            raise ValueError(f"Expected a non-empty value for `file_id` but received {file_id!r}")
+        if not file_identifier:
+            raise ValueError(f"Expected a non-empty value for `file_identifier` but received {file_identifier!r}")
         return await self._delete(
-            f"/v1/stores/{store_identifier}/files/{file_id}",
+            f"/v1/stores/{store_identifier}/files/{file_identifier}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
