@@ -12,6 +12,7 @@ from tests.utils import assert_matches_type
 from mixedbread.types.stores import (
     StoreFile,
     FileListResponse,
+    FileDeleteResponse,
     FileSearchResponse,
 )
 
@@ -219,6 +220,54 @@ class TestFiles:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `store_identifier` but received ''"):
             client.stores.files.with_raw_response.list(
                 store_identifier="",
+            )
+
+    @parametrize
+    def test_method_delete(self, client: Mixedbread) -> None:
+        file = client.stores.files.delete(
+            file_identifier="file_identifier",
+            store_identifier="store_identifier",
+        )
+        assert_matches_type(FileDeleteResponse, file, path=["response"])
+
+    @parametrize
+    def test_raw_response_delete(self, client: Mixedbread) -> None:
+        response = client.stores.files.with_raw_response.delete(
+            file_identifier="file_identifier",
+            store_identifier="store_identifier",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        file = response.parse()
+        assert_matches_type(FileDeleteResponse, file, path=["response"])
+
+    @parametrize
+    def test_streaming_response_delete(self, client: Mixedbread) -> None:
+        with client.stores.files.with_streaming_response.delete(
+            file_identifier="file_identifier",
+            store_identifier="store_identifier",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            file = response.parse()
+            assert_matches_type(FileDeleteResponse, file, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    def test_path_params_delete(self, client: Mixedbread) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `store_identifier` but received ''"):
+            client.stores.files.with_raw_response.delete(
+                file_identifier="file_identifier",
+                store_identifier="",
+            )
+
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `file_identifier` but received ''"):
+            client.stores.files.with_raw_response.delete(
+                file_identifier="",
+                store_identifier="store_identifier",
             )
 
     @parametrize
@@ -516,6 +565,54 @@ class TestAsyncFiles:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `store_identifier` but received ''"):
             await async_client.stores.files.with_raw_response.list(
                 store_identifier="",
+            )
+
+    @parametrize
+    async def test_method_delete(self, async_client: AsyncMixedbread) -> None:
+        file = await async_client.stores.files.delete(
+            file_identifier="file_identifier",
+            store_identifier="store_identifier",
+        )
+        assert_matches_type(FileDeleteResponse, file, path=["response"])
+
+    @parametrize
+    async def test_raw_response_delete(self, async_client: AsyncMixedbread) -> None:
+        response = await async_client.stores.files.with_raw_response.delete(
+            file_identifier="file_identifier",
+            store_identifier="store_identifier",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        file = await response.parse()
+        assert_matches_type(FileDeleteResponse, file, path=["response"])
+
+    @parametrize
+    async def test_streaming_response_delete(self, async_client: AsyncMixedbread) -> None:
+        async with async_client.stores.files.with_streaming_response.delete(
+            file_identifier="file_identifier",
+            store_identifier="store_identifier",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            file = await response.parse()
+            assert_matches_type(FileDeleteResponse, file, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    async def test_path_params_delete(self, async_client: AsyncMixedbread) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `store_identifier` but received ''"):
+            await async_client.stores.files.with_raw_response.delete(
+                file_identifier="file_identifier",
+                store_identifier="",
+            )
+
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `file_identifier` but received ''"):
+            await async_client.stores.files.with_raw_response.delete(
+                file_identifier="",
+                store_identifier="store_identifier",
             )
 
     @parametrize
