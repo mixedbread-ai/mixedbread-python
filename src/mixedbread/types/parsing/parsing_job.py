@@ -34,7 +34,7 @@ class ResultChunkElement(BaseModel):
 
 
 class ResultChunk(BaseModel):
-    content: str
+    content: Optional[str] = None
     """The full content of the chunk"""
 
     content_to_embed: str
