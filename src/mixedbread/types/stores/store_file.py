@@ -92,6 +92,10 @@ class ChunkTextInputChunkGeneratedMetadataMarkdownChunkGeneratedMetadata(BaseMod
         List[ChunkTextInputChunkGeneratedMetadataMarkdownChunkGeneratedMetadataHeadingContext]
     ] = None
 
+    start_line: Optional[int] = None
+
+    num_lines: Optional[int] = None
+
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
         # value to this field, so for compatibility we avoid doing it at runtime.
@@ -115,6 +119,10 @@ class ChunkTextInputChunkGeneratedMetadataTextChunkGeneratedMetadata(BaseModel):
     word_count: int
 
     file_size: int
+
+    start_line: Optional[int] = None
+
+    num_lines: Optional[int] = None
 
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
@@ -161,6 +169,10 @@ class ChunkTextInputChunkGeneratedMetadataCodeChunkGeneratedMetadata(BaseModel):
     word_count: int
 
     file_size: int
+
+    start_line: Optional[int] = None
+
+    num_lines: Optional[int] = None
 
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
@@ -270,6 +282,10 @@ class ChunkImageURLInputChunkGeneratedMetadataMarkdownChunkGeneratedMetadata(Bas
         List[ChunkImageURLInputChunkGeneratedMetadataMarkdownChunkGeneratedMetadataHeadingContext]
     ] = None
 
+    start_line: Optional[int] = None
+
+    num_lines: Optional[int] = None
+
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
         # value to this field, so for compatibility we avoid doing it at runtime.
@@ -293,6 +309,10 @@ class ChunkImageURLInputChunkGeneratedMetadataTextChunkGeneratedMetadata(BaseMod
     word_count: int
 
     file_size: int
+
+    start_line: Optional[int] = None
+
+    num_lines: Optional[int] = None
 
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
@@ -339,6 +359,10 @@ class ChunkImageURLInputChunkGeneratedMetadataCodeChunkGeneratedMetadata(BaseMod
     word_count: int
 
     file_size: int
+
+    start_line: Optional[int] = None
+
+    num_lines: Optional[int] = None
 
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
@@ -459,6 +483,10 @@ class ChunkAudioURLInputChunkGeneratedMetadataMarkdownChunkGeneratedMetadata(Bas
         List[ChunkAudioURLInputChunkGeneratedMetadataMarkdownChunkGeneratedMetadataHeadingContext]
     ] = None
 
+    start_line: Optional[int] = None
+
+    num_lines: Optional[int] = None
+
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
         # value to this field, so for compatibility we avoid doing it at runtime.
@@ -482,6 +510,10 @@ class ChunkAudioURLInputChunkGeneratedMetadataTextChunkGeneratedMetadata(BaseMod
     word_count: int
 
     file_size: int
+
+    start_line: Optional[int] = None
+
+    num_lines: Optional[int] = None
 
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
@@ -528,6 +560,10 @@ class ChunkAudioURLInputChunkGeneratedMetadataCodeChunkGeneratedMetadata(BaseMod
     word_count: int
 
     file_size: int
+
+    start_line: Optional[int] = None
+
+    num_lines: Optional[int] = None
 
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
@@ -648,6 +684,10 @@ class ChunkVideoURLInputChunkGeneratedMetadataMarkdownChunkGeneratedMetadata(Bas
         List[ChunkVideoURLInputChunkGeneratedMetadataMarkdownChunkGeneratedMetadataHeadingContext]
     ] = None
 
+    start_line: Optional[int] = None
+
+    num_lines: Optional[int] = None
+
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
         # value to this field, so for compatibility we avoid doing it at runtime.
@@ -671,6 +711,10 @@ class ChunkVideoURLInputChunkGeneratedMetadataTextChunkGeneratedMetadata(BaseMod
     word_count: int
 
     file_size: int
+
+    start_line: Optional[int] = None
+
+    num_lines: Optional[int] = None
 
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
@@ -717,6 +761,10 @@ class ChunkVideoURLInputChunkGeneratedMetadataCodeChunkGeneratedMetadata(BaseMod
     word_count: int
 
     file_size: int
+
+    start_line: Optional[int] = None
+
+    num_lines: Optional[int] = None
 
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a

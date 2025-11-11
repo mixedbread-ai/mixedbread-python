@@ -94,6 +94,10 @@ class SourceMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredTextInputChunk
         ]
     ] = None
 
+    start_line: Optional[int] = None
+
+    num_lines: Optional[int] = None
+
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
         # value to this field, so for compatibility we avoid doing it at runtime.
@@ -119,6 +123,10 @@ class SourceMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredTextInputChunk
     word_count: int
 
     file_size: int
+
+    start_line: Optional[int] = None
+
+    num_lines: Optional[int] = None
 
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
@@ -169,6 +177,10 @@ class SourceMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredTextInputChunk
     word_count: int
 
     file_size: int
+
+    start_line: Optional[int] = None
+
+    num_lines: Optional[int] = None
 
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
@@ -307,6 +319,10 @@ class SourceMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredImageURLInputC
         ]
     ] = None
 
+    start_line: Optional[int] = None
+
+    num_lines: Optional[int] = None
+
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
         # value to this field, so for compatibility we avoid doing it at runtime.
@@ -332,6 +348,10 @@ class SourceMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredImageURLInputC
     word_count: int
 
     file_size: int
+
+    start_line: Optional[int] = None
+
+    num_lines: Optional[int] = None
 
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
@@ -382,6 +402,10 @@ class SourceMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredImageURLInputC
     word_count: int
 
     file_size: int
+
+    start_line: Optional[int] = None
+
+    num_lines: Optional[int] = None
 
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
@@ -531,6 +555,10 @@ class SourceMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredAudioURLInputC
         ]
     ] = None
 
+    start_line: Optional[int] = None
+
+    num_lines: Optional[int] = None
+
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
         # value to this field, so for compatibility we avoid doing it at runtime.
@@ -556,6 +584,10 @@ class SourceMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredAudioURLInputC
     word_count: int
 
     file_size: int
+
+    start_line: Optional[int] = None
+
+    num_lines: Optional[int] = None
 
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
@@ -606,6 +638,10 @@ class SourceMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredAudioURLInputC
     word_count: int
 
     file_size: int
+
+    start_line: Optional[int] = None
+
+    num_lines: Optional[int] = None
 
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
@@ -755,6 +791,10 @@ class SourceMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredVideoURLInputC
         ]
     ] = None
 
+    start_line: Optional[int] = None
+
+    num_lines: Optional[int] = None
+
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
         # value to this field, so for compatibility we avoid doing it at runtime.
@@ -780,6 +820,10 @@ class SourceMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredVideoURLInputC
     word_count: int
 
     file_size: int
+
+    start_line: Optional[int] = None
+
+    num_lines: Optional[int] = None
 
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
@@ -830,6 +874,10 @@ class SourceMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredVideoURLInputC
     word_count: int
 
     file_size: int
+
+    start_line: Optional[int] = None
+
+    num_lines: Optional[int] = None
 
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a

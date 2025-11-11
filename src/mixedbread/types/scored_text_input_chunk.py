@@ -48,6 +48,10 @@ class GeneratedMetadataMarkdownChunkGeneratedMetadata(BaseModel):
 
     heading_context: Optional[List[GeneratedMetadataMarkdownChunkGeneratedMetadataHeadingContext]] = None
 
+    start_line: Optional[int] = None
+
+    num_lines: Optional[int] = None
+
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
         # value to this field, so for compatibility we avoid doing it at runtime.
@@ -71,6 +75,10 @@ class GeneratedMetadataTextChunkGeneratedMetadata(BaseModel):
     word_count: int
 
     file_size: int
+
+    start_line: Optional[int] = None
+
+    num_lines: Optional[int] = None
 
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
@@ -117,6 +125,10 @@ class GeneratedMetadataCodeChunkGeneratedMetadata(BaseModel):
     word_count: int
 
     file_size: int
+
+    start_line: Optional[int] = None
+
+    num_lines: Optional[int] = None
 
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
