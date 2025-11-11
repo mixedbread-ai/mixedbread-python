@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.40.0 (2025-11-11)
+
+Full Changelog: [v0.39.0...v0.40.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.39.0...v0.40.0)
+
+### Features
+
+* **api:** api update ([93c24d4](https://github.com/mixedbread-ai/mixedbread-python/commit/93c24d40549f6e7d1cb881313a40bcdd19fed4ab))
+* **api:** api update ([478b973](https://github.com/mixedbread-ai/mixedbread-python/commit/478b9736d4da0411c814620a61b2675faed9173c))
+
+
+### Bug Fixes
+
+* compat with Python 3.14 ([99a4c1c](https://github.com/mixedbread-ai/mixedbread-python/commit/99a4c1c553bd638b2d7e2f050ca33824623c93e8))
+
+
+### Chores
+
+* **package:** drop Python 3.8 support ([54a77eb](https://github.com/mixedbread-ai/mixedbread-python/commit/54a77eb9af52ced156a07b0d524068cb5337dd8f))
+
 ## 0.39.0 (2025-11-07)
 
 Full Changelog: [v0.38.0...v0.39.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.38.0...v0.39.0)
