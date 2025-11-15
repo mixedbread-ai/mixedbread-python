@@ -124,7 +124,7 @@ class FilesResource(SyncAPIResource):
         file_identifier: str,
         *,
         store_identifier: str,
-        return_chunks: bool | Omit = omit,
+        return_chunks: Union[bool, Iterable[int]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -146,7 +146,8 @@ class FilesResource(SyncAPIResource):
 
           file_identifier: The ID or name of the file
 
-          return_chunks: Whether to return the chunks for the file
+          return_chunks: Whether to return the chunks for the file. If a list of integers is provided,
+              only the chunks at the specified indices will be returned.
 
           extra_headers: Send extra headers
 
@@ -607,7 +608,7 @@ class AsyncFilesResource(AsyncAPIResource):
         file_identifier: str,
         *,
         store_identifier: str,
-        return_chunks: bool | Omit = omit,
+        return_chunks: Union[bool, Iterable[int]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -629,7 +630,8 @@ class AsyncFilesResource(AsyncAPIResource):
 
           file_identifier: The ID or name of the file
 
-          return_chunks: Whether to return the chunks for the file
+          return_chunks: Whether to return the chunks for the file. If a list of integers is provided,
+              only the chunks at the specified indices will be returned.
 
           extra_headers: Send extra headers
 
