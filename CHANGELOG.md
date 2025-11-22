@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.41.1 (2025-11-22)
+
+Full Changelog: [v0.41.0...v0.41.1](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.41.0...v0.41.1)
+
+### Chores
+
+* add Python 3.14 classifier and testing ([96031f8](https://github.com/mixedbread-ai/mixedbread-python/commit/96031f8ee44ce757efcb0d73377530a4179f9c77))
+
 ## 0.41.0 (2025-11-15)
 
 Full Changelog: [v0.40.0...v0.41.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.40.0...v0.41.0)
