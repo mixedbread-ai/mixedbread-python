@@ -14,5 +14,7 @@ class SearchFilterCondition(BaseModel):
     value: object
     """The value to compare against"""
 
-    operator: Literal["eq", "not_eq", "gt", "gte", "lt", "lte", "in", "not_in", "like", "starts_with", "not_like"]
+    operator: Literal[
+        "eq", "not_eq", "gt", "gte", "lt", "lte", "in", "not_in", "like", "starts_with", "not_like", "regex"
+    ]
     """The operator for the condition"""
