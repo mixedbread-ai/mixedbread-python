@@ -5,15 +5,15 @@ from typing_extensions import Literal, TypeAlias
 __all__ = ["ElementType"]
 
 ElementType: TypeAlias = Literal[
-    "caption",
-    "footnote",
-    "formula",
-    "list-item",
-    "page-footer",
-    "page-header",
-    "picture",
-    "section-header",
-    "table",
-    "text",
+    "header",
+    "footer",
     "title",
+    "section-header",
+    "page-number",
+    "list-item",
+    "figure",
+    "table",
+    "form",
+    "text",
+    "footnote",
 ]

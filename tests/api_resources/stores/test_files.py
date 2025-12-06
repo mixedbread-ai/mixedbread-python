@@ -188,6 +188,7 @@ class TestFiles:
                     },
                 ],
             },
+            q="x",
         )
         assert_matches_type(FileListResponse, file, path=["response"])
 
@@ -533,6 +534,7 @@ class TestAsyncFiles:
                     },
                 ],
             },
+            q="x",
         )
         assert_matches_type(FileListResponse, file, path=["response"])
 
