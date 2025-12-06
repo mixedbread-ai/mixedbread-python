@@ -888,6 +888,9 @@ class StoreFile(BaseModel):
     usage_bytes: Optional[int] = None
     """Storage usage in bytes"""
 
+    usage_tokens: Optional[int] = None
+    """Storage usage in tokens"""
+
     config: Optional[Config] = None
     """Configuration for a file."""
 

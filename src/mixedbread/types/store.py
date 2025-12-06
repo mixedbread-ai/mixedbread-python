@@ -88,6 +88,9 @@ class Store(BaseModel):
     usage_bytes: Optional[int] = None
     """Total storage usage in bytes"""
 
+    usage_tokens: Optional[int] = None
+    """Total storage usage in tokens"""
+
     expires_at: Optional[datetime] = None
     """Optional expiration timestamp for the store"""
 
