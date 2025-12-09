@@ -9,6 +9,8 @@ __all__ = ["JobDeleteResponse"]
 
 
 class JobDeleteResponse(BaseModel):
+    """A deleted parsing job."""
+
     id: str
     """The ID of the deleted job"""
 

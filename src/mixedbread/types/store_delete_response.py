@@ -9,6 +9,8 @@ __all__ = ["StoreDeleteResponse"]
 
 
 class StoreDeleteResponse(BaseModel):
+    """Response model for store deletion."""
+
     id: str
     """ID of the deleted store"""
 

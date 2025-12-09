@@ -11,6 +11,8 @@ __all__ = ["RerankConfigParam"]
 
 
 class RerankConfigParam(TypedDict, total=False):
+    """Represents a reranking configuration."""
+
     model: str
     """The name of the reranking model"""
 

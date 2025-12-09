@@ -8,6 +8,8 @@ __all__ = ["SearchFilterCondition"]
 
 
 class SearchFilterCondition(TypedDict, total=False):
+    """Represents a condition with a field, operator, and value."""
+
     key: Required[str]
     """The field to apply the condition on"""
 

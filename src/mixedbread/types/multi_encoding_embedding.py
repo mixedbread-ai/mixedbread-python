@@ -10,6 +10,10 @@ __all__ = ["MultiEncodingEmbedding", "Embedding"]
 
 
 class Embedding(BaseModel):
+    """
+    The encoded embedding data by encoding format.Returned, if more than one encoding format is used.
+    """
+
     float: Optional[List[builtins.float]] = None
 
     int8: Optional[List[int]] = None

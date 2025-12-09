@@ -10,6 +10,8 @@ __all__ = ["DataSourceOauth2Params"]
 
 
 class DataSourceOauth2Params(BaseModel):
+    """Authentication parameters for a OAuth data source."""
+
     type: Optional[Literal["oauth2"]] = None
 
     created_at: Optional[datetime] = None

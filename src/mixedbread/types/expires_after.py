@@ -9,6 +9,8 @@ __all__ = ["ExpiresAfter"]
 
 
 class ExpiresAfter(BaseModel):
+    """Represents an expiration policy for a store."""
+
     anchor: Optional[Literal["last_active_at"]] = None
     """Anchor date for the expiration policy"""
 

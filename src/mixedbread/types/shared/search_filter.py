@@ -28,6 +28,8 @@ else:
 
 
 class SearchFilter(BaseModel):
+    """Represents a filter with AND, OR, and NOT conditions."""
+
     all: Optional[List[All]] = None
     """List of conditions or filters to be ANDed together"""
 

@@ -13,6 +13,8 @@ __all__ = ["DataSource", "AuthParams", "AuthParamsDataSourceAPIKeyParams"]
 
 
 class AuthParamsDataSourceAPIKeyParams(BaseModel):
+    """Authentication parameters for a API key data source."""
+
     type: Optional[Literal["api_key"]] = None
 
     api_key: str
@@ -25,6 +27,8 @@ AuthParams: TypeAlias = Annotated[
 
 
 class DataSource(BaseModel):
+    """Service-level representation of a data source."""
+
     id: str
     """The ID of the data source"""
 

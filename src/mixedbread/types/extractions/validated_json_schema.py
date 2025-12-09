@@ -8,6 +8,8 @@ __all__ = ["ValidatedJsonSchema"]
 
 
 class ValidatedJsonSchema(BaseModel):
+    """Result of validating a JSON schema."""
+
     is_valid: bool
     """Whether the schema is valid"""
 

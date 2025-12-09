@@ -8,6 +8,8 @@ __all__ = ["PaginationWithTotal"]
 
 
 class PaginationWithTotal(BaseModel):
+    """Pagination model that includes total count of items."""
+
     limit: Optional[int] = None
     """Maximum number of items to return per page"""
 

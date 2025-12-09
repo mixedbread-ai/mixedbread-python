@@ -10,6 +10,8 @@ __all__ = ["FileListResponse", "Pagination"]
 
 
 class Pagination(BaseModel):
+    """Response model for cursor-based pagination."""
+
     has_more: bool
     """
     Contextual direction-aware flag: True if more items exist in the requested
@@ -38,6 +40,8 @@ class Pagination(BaseModel):
 
 
 class FileListResponse(BaseModel):
+    """List response wrapper for vector store files."""
+
     pagination: Pagination
     """Response model for cursor-based pagination."""
 

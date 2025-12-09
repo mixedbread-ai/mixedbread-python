@@ -11,6 +11,8 @@ __all__ = ["NotionDataSourceParam", "AuthParams", "AuthParamsAPIKeyCreateOrUpdat
 
 
 class AuthParamsAPIKeyCreateOrUpdateParams(TypedDict, total=False):
+    """Base class for API key create or update parameters."""
+
     type: Literal["api_key"]
 
     api_key: Required[str]
@@ -21,6 +23,8 @@ AuthParams: TypeAlias = Union[Oauth2Params, AuthParamsAPIKeyCreateOrUpdateParams
 
 
 class NotionDataSourceParam(TypedDict, total=False):
+    """Parameters for creating or updating a Notion data source."""
+
     type: Literal["notion"]
     """The type of data source to create"""
 

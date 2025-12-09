@@ -10,6 +10,8 @@ __all__ = ["DataSourceConnector"]
 
 
 class DataSourceConnector(BaseModel):
+    """Service-level representation of a connector."""
+
     id: str
     """The ID of the connector"""
 

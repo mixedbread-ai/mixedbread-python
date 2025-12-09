@@ -11,6 +11,8 @@ __all__ = ["LinearDataSourceParam"]
 
 
 class LinearDataSourceParam(TypedDict, total=False):
+    """Parameters for creating or updating a Linear data source."""
+
     type: Literal["linear"]
     """The type of data source to create"""
 

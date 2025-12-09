@@ -10,6 +10,8 @@ __all__ = ["FileSearchResponse"]
 
 
 class FileSearchResponse(BaseModel):
+    """Search response wrapper for vector store files."""
+
     object: Optional[Literal["list"]] = None
     """The object type of the response"""
 

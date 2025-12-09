@@ -186,6 +186,8 @@ GeneratedMetadata: TypeAlias = Annotated[
 
 
 class AudioURL(BaseModel):
+    """The audio input specification."""
+
     url: str
     """The audio URL. Can be either a URL or a Data URI."""
 

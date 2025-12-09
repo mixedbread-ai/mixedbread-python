@@ -16,6 +16,8 @@ __all__ = ["ScoredStoreFile", "Config", "Chunk"]
 
 
 class Config(BaseModel):
+    """Configuration for a file."""
+
     parsing_strategy: Optional[Literal["fast", "high_quality"]] = None
     """Strategy for adding the file, this overrides the store-level default"""
 
@@ -27,6 +29,8 @@ Chunk: TypeAlias = Annotated[
 
 
 class ScoredStoreFile(BaseModel):
+    """Represents a scored store file."""
+
     id: str
     """Unique identifier for the file"""
 

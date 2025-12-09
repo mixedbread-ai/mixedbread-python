@@ -241,6 +241,8 @@ ChunkMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredTextInputChunkGenerat
 
 
 class ChunkMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredTextInputChunk(BaseModel):
+    """Scored text chunk for deprecated API."""
+
     chunk_index: int
     """position of the chunk in a file"""
 
@@ -466,6 +468,8 @@ ChunkMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredImageURLInputChunkGen
 
 
 class ChunkMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredImageURLInputChunkImageURL(BaseModel):
+    """The image input specification."""
+
     url: str
     """The image URL. Can be either a URL or a Data URI."""
 
@@ -474,6 +478,8 @@ class ChunkMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredImageURLInputCh
 
 
 class ChunkMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredImageURLInputChunk(BaseModel):
+    """Scored image chunk for deprecated API."""
+
     chunk_index: int
     """position of the chunk in a file"""
 
@@ -702,11 +708,15 @@ ChunkMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredAudioURLInputChunkGen
 
 
 class ChunkMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredAudioURLInputChunkAudioURL(BaseModel):
+    """The audio input specification."""
+
     url: str
     """The audio URL. Can be either a URL or a Data URI."""
 
 
 class ChunkMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredAudioURLInputChunk(BaseModel):
+    """Scored audio chunk for deprecated API."""
+
     chunk_index: int
     """position of the chunk in a file"""
 
@@ -938,11 +948,15 @@ ChunkMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredVideoURLInputChunkGen
 
 
 class ChunkMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredVideoURLInputChunkVideoURL(BaseModel):
+    """The video input specification."""
+
     url: str
     """The video URL. Can be either a URL or a Data URI."""
 
 
 class ChunkMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredVideoURLInputChunk(BaseModel):
+    """Scored video chunk for deprecated API."""
+
     chunk_index: int
     """position of the chunk in a file"""
 
@@ -997,6 +1011,8 @@ Chunk: TypeAlias = Annotated[
 
 
 class ScoredVectorStoreFile(BaseModel):
+    """Represents a scored store file."""
+
     id: str
     """Unique identifier for the file"""
 

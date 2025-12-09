@@ -29,10 +29,14 @@ class FileCreateParams(TypedDict, total=False):
 
 
 class Config(TypedDict, total=False):
+    """Configuration for adding the file"""
+
     parsing_strategy: Literal["fast", "high_quality"]
     """Strategy for adding the file, this overrides the store-level default"""
 
 
 class Experimental(TypedDict, total=False):
+    """Configuration for a file."""
+
     parsing_strategy: Literal["fast", "high_quality"]
     """Strategy for adding the file, this overrides the store-level default"""

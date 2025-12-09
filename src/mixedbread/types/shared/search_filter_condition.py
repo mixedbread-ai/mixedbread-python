@@ -8,6 +8,8 @@ __all__ = ["SearchFilterCondition"]
 
 
 class SearchFilterCondition(BaseModel):
+    """Represents a condition with a field, operator, and value."""
+
     key: str
     """The field to apply the condition on"""
 
