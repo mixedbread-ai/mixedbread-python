@@ -8,6 +8,8 @@ __all__ = ["ExtractionResult"]
 
 
 class ExtractionResult(BaseModel):
+    """The result of an extraction job."""
+
     data: Dict[str, object]
 
     warnings: List[str]

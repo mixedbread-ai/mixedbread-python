@@ -186,6 +186,8 @@ GeneratedMetadata: TypeAlias = Annotated[
 
 
 class VideoURL(BaseModel):
+    """The video input specification."""
+
     url: str
     """The video URL. Can be either a URL or a Data URI."""
 

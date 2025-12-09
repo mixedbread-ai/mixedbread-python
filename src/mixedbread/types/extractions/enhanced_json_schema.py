@@ -8,5 +8,7 @@ __all__ = ["EnhancedJsonSchema"]
 
 
 class EnhancedJsonSchema(BaseModel):
+    """Result of enhancing a JSON schema."""
+
     json_schema: Dict[str, object]
     """The enhanced JSON schema"""

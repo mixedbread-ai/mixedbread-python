@@ -9,6 +9,8 @@ __all__ = ["DataSourceDeleteResponse"]
 
 
 class DataSourceDeleteResponse(BaseModel):
+    """Deleted data source."""
+
     id: str
     """The ID of the data source"""
 

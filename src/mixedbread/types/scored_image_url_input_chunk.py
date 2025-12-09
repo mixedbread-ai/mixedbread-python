@@ -186,6 +186,8 @@ GeneratedMetadata: TypeAlias = Annotated[
 
 
 class ImageURL(BaseModel):
+    """The image input specification."""
+
     url: str
     """The image URL. Can be either a URL or a Data URI."""
 

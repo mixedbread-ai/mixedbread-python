@@ -239,6 +239,8 @@ DataMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredTextInputChunkGenerate
 
 
 class DataMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredTextInputChunk(BaseModel):
+    """Scored text chunk for deprecated API."""
+
     chunk_index: int
     """position of the chunk in a file"""
 
@@ -464,6 +466,8 @@ DataMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredImageURLInputChunkGene
 
 
 class DataMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredImageURLInputChunkImageURL(BaseModel):
+    """The image input specification."""
+
     url: str
     """The image URL. Can be either a URL or a Data URI."""
 
@@ -472,6 +476,8 @@ class DataMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredImageURLInputChu
 
 
 class DataMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredImageURLInputChunk(BaseModel):
+    """Scored image chunk for deprecated API."""
+
     chunk_index: int
     """position of the chunk in a file"""
 
@@ -700,11 +706,15 @@ DataMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredAudioURLInputChunkGene
 
 
 class DataMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredAudioURLInputChunkAudioURL(BaseModel):
+    """The audio input specification."""
+
     url: str
     """The audio URL. Can be either a URL or a Data URI."""
 
 
 class DataMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredAudioURLInputChunk(BaseModel):
+    """Scored audio chunk for deprecated API."""
+
     chunk_index: int
     """position of the chunk in a file"""
 
@@ -936,11 +946,15 @@ DataMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredVideoURLInputChunkGene
 
 
 class DataMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredVideoURLInputChunkVideoURL(BaseModel):
+    """The video input specification."""
+
     url: str
     """The video URL. Can be either a URL or a Data URI."""
 
 
 class DataMxbaiOmniAPIRoutesV1DeprecatedVectorStoresModelsScoredVideoURLInputChunk(BaseModel):
+    """Scored video chunk for deprecated API."""
+
     chunk_index: int
     """position of the chunk in a file"""
 

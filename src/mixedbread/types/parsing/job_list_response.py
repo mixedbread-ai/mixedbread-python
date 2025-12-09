@@ -11,6 +11,8 @@ __all__ = ["JobListResponse"]
 
 
 class JobListResponse(BaseModel):
+    """A parsing job item for list responses, omitting result and error fields."""
+
     id: str
     """The ID of the job"""
 

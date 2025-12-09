@@ -8,5 +8,7 @@ __all__ = ["StoreMetadataFacetsResponse"]
 
 
 class StoreMetadataFacetsResponse(BaseModel):
+    """Represents metadata facets for a store."""
+
     facets: Dict[str, Dict[str, object]]
     """Metadata facets"""

@@ -9,6 +9,8 @@ __all__ = ["ConnectorDeleteResponse"]
 
 
 class ConnectorDeleteResponse(BaseModel):
+    """Deleted connector."""
+
     id: str
     """The ID of the connector"""
 

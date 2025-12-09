@@ -27,6 +27,8 @@ else:
 
 
 class SearchFilter(TypedDict, total=False):
+    """Represents a filter with AND, OR, and NOT conditions."""
+
     all: Optional[Iterable[All]]
     """List of conditions or filters to be ANDed together"""
 

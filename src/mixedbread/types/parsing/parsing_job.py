@@ -14,6 +14,8 @@ __all__ = ["ParsingJob", "Result", "ResultChunk", "ResultChunkElement"]
 
 
 class ResultChunkElement(BaseModel):
+    """Represents an extracted element from a document with its content and metadata."""
+
     type: ElementType
     """The type of the extracted element"""
 
@@ -34,6 +36,8 @@ class ResultChunkElement(BaseModel):
 
 
 class ResultChunk(BaseModel):
+    """A chunk of text extracted from a document page."""
+
     content: Optional[str] = None
     """The full content of the chunk"""
 
@@ -45,6 +49,8 @@ class ResultChunk(BaseModel):
 
 
 class Result(BaseModel):
+    """Result of document parsing operation."""
+
     chunking_strategy: ChunkingStrategy
     """The strategy used for chunking the document"""
 
@@ -62,6 +68,8 @@ class Result(BaseModel):
 
 
 class ParsingJob(BaseModel):
+    """A job for parsing documents with its current state and result."""
+
     id: str
     """The ID of the job"""
 

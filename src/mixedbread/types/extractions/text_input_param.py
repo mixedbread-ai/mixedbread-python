@@ -8,6 +8,13 @@ __all__ = ["TextInputParam"]
 
 
 class TextInputParam(TypedDict, total=False):
+    """Model for text input validation.
+
+    Attributes:
+        type: Input type identifier, always "text"
+        text: The actual text content, with length and whitespace constraints
+    """
+
     type: Literal["text"]
     """Input type identifier"""
 

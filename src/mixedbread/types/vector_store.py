@@ -11,6 +11,8 @@ __all__ = ["VectorStore", "FileCounts"]
 
 
 class FileCounts(BaseModel):
+    """Counts of files in different states"""
+
     pending: Optional[int] = None
     """Number of files waiting to be processed"""
 
@@ -31,6 +33,8 @@ class FileCounts(BaseModel):
 
 
 class VectorStore(BaseModel):
+    """Model representing a vector store with its metadata and timestamps."""
+
     id: str
     """Unique identifier for the vector store"""
 

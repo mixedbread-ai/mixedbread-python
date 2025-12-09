@@ -40,6 +40,8 @@ SearchOptionsRerank: TypeAlias = Union[bool, RerankConfigParam]
 
 
 class SearchOptions(TypedDict, total=False):
+    """Search configuration options"""
+
     score_threshold: float
     """Minimum similarity score threshold"""
 

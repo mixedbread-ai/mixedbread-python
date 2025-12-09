@@ -8,6 +8,12 @@ __all__ = ["FileObject"]
 
 
 class FileObject(BaseModel):
+    """A model representing a file object in the system.
+
+    This model contains metadata about files stored in the system, including
+    identifiers, size information, and timestamps.
+    """
+
     id: str
     """Unique identifier for the file"""
 

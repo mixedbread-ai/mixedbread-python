@@ -13,6 +13,8 @@ Rerank: TypeAlias = Union[bool, RerankConfigParam]
 
 
 class VectorStoreChunkSearchOptionsParam(TypedDict, total=False):
+    """Options for configuring vector store chunk searches."""
+
     score_threshold: float
     """Minimum similarity score threshold"""
 

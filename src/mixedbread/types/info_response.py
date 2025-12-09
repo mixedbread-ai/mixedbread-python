@@ -6,6 +6,8 @@ __all__ = ["InfoResponse"]
 
 
 class InfoResponse(BaseModel):
+    """Info Pydantic Response Service Message"""
+
     name: str
 
     version: str
