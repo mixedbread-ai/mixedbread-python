@@ -23,7 +23,7 @@ class APIKeyCreateParams(TypedDict, total=False):
 
 
 class Scope(TypedDict, total=False):
-    method: Required[Literal["read", "write", "delete", "list", "create"]]
+    method: Required[Literal["read", "write", "delete", "list", "create", "search"]]
 
     resource_type: Optional[Literal["store"]]
 

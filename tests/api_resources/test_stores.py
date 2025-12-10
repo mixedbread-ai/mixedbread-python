@@ -32,7 +32,7 @@ class TestStores:
     @parametrize
     def test_method_create_with_all_params(self, client: Mixedbread) -> None:
         store = client.stores.create(
-            name="Technical Documentation",
+            name="technical-documentation",
             description="Contains technical specifications and guides",
             is_public=False,
             expires_after={
@@ -511,7 +511,7 @@ class TestAsyncStores:
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncMixedbread) -> None:
         store = await async_client.stores.create(
-            name="Technical Documentation",
+            name="technical-documentation",
             description="Contains technical specifications and guides",
             is_public=False,
             expires_after={
