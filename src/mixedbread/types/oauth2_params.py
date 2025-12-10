@@ -8,4 +8,6 @@ __all__ = ["Oauth2Params"]
 
 
 class Oauth2Params(TypedDict, total=False):
+    """Base class for OAuth2 create or update parameters."""
+
     type: Literal["oauth2"]

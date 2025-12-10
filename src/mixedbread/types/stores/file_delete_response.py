@@ -9,6 +9,8 @@ __all__ = ["FileDeleteResponse"]
 
 
 class FileDeleteResponse(BaseModel):
+    """Response model for file deletion."""
+
     id: str
     """ID of the deleted file"""
 

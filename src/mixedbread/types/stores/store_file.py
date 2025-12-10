@@ -57,6 +57,8 @@ __all__ = [
 
 
 class Config(BaseModel):
+    """Configuration for a file."""
+
     parsing_strategy: Optional[Literal["fast", "high_quality"]] = None
     """Strategy for adding the file, this overrides the store-level default"""
 
@@ -419,6 +421,8 @@ ChunkImageURLInputChunkGeneratedMetadata: TypeAlias = Annotated[
 
 
 class ChunkImageURLInputChunkImageURL(BaseModel):
+    """The image input specification."""
+
     url: str
     """The image URL. Can be either a URL or a Data URI."""
 
@@ -620,6 +624,8 @@ ChunkAudioURLInputChunkGeneratedMetadata: TypeAlias = Annotated[
 
 
 class ChunkAudioURLInputChunkAudioURL(BaseModel):
+    """The audio input specification."""
+
     url: str
     """The audio URL. Can be either a URL or a Data URI."""
 
@@ -821,6 +827,8 @@ ChunkVideoURLInputChunkGeneratedMetadata: TypeAlias = Annotated[
 
 
 class ChunkVideoURLInputChunkVideoURL(BaseModel):
+    """The video input specification."""
+
     url: str
     """The video URL. Can be either a URL or a Data URI."""
 
@@ -858,6 +866,8 @@ Chunk: TypeAlias = Annotated[
 
 
 class StoreFile(BaseModel):
+    """Represents a file stored in a store."""
+
     id: str
     """Unique identifier for the file"""
 
@@ -887,6 +897,9 @@ class StoreFile(BaseModel):
 
     usage_bytes: Optional[int] = None
     """Storage usage in bytes"""
+
+    usage_tokens: Optional[int] = None
+    """Storage usage in tokens"""
 
     config: Optional[Config] = None
     """Configuration for a file."""

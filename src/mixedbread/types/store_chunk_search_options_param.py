@@ -13,6 +13,8 @@ Rerank: TypeAlias = Union[bool, RerankConfigParam]
 
 
 class StoreChunkSearchOptionsParam(TypedDict, total=False):
+    """Options for configuring store chunk searches."""
+
     score_threshold: float
     """Minimum similarity score threshold"""
 

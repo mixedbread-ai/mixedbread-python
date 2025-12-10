@@ -11,6 +11,8 @@ __all__ = ["ExtractionJob"]
 
 
 class ExtractionJob(BaseModel):
+    """A job for extracting structured data from documents."""
+
     id: str
     """Unique identifier for the extraction job"""
 

@@ -24,11 +24,15 @@ ConfigContextualization: TypeAlias = Union[bool, ConfigContextualizationContextu
 
 
 class Config(BaseModel):
+    """Configuration for a store."""
+
     contextualization: Optional[ConfigContextualization] = None
     """Contextualize files with metadata"""
 
 
 class FileCounts(BaseModel):
+    """Counts of files in different states"""
+
     pending: Optional[int] = None
     """Number of files waiting to be processed"""
 
@@ -49,6 +53,8 @@ class FileCounts(BaseModel):
 
 
 class Store(BaseModel):
+    """Model representing a store with its metadata and timestamps."""
+
     id: str
     """Unique identifier for the store"""
 
@@ -87,6 +93,9 @@ class Store(BaseModel):
 
     usage_bytes: Optional[int] = None
     """Total storage usage in bytes"""
+
+    usage_tokens: Optional[int] = None
+    """Total storage usage in tokens"""
 
     expires_at: Optional[datetime] = None
     """Optional expiration timestamp for the store"""

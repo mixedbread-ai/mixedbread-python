@@ -8,5 +8,7 @@ __all__ = ["CreatedJsonSchema"]
 
 
 class CreatedJsonSchema(BaseModel):
+    """Result of creating a JSON schema."""
+
     json_schema: Dict[str, object]
     """The created JSON schema"""

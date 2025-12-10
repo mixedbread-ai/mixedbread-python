@@ -47,6 +47,8 @@ Filters: TypeAlias = Union["SearchFilter", SearchFilterCondition, Iterable[Filte
 
 
 class QaOptions(TypedDict, total=False):
+    """Question answering configuration options"""
+
     cite: bool
     """Whether to use citations"""
 

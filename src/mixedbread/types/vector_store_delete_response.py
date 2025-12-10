@@ -9,6 +9,8 @@ __all__ = ["VectorStoreDeleteResponse"]
 
 
 class VectorStoreDeleteResponse(BaseModel):
+    """Response model for vector store deletion."""
+
     id: str
     """ID of the deleted vector store"""
 

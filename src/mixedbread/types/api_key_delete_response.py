@@ -9,6 +9,8 @@ __all__ = ["APIKeyDeleteResponse"]
 
 
 class APIKeyDeleteResponse(BaseModel):
+    """Response model for deleting an API key."""
+
     id: str
     """The ID of the deleted API key"""
 

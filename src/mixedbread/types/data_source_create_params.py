@@ -34,6 +34,8 @@ class NotionDataSource(TypedDict, total=False):
 
 
 class NotionDataSourceAuthParamsAPIKeyCreateOrUpdateParams(TypedDict, total=False):
+    """Base class for API key create or update parameters."""
+
     type: Literal["api_key"]
 
     api_key: Required[str]

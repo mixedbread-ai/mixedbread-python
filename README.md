@@ -83,6 +83,7 @@ pip install mixedbread[aiohttp]
 Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:
 
 ```python
+import os
 import asyncio
 from mixedbread import DefaultAioHttpClient
 from mixedbread import AsyncMixedbread
@@ -90,7 +91,7 @@ from mixedbread import AsyncMixedbread
 
 async def main() -> None:
     async with AsyncMixedbread(
-        api_key="My API Key",
+        api_key=os.environ.get("MXBAI_API_KEY"),  # This is the default and can be omitted
         http_client=DefaultAioHttpClient(),
     ) as client:
         store = await client.stores.create()

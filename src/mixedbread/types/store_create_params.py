@@ -48,5 +48,7 @@ ConfigContextualization: TypeAlias = Union[bool, ConfigContextualizationContextu
 
 
 class Config(TypedDict, total=False):
+    """Configuration for a store."""
+
     contextualization: ConfigContextualization
     """Contextualize files with metadata"""

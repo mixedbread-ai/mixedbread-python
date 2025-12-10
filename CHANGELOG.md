@@ -1,5 +1,29 @@
 # Changelog
 
+## 0.42.0 (2025-12-09)
+
+Full Changelog: [v0.41.0...v0.42.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.41.0...v0.42.0)
+
+### Features
+
+* **api:** api update ([b68552a](https://github.com/mixedbread-ai/mixedbread-python/commit/b68552a2d589b6d8fffde474f9380c55987039fd))
+* **api:** api update ([827c1c9](https://github.com/mixedbread-ai/mixedbread-python/commit/827c1c990ef63105a07fcc7343c412b8dc0adfef))
+
+
+### Bug Fixes
+
+* ensure streams are always closed ([28298c9](https://github.com/mixedbread-ai/mixedbread-python/commit/28298c9a679d40727c20d51c3e67c765db2d1801))
+* **types:** allow pyright to infer TypedDict types within SequenceNotStr ([601ab69](https://github.com/mixedbread-ai/mixedbread-python/commit/601ab69a5e91c17f6e2973414371e77e0f2b7f0d))
+
+
+### Chores
+
+* add missing docstrings ([1935ebc](https://github.com/mixedbread-ai/mixedbread-python/commit/1935ebcea34df71c8839264cffa9076d924712f1))
+* add Python 3.14 classifier and testing ([96031f8](https://github.com/mixedbread-ai/mixedbread-python/commit/96031f8ee44ce757efcb0d73377530a4179f9c77))
+* **deps:** mypy 1.18.1 has a regression, pin to 1.17 ([fcb918d](https://github.com/mixedbread-ai/mixedbread-python/commit/fcb918dcd2bd7fe6de849981d1c224b6623b1d40))
+* **docs:** use environment variables for authentication in code snippets ([98093d0](https://github.com/mixedbread-ai/mixedbread-python/commit/98093d0c07f4f14de4d82bbc015cb9aa06f2fab7))
+* update lockfile ([8f57fad](https://github.com/mixedbread-ai/mixedbread-python/commit/8f57fad79bd7cd01ef1fcdbb4b648b16cc548109))
+
 ## 0.41.0 (2025-11-15)
 
 Full Changelog: [v0.40.0...v0.41.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.40.0...v0.41.0)

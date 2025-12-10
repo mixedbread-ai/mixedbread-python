@@ -183,6 +183,7 @@ class FilesResource(SyncAPIResource):
         include_total: bool | Omit = omit,
         statuses: Optional[List[StoreFileStatus]] | Omit = omit,
         metadata_filter: Optional[file_list_params.MetadataFilter] | Omit = omit,
+        q: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -215,6 +216,8 @@ class FilesResource(SyncAPIResource):
 
           metadata_filter: Metadata filter to apply to the query
 
+          q: Search query for fuzzy matching over name and description fields
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -235,6 +238,7 @@ class FilesResource(SyncAPIResource):
                     "include_total": include_total,
                     "statuses": statuses,
                     "metadata_filter": metadata_filter,
+                    "q": q,
                 },
                 file_list_params.FileListParams,
             ),
@@ -669,6 +673,7 @@ class AsyncFilesResource(AsyncAPIResource):
         include_total: bool | Omit = omit,
         statuses: Optional[List[StoreFileStatus]] | Omit = omit,
         metadata_filter: Optional[file_list_params.MetadataFilter] | Omit = omit,
+        q: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -701,6 +706,8 @@ class AsyncFilesResource(AsyncAPIResource):
 
           metadata_filter: Metadata filter to apply to the query
 
+          q: Search query for fuzzy matching over name and description fields
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -721,6 +728,7 @@ class AsyncFilesResource(AsyncAPIResource):
                     "include_total": include_total,
                     "statuses": statuses,
                     "metadata_filter": metadata_filter,
+                    "q": q,
                 },
                 file_list_params.FileListParams,
             ),

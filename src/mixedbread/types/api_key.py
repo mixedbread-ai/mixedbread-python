@@ -18,6 +18,8 @@ class Scope(BaseModel):
 
 
 class APIKey(BaseModel):
+    """Response model for an API key."""
+
     id: str
     """The ID of the API key"""
 

@@ -8,6 +8,8 @@ __all__ = ["ImageURLInputParam", "ImageURL"]
 
 
 class ImageURL(TypedDict, total=False):
+    """The image input specification."""
+
     url: Required[str]
     """The image URL. Can be either a URL or a Data URI."""
 
@@ -16,6 +18,8 @@ class ImageURL(TypedDict, total=False):
 
 
 class ImageURLInputParam(TypedDict, total=False):
+    """Model for image input validation."""
+
     type: Literal["image_url"]
     """Input type identifier"""
 
