@@ -95,7 +95,8 @@ class StoresResource(SyncAPIResource):
         Returns: VectorStore: The response containing the created vector store details.
 
         Args:
-          name: Name for the new store
+          name: Name for the new store. Can only contain lowercase letters, numbers, periods
+              (.), and hyphens (-).
 
           description: Description of the store
 
@@ -203,7 +204,8 @@ class StoresResource(SyncAPIResource):
         Args:
           store_identifier: The ID or name of the store
 
-          name: New name for the store
+          name: New name for the store. Can only contain lowercase letters, numbers, periods
+              (.), and hyphens (-).
 
           description: New description
 
@@ -605,7 +607,8 @@ class AsyncStoresResource(AsyncAPIResource):
         Returns: VectorStore: The response containing the created vector store details.
 
         Args:
-          name: Name for the new store
+          name: Name for the new store. Can only contain lowercase letters, numbers, periods
+              (.), and hyphens (-).
 
           description: Description of the store
 
@@ -713,7 +716,8 @@ class AsyncStoresResource(AsyncAPIResource):
         Args:
           store_identifier: The ID or name of the store
 
-          name: New name for the store
+          name: New name for the store. Can only contain lowercase letters, numbers, periods
+              (.), and hyphens (-).
 
           description: New description
 
