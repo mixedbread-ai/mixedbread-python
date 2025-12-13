@@ -13,7 +13,10 @@ __all__ = ["StoreCreateParams", "Config", "ConfigContextualization", "ConfigCont
 
 class StoreCreateParams(TypedDict, total=False):
     name: Optional[str]
-    """Name for the new store"""
+    """Name for the new store.
+
+    Can only contain lowercase letters, numbers, periods (.), and hyphens (-).
+    """
 
     description: Optional[str]
     """Description of the store"""

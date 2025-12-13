@@ -174,42 +174,9 @@ class TestFiles:
                 include_total=False,
                 statuses=["pending"],
                 metadata_filter={
-                    "all": [
-                        {
-                            "key": "price",
-                            "value": "100",
-                            "operator": "gt",
-                        },
-                        {
-                            "key": "color",
-                            "value": "red",
-                            "operator": "eq",
-                        },
-                    ],
-                    "any": [
-                        {
-                            "key": "price",
-                            "value": "100",
-                            "operator": "gt",
-                        },
-                        {
-                            "key": "color",
-                            "value": "red",
-                            "operator": "eq",
-                        },
-                    ],
-                    "none": [
-                        {
-                            "key": "price",
-                            "value": "100",
-                            "operator": "gt",
-                        },
-                        {
-                            "key": "color",
-                            "value": "red",
-                            "operator": "eq",
-                        },
-                    ],
+                    "all": [{}, {}],
+                    "any": [{}, {}],
+                    "none": [{}, {}],
                 },
             )
 
@@ -324,42 +291,9 @@ class TestFiles:
                 vector_store_identifiers=["string"],
                 top_k=1,
                 filters={
-                    "all": [
-                        {
-                            "key": "price",
-                            "value": "100",
-                            "operator": "gt",
-                        },
-                        {
-                            "key": "color",
-                            "value": "red",
-                            "operator": "eq",
-                        },
-                    ],
-                    "any": [
-                        {
-                            "key": "price",
-                            "value": "100",
-                            "operator": "gt",
-                        },
-                        {
-                            "key": "color",
-                            "value": "red",
-                            "operator": "eq",
-                        },
-                    ],
-                    "none": [
-                        {
-                            "key": "price",
-                            "value": "100",
-                            "operator": "gt",
-                        },
-                        {
-                            "key": "color",
-                            "value": "red",
-                            "operator": "eq",
-                        },
-                    ],
+                    "all": [{}, {}],
+                    "any": [{}, {}],
+                    "none": [{}, {}],
                 },
                 file_ids=["123e4567-e89b-12d3-a456-426614174000", "123e4567-e89b-12d3-a456-426614174001"],
                 search_options={
@@ -559,42 +493,9 @@ class TestAsyncFiles:
                 include_total=False,
                 statuses=["pending"],
                 metadata_filter={
-                    "all": [
-                        {
-                            "key": "price",
-                            "value": "100",
-                            "operator": "gt",
-                        },
-                        {
-                            "key": "color",
-                            "value": "red",
-                            "operator": "eq",
-                        },
-                    ],
-                    "any": [
-                        {
-                            "key": "price",
-                            "value": "100",
-                            "operator": "gt",
-                        },
-                        {
-                            "key": "color",
-                            "value": "red",
-                            "operator": "eq",
-                        },
-                    ],
-                    "none": [
-                        {
-                            "key": "price",
-                            "value": "100",
-                            "operator": "gt",
-                        },
-                        {
-                            "key": "color",
-                            "value": "red",
-                            "operator": "eq",
-                        },
-                    ],
+                    "all": [{}, {}],
+                    "any": [{}, {}],
+                    "none": [{}, {}],
                 },
             )
 
@@ -709,42 +610,9 @@ class TestAsyncFiles:
                 vector_store_identifiers=["string"],
                 top_k=1,
                 filters={
-                    "all": [
-                        {
-                            "key": "price",
-                            "value": "100",
-                            "operator": "gt",
-                        },
-                        {
-                            "key": "color",
-                            "value": "red",
-                            "operator": "eq",
-                        },
-                    ],
-                    "any": [
-                        {
-                            "key": "price",
-                            "value": "100",
-                            "operator": "gt",
-                        },
-                        {
-                            "key": "color",
-                            "value": "red",
-                            "operator": "eq",
-                        },
-                    ],
-                    "none": [
-                        {
-                            "key": "price",
-                            "value": "100",
-                            "operator": "gt",
-                        },
-                        {
-                            "key": "color",
-                            "value": "red",
-                            "operator": "eq",
-                        },
-                    ],
+                    "all": [{}, {}],
+                    "any": [{}, {}],
+                    "none": [{}, {}],
                 },
                 file_ids=["123e4567-e89b-12d3-a456-426614174000", "123e4567-e89b-12d3-a456-426614174001"],
                 search_options={

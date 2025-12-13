@@ -10,7 +10,7 @@ __all__ = ["APIKeyCreated", "Scope"]
 
 
 class Scope(BaseModel):
-    method: Literal["read", "write", "delete", "list", "create"]
+    method: Literal["read", "write", "delete", "list", "create", "search"]
 
     resource_type: Optional[Literal["store"]] = None
 

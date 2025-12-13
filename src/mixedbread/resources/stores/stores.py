@@ -95,7 +95,8 @@ class StoresResource(SyncAPIResource):
         Returns: VectorStore: The response containing the created vector store details.
 
         Args:
-          name: Name for the new store
+          name: Name for the new store. Can only contain lowercase letters, numbers, periods
+              (.), and hyphens (-).
 
           description: Description of the store
 
@@ -203,7 +204,8 @@ class StoresResource(SyncAPIResource):
         Args:
           store_identifier: The ID or name of the store
 
-          name: New name for the store
+          name: New name for the store. Can only contain lowercase letters, numbers, periods
+              (.), and hyphens (-).
 
           description: New description
 
@@ -502,6 +504,10 @@ class StoresResource(SyncAPIResource):
         It supports complex search queries with filters and returns relevance-scored
         results.
 
+        For the special 'mixedbread/web' store, this endpoint performs web search using
+        a mixture of different providers instead of semantic search. Web search results
+        are always reranked for consistent scoring.
+
         Args: search_params: Search configuration including: - query text or
         embeddings - store_identifiers: List of store identifiers to search - file_ids:
         Optional list of file IDs to filter chunks by (or tuple of list and condition
@@ -605,7 +611,8 @@ class AsyncStoresResource(AsyncAPIResource):
         Returns: VectorStore: The response containing the created vector store details.
 
         Args:
-          name: Name for the new store
+          name: Name for the new store. Can only contain lowercase letters, numbers, periods
+              (.), and hyphens (-).
 
           description: Description of the store
 
@@ -713,7 +720,8 @@ class AsyncStoresResource(AsyncAPIResource):
         Args:
           store_identifier: The ID or name of the store
 
-          name: New name for the store
+          name: New name for the store. Can only contain lowercase letters, numbers, periods
+              (.), and hyphens (-).
 
           description: New description
 
@@ -1011,6 +1019,10 @@ class AsyncStoresResource(AsyncAPIResource):
         This endpoint searches through store chunks using semantic similarity matching.
         It supports complex search queries with filters and returns relevance-scored
         results.
+
+        For the special 'mixedbread/web' store, this endpoint performs web search using
+        a mixture of different providers instead of semantic search. Web search results
+        are always reranked for consistent scoring.
 
         Args: search_params: Search configuration including: - query text or
         embeddings - store_identifiers: List of store identifiers to search - file_ids:
