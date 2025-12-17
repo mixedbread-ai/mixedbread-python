@@ -12,7 +12,10 @@ __all__ = ["StoreUpdateParams"]
 
 class StoreUpdateParams(TypedDict, total=False):
     name: Optional[str]
-    """New name for the store"""
+    """New name for the store.
+
+    Can only contain lowercase letters, numbers, periods (.), and hyphens (-).
+    """
 
     description: Optional[str]
     """New description"""
