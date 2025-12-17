@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.43.0 (2025-12-17)
+
+Full Changelog: [v0.42.0...v0.43.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.42.0...v0.43.0)
+
+### Features
+
+* **api:** api update ([76031ac](https://github.com/mixedbread-ai/mixedbread-python/commit/76031acaaf497a052394a8605a714980a9c7c68d))
+* **api:** api update ([00869f5](https://github.com/mixedbread-ai/mixedbread-python/commit/00869f5ba2c9ca6b8c4be5b74fad07ec98f7f647))
+
+
+### Bug Fixes
+
+* **docs:** remove extraneous example object fields ([23a65db](https://github.com/mixedbread-ai/mixedbread-python/commit/23a65dbf0eadce62364a421b474b8e4ffe6b9f22))
+
+
+### Chores
+
+* **internal:** add missing files argument to base client ([50f5711](https://github.com/mixedbread-ai/mixedbread-python/commit/50f57113be74f17642439e03ecce59deac2196f5))
+* speedup initial import ([b8d7306](https://github.com/mixedbread-ai/mixedbread-python/commit/b8d73066a54c466366e934a9e086462bb00a3d75))
+
 ## 0.42.0 (2025-12-09)
 
 Full Changelog: [v0.41.0...v0.42.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.41.0...v0.42.0)
