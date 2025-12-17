@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import os
-from typing import Any, Dict, List, Union, Mapping, Iterable, Optional, cast
+from typing import TYPE_CHECKING, Any, Dict, List, Union, Mapping, Iterable, Optional, cast
 from typing_extensions import Self, Literal, override
 
 import httpx
@@ -31,6 +31,7 @@ from ._utils import (
     get_async_library,
     async_maybe_transform,
 )
+from ._compat import cached_property
 from ._version import __version__
 from ._response import (
     to_raw_response_wrapper,
@@ -38,7 +39,6 @@ from ._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from .resources import chat, files, api_keys, embeddings
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import APIStatusError, MixedbreadError
 from ._base_client import (
@@ -47,15 +47,22 @@ from ._base_client import (
     AsyncAPIClient,
     make_request_options,
 )
-from .resources.stores import stores
-from .resources.parsing import parsing
 from .types.info_response import InfoResponse
-from .resources.extractions import extractions
 from .types.encoding_format import EncodingFormat
 from .types.rerank_response import RerankResponse
-from .resources.data_sources import data_sources
-from .resources.vector_stores import vector_stores
 from .types.embedding_create_response import EmbeddingCreateResponse
+
+if TYPE_CHECKING:
+    from .resources import chat, files, stores, parsing, api_keys, embeddings, extractions, data_sources, vector_stores
+    from .resources.chat import ChatResource, AsyncChatResource
+    from .resources.files import FilesResource, AsyncFilesResource
+    from .resources.api_keys import APIKeysResource, AsyncAPIKeysResource
+    from .resources.embeddings import EmbeddingsResource, AsyncEmbeddingsResource
+    from .resources.stores.stores import StoresResource, AsyncStoresResource
+    from .resources.parsing.parsing import ParsingResource, AsyncParsingResource
+    from .resources.extractions.extractions import ExtractionsResource, AsyncExtractionsResource
+    from .resources.data_sources.data_sources import DataSourcesResource, AsyncDataSourcesResource
+    from .resources.vector_stores.vector_stores import VectorStoresResource, AsyncVectorStoresResource
 
 __all__ = [
     "ENVIRONMENTS",
@@ -77,18 +84,6 @@ ENVIRONMENTS: Dict[str, str] = {
 
 
 class Mixedbread(SyncAPIClient):
-    vector_stores: vector_stores.VectorStoresResource
-    stores: stores.StoresResource
-    parsing: parsing.ParsingResource
-    files: files.FilesResource
-    extractions: extractions.ExtractionsResource
-    embeddings: embeddings.EmbeddingsResource
-    data_sources: data_sources.DataSourcesResource
-    api_keys: api_keys.APIKeysResource
-    chat: chat.ChatResource
-    with_raw_response: MixedbreadWithRawResponse
-    with_streaming_response: MixedbreadWithStreamedResponse
-
     # client options
     api_key: str
 
@@ -167,17 +162,67 @@ class Mixedbread(SyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.vector_stores = vector_stores.VectorStoresResource(self)
-        self.stores = stores.StoresResource(self)
-        self.parsing = parsing.ParsingResource(self)
-        self.files = files.FilesResource(self)
-        self.extractions = extractions.ExtractionsResource(self)
-        self.embeddings = embeddings.EmbeddingsResource(self)
-        self.data_sources = data_sources.DataSourcesResource(self)
-        self.api_keys = api_keys.APIKeysResource(self)
-        self.chat = chat.ChatResource(self)
-        self.with_raw_response = MixedbreadWithRawResponse(self)
-        self.with_streaming_response = MixedbreadWithStreamedResponse(self)
+    @cached_property
+    def vector_stores(self) -> VectorStoresResource:
+        from .resources.vector_stores import VectorStoresResource
+
+        return VectorStoresResource(self)
+
+    @cached_property
+    def stores(self) -> StoresResource:
+        from .resources.stores import StoresResource
+
+        return StoresResource(self)
+
+    @cached_property
+    def parsing(self) -> ParsingResource:
+        from .resources.parsing import ParsingResource
+
+        return ParsingResource(self)
+
+    @cached_property
+    def files(self) -> FilesResource:
+        from .resources.files import FilesResource
+
+        return FilesResource(self)
+
+    @cached_property
+    def extractions(self) -> ExtractionsResource:
+        from .resources.extractions import ExtractionsResource
+
+        return ExtractionsResource(self)
+
+    @cached_property
+    def embeddings(self) -> EmbeddingsResource:
+        from .resources.embeddings import EmbeddingsResource
+
+        return EmbeddingsResource(self)
+
+    @cached_property
+    def data_sources(self) -> DataSourcesResource:
+        from .resources.data_sources import DataSourcesResource
+
+        return DataSourcesResource(self)
+
+    @cached_property
+    def api_keys(self) -> APIKeysResource:
+        from .resources.api_keys import APIKeysResource
+
+        return APIKeysResource(self)
+
+    @cached_property
+    def chat(self) -> ChatResource:
+        from .resources.chat import ChatResource
+
+        return ChatResource(self)
+
+    @cached_property
+    def with_raw_response(self) -> MixedbreadWithRawResponse:
+        return MixedbreadWithRawResponse(self)
+
+    @cached_property
+    def with_streaming_response(self) -> MixedbreadWithStreamedResponse:
+        return MixedbreadWithStreamedResponse(self)
 
     @property
     @override
@@ -442,18 +487,6 @@ class Mixedbread(SyncAPIClient):
 
 
 class AsyncMixedbread(AsyncAPIClient):
-    vector_stores: vector_stores.AsyncVectorStoresResource
-    stores: stores.AsyncStoresResource
-    parsing: parsing.AsyncParsingResource
-    files: files.AsyncFilesResource
-    extractions: extractions.AsyncExtractionsResource
-    embeddings: embeddings.AsyncEmbeddingsResource
-    data_sources: data_sources.AsyncDataSourcesResource
-    api_keys: api_keys.AsyncAPIKeysResource
-    chat: chat.AsyncChatResource
-    with_raw_response: AsyncMixedbreadWithRawResponse
-    with_streaming_response: AsyncMixedbreadWithStreamedResponse
-
     # client options
     api_key: str
 
@@ -532,17 +565,67 @@ class AsyncMixedbread(AsyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.vector_stores = vector_stores.AsyncVectorStoresResource(self)
-        self.stores = stores.AsyncStoresResource(self)
-        self.parsing = parsing.AsyncParsingResource(self)
-        self.files = files.AsyncFilesResource(self)
-        self.extractions = extractions.AsyncExtractionsResource(self)
-        self.embeddings = embeddings.AsyncEmbeddingsResource(self)
-        self.data_sources = data_sources.AsyncDataSourcesResource(self)
-        self.api_keys = api_keys.AsyncAPIKeysResource(self)
-        self.chat = chat.AsyncChatResource(self)
-        self.with_raw_response = AsyncMixedbreadWithRawResponse(self)
-        self.with_streaming_response = AsyncMixedbreadWithStreamedResponse(self)
+    @cached_property
+    def vector_stores(self) -> AsyncVectorStoresResource:
+        from .resources.vector_stores import AsyncVectorStoresResource
+
+        return AsyncVectorStoresResource(self)
+
+    @cached_property
+    def stores(self) -> AsyncStoresResource:
+        from .resources.stores import AsyncStoresResource
+
+        return AsyncStoresResource(self)
+
+    @cached_property
+    def parsing(self) -> AsyncParsingResource:
+        from .resources.parsing import AsyncParsingResource
+
+        return AsyncParsingResource(self)
+
+    @cached_property
+    def files(self) -> AsyncFilesResource:
+        from .resources.files import AsyncFilesResource
+
+        return AsyncFilesResource(self)
+
+    @cached_property
+    def extractions(self) -> AsyncExtractionsResource:
+        from .resources.extractions import AsyncExtractionsResource
+
+        return AsyncExtractionsResource(self)
+
+    @cached_property
+    def embeddings(self) -> AsyncEmbeddingsResource:
+        from .resources.embeddings import AsyncEmbeddingsResource
+
+        return AsyncEmbeddingsResource(self)
+
+    @cached_property
+    def data_sources(self) -> AsyncDataSourcesResource:
+        from .resources.data_sources import AsyncDataSourcesResource
+
+        return AsyncDataSourcesResource(self)
+
+    @cached_property
+    def api_keys(self) -> AsyncAPIKeysResource:
+        from .resources.api_keys import AsyncAPIKeysResource
+
+        return AsyncAPIKeysResource(self)
+
+    @cached_property
+    def chat(self) -> AsyncChatResource:
+        from .resources.chat import AsyncChatResource
+
+        return AsyncChatResource(self)
+
+    @cached_property
+    def with_raw_response(self) -> AsyncMixedbreadWithRawResponse:
+        return AsyncMixedbreadWithRawResponse(self)
+
+    @cached_property
+    def with_streaming_response(self) -> AsyncMixedbreadWithStreamedResponse:
+        return AsyncMixedbreadWithStreamedResponse(self)
 
     @property
     @override
@@ -807,16 +890,10 @@ class AsyncMixedbread(AsyncAPIClient):
 
 
 class MixedbreadWithRawResponse:
+    _client: Mixedbread
+
     def __init__(self, client: Mixedbread) -> None:
-        self.vector_stores = vector_stores.VectorStoresResourceWithRawResponse(client.vector_stores)
-        self.stores = stores.StoresResourceWithRawResponse(client.stores)
-        self.parsing = parsing.ParsingResourceWithRawResponse(client.parsing)
-        self.files = files.FilesResourceWithRawResponse(client.files)
-        self.extractions = extractions.ExtractionsResourceWithRawResponse(client.extractions)
-        self.embeddings = embeddings.EmbeddingsResourceWithRawResponse(client.embeddings)
-        self.data_sources = data_sources.DataSourcesResourceWithRawResponse(client.data_sources)
-        self.api_keys = api_keys.APIKeysResourceWithRawResponse(client.api_keys)
-        self.chat = chat.ChatResourceWithRawResponse(client.chat)
+        self._client = client
 
         self.embed = to_raw_response_wrapper(
             client.embed,
@@ -828,18 +905,66 @@ class MixedbreadWithRawResponse:
             client.rerank,
         )
 
+    @cached_property
+    def vector_stores(self) -> vector_stores.VectorStoresResourceWithRawResponse:
+        from .resources.vector_stores import VectorStoresResourceWithRawResponse
+
+        return VectorStoresResourceWithRawResponse(self._client.vector_stores)
+
+    @cached_property
+    def stores(self) -> stores.StoresResourceWithRawResponse:
+        from .resources.stores import StoresResourceWithRawResponse
+
+        return StoresResourceWithRawResponse(self._client.stores)
+
+    @cached_property
+    def parsing(self) -> parsing.ParsingResourceWithRawResponse:
+        from .resources.parsing import ParsingResourceWithRawResponse
+
+        return ParsingResourceWithRawResponse(self._client.parsing)
+
+    @cached_property
+    def files(self) -> files.FilesResourceWithRawResponse:
+        from .resources.files import FilesResourceWithRawResponse
+
+        return FilesResourceWithRawResponse(self._client.files)
+
+    @cached_property
+    def extractions(self) -> extractions.ExtractionsResourceWithRawResponse:
+        from .resources.extractions import ExtractionsResourceWithRawResponse
+
+        return ExtractionsResourceWithRawResponse(self._client.extractions)
+
+    @cached_property
+    def embeddings(self) -> embeddings.EmbeddingsResourceWithRawResponse:
+        from .resources.embeddings import EmbeddingsResourceWithRawResponse
+
+        return EmbeddingsResourceWithRawResponse(self._client.embeddings)
+
+    @cached_property
+    def data_sources(self) -> data_sources.DataSourcesResourceWithRawResponse:
+        from .resources.data_sources import DataSourcesResourceWithRawResponse
+
+        return DataSourcesResourceWithRawResponse(self._client.data_sources)
+
+    @cached_property
+    def api_keys(self) -> api_keys.APIKeysResourceWithRawResponse:
+        from .resources.api_keys import APIKeysResourceWithRawResponse
+
+        return APIKeysResourceWithRawResponse(self._client.api_keys)
+
+    @cached_property
+    def chat(self) -> chat.ChatResourceWithRawResponse:
+        from .resources.chat import ChatResourceWithRawResponse
+
+        return ChatResourceWithRawResponse(self._client.chat)
+
 
 class AsyncMixedbreadWithRawResponse:
+    _client: AsyncMixedbread
+
     def __init__(self, client: AsyncMixedbread) -> None:
-        self.vector_stores = vector_stores.AsyncVectorStoresResourceWithRawResponse(client.vector_stores)
-        self.stores = stores.AsyncStoresResourceWithRawResponse(client.stores)
-        self.parsing = parsing.AsyncParsingResourceWithRawResponse(client.parsing)
-        self.files = files.AsyncFilesResourceWithRawResponse(client.files)
-        self.extractions = extractions.AsyncExtractionsResourceWithRawResponse(client.extractions)
-        self.embeddings = embeddings.AsyncEmbeddingsResourceWithRawResponse(client.embeddings)
-        self.data_sources = data_sources.AsyncDataSourcesResourceWithRawResponse(client.data_sources)
-        self.api_keys = api_keys.AsyncAPIKeysResourceWithRawResponse(client.api_keys)
-        self.chat = chat.AsyncChatResourceWithRawResponse(client.chat)
+        self._client = client
 
         self.embed = async_to_raw_response_wrapper(
             client.embed,
@@ -851,18 +976,66 @@ class AsyncMixedbreadWithRawResponse:
             client.rerank,
         )
 
+    @cached_property
+    def vector_stores(self) -> vector_stores.AsyncVectorStoresResourceWithRawResponse:
+        from .resources.vector_stores import AsyncVectorStoresResourceWithRawResponse
+
+        return AsyncVectorStoresResourceWithRawResponse(self._client.vector_stores)
+
+    @cached_property
+    def stores(self) -> stores.AsyncStoresResourceWithRawResponse:
+        from .resources.stores import AsyncStoresResourceWithRawResponse
+
+        return AsyncStoresResourceWithRawResponse(self._client.stores)
+
+    @cached_property
+    def parsing(self) -> parsing.AsyncParsingResourceWithRawResponse:
+        from .resources.parsing import AsyncParsingResourceWithRawResponse
+
+        return AsyncParsingResourceWithRawResponse(self._client.parsing)
+
+    @cached_property
+    def files(self) -> files.AsyncFilesResourceWithRawResponse:
+        from .resources.files import AsyncFilesResourceWithRawResponse
+
+        return AsyncFilesResourceWithRawResponse(self._client.files)
+
+    @cached_property
+    def extractions(self) -> extractions.AsyncExtractionsResourceWithRawResponse:
+        from .resources.extractions import AsyncExtractionsResourceWithRawResponse
+
+        return AsyncExtractionsResourceWithRawResponse(self._client.extractions)
+
+    @cached_property
+    def embeddings(self) -> embeddings.AsyncEmbeddingsResourceWithRawResponse:
+        from .resources.embeddings import AsyncEmbeddingsResourceWithRawResponse
+
+        return AsyncEmbeddingsResourceWithRawResponse(self._client.embeddings)
+
+    @cached_property
+    def data_sources(self) -> data_sources.AsyncDataSourcesResourceWithRawResponse:
+        from .resources.data_sources import AsyncDataSourcesResourceWithRawResponse
+
+        return AsyncDataSourcesResourceWithRawResponse(self._client.data_sources)
+
+    @cached_property
+    def api_keys(self) -> api_keys.AsyncAPIKeysResourceWithRawResponse:
+        from .resources.api_keys import AsyncAPIKeysResourceWithRawResponse
+
+        return AsyncAPIKeysResourceWithRawResponse(self._client.api_keys)
+
+    @cached_property
+    def chat(self) -> chat.AsyncChatResourceWithRawResponse:
+        from .resources.chat import AsyncChatResourceWithRawResponse
+
+        return AsyncChatResourceWithRawResponse(self._client.chat)
+
 
 class MixedbreadWithStreamedResponse:
+    _client: Mixedbread
+
     def __init__(self, client: Mixedbread) -> None:
-        self.vector_stores = vector_stores.VectorStoresResourceWithStreamingResponse(client.vector_stores)
-        self.stores = stores.StoresResourceWithStreamingResponse(client.stores)
-        self.parsing = parsing.ParsingResourceWithStreamingResponse(client.parsing)
-        self.files = files.FilesResourceWithStreamingResponse(client.files)
-        self.extractions = extractions.ExtractionsResourceWithStreamingResponse(client.extractions)
-        self.embeddings = embeddings.EmbeddingsResourceWithStreamingResponse(client.embeddings)
-        self.data_sources = data_sources.DataSourcesResourceWithStreamingResponse(client.data_sources)
-        self.api_keys = api_keys.APIKeysResourceWithStreamingResponse(client.api_keys)
-        self.chat = chat.ChatResourceWithStreamingResponse(client.chat)
+        self._client = client
 
         self.embed = to_streamed_response_wrapper(
             client.embed,
@@ -874,18 +1047,66 @@ class MixedbreadWithStreamedResponse:
             client.rerank,
         )
 
+    @cached_property
+    def vector_stores(self) -> vector_stores.VectorStoresResourceWithStreamingResponse:
+        from .resources.vector_stores import VectorStoresResourceWithStreamingResponse
+
+        return VectorStoresResourceWithStreamingResponse(self._client.vector_stores)
+
+    @cached_property
+    def stores(self) -> stores.StoresResourceWithStreamingResponse:
+        from .resources.stores import StoresResourceWithStreamingResponse
+
+        return StoresResourceWithStreamingResponse(self._client.stores)
+
+    @cached_property
+    def parsing(self) -> parsing.ParsingResourceWithStreamingResponse:
+        from .resources.parsing import ParsingResourceWithStreamingResponse
+
+        return ParsingResourceWithStreamingResponse(self._client.parsing)
+
+    @cached_property
+    def files(self) -> files.FilesResourceWithStreamingResponse:
+        from .resources.files import FilesResourceWithStreamingResponse
+
+        return FilesResourceWithStreamingResponse(self._client.files)
+
+    @cached_property
+    def extractions(self) -> extractions.ExtractionsResourceWithStreamingResponse:
+        from .resources.extractions import ExtractionsResourceWithStreamingResponse
+
+        return ExtractionsResourceWithStreamingResponse(self._client.extractions)
+
+    @cached_property
+    def embeddings(self) -> embeddings.EmbeddingsResourceWithStreamingResponse:
+        from .resources.embeddings import EmbeddingsResourceWithStreamingResponse
+
+        return EmbeddingsResourceWithStreamingResponse(self._client.embeddings)
+
+    @cached_property
+    def data_sources(self) -> data_sources.DataSourcesResourceWithStreamingResponse:
+        from .resources.data_sources import DataSourcesResourceWithStreamingResponse
+
+        return DataSourcesResourceWithStreamingResponse(self._client.data_sources)
+
+    @cached_property
+    def api_keys(self) -> api_keys.APIKeysResourceWithStreamingResponse:
+        from .resources.api_keys import APIKeysResourceWithStreamingResponse
+
+        return APIKeysResourceWithStreamingResponse(self._client.api_keys)
+
+    @cached_property
+    def chat(self) -> chat.ChatResourceWithStreamingResponse:
+        from .resources.chat import ChatResourceWithStreamingResponse
+
+        return ChatResourceWithStreamingResponse(self._client.chat)
+
 
 class AsyncMixedbreadWithStreamedResponse:
+    _client: AsyncMixedbread
+
     def __init__(self, client: AsyncMixedbread) -> None:
-        self.vector_stores = vector_stores.AsyncVectorStoresResourceWithStreamingResponse(client.vector_stores)
-        self.stores = stores.AsyncStoresResourceWithStreamingResponse(client.stores)
-        self.parsing = parsing.AsyncParsingResourceWithStreamingResponse(client.parsing)
-        self.files = files.AsyncFilesResourceWithStreamingResponse(client.files)
-        self.extractions = extractions.AsyncExtractionsResourceWithStreamingResponse(client.extractions)
-        self.embeddings = embeddings.AsyncEmbeddingsResourceWithStreamingResponse(client.embeddings)
-        self.data_sources = data_sources.AsyncDataSourcesResourceWithStreamingResponse(client.data_sources)
-        self.api_keys = api_keys.AsyncAPIKeysResourceWithStreamingResponse(client.api_keys)
-        self.chat = chat.AsyncChatResourceWithStreamingResponse(client.chat)
+        self._client = client
 
         self.embed = async_to_streamed_response_wrapper(
             client.embed,
@@ -896,6 +1117,60 @@ class AsyncMixedbreadWithStreamedResponse:
         self.rerank = async_to_streamed_response_wrapper(
             client.rerank,
         )
+
+    @cached_property
+    def vector_stores(self) -> vector_stores.AsyncVectorStoresResourceWithStreamingResponse:
+        from .resources.vector_stores import AsyncVectorStoresResourceWithStreamingResponse
+
+        return AsyncVectorStoresResourceWithStreamingResponse(self._client.vector_stores)
+
+    @cached_property
+    def stores(self) -> stores.AsyncStoresResourceWithStreamingResponse:
+        from .resources.stores import AsyncStoresResourceWithStreamingResponse
+
+        return AsyncStoresResourceWithStreamingResponse(self._client.stores)
+
+    @cached_property
+    def parsing(self) -> parsing.AsyncParsingResourceWithStreamingResponse:
+        from .resources.parsing import AsyncParsingResourceWithStreamingResponse
+
+        return AsyncParsingResourceWithStreamingResponse(self._client.parsing)
+
+    @cached_property
+    def files(self) -> files.AsyncFilesResourceWithStreamingResponse:
+        from .resources.files import AsyncFilesResourceWithStreamingResponse
+
+        return AsyncFilesResourceWithStreamingResponse(self._client.files)
+
+    @cached_property
+    def extractions(self) -> extractions.AsyncExtractionsResourceWithStreamingResponse:
+        from .resources.extractions import AsyncExtractionsResourceWithStreamingResponse
+
+        return AsyncExtractionsResourceWithStreamingResponse(self._client.extractions)
+
+    @cached_property
+    def embeddings(self) -> embeddings.AsyncEmbeddingsResourceWithStreamingResponse:
+        from .resources.embeddings import AsyncEmbeddingsResourceWithStreamingResponse
+
+        return AsyncEmbeddingsResourceWithStreamingResponse(self._client.embeddings)
+
+    @cached_property
+    def data_sources(self) -> data_sources.AsyncDataSourcesResourceWithStreamingResponse:
+        from .resources.data_sources import AsyncDataSourcesResourceWithStreamingResponse
+
+        return AsyncDataSourcesResourceWithStreamingResponse(self._client.data_sources)
+
+    @cached_property
+    def api_keys(self) -> api_keys.AsyncAPIKeysResourceWithStreamingResponse:
+        from .resources.api_keys import AsyncAPIKeysResourceWithStreamingResponse
+
+        return AsyncAPIKeysResourceWithStreamingResponse(self._client.api_keys)
+
+    @cached_property
+    def chat(self) -> chat.AsyncChatResourceWithStreamingResponse:
+        from .resources.chat import AsyncChatResourceWithStreamingResponse
+
+        return AsyncChatResourceWithStreamingResponse(self._client.chat)
 
 
 Client = Mixedbread
