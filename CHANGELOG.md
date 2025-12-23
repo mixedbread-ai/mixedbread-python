@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.45.0 (2025-12-23)
+
+Full Changelog: [v0.44.0...v0.45.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.44.0...v0.45.0)
+
+### Features
+
+* **api:** api update ([e693c21](https://github.com/mixedbread-ai/mixedbread-python/commit/e693c21580f165e34f536aebfe85d57ec51f2cd3))
+
+
+### Bug Fixes
+
+* use async_to_httpx_files in patch method ([7a64fa3](https://github.com/mixedbread-ai/mixedbread-python/commit/7a64fa34f7ff89b808f079f3f379f55527bdcfc4))
+
+
+### Chores
+
+* **internal:** add `--fix` argument to lint script ([6644d65](https://github.com/mixedbread-ai/mixedbread-python/commit/6644d6512807e3572613fa1ce21f5fc70e64dd35))
+
 ## 0.44.0 (2025-12-17)
 
 Full Changelog: [v0.43.0...v0.44.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.43.0...v0.44.0)

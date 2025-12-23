@@ -9,7 +9,15 @@ from ..._types import SequenceNotStr
 from .rerank_config_param import RerankConfigParam
 from ..shared_params.search_filter_condition import SearchFilterCondition
 
-__all__ = ["FileSearchParams", "Filters", "FiltersUnionMember2", "SearchOptions", "SearchOptionsRerank"]
+__all__ = [
+    "FileSearchParams",
+    "Filters",
+    "FiltersUnionMember2",
+    "SearchOptions",
+    "SearchOptionsRerank",
+    "SearchOptionsAgentic",
+    "SearchOptionsAgenticAgenticSearchConfig",
+]
 
 
 class FileSearchParams(TypedDict, total=False):
@@ -39,6 +47,22 @@ Filters: TypeAlias = Union["SearchFilter", SearchFilterCondition, Iterable[Filte
 SearchOptionsRerank: TypeAlias = Union[bool, RerankConfigParam]
 
 
+class SearchOptionsAgenticAgenticSearchConfig(TypedDict, total=False):
+    """Configuration for agentic multi-query search."""
+
+    max_rounds: int
+    """Maximum number of search rounds"""
+
+    queries_per_round: int
+    """Maximum queries per round"""
+
+    results_per_query: int
+    """Results to fetch per query"""
+
+
+SearchOptionsAgentic: TypeAlias = Union[bool, SearchOptionsAgenticAgenticSearchConfig]
+
+
 class SearchOptions(TypedDict, total=False):
     """Search configuration options"""
 
@@ -46,10 +70,22 @@ class SearchOptions(TypedDict, total=False):
     """Minimum similarity score threshold"""
 
     rewrite_query: bool
-    """Whether to rewrite the query"""
+    """Whether to rewrite the query.
+
+    Ignored when agentic is enabled (the agent handles query decomposition).
+    """
 
     rerank: Optional[SearchOptionsRerank]
-    """Whether to rerank results and optional reranking configuration"""
+    """Whether to rerank results and optional reranking configuration.
+
+    Ignored when agentic is enabled (the agent handles ranking).
+    """
+
+    agentic: Optional[SearchOptionsAgentic]
+    """
+    Whether to use agentic multi-query search with automatic query decomposition and
+    ranking. When enabled, rewrite_query and rerank options are ignored.
+    """
 
     return_metadata: bool
     """Whether to return file metadata"""

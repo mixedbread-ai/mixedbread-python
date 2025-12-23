@@ -1,6 +1,6 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import List, Optional
+from typing import Dict, List, Optional
 from datetime import datetime
 from typing_extensions import Literal
 
@@ -82,7 +82,7 @@ class ParsingJob(BaseModel):
     status: ParsingJobStatus
     """The status of the job"""
 
-    error: Optional[object] = None
+    error: Optional[Dict[str, object]] = None
     """The error of the job"""
 
     result: Optional[Result] = None

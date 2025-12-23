@@ -7,9 +7,25 @@ from typing_extensions import TypeAlias, TypedDict
 
 from .vector_stores.rerank_config_param import RerankConfigParam
 
-__all__ = ["VectorStoreChunkSearchOptionsParam", "Rerank"]
+__all__ = ["VectorStoreChunkSearchOptionsParam", "Rerank", "Agentic", "AgenticAgenticSearchConfig"]
 
 Rerank: TypeAlias = Union[bool, RerankConfigParam]
+
+
+class AgenticAgenticSearchConfig(TypedDict, total=False):
+    """Configuration for agentic multi-query search."""
+
+    max_rounds: int
+    """Maximum number of search rounds"""
+
+    queries_per_round: int
+    """Maximum queries per round"""
+
+    results_per_query: int
+    """Results to fetch per query"""
+
+
+Agentic: TypeAlias = Union[bool, AgenticAgenticSearchConfig]
 
 
 class VectorStoreChunkSearchOptionsParam(TypedDict, total=False):
@@ -19,10 +35,22 @@ class VectorStoreChunkSearchOptionsParam(TypedDict, total=False):
     """Minimum similarity score threshold"""
 
     rewrite_query: bool
-    """Whether to rewrite the query"""
+    """Whether to rewrite the query.
+
+    Ignored when agentic is enabled (the agent handles query decomposition).
+    """
 
     rerank: Optional[Rerank]
-    """Whether to rerank results and optional reranking configuration"""
+    """Whether to rerank results and optional reranking configuration.
+
+    Ignored when agentic is enabled (the agent handles ranking).
+    """
+
+    agentic: Optional[Agentic]
+    """
+    Whether to use agentic multi-query search with automatic query decomposition and
+    ranking. When enabled, rewrite_query and rerank options are ignored.
+    """
 
     return_metadata: bool
     """Whether to return file metadata"""
