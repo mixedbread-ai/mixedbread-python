@@ -1,6 +1,6 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import Optional
+from typing import Dict, Optional
 from datetime import datetime
 from typing_extensions import Literal
 
@@ -11,7 +11,7 @@ __all__ = ["JobListResponse"]
 
 
 class JobListResponse(BaseModel):
-    """A parsing job item for list responses, omitting result and error fields."""
+    """A parsing job item for list responses."""
 
     id: str
     """The ID of the job"""
@@ -24,6 +24,9 @@ class JobListResponse(BaseModel):
 
     status: ParsingJobStatus
     """The status of the job"""
+
+    error: Optional[Dict[str, object]] = None
+    """The error of the job"""
 
     started_at: Optional[datetime] = None
     """The started time of the job"""
