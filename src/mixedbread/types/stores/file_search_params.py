@@ -6,7 +6,6 @@ from typing import Union, Iterable, Optional
 from typing_extensions import Required, TypeAlias, TypedDict
 
 from ..._types import SequenceNotStr
-from ..vector_stores.rerank_config_param import RerankConfigParam
 from ..shared_params.search_filter_condition import SearchFilterCondition
 
 __all__ = [
@@ -15,6 +14,7 @@ __all__ = [
     "FiltersUnionMember2",
     "SearchOptions",
     "SearchOptionsRerank",
+    "SearchOptionsRerankRerankConfig",
     "SearchOptionsAgentic",
     "SearchOptionsAgenticAgenticSearchConfig",
 ]
@@ -44,7 +44,24 @@ FiltersUnionMember2: TypeAlias = Union["SearchFilter", SearchFilterCondition]
 
 Filters: TypeAlias = Union["SearchFilter", SearchFilterCondition, Iterable[FiltersUnionMember2]]
 
-SearchOptionsRerank: TypeAlias = Union[bool, RerankConfigParam]
+
+class SearchOptionsRerankRerankConfig(TypedDict, total=False):
+    """Represents a reranking configuration."""
+
+    model: str
+    """The name of the reranking model"""
+
+    with_metadata: Union[bool, SequenceNotStr[str]]
+    """Whether to include metadata in the reranked results"""
+
+    top_k: Optional[int]
+    """Maximum number of results to return after reranking.
+
+    If None, returns all reranked results.
+    """
+
+
+SearchOptionsRerank: TypeAlias = Union[bool, SearchOptionsRerankRerankConfig]
 
 
 class SearchOptionsAgenticAgenticSearchConfig(TypedDict, total=False):
