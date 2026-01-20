@@ -186,7 +186,7 @@ GeneratedMetadata: TypeAlias = Annotated[
 
 
 class VideoURL(BaseModel):
-    """The video input specification."""
+    """Model for video URL validation."""
 
     url: str
     """The video URL. Can be either a URL or a Data URI."""
@@ -229,5 +229,5 @@ class ScoredVideoURLInputChunk(BaseModel):
     summary: Optional[str] = None
     """summary of the video"""
 
-    video_url: VideoURL
-    """The video input specification."""
+    video_url: Optional[VideoURL] = None
+    """Model for video URL validation."""
