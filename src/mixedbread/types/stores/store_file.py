@@ -249,8 +249,8 @@ class ChunkTextInputChunk(BaseModel):
     offset: Optional[int] = None
     """The offset of the text in the file relative to the start of the file."""
 
-    text: str
-    """Text content to process"""
+    text: Optional[str] = None
+    """Text content"""
 
 
 class ChunkImageURLInputChunkGeneratedMetadataMarkdownChunkGeneratedMetadataChunkHeading(BaseModel):
@@ -421,7 +421,7 @@ ChunkImageURLInputChunkGeneratedMetadata: TypeAlias = Annotated[
 
 
 class ChunkImageURLInputChunkImageURL(BaseModel):
-    """The image input specification."""
+    """Model for image URL validation."""
 
     url: str
     """The image URL. Can be either a URL or a Data URI."""
@@ -452,8 +452,8 @@ class ChunkImageURLInputChunk(BaseModel):
     summary: Optional[str] = None
     """summary of the image"""
 
-    image_url: ChunkImageURLInputChunkImageURL
-    """The image input specification."""
+    image_url: Optional[ChunkImageURLInputChunkImageURL] = None
+    """Model for image URL validation."""
 
 
 class ChunkAudioURLInputChunkGeneratedMetadataMarkdownChunkGeneratedMetadataChunkHeading(BaseModel):
@@ -624,7 +624,7 @@ ChunkAudioURLInputChunkGeneratedMetadata: TypeAlias = Annotated[
 
 
 class ChunkAudioURLInputChunkAudioURL(BaseModel):
-    """The audio input specification."""
+    """Model for audio URL validation."""
 
     url: str
     """The audio URL. Can be either a URL or a Data URI."""
@@ -652,8 +652,8 @@ class ChunkAudioURLInputChunk(BaseModel):
     summary: Optional[str] = None
     """summary of the audio"""
 
-    audio_url: ChunkAudioURLInputChunkAudioURL
-    """The audio input specification."""
+    audio_url: Optional[ChunkAudioURLInputChunkAudioURL] = None
+    """Model for audio URL validation."""
 
     sampling_rate: int
     """The sampling rate of the audio."""
@@ -827,7 +827,7 @@ ChunkVideoURLInputChunkGeneratedMetadata: TypeAlias = Annotated[
 
 
 class ChunkVideoURLInputChunkVideoURL(BaseModel):
-    """The video input specification."""
+    """Model for video URL validation."""
 
     url: str
     """The video URL. Can be either a URL or a Data URI."""
@@ -855,8 +855,8 @@ class ChunkVideoURLInputChunk(BaseModel):
     summary: Optional[str] = None
     """summary of the video"""
 
-    video_url: ChunkVideoURLInputChunkVideoURL
-    """The video input specification."""
+    video_url: Optional[ChunkVideoURLInputChunkVideoURL] = None
+    """Model for video URL validation."""
 
 
 Chunk: TypeAlias = Annotated[

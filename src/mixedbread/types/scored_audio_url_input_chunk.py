@@ -186,7 +186,7 @@ GeneratedMetadata: TypeAlias = Annotated[
 
 
 class AudioURL(BaseModel):
-    """The audio input specification."""
+    """Model for audio URL validation."""
 
     url: str
     """The audio URL. Can be either a URL or a Data URI."""
@@ -229,8 +229,8 @@ class ScoredAudioURLInputChunk(BaseModel):
     summary: Optional[str] = None
     """summary of the audio"""
 
-    audio_url: AudioURL
-    """The audio input specification."""
+    audio_url: Optional[AudioURL] = None
+    """Model for audio URL validation."""
 
     sampling_rate: int
     """The sampling rate of the audio."""

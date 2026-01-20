@@ -186,7 +186,7 @@ GeneratedMetadata: TypeAlias = Annotated[
 
 
 class ImageURL(BaseModel):
-    """The image input specification."""
+    """Model for image URL validation."""
 
     url: str
     """The image URL. Can be either a URL or a Data URI."""
@@ -232,5 +232,5 @@ class ScoredImageURLInputChunk(BaseModel):
     summary: Optional[str] = None
     """summary of the image"""
 
-    image_url: ImageURL
-    """The image input specification."""
+    image_url: Optional[ImageURL] = None
+    """Model for image URL validation."""

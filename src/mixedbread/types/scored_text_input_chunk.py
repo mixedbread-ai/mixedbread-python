@@ -218,5 +218,5 @@ class ScoredTextInputChunk(BaseModel):
     offset: Optional[int] = None
     """The offset of the text in the file relative to the start of the file."""
 
-    text: str
-    """Text content to process"""
+    text: Optional[str] = None
+    """Text content"""
