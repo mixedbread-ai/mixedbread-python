@@ -53,6 +53,8 @@ class GeneratedMetadataMarkdownChunkGeneratedMetadata(BaseModel):
 
     num_lines: Optional[int] = None
 
+    frontmatter: Optional[Dict[str, object]] = None
+
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
         # value to this field, so for compatibility we avoid doing it at runtime.
