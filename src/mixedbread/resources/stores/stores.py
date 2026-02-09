@@ -484,7 +484,7 @@ class StoresResource(SyncAPIResource):
     def search(
         self,
         *,
-        query: store_search_params.Query,
+        query: str,
         store_identifiers: SequenceNotStr[str],
         top_k: int | Omit = omit,
         filters: Optional[store_search_params.Filters] | Omit = omit,
@@ -1000,7 +1000,7 @@ class AsyncStoresResource(AsyncAPIResource):
     async def search(
         self,
         *,
-        query: store_search_params.Query,
+        query: str,
         store_identifiers: SequenceNotStr[str],
         top_k: int | Omit = omit,
         filters: Optional[store_search_params.Filters] | Omit = omit,

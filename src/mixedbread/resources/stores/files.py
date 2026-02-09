@@ -350,7 +350,7 @@ class FilesResource(SyncAPIResource):
     def search(
         self,
         *,
-        query: file_search_params.Query,
+        query: str,
         store_identifiers: SequenceNotStr[str],
         top_k: int | Omit = omit,
         filters: Optional[file_search_params.Filters] | Omit = omit,
@@ -732,7 +732,7 @@ class AsyncFilesResource(AsyncAPIResource):
     async def search(
         self,
         *,
-        query: file_search_params.Query,
+        query: str,
         store_identifiers: SequenceNotStr[str],
         top_k: int | Omit = omit,
         filters: Optional[file_search_params.Filters] | Omit = omit,
