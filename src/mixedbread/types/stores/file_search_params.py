@@ -6,13 +6,10 @@ from typing import Union, Iterable, Optional
 from typing_extensions import Required, TypeAlias, TypedDict
 
 from ..._types import SequenceNotStr
-from ..extractions.text_input_param import TextInputParam
-from ..extractions.image_url_input_param import ImageURLInputParam
 from ..shared_params.search_filter_condition import SearchFilterCondition
 
 __all__ = [
     "FileSearchParams",
-    "Query",
     "Filters",
     "FiltersUnionMember2",
     "SearchOptions",
@@ -24,7 +21,7 @@ __all__ = [
 
 
 class FileSearchParams(TypedDict, total=False):
-    query: Required[Query]
+    query: Required[str]
     """Search query text"""
 
     store_identifiers: Required[SequenceNotStr[str]]
@@ -42,8 +39,6 @@ class FileSearchParams(TypedDict, total=False):
     search_options: SearchOptions
     """Search configuration options"""
 
-
-Query: TypeAlias = Union[str, ImageURLInputParam, TextInputParam]
 
 FiltersUnionMember2: TypeAlias = Union["SearchFilter", SearchFilterCondition]
 
