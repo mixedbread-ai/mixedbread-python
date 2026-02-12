@@ -40,7 +40,10 @@ class TestStores:
                 "days": 0,
             },
             metadata={},
-            config={"contextualization": True},
+            config={
+                "contextualization": True,
+                "save_content": True,
+            },
             file_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
         )
         assert_matches_type(Store, store, path=["response"])
@@ -423,7 +426,10 @@ class TestAsyncStores:
                 "days": 0,
             },
             metadata={},
-            config={"contextualization": True},
+            config={
+                "contextualization": True,
+                "save_content": True,
+            },
             file_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
         )
         assert_matches_type(Store, store, path=["response"])

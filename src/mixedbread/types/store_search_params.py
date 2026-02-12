@@ -6,14 +6,16 @@ from typing import Union, Iterable, Optional
 from typing_extensions import Required, TypeAlias, TypedDict
 
 from .._types import SequenceNotStr
+from .extractions.text_input_param import TextInputParam
 from .store_chunk_search_options_param import StoreChunkSearchOptionsParam
+from .extractions.image_url_input_param import ImageURLInputParam
 from .shared_params.search_filter_condition import SearchFilterCondition
 
-__all__ = ["StoreSearchParams", "Filters", "FiltersUnionMember2"]
+__all__ = ["StoreSearchParams", "Query", "Filters", "FiltersUnionMember2"]
 
 
 class StoreSearchParams(TypedDict, total=False):
-    query: Required[str]
+    query: Required[Query]
     """Search query text"""
 
     store_identifiers: Required[SequenceNotStr[str]]
@@ -31,6 +33,8 @@ class StoreSearchParams(TypedDict, total=False):
     search_options: StoreChunkSearchOptionsParam
     """Search configuration options"""
 
+
+Query: TypeAlias = Union[str, ImageURLInputParam, TextInputParam]
 
 FiltersUnionMember2: TypeAlias = Union["SearchFilter", SearchFilterCondition]
 

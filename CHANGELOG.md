@@ -1,5 +1,26 @@
 # Changelog
 
+## 1.0.0 (2026-02-12)
+
+Full Changelog: [v0.46.0...v1.0.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.46.0...v1.0.0)
+
+### Features
+
+* **api:** api update ([aa4cd1b](https://github.com/mixedbread-ai/mixedbread-python/commit/aa4cd1be677441f7099b98316825fa4873b7d0a9))
+* **api:** api update ([4ee152e](https://github.com/mixedbread-ai/mixedbread-python/commit/4ee152e99e45c3c3ead05f66864b8c5ad0f703bf))
+* **api:** api update ([dbf3b5a](https://github.com/mixedbread-ai/mixedbread-python/commit/dbf3b5a1de72068247b21fa1ccb6449f19af1437))
+* **api:** api update ([af6abf1](https://github.com/mixedbread-ai/mixedbread-python/commit/af6abf14e00dc0adf7ed962b0cb9edf3c40846fb))
+* **api:** api update ([650eb91](https://github.com/mixedbread-ai/mixedbread-python/commit/650eb91df9e65e4c6d9ad95db440f78381cee89e))
+* **api:** api update ([c5efbe2](https://github.com/mixedbread-ai/mixedbread-python/commit/c5efbe227c1ce9a01beace2df1019f30d39fe9b8))
+* **api:** manual updates ([8ac3ea2](https://github.com/mixedbread-ai/mixedbread-python/commit/8ac3ea2e1fd757e00ceab7eb97d7421848869664))
+* **client:** add custom JSON encoder for extended type support ([75cc241](https://github.com/mixedbread-ai/mixedbread-python/commit/75cc241a06480f5dee3f3a3c284ee51663e68193))
+
+
+### Chores
+
+* **ci:** upgrade `actions/github-script` ([56e9034](https://github.com/mixedbread-ai/mixedbread-python/commit/56e9034b3f755fef67982f5c2a122a69802c6ea4))
+* **internal:** bump dependencies ([580f6f8](https://github.com/mixedbread-ai/mixedbread-python/commit/580f6f8a878e936e1f9474138c1d7c839681b537))
+
 ## 0.46.0 (2026-01-17)
 
 Full Changelog: [v0.45.0...v0.46.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.45.0...v0.46.0)

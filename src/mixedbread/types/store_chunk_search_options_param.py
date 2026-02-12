@@ -5,11 +5,28 @@ from __future__ import annotations
 from typing import Union, Optional
 from typing_extensions import TypeAlias, TypedDict
 
-from .vector_stores.rerank_config_param import RerankConfigParam
+from .._types import SequenceNotStr
 
-__all__ = ["StoreChunkSearchOptionsParam", "Rerank", "Agentic", "AgenticAgenticSearchConfig"]
+__all__ = ["StoreChunkSearchOptionsParam", "Rerank", "RerankRerankConfig", "Agentic", "AgenticAgenticSearchConfig"]
 
-Rerank: TypeAlias = Union[bool, RerankConfigParam]
+
+class RerankRerankConfig(TypedDict, total=False):
+    """Represents a reranking configuration."""
+
+    model: str
+    """The name of the reranking model"""
+
+    with_metadata: Union[bool, SequenceNotStr[str]]
+    """Whether to include metadata in the reranked results"""
+
+    top_k: Optional[int]
+    """Maximum number of results to return after reranking.
+
+    If None, returns all reranked results.
+    """
+
+
+Rerank: TypeAlias = Union[bool, RerankRerankConfig]
 
 
 class AgenticAgenticSearchConfig(TypedDict, total=False):

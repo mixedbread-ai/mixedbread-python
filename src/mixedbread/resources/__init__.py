@@ -64,22 +64,8 @@ from .data_sources import (
     DataSourcesResourceWithStreamingResponse,
     AsyncDataSourcesResourceWithStreamingResponse,
 )
-from .vector_stores import (
-    VectorStoresResource,
-    AsyncVectorStoresResource,
-    VectorStoresResourceWithRawResponse,
-    AsyncVectorStoresResourceWithRawResponse,
-    VectorStoresResourceWithStreamingResponse,
-    AsyncVectorStoresResourceWithStreamingResponse,
-)
 
 __all__ = [
-    "VectorStoresResource",
-    "AsyncVectorStoresResource",
-    "VectorStoresResourceWithRawResponse",
-    "AsyncVectorStoresResourceWithRawResponse",
-    "VectorStoresResourceWithStreamingResponse",
-    "AsyncVectorStoresResourceWithStreamingResponse",
     "StoresResource",
     "AsyncStoresResource",
     "StoresResourceWithRawResponse",

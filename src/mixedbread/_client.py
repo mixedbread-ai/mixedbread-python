@@ -53,7 +53,7 @@ from .types.rerank_response import RerankResponse
 from .types.embedding_create_response import EmbeddingCreateResponse
 
 if TYPE_CHECKING:
-    from .resources import chat, files, stores, parsing, api_keys, embeddings, extractions, data_sources, vector_stores
+    from .resources import chat, files, stores, parsing, api_keys, embeddings, extractions, data_sources
     from .resources.chat import ChatResource, AsyncChatResource
     from .resources.files import FilesResource, AsyncFilesResource
     from .resources.api_keys import APIKeysResource, AsyncAPIKeysResource
@@ -62,7 +62,6 @@ if TYPE_CHECKING:
     from .resources.parsing.parsing import ParsingResource, AsyncParsingResource
     from .resources.extractions.extractions import ExtractionsResource, AsyncExtractionsResource
     from .resources.data_sources.data_sources import DataSourcesResource, AsyncDataSourcesResource
-    from .resources.vector_stores.vector_stores import VectorStoresResource, AsyncVectorStoresResource
 
 __all__ = [
     "ENVIRONMENTS",
@@ -161,12 +160,6 @@ class Mixedbread(SyncAPIClient):
             custom_query=default_query,
             _strict_response_validation=_strict_response_validation,
         )
-
-    @cached_property
-    def vector_stores(self) -> VectorStoresResource:
-        from .resources.vector_stores import VectorStoresResource
-
-        return VectorStoresResource(self)
 
     @cached_property
     def stores(self) -> StoresResource:
@@ -566,12 +559,6 @@ class AsyncMixedbread(AsyncAPIClient):
         )
 
     @cached_property
-    def vector_stores(self) -> AsyncVectorStoresResource:
-        from .resources.vector_stores import AsyncVectorStoresResource
-
-        return AsyncVectorStoresResource(self)
-
-    @cached_property
     def stores(self) -> AsyncStoresResource:
         from .resources.stores import AsyncStoresResource
 
@@ -906,12 +893,6 @@ class MixedbreadWithRawResponse:
         )
 
     @cached_property
-    def vector_stores(self) -> vector_stores.VectorStoresResourceWithRawResponse:
-        from .resources.vector_stores import VectorStoresResourceWithRawResponse
-
-        return VectorStoresResourceWithRawResponse(self._client.vector_stores)
-
-    @cached_property
     def stores(self) -> stores.StoresResourceWithRawResponse:
         from .resources.stores import StoresResourceWithRawResponse
 
@@ -975,12 +956,6 @@ class AsyncMixedbreadWithRawResponse:
         self.rerank = async_to_raw_response_wrapper(
             client.rerank,
         )
-
-    @cached_property
-    def vector_stores(self) -> vector_stores.AsyncVectorStoresResourceWithRawResponse:
-        from .resources.vector_stores import AsyncVectorStoresResourceWithRawResponse
-
-        return AsyncVectorStoresResourceWithRawResponse(self._client.vector_stores)
 
     @cached_property
     def stores(self) -> stores.AsyncStoresResourceWithRawResponse:
@@ -1048,12 +1023,6 @@ class MixedbreadWithStreamedResponse:
         )
 
     @cached_property
-    def vector_stores(self) -> vector_stores.VectorStoresResourceWithStreamingResponse:
-        from .resources.vector_stores import VectorStoresResourceWithStreamingResponse
-
-        return VectorStoresResourceWithStreamingResponse(self._client.vector_stores)
-
-    @cached_property
     def stores(self) -> stores.StoresResourceWithStreamingResponse:
         from .resources.stores import StoresResourceWithStreamingResponse
 
@@ -1117,12 +1086,6 @@ class AsyncMixedbreadWithStreamedResponse:
         self.rerank = async_to_streamed_response_wrapper(
             client.rerank,
         )
-
-    @cached_property
-    def vector_stores(self) -> vector_stores.AsyncVectorStoresResourceWithStreamingResponse:
-        from .resources.vector_stores import AsyncVectorStoresResourceWithStreamingResponse
-
-        return AsyncVectorStoresResourceWithStreamingResponse(self._client.vector_stores)
 
     @cached_property
     def stores(self) -> stores.AsyncStoresResourceWithStreamingResponse:
