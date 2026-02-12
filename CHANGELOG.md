@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.46.0 (2026-01-17)
+
+Full Changelog: [v0.45.0...v0.46.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.45.0...v0.46.0)
+
+### Features
+
+* **client:** add support for binary request streaming ([721b537](https://github.com/mixedbread-ai/mixedbread-python/commit/721b537346edbee0753ddb2efecf08c18c08d9ad))
+
+
+### Chores
+
+* **internal:** update `actions/checkout` version ([067b305](https://github.com/mixedbread-ai/mixedbread-python/commit/067b305ab53c7b3edce08e99d0177d9a916727cb))
+
 ## 0.45.0 (2025-12-23)
 
 Full Changelog: [v0.44.0...v0.45.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.44.0...v0.45.0)
