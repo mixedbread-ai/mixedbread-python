@@ -10,7 +10,6 @@ from .api_key import APIKey as APIKey
 from .embedding import Embedding as Embedding
 from .data_source import DataSource as DataSource
 from .file_object import FileObject as FileObject
-from .vector_store import VectorStore as VectorStore
 from .expires_after import ExpiresAfter as ExpiresAfter
 from .info_response import InfoResponse as InfoResponse
 from .oauth2_params import Oauth2Params as Oauth2Params
@@ -41,34 +40,19 @@ from .scored_text_input_chunk import ScoredTextInputChunk as ScoredTextInputChun
 from .linear_data_source_param import LinearDataSourceParam as LinearDataSourceParam
 from .multi_encoding_embedding import MultiEncodingEmbedding as MultiEncodingEmbedding
 from .notion_data_source_param import NotionDataSourceParam as NotionDataSourceParam
-from .vector_store_list_params import VectorStoreListParams as VectorStoreListParams
 from .data_source_create_params import DataSourceCreateParams as DataSourceCreateParams
 from .data_source_oauth2_params import DataSourceOauth2Params as DataSourceOauth2Params
 from .data_source_update_params import DataSourceUpdateParams as DataSourceUpdateParams
 from .embedding_create_response import EmbeddingCreateResponse as EmbeddingCreateResponse
-from .vector_store_create_params import VectorStoreCreateParams as VectorStoreCreateParams
-from .vector_store_search_params import VectorStoreSearchParams as VectorStoreSearchParams
-from .vector_store_update_params import VectorStoreUpdateParams as VectorStoreUpdateParams
 from .data_source_delete_response import DataSourceDeleteResponse as DataSourceDeleteResponse
 from .scored_audio_url_input_chunk import ScoredAudioURLInputChunk as ScoredAudioURLInputChunk
 from .scored_image_url_input_chunk import ScoredImageURLInputChunk as ScoredImageURLInputChunk
 from .scored_video_url_input_chunk import ScoredVideoURLInputChunk as ScoredVideoURLInputChunk
 from .store_metadata_facets_params import StoreMetadataFacetsParams as StoreMetadataFacetsParams
-from .vector_store_delete_response import VectorStoreDeleteResponse as VectorStoreDeleteResponse
-from .vector_store_search_response import VectorStoreSearchResponse as VectorStoreSearchResponse
 from .store_metadata_facets_response import StoreMetadataFacetsResponse as StoreMetadataFacetsResponse
 from .store_question_answering_params import StoreQuestionAnsweringParams as StoreQuestionAnsweringParams
 from .store_chunk_search_options_param import StoreChunkSearchOptionsParam as StoreChunkSearchOptionsParam
 from .store_question_answering_response import StoreQuestionAnsweringResponse as StoreQuestionAnsweringResponse
-from .vector_store_question_answering_params import (
-    VectorStoreQuestionAnsweringParams as VectorStoreQuestionAnsweringParams,
-)
-from .vector_store_chunk_search_options_param import (
-    VectorStoreChunkSearchOptionsParam as VectorStoreChunkSearchOptionsParam,
-)
-from .vector_store_question_answering_response import (
-    VectorStoreQuestionAnsweringResponse as VectorStoreQuestionAnsweringResponse,
-)
 
 # Rebuild cyclical models only after all modules are imported.
 # This ensures that, when building the deferred (due to cyclical references) model schema,
