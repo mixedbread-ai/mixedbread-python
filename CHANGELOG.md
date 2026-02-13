@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.0.1 (2026-02-13)
+
+Full Changelog: [v1.0.0...v1.0.1](https://github.com/mixedbread-ai/mixedbread-python/compare/v1.0.0...v1.0.1)
+
+### Chores
+
+* format all `api.md` files ([d167e2d](https://github.com/mixedbread-ai/mixedbread-python/commit/d167e2d222b34334f86313213bb01d7c8a003f18))
+* **internal:** fix lint error on Python 3.14 ([72f3d05](https://github.com/mixedbread-ai/mixedbread-python/commit/72f3d05d8e2b6bea43db9001270d836f21254a9e))
+
 ## 1.0.0 (2026-02-12)
 
 Full Changelog: [v0.46.0...v1.0.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.46.0...v1.0.0)
