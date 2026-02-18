@@ -254,6 +254,9 @@ class ScoredImageURLInputChunk(BaseModel):
     store_id: str
     """store id"""
 
+    external_id: Optional[str] = None
+    """external identifier for this file"""
+
     metadata: Optional[object] = None
     """file metadata"""
 
