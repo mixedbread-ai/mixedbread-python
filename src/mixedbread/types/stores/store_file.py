@@ -240,6 +240,8 @@ class ChunkTextInputChunkGeneratedMetadataVideoChunkGeneratedMetadata(BaseModel)
 
     frame_count: int
 
+    has_audio_stream: Optional[bool] = None
+
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
         # value to this field, so for compatibility we avoid doing it at runtime.
@@ -462,6 +464,8 @@ class ChunkImageURLInputChunkGeneratedMetadataVideoChunkGeneratedMetadata(BaseMo
     height: int
 
     frame_count: int
+
+    has_audio_stream: Optional[bool] = None
 
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
@@ -699,6 +703,8 @@ class ChunkAudioURLInputChunkGeneratedMetadataVideoChunkGeneratedMetadata(BaseMo
 
     frame_count: int
 
+    has_audio_stream: Optional[bool] = None
+
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
         # value to this field, so for compatibility we avoid doing it at runtime.
@@ -934,6 +940,8 @@ class ChunkVideoURLInputChunkGeneratedMetadataVideoChunkGeneratedMetadata(BaseMo
     height: int
 
     frame_count: int
+
+    has_audio_stream: Optional[bool] = None
 
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
