@@ -19,6 +19,7 @@ __all__ = [
     "GeneratedMetadataCodeChunkGeneratedMetadata",
     "GeneratedMetadataAudioChunkGeneratedMetadata",
     "GeneratedMetadataVideoChunkGeneratedMetadata",
+    "GeneratedMetadataImageChunkGeneratedMetadata",
     "VideoURL",
 ]
 
@@ -54,6 +55,8 @@ class GeneratedMetadataMarkdownChunkGeneratedMetadata(BaseModel):
 
     num_lines: Optional[int] = None
 
+    file_extension: Optional[str] = None
+
     frontmatter: Optional[Dict[str, object]] = None
 
     if TYPE_CHECKING:
@@ -84,6 +87,8 @@ class GeneratedMetadataTextChunkGeneratedMetadata(BaseModel):
 
     num_lines: Optional[int] = None
 
+    file_extension: Optional[str] = None
+
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
         # value to this field, so for compatibility we avoid doing it at runtime.
@@ -105,6 +110,8 @@ class GeneratedMetadataPdfChunkGeneratedMetadata(BaseModel):
     total_pages: int
 
     total_size: int
+
+    file_extension: Optional[str] = None
 
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
@@ -134,6 +141,8 @@ class GeneratedMetadataCodeChunkGeneratedMetadata(BaseModel):
 
     num_lines: Optional[int] = None
 
+    file_extension: Optional[str] = None
+
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
         # value to this field, so for compatibility we avoid doing it at runtime.
@@ -161,6 +170,8 @@ class GeneratedMetadataAudioChunkGeneratedMetadata(BaseModel):
     channels: int
 
     audio_format: int
+
+    file_extension: Optional[str] = None
 
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
@@ -194,6 +205,34 @@ class GeneratedMetadataVideoChunkGeneratedMetadata(BaseModel):
 
     has_audio_stream: Optional[bool] = None
 
+    file_extension: Optional[str] = None
+
+    if TYPE_CHECKING:
+        # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
+        # value to this field, so for compatibility we avoid doing it at runtime.
+        __pydantic_extra__: Dict[str, object] = FieldInfo(init=False)  # pyright: ignore[reportIncompatibleVariableOverride]
+
+        # Stub to indicate that arbitrary properties are accepted.
+        # To access properties that are not valid identifiers you can use `getattr`, e.g.
+        # `getattr(obj, '$type')`
+        def __getattr__(self, attr: str) -> object: ...
+    else:
+        __pydantic_extra__: Dict[str, object]
+
+
+class GeneratedMetadataImageChunkGeneratedMetadata(BaseModel):
+    type: Optional[Literal["image"]] = None
+
+    file_type: str
+
+    file_size: int
+
+    width: int
+
+    height: int
+
+    file_extension: Optional[str] = None
+
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
         # value to this field, so for compatibility we avoid doing it at runtime.
@@ -215,6 +254,7 @@ GeneratedMetadata: TypeAlias = Annotated[
         GeneratedMetadataCodeChunkGeneratedMetadata,
         GeneratedMetadataAudioChunkGeneratedMetadata,
         GeneratedMetadataVideoChunkGeneratedMetadata,
+        GeneratedMetadataImageChunkGeneratedMetadata,
         None,
     ],
     PropertyInfo(discriminator="type"),
