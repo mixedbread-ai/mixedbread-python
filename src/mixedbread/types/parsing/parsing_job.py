@@ -29,10 +29,13 @@ class ResultChunkElement(BaseModel):
     """The page number where the element was found"""
 
     content: str
-    """The full content of the extracted element"""
+    """The extracted text content of the element"""
 
     summary: Optional[str] = None
     """A brief summary of the element's content"""
+
+    image: Optional[str] = None
+    """The base64-encoded image data for figure elements"""
 
 
 class ResultChunk(BaseModel):
