@@ -38,9 +38,6 @@ class AgenticAgenticSearchConfig(TypedDict, total=False):
     queries_per_round: int
     """Maximum queries per round"""
 
-    results_per_query: int
-    """Results to fetch per query"""
-
 
 Agentic: TypeAlias = Union[bool, AgenticAgenticSearchConfig]
 
