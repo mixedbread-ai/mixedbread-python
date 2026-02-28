@@ -271,7 +271,7 @@ class FilesResource(SyncAPIResource):
 
           metadata_filter: Metadata filter to apply to the query
 
-          q: Search query for fuzzy matching over name and description fields
+          q: Search query for fuzzy matching over name and external_id fields
 
           extra_headers: Send extra headers
 
@@ -810,7 +810,7 @@ class AsyncFilesResource(AsyncAPIResource):
 
           metadata_filter: Metadata filter to apply to the query
 
-          q: Search query for fuzzy matching over name and description fields
+          q: Search query for fuzzy matching over name and external_id fields
 
           extra_headers: Send extra headers
 

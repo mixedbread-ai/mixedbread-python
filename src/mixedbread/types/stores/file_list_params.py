@@ -37,7 +37,7 @@ class FileListParams(TypedDict, total=False):
     """Metadata filter to apply to the query"""
 
     q: Optional[str]
-    """Search query for fuzzy matching over name and description fields"""
+    """Search query for fuzzy matching over name and external_id fields"""
 
 
 MetadataFilterUnionMember2: TypeAlias = Union["SearchFilter", SearchFilterCondition]
