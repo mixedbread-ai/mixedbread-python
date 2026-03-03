@@ -64,7 +64,6 @@ from mixedbread.types.stores import (
     ScoredStoreFile,
     StoreFileStatus,
     StoreFile,
-    FileListResponse,
     FileDeleteResponse,
     FileSearchResponse,
 )
@@ -75,7 +74,7 @@ Methods:
 - <code title="post /v1/stores/{store_identifier}/files">client.stores.files.<a href="./src/mixedbread/resources/stores/files.py">create</a>(store_identifier, \*\*<a href="src/mixedbread/types/stores/file_create_params.py">params</a>) -> <a href="./src/mixedbread/types/stores/store_file.py">StoreFile</a></code>
 - <code title="get /v1/stores/{store_identifier}/files/{file_identifier}">client.stores.files.<a href="./src/mixedbread/resources/stores/files.py">retrieve</a>(file_identifier, \*, store_identifier, \*\*<a href="src/mixedbread/types/stores/file_retrieve_params.py">params</a>) -> <a href="./src/mixedbread/types/stores/store_file.py">StoreFile</a></code>
 - <code title="patch /v1/stores/{store_identifier}/files/{file_identifier}">client.stores.files.<a href="./src/mixedbread/resources/stores/files.py">update</a>(file_identifier, \*, store_identifier, \*\*<a href="src/mixedbread/types/stores/file_update_params.py">params</a>) -> <a href="./src/mixedbread/types/stores/store_file.py">StoreFile</a></code>
-- <code title="post /v1/stores/{store_identifier}/files/list">client.stores.files.<a href="./src/mixedbread/resources/stores/files.py">list</a>(store_identifier, \*\*<a href="src/mixedbread/types/stores/file_list_params.py">params</a>) -> <a href="./src/mixedbread/types/stores/file_list_response.py">FileListResponse</a></code>
+- <code title="get /v1/stores/{store_identifier}/files">client.stores.files.<a href="./src/mixedbread/resources/stores/files.py">list</a>(store_identifier, \*\*<a href="src/mixedbread/types/stores/file_list_params.py">params</a>) -> <a href="./src/mixedbread/types/stores/store_file.py">SyncCursor[StoreFile]</a></code>
 - <code title="delete /v1/stores/{store_identifier}/files/{file_identifier}">client.stores.files.<a href="./src/mixedbread/resources/stores/files.py">delete</a>(file_identifier, \*, store_identifier) -> <a href="./src/mixedbread/types/stores/file_delete_response.py">FileDeleteResponse</a></code>
 - <code title="post /v1/stores/files/search">client.stores.files.<a href="./src/mixedbread/resources/stores/files.py">search</a>(\*\*<a href="src/mixedbread/types/stores/file_search_params.py">params</a>) -> <a href="./src/mixedbread/types/stores/file_search_response.py">FileSearchResponse</a></code>
 
@@ -110,17 +109,40 @@ Methods:
 Types:
 
 ```python
-from mixedbread.types import FileObject, PaginationWithTotal, FileDeleteResponse
+from mixedbread.types import FileObject, PaginationWithTotal
 ```
 
 Methods:
 
-- <code title="post /v1/files">client.files.<a href="./src/mixedbread/resources/files.py">create</a>(\*\*<a href="src/mixedbread/types/file_create_params.py">params</a>) -> <a href="./src/mixedbread/types/file_object.py">FileObject</a></code>
-- <code title="get /v1/files/{file_id}">client.files.<a href="./src/mixedbread/resources/files.py">retrieve</a>(file_id) -> <a href="./src/mixedbread/types/file_object.py">FileObject</a></code>
-- <code title="post /v1/files/{file_id}">client.files.<a href="./src/mixedbread/resources/files.py">update</a>(file_id, \*\*<a href="src/mixedbread/types/file_update_params.py">params</a>) -> <a href="./src/mixedbread/types/file_object.py">FileObject</a></code>
-- <code title="get /v1/files">client.files.<a href="./src/mixedbread/resources/files.py">list</a>(\*\*<a href="src/mixedbread/types/file_list_params.py">params</a>) -> <a href="./src/mixedbread/types/file_object.py">SyncCursor[FileObject]</a></code>
-- <code title="delete /v1/files/{file_id}">client.files.<a href="./src/mixedbread/resources/files.py">delete</a>(file_id) -> <a href="./src/mixedbread/types/file_delete_response.py">FileDeleteResponse</a></code>
-- <code title="get /v1/files/{file_id}/content">client.files.<a href="./src/mixedbread/resources/files.py">content</a>(file_id) -> BinaryAPIResponse</code>
+- <code title="post /v1/files">client.files.<a href="./src/mixedbread/resources/files/files.py">create</a>(\*\*<a href="src/mixedbread/types/file_create_params.py">params</a>) -> <a href="./src/mixedbread/types/file_object.py">FileObject</a></code>
+- <code title="get /v1/files/{file_id}">client.files.<a href="./src/mixedbread/resources/files/files.py">retrieve</a>(file_id) -> <a href="./src/mixedbread/types/file_object.py">FileObject</a></code>
+- <code title="post /v1/files/{file_id}">client.files.<a href="./src/mixedbread/resources/files/files.py">update</a>(file_id, \*\*<a href="src/mixedbread/types/file_update_params.py">params</a>) -> <a href="./src/mixedbread/types/file_object.py">FileObject</a></code>
+- <code title="get /v1/files">client.files.<a href="./src/mixedbread/resources/files/files.py">list</a>(\*\*<a href="src/mixedbread/types/file_list_params.py">params</a>) -> <a href="./src/mixedbread/types/file_object.py">SyncCursor[FileObject]</a></code>
+- <code title="delete /v1/files/{file_id}">client.files.<a href="./src/mixedbread/resources/files/files.py">delete</a>(file_id) -> <a href="./src/mixedbread/types/files/file_deleted.py">FileDeleted</a></code>
+- <code title="get /v1/files/{file_id}/content">client.files.<a href="./src/mixedbread/resources/files/files.py">content</a>(file_id) -> BinaryAPIResponse</code>
+
+## Uploads
+
+Types:
+
+```python
+from mixedbread.types.files import (
+    FileDeleted,
+    MultipartUploadPart,
+    MultipartUploadPartURL,
+    UploadCreateResponse,
+    UploadRetrieveResponse,
+    UploadListResponse,
+)
+```
+
+Methods:
+
+- <code title="post /v1/files/uploads">client.files.uploads.<a href="./src/mixedbread/resources/files/uploads.py">create</a>(\*\*<a href="src/mixedbread/types/files/upload_create_params.py">params</a>) -> <a href="./src/mixedbread/types/files/upload_create_response.py">UploadCreateResponse</a></code>
+- <code title="get /v1/files/uploads/{upload_id}">client.files.uploads.<a href="./src/mixedbread/resources/files/uploads.py">retrieve</a>(upload_id) -> <a href="./src/mixedbread/types/files/upload_retrieve_response.py">UploadRetrieveResponse</a></code>
+- <code title="get /v1/files/uploads">client.files.uploads.<a href="./src/mixedbread/resources/files/uploads.py">list</a>() -> <a href="./src/mixedbread/types/files/upload_list_response.py">UploadListResponse</a></code>
+- <code title="post /v1/files/uploads/{upload_id}/abort">client.files.uploads.<a href="./src/mixedbread/resources/files/uploads.py">abort</a>(upload_id) -> <a href="./src/mixedbread/types/files/file_deleted.py">FileDeleted</a></code>
+- <code title="post /v1/files/uploads/{upload_id}/complete">client.files.uploads.<a href="./src/mixedbread/resources/files/uploads.py">complete</a>(upload_id, \*\*<a href="src/mixedbread/types/files/upload_complete_params.py">params</a>) -> <a href="./src/mixedbread/types/file_object.py">FileObject</a></code>
 
 # Extractions
 

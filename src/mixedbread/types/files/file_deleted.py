@@ -3,12 +3,12 @@
 from typing import Optional
 from typing_extensions import Literal
 
-from .._models import BaseModel
+from ..._models import BaseModel
 
-__all__ = ["FileDeleteResponse"]
+__all__ = ["FileDeleted"]
 
 
-class FileDeleteResponse(BaseModel):
+class FileDeleted(BaseModel):
     id: str
     """The ID of the deleted file"""
 

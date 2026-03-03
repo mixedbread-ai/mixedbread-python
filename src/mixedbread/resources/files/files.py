@@ -6,12 +6,20 @@ from typing import Mapping, Optional, cast
 
 import httpx
 
-from ..types import file_list_params, file_create_params, file_update_params
-from .._types import Body, Omit, Query, Headers, NotGiven, FileTypes, omit, not_given
-from .._utils import extract_files, maybe_transform, deepcopy_minimal, async_maybe_transform
-from .._compat import cached_property
-from .._resource import SyncAPIResource, AsyncAPIResource
-from .._response import (
+from ...types import file_list_params, file_create_params, file_update_params
+from .uploads import (
+    UploadsResource,
+    AsyncUploadsResource,
+    UploadsResourceWithRawResponse,
+    AsyncUploadsResourceWithRawResponse,
+    UploadsResourceWithStreamingResponse,
+    AsyncUploadsResourceWithStreamingResponse,
+)
+from ..._types import Body, Omit, Query, Headers, NotGiven, FileTypes, omit, not_given
+from ..._utils import extract_files, maybe_transform, deepcopy_minimal, async_maybe_transform
+from ..._compat import cached_property
+from ..._resource import SyncAPIResource, AsyncAPIResource
+from ..._response import (
     BinaryAPIResponse,
     AsyncBinaryAPIResponse,
     StreamedBinaryAPIResponse,
@@ -25,15 +33,19 @@ from .._response import (
     async_to_custom_raw_response_wrapper,
     async_to_custom_streamed_response_wrapper,
 )
-from ..pagination import SyncCursor, AsyncCursor
-from .._base_client import AsyncPaginator, make_request_options
-from ..types.file_object import FileObject
-from ..types.file_delete_response import FileDeleteResponse
+from ...pagination import SyncCursor, AsyncCursor
+from ..._base_client import AsyncPaginator, make_request_options
+from ...types.file_object import FileObject
+from ...types.files.file_deleted import FileDeleted
 
 __all__ = ["FilesResource", "AsyncFilesResource"]
 
 
 class FilesResource(SyncAPIResource):
+    @cached_property
+    def uploads(self) -> UploadsResource:
+        return UploadsResource(self._client)
+
     @cached_property
     def with_raw_response(self) -> FilesResourceWithRawResponse:
         """
@@ -262,7 +274,7 @@ class FilesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileDeleteResponse:
+    ) -> FileDeleted:
         """
         Delete a specific file by its ID.
 
@@ -288,7 +300,7 @@ class FilesResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=FileDeleteResponse,
+            cast_to=FileDeleted,
         )
 
     def content(
@@ -333,6 +345,10 @@ class FilesResource(SyncAPIResource):
 
 
 class AsyncFilesResource(AsyncAPIResource):
+    @cached_property
+    def uploads(self) -> AsyncUploadsResource:
+        return AsyncUploadsResource(self._client)
+
     @cached_property
     def with_raw_response(self) -> AsyncFilesResourceWithRawResponse:
         """
@@ -561,7 +577,7 @@ class AsyncFilesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileDeleteResponse:
+    ) -> FileDeleted:
         """
         Delete a specific file by its ID.
 
@@ -587,7 +603,7 @@ class AsyncFilesResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=FileDeleteResponse,
+            cast_to=FileDeleted,
         )
 
     async def content(
@@ -655,6 +671,10 @@ class FilesResourceWithRawResponse:
             BinaryAPIResponse,
         )
 
+    @cached_property
+    def uploads(self) -> UploadsResourceWithRawResponse:
+        return UploadsResourceWithRawResponse(self._files.uploads)
+
 
 class AsyncFilesResourceWithRawResponse:
     def __init__(self, files: AsyncFilesResource) -> None:
@@ -679,6 +699,10 @@ class AsyncFilesResourceWithRawResponse:
             files.content,
             AsyncBinaryAPIResponse,
         )
+
+    @cached_property
+    def uploads(self) -> AsyncUploadsResourceWithRawResponse:
+        return AsyncUploadsResourceWithRawResponse(self._files.uploads)
 
 
 class FilesResourceWithStreamingResponse:
@@ -705,6 +729,10 @@ class FilesResourceWithStreamingResponse:
             StreamedBinaryAPIResponse,
         )
 
+    @cached_property
+    def uploads(self) -> UploadsResourceWithStreamingResponse:
+        return UploadsResourceWithStreamingResponse(self._files.uploads)
+
 
 class AsyncFilesResourceWithStreamingResponse:
     def __init__(self, files: AsyncFilesResource) -> None:
@@ -729,3 +757,7 @@ class AsyncFilesResourceWithStreamingResponse:
             files.content,
             AsyncStreamedBinaryAPIResponse,
         )
+
+    @cached_property
+    def uploads(self) -> AsyncUploadsResourceWithStreamingResponse:
+        return AsyncUploadsResourceWithStreamingResponse(self._files.uploads)

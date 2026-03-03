@@ -55,9 +55,9 @@ from .types.embedding_create_response import EmbeddingCreateResponse
 if TYPE_CHECKING:
     from .resources import chat, files, stores, parsing, api_keys, embeddings, extractions, data_sources
     from .resources.chat import ChatResource, AsyncChatResource
-    from .resources.files import FilesResource, AsyncFilesResource
     from .resources.api_keys import APIKeysResource, AsyncAPIKeysResource
     from .resources.embeddings import EmbeddingsResource, AsyncEmbeddingsResource
+    from .resources.files.files import FilesResource, AsyncFilesResource
     from .resources.stores.stores import StoresResource, AsyncStoresResource
     from .resources.parsing.parsing import ParsingResource, AsyncParsingResource
     from .resources.extractions.extractions import ExtractionsResource, AsyncExtractionsResource
