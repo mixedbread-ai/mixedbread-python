@@ -110,7 +110,7 @@ Methods:
 Types:
 
 ```python
-from mixedbread.types import FileObject, PaginationWithTotal
+from mixedbread.types import FileDeleted, FileObject, PaginationWithTotal
 ```
 
 Methods:
