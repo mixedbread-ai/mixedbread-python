@@ -10,6 +10,7 @@ from .api_key import APIKey as APIKey
 from .embedding import Embedding as Embedding
 from .data_source import DataSource as DataSource
 from .file_object import FileObject as FileObject
+from .file_deleted import FileDeleted as FileDeleted
 from .expires_after import ExpiresAfter as ExpiresAfter
 from .info_response import InfoResponse as InfoResponse
 from .oauth2_params import Oauth2Params as Oauth2Params

@@ -19,7 +19,7 @@ from ..._response import (
 from ...types.files import upload_create_params, upload_complete_params
 from ..._base_client import make_request_options
 from ...types.file_object import FileObject
-from ...types.files.file_deleted import FileDeleted
+from ...types.file_deleted import FileDeleted
 from ...types.files.upload_list_response import UploadListResponse
 from ...types.files.upload_create_response import UploadCreateResponse
 from ...types.files.upload_retrieve_response import UploadRetrieveResponse

@@ -9,9 +9,8 @@ import pytest
 
 from mixedbread import Mixedbread, AsyncMixedbread
 from tests.utils import assert_matches_type
-from mixedbread.types import FileObject
+from mixedbread.types import FileObject, FileDeleted
 from mixedbread.types.files import (
-    FileDeleted,
     UploadListResponse,
     UploadCreateResponse,
     UploadRetrieveResponse,

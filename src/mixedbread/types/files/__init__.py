@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-from .file_deleted import FileDeleted as FileDeleted
 from .upload_create_params import UploadCreateParams as UploadCreateParams
 from .upload_list_response import UploadListResponse as UploadListResponse
 from .multipart_upload_part import MultipartUploadPart as MultipartUploadPart
