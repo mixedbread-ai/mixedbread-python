@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import functools
-import typing_extensions
 from typing import Any, Dict, List, Union, Iterable, Optional
 
 import httpx
@@ -19,8 +18,7 @@ from ..._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ...pagination import SyncCursor, AsyncCursor
-from ..._base_client import AsyncPaginator, make_request_options
+from ..._base_client import make_request_options
 from ...types.stores import (
     file_list_params,
     file_create_params,
@@ -30,6 +28,7 @@ from ...types.stores import (
 )
 from ...types.stores.store_file import StoreFile
 from ...types.stores.store_file_status import StoreFileStatus
+from ...types.stores.file_list_response import FileListResponse
 from ...types.stores.file_delete_response import FileDeleteResponse
 from ...types.stores.file_search_response import FileSearchResponse
 
@@ -229,7 +228,6 @@ class FilesResource(SyncAPIResource):
             cast_to=StoreFile,
         )
 
-    @typing_extensions.deprecated("deprecated")
     def list(
         self,
         store_identifier: str,
@@ -239,15 +237,22 @@ class FilesResource(SyncAPIResource):
         before: Optional[str] | Omit = omit,
         include_total: bool | Omit = omit,
         statuses: Optional[List[StoreFileStatus]] | Omit = omit,
+        metadata_filter: Optional[file_list_params.MetadataFilter] | Omit = omit,
+        q: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> SyncCursor[StoreFile]:
+    ) -> FileListResponse:
         """
-        DEPRECATED: Use POST /stores/{store_identifier}/files/list instead
+        List files indexed in a vector store with pagination and metadata filter.
+
+        Args: vector_store_identifier: The ID or name of the vector store pagination:
+        Pagination parameters and metadata filter
+
+        Returns: VectorStoreFileListResponse: Paginated list of vector store files
 
         Args:
           store_identifier: The ID or name of the store
@@ -264,6 +269,10 @@ class FilesResource(SyncAPIResource):
 
           statuses: Status to filter by
 
+          metadata_filter: Metadata filter to apply to the query
+
+          q: Search query for fuzzy matching over name and external_id fields
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -274,26 +283,24 @@ class FilesResource(SyncAPIResource):
         """
         if not store_identifier:
             raise ValueError(f"Expected a non-empty value for `store_identifier` but received {store_identifier!r}")
-        return self._get_api_list(
-            f"/v1/stores/{store_identifier}/files",
-            page=SyncCursor[StoreFile],
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "limit": limit,
-                        "after": after,
-                        "before": before,
-                        "include_total": include_total,
-                        "statuses": statuses,
-                    },
-                    file_list_params.FileListParams,
-                ),
+        return self._post(
+            f"/v1/stores/{store_identifier}/files/list",
+            body=maybe_transform(
+                {
+                    "limit": limit,
+                    "after": after,
+                    "before": before,
+                    "include_total": include_total,
+                    "statuses": statuses,
+                    "metadata_filter": metadata_filter,
+                    "q": q,
+                },
+                file_list_params.FileListParams,
             ),
-            model=StoreFile,
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=FileListResponse,
         )
 
     def delete(
@@ -760,8 +767,7 @@ class AsyncFilesResource(AsyncAPIResource):
             cast_to=StoreFile,
         )
 
-    @typing_extensions.deprecated("deprecated")
-    def list(
+    async def list(
         self,
         store_identifier: str,
         *,
@@ -770,15 +776,22 @@ class AsyncFilesResource(AsyncAPIResource):
         before: Optional[str] | Omit = omit,
         include_total: bool | Omit = omit,
         statuses: Optional[List[StoreFileStatus]] | Omit = omit,
+        metadata_filter: Optional[file_list_params.MetadataFilter] | Omit = omit,
+        q: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AsyncPaginator[StoreFile, AsyncCursor[StoreFile]]:
+    ) -> FileListResponse:
         """
-        DEPRECATED: Use POST /stores/{store_identifier}/files/list instead
+        List files indexed in a vector store with pagination and metadata filter.
+
+        Args: vector_store_identifier: The ID or name of the vector store pagination:
+        Pagination parameters and metadata filter
+
+        Returns: VectorStoreFileListResponse: Paginated list of vector store files
 
         Args:
           store_identifier: The ID or name of the store
@@ -795,6 +808,10 @@ class AsyncFilesResource(AsyncAPIResource):
 
           statuses: Status to filter by
 
+          metadata_filter: Metadata filter to apply to the query
+
+          q: Search query for fuzzy matching over name and external_id fields
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -805,26 +822,24 @@ class AsyncFilesResource(AsyncAPIResource):
         """
         if not store_identifier:
             raise ValueError(f"Expected a non-empty value for `store_identifier` but received {store_identifier!r}")
-        return self._get_api_list(
-            f"/v1/stores/{store_identifier}/files",
-            page=AsyncCursor[StoreFile],
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "limit": limit,
-                        "after": after,
-                        "before": before,
-                        "include_total": include_total,
-                        "statuses": statuses,
-                    },
-                    file_list_params.FileListParams,
-                ),
+        return await self._post(
+            f"/v1/stores/{store_identifier}/files/list",
+            body=await async_maybe_transform(
+                {
+                    "limit": limit,
+                    "after": after,
+                    "before": before,
+                    "include_total": include_total,
+                    "statuses": statuses,
+                    "metadata_filter": metadata_filter,
+                    "q": q,
+                },
+                file_list_params.FileListParams,
             ),
-            model=StoreFile,
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=FileListResponse,
         )
 
     async def delete(
@@ -1111,10 +1126,8 @@ class FilesResourceWithRawResponse:
         self.update = to_raw_response_wrapper(
             files.update,
         )
-        self.list = (  # pyright: ignore[reportDeprecated]
-            to_raw_response_wrapper(
-                files.list,  # pyright: ignore[reportDeprecated],
-            )
+        self.list = to_raw_response_wrapper(
+            files.list,
         )
         self.delete = to_raw_response_wrapper(
             files.delete,
@@ -1137,10 +1150,8 @@ class AsyncFilesResourceWithRawResponse:
         self.update = async_to_raw_response_wrapper(
             files.update,
         )
-        self.list = (  # pyright: ignore[reportDeprecated]
-            async_to_raw_response_wrapper(
-                files.list,  # pyright: ignore[reportDeprecated],
-            )
+        self.list = async_to_raw_response_wrapper(
+            files.list,
         )
         self.delete = async_to_raw_response_wrapper(
             files.delete,
@@ -1163,10 +1174,8 @@ class FilesResourceWithStreamingResponse:
         self.update = to_streamed_response_wrapper(
             files.update,
         )
-        self.list = (  # pyright: ignore[reportDeprecated]
-            to_streamed_response_wrapper(
-                files.list,  # pyright: ignore[reportDeprecated],
-            )
+        self.list = to_streamed_response_wrapper(
+            files.list,
         )
         self.delete = to_streamed_response_wrapper(
             files.delete,
@@ -1189,10 +1198,8 @@ class AsyncFilesResourceWithStreamingResponse:
         self.update = async_to_streamed_response_wrapper(
             files.update,
         )
-        self.list = (  # pyright: ignore[reportDeprecated]
-            async_to_streamed_response_wrapper(
-                files.list,  # pyright: ignore[reportDeprecated],
-            )
+        self.list = async_to_streamed_response_wrapper(
+            files.list,
         )
         self.delete = async_to_streamed_response_wrapper(
             files.delete,
