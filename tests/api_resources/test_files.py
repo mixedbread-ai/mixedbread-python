@@ -11,7 +11,7 @@ from respx import MockRouter
 
 from mixedbread import Mixedbread, AsyncMixedbread
 from tests.utils import assert_matches_type
-from mixedbread.types import FileObject
+from mixedbread.types import FileObject, FileDeleted
 from mixedbread._response import (
     BinaryAPIResponse,
     AsyncBinaryAPIResponse,
@@ -19,7 +19,6 @@ from mixedbread._response import (
     AsyncStreamedBinaryAPIResponse,
 )
 from mixedbread.pagination import SyncCursor, AsyncCursor
-from mixedbread.types.files import FileDeleted
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 

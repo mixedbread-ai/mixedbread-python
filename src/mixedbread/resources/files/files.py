@@ -36,7 +36,7 @@ from ..._response import (
 from ...pagination import SyncCursor, AsyncCursor
 from ..._base_client import AsyncPaginator, make_request_options
 from ...types.file_object import FileObject
-from ...types.files.file_deleted import FileDeleted
+from ...types.file_deleted import FileDeleted
 
 __all__ = ["FilesResource", "AsyncFilesResource"]
 
