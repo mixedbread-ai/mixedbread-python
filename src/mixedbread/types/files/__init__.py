@@ -5,6 +5,7 @@ from __future__ import annotations
 from .upload_create_params import UploadCreateParams as UploadCreateParams
 from .upload_list_response import UploadListResponse as UploadListResponse
 from .multipart_upload_part import MultipartUploadPart as MultipartUploadPart
+from .upload_abort_response import UploadAbortResponse as UploadAbortResponse
 from .upload_complete_params import UploadCompleteParams as UploadCompleteParams
 from .upload_create_response import UploadCreateResponse as UploadCreateResponse
 from .upload_retrieve_response import UploadRetrieveResponse as UploadRetrieveResponse
