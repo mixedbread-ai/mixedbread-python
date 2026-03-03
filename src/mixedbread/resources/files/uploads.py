@@ -19,8 +19,8 @@ from ..._response import (
 from ...types.files import upload_create_params, upload_complete_params
 from ..._base_client import make_request_options
 from ...types.file_object import FileObject
-from ...types.file_deleted import FileDeleted
 from ...types.files.upload_list_response import UploadListResponse
+from ...types.files.upload_abort_response import UploadAbortResponse
 from ...types.files.upload_create_response import UploadCreateResponse
 from ...types.files.upload_retrieve_response import UploadRetrieveResponse
 from ...types.files.multipart_upload_part_param import MultipartUploadPartParam
@@ -165,7 +165,7 @@ class UploadsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileDeleted:
+    ) -> UploadAbortResponse:
         """
         Abort a multipart upload and clean up any uploaded parts.
 
@@ -187,7 +187,7 @@ class UploadsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=FileDeleted,
+            cast_to=UploadAbortResponse,
         )
 
     def complete(
@@ -369,7 +369,7 @@ class AsyncUploadsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileDeleted:
+    ) -> UploadAbortResponse:
         """
         Abort a multipart upload and clean up any uploaded parts.
 
@@ -391,7 +391,7 @@ class AsyncUploadsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=FileDeleted,
+            cast_to=UploadAbortResponse,
         )
 
     async def complete(

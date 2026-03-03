@@ -36,7 +36,7 @@ from ..._response import (
 from ...pagination import SyncCursor, AsyncCursor
 from ..._base_client import AsyncPaginator, make_request_options
 from ...types.file_object import FileObject
-from ...types.file_deleted import FileDeleted
+from ...types.file_delete_response import FileDeleteResponse
 
 __all__ = ["FilesResource", "AsyncFilesResource"]
 
@@ -274,7 +274,7 @@ class FilesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileDeleted:
+    ) -> FileDeleteResponse:
         """
         Delete a specific file by its ID.
 
@@ -300,7 +300,7 @@ class FilesResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=FileDeleted,
+            cast_to=FileDeleteResponse,
         )
 
     def content(
@@ -577,7 +577,7 @@ class AsyncFilesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileDeleted:
+    ) -> FileDeleteResponse:
         """
         Delete a specific file by its ID.
 
@@ -603,7 +603,7 @@ class AsyncFilesResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=FileDeleted,
+            cast_to=FileDeleteResponse,
         )
 
     async def content(

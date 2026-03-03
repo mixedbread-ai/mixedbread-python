@@ -9,9 +9,10 @@ import pytest
 
 from mixedbread import Mixedbread, AsyncMixedbread
 from tests.utils import assert_matches_type
-from mixedbread.types import FileObject, FileDeleted
+from mixedbread.types import FileObject
 from mixedbread.types.files import (
     UploadListResponse,
+    UploadAbortResponse,
     UploadCreateResponse,
     UploadRetrieveResponse,
 )
@@ -137,7 +138,7 @@ class TestUploads:
         upload = client.files.uploads.abort(
             "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(FileDeleted, upload, path=["response"])
+        assert_matches_type(UploadAbortResponse, upload, path=["response"])
 
     @parametrize
     def test_raw_response_abort(self, client: Mixedbread) -> None:
@@ -148,7 +149,7 @@ class TestUploads:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         upload = response.parse()
-        assert_matches_type(FileDeleted, upload, path=["response"])
+        assert_matches_type(UploadAbortResponse, upload, path=["response"])
 
     @parametrize
     def test_streaming_response_abort(self, client: Mixedbread) -> None:
@@ -159,7 +160,7 @@ class TestUploads:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             upload = response.parse()
-            assert_matches_type(FileDeleted, upload, path=["response"])
+            assert_matches_type(UploadAbortResponse, upload, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -353,7 +354,7 @@ class TestAsyncUploads:
         upload = await async_client.files.uploads.abort(
             "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(FileDeleted, upload, path=["response"])
+        assert_matches_type(UploadAbortResponse, upload, path=["response"])
 
     @parametrize
     async def test_raw_response_abort(self, async_client: AsyncMixedbread) -> None:
@@ -364,7 +365,7 @@ class TestAsyncUploads:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         upload = await response.parse()
-        assert_matches_type(FileDeleted, upload, path=["response"])
+        assert_matches_type(UploadAbortResponse, upload, path=["response"])
 
     @parametrize
     async def test_streaming_response_abort(self, async_client: AsyncMixedbread) -> None:
@@ -375,7 +376,7 @@ class TestAsyncUploads:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             upload = await response.parse()
-            assert_matches_type(FileDeleted, upload, path=["response"])
+            assert_matches_type(UploadAbortResponse, upload, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
