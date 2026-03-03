@@ -28,7 +28,6 @@ from .store_create_params import StoreCreateParams as StoreCreateParams
 from .store_search_params import StoreSearchParams as StoreSearchParams
 from .store_update_params import StoreUpdateParams as StoreUpdateParams
 from .client_rerank_params import ClientRerankParams as ClientRerankParams
-from .file_delete_response import FileDeleteResponse as FileDeleteResponse
 from .api_key_create_params import APIKeyCreateParams as APIKeyCreateParams
 from .pagination_with_total import PaginationWithTotal as PaginationWithTotal
 from .store_delete_response import StoreDeleteResponse as StoreDeleteResponse
