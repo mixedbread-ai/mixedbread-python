@@ -242,7 +242,7 @@ class ChunkTextInputChunkGeneratedMetadataVideoChunkGeneratedMetadata(BaseModel)
 
     file_type: str
 
-    file_size: int
+    file_size: Optional[int] = None
 
     total_duration_seconds: float
 
@@ -506,7 +506,7 @@ class ChunkImageURLInputChunkGeneratedMetadataVideoChunkGeneratedMetadata(BaseMo
 
     file_type: str
 
-    file_size: int
+    file_size: Optional[int] = None
 
     total_duration_seconds: float
 
@@ -783,7 +783,7 @@ class ChunkAudioURLInputChunkGeneratedMetadataVideoChunkGeneratedMetadata(BaseMo
 
     file_type: str
 
-    file_size: int
+    file_size: Optional[int] = None
 
     total_duration_seconds: float
 
@@ -1060,7 +1060,7 @@ class ChunkVideoURLInputChunkGeneratedMetadataVideoChunkGeneratedMetadata(BaseMo
 
     file_type: str
 
-    file_size: int
+    file_size: Optional[int] = None
 
     total_duration_seconds: float
 
