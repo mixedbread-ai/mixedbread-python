@@ -36,6 +36,12 @@ from ..._response import (
 from ...pagination import SyncCursor, AsyncCursor
 from ..._base_client import AsyncPaginator, make_request_options
 from ...types.file_object import FileObject
+from ...lib.multipart_upload import (
+    MultipartUploadOptions,
+    _get_file_size,
+    multipart_create_sync,
+    multipart_create_async,
+)
 from ...types.file_delete_response import FileDeleteResponse
 
 __all__ = ["FilesResource", "AsyncFilesResource"]
@@ -69,6 +75,7 @@ class FilesResource(SyncAPIResource):
         self,
         *,
         file: FileTypes,
+        multipart_upload: bool | MultipartUploadOptions | None = None,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -79,12 +86,20 @@ class FilesResource(SyncAPIResource):
         """
         Upload a new file.
 
+        Automatically uses multipart uploads for large files (>100MB by default).
+
         Args: file: The file to upload.
 
         Returns: FileResponse: The response containing the details of the uploaded file.
 
         Args:
           file: The file to upload
+
+          multipart_upload: Controls multipart upload behavior.
+              None (default) auto-detects based on file size.
+              True forces multipart with default options.
+              False disables multipart.
+              MultipartUploadOptions for custom settings.
 
           extra_headers: Send extra headers
 
@@ -94,6 +109,23 @@ class FilesResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        if multipart_upload is not False:
+            if isinstance(multipart_upload, MultipartUploadOptions):
+                _opts = multipart_upload
+                _use_multipart = True
+            elif multipart_upload is True:
+                _opts = MultipartUploadOptions()
+                _use_multipart = True
+            else:  # None — auto-detect
+                _opts = MultipartUploadOptions()
+                try:
+                    _use_multipart = _get_file_size(file) >= _opts.threshold
+                except (TypeError, OSError):
+                    _use_multipart = False
+
+            if _use_multipart:
+                return multipart_create_sync(self.uploads, file, _opts)
+
         body = deepcopy_minimal({"file": file})
         files = extract_files(cast(Mapping[str, object], body), paths=[["file"]])
         # It should be noted that the actual Content-Type header that will be
@@ -372,6 +404,7 @@ class AsyncFilesResource(AsyncAPIResource):
         self,
         *,
         file: FileTypes,
+        multipart_upload: bool | MultipartUploadOptions | None = None,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -382,12 +415,20 @@ class AsyncFilesResource(AsyncAPIResource):
         """
         Upload a new file.
 
+        Automatically uses multipart uploads for large files (>100MB by default).
+
         Args: file: The file to upload.
 
         Returns: FileResponse: The response containing the details of the uploaded file.
 
         Args:
           file: The file to upload
+
+          multipart_upload: Controls multipart upload behavior.
+              None (default) auto-detects based on file size.
+              True forces multipart with default options.
+              False disables multipart.
+              MultipartUploadOptions for custom settings.
 
           extra_headers: Send extra headers
 
@@ -397,6 +438,23 @@ class AsyncFilesResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        if multipart_upload is not False:
+            if isinstance(multipart_upload, MultipartUploadOptions):
+                _opts = multipart_upload
+                _use_multipart = True
+            elif multipart_upload is True:
+                _opts = MultipartUploadOptions()
+                _use_multipart = True
+            else:  # None — auto-detect
+                _opts = MultipartUploadOptions()
+                try:
+                    _use_multipart = _get_file_size(file) >= _opts.threshold
+                except (TypeError, OSError):
+                    _use_multipart = False
+
+            if _use_multipart:
+                return await multipart_create_async(self.uploads, file, _opts)
+
         body = deepcopy_minimal({"file": file})
         files = extract_files(cast(Mapping[str, object], body), paths=[["file"]])
         # It should be noted that the actual Content-Type header that will be
