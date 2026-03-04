@@ -4,6 +4,7 @@ import os
 import math
 import asyncio
 import mimetypes
+import threading
 from typing import TYPE_CHECKING, Any, List, Union, Callable, Optional
 from pathlib import Path
 from dataclasses import dataclass
@@ -199,17 +200,20 @@ def multipart_create_sync(
         # Step 2: Upload parts concurrently
         completed_parts: List[MultipartUploadPartParam] = []
 
+        uploaded_bytes_total = 0
+        upload_lock = threading.Lock()
+
         with httpx.Client(timeout=httpx.Timeout(UPLOAD_TIMEOUT)) as http_client:
 
             def _do_upload(part_url: Any) -> MultipartUploadPartParam:
+                nonlocal uploaded_bytes_total
                 part_data = _read_part(resolved, part_url.part_number, options.part_size)
                 etag = _upload_single_part(part_url.url, part_data, http_client)
 
                 if options.on_part_upload:
-                    uploaded_bytes = min(
-                        part_url.part_number * options.part_size,
-                        resolved.file_size,
-                    )
+                    with upload_lock:
+                        uploaded_bytes_total += len(part_data)
+                        uploaded_bytes = uploaded_bytes_total
                     options.on_part_upload(
                         PartUploadEvent(
                             part_number=part_url.part_number,
@@ -266,25 +270,24 @@ async def multipart_create_async(
     try:
         # Step 2: Upload parts concurrently
         semaphore = asyncio.Semaphore(options.concurrency)
+        uploaded_bytes_total = 0
 
         async with httpx.AsyncClient(timeout=httpx.Timeout(UPLOAD_TIMEOUT)) as http_client:
 
             async def _do_upload(part_url: Any) -> MultipartUploadPartParam:
+                nonlocal uploaded_bytes_total
                 async with semaphore:
                     part_data = await asyncio.to_thread(_read_part, resolved, part_url.part_number, options.part_size)
                     etag = await _async_upload_single_part(part_url.url, part_data, http_client)
 
                     if options.on_part_upload:
-                        uploaded_bytes = min(
-                            part_url.part_number * options.part_size,
-                            resolved.file_size,
-                        )
+                        uploaded_bytes_total += len(part_data)
                         options.on_part_upload(
                             PartUploadEvent(
                                 part_number=part_url.part_number,
                                 total_parts=part_count,
                                 part_size=len(part_data),
-                                uploaded_bytes=uploaded_bytes,
+                                uploaded_bytes=uploaded_bytes_total,
                                 total_bytes=resolved.file_size,
                             )
                         )
