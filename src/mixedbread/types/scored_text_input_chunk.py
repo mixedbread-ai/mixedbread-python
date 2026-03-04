@@ -190,7 +190,7 @@ class GeneratedMetadataVideoChunkGeneratedMetadata(BaseModel):
 
     file_type: str
 
-    file_size: int
+    file_size: Optional[int] = None
 
     total_duration_seconds: float
 
