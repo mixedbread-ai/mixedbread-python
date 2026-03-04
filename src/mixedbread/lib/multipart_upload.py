@@ -251,7 +251,7 @@ async def multipart_create_async(
     options: MultipartUploadOptions,
 ) -> FileObject:
     """Perform a multipart upload asynchronously."""
-    resolved = _resolve_file_input(file)
+    resolved = await asyncio.to_thread(_resolve_file_input, file)
     part_count = max(1, math.ceil(resolved.file_size / options.part_size))
 
     # Step 1: Initiate the multipart upload
@@ -271,7 +271,7 @@ async def multipart_create_async(
 
             async def _do_upload(part_url: Any) -> MultipartUploadPartParam:
                 async with semaphore:
-                    part_data = _read_part(resolved, part_url.part_number, options.part_size)
+                    part_data = await asyncio.to_thread(_read_part, resolved, part_url.part_number, options.part_size)
                     etag = await _async_upload_single_part(part_url.url, part_data, http_client)
 
                     if options.on_part_upload:
