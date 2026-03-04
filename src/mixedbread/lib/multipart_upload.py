@@ -73,11 +73,11 @@ def _get_file_size(file: FileTypes) -> int:
     if isinstance(file_content, os.PathLike):
         return os.stat(file_content).st_size
 
-    # IO[bytes] - try seek-based size detection
+    # IO[bytes] - measure remaining bytes from current position
     if hasattr(file_content, "seek") and hasattr(file_content, "tell"):
         current = file_content.tell()
         file_content.seek(0, 2)
-        size = file_content.tell()
+        size = file_content.tell() - current
         file_content.seek(current)
         return size
 
@@ -294,9 +294,14 @@ async def multipart_create_async(
 
                     return MultipartUploadPartParam(part_number=part_url.part_number, etag=etag)
 
-            completed_parts: List[MultipartUploadPartParam] = list(
-                await asyncio.gather(*[_do_upload(pu) for pu in upload.part_urls])
-            )
+            tasks = [asyncio.ensure_future(_do_upload(pu)) for pu in upload.part_urls]
+            try:
+                completed_parts: List[MultipartUploadPartParam] = list(await asyncio.gather(*tasks))
+            except BaseException:
+                for task in tasks:
+                    task.cancel()
+                await asyncio.gather(*tasks, return_exceptions=True)
+                raise
 
         # Sort by part number
         completed_parts.sort(key=lambda p: p["part_number"])
