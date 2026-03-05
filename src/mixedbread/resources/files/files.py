@@ -124,7 +124,13 @@ class FilesResource(SyncAPIResource):
                     _use_multipart = False
 
             if _use_multipart:
-                return multipart_create_sync(self.uploads, file, _opts)
+                return multipart_create_sync(
+                    self.uploads, file, _opts,
+                    extra_headers=extra_headers,
+                    extra_query=extra_query,
+                    extra_body=extra_body,
+                    timeout=timeout,
+                )
 
         body = deepcopy_minimal({"file": file})
         files = extract_files(cast(Mapping[str, object], body), paths=[["file"]])
@@ -453,7 +459,13 @@ class AsyncFilesResource(AsyncAPIResource):
                     _use_multipart = False
 
             if _use_multipart:
-                return await multipart_create_async(self.uploads, file, _opts)
+                return await multipart_create_async(
+                    self.uploads, file, _opts,
+                    extra_headers=extra_headers,
+                    extra_query=extra_query,
+                    extra_body=extra_body,
+                    timeout=timeout,
+                )
 
         body = deepcopy_minimal({"file": file})
         files = extract_files(cast(Mapping[str, object], body), paths=[["file"]])

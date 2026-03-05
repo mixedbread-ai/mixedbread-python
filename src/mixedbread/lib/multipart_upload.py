@@ -16,6 +16,8 @@ if TYPE_CHECKING:
     from .._types import FileTypes, FileContent
     from ..resources.files.uploads import UploadsResource, AsyncUploadsResource
 
+from .._types import Body, Query, Headers, NotGiven, not_given
+
 from ..types.file_object import FileObject
 from ..types.files.multipart_upload_part_param import MultipartUploadPartParam
 
@@ -182,6 +184,11 @@ def multipart_create_sync(
     uploads: UploadsResource,
     file: FileTypes,
     options: MultipartUploadOptions,
+    *,
+    extra_headers: Headers | None = None,
+    extra_query: Query | None = None,
+    extra_body: Body | None = None,
+    timeout: float | httpx.Timeout | None | NotGiven = not_given,
 ) -> FileObject:
     """Perform a multipart upload synchronously."""
     resolved = _resolve_file_input(file)
@@ -193,6 +200,10 @@ def multipart_create_sync(
         file_size=resolved.file_size,
         mime_type=resolved.mime_type,
         part_count=part_count,
+        extra_headers=extra_headers,
+        extra_query=extra_query,
+        extra_body=extra_body,
+        timeout=timeout,
     )
     upload_id = upload.id
 
@@ -238,12 +249,22 @@ def multipart_create_sync(
         return uploads.complete(
             upload_id=upload_id,
             parts=completed_parts,
+            extra_headers=extra_headers,
+            extra_query=extra_query,
+            extra_body=extra_body,
+            timeout=timeout,
         )
 
     except BaseException:
         # Abort on any failure (including KeyboardInterrupt, CancelledError)
         try:
-            uploads.abort(upload_id=upload_id)
+            uploads.abort(
+                upload_id=upload_id,
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+            )
         except Exception:
             pass  # Best effort abort
         raise
@@ -253,6 +274,11 @@ async def multipart_create_async(
     uploads: AsyncUploadsResource,
     file: FileTypes,
     options: MultipartUploadOptions,
+    *,
+    extra_headers: Headers | None = None,
+    extra_query: Query | None = None,
+    extra_body: Body | None = None,
+    timeout: float | httpx.Timeout | None | NotGiven = not_given,
 ) -> FileObject:
     """Perform a multipart upload asynchronously."""
     resolved = await asyncio.to_thread(_resolve_file_input, file)
@@ -264,6 +290,10 @@ async def multipart_create_async(
         file_size=resolved.file_size,
         mime_type=resolved.mime_type,
         part_count=part_count,
+        extra_headers=extra_headers,
+        extra_query=extra_query,
+        extra_body=extra_body,
+        timeout=timeout,
     )
     upload_id = upload.id
 
@@ -310,12 +340,22 @@ async def multipart_create_async(
         return await uploads.complete(
             upload_id=upload_id,
             parts=completed_parts,
+            extra_headers=extra_headers,
+            extra_query=extra_query,
+            extra_body=extra_body,
+            timeout=timeout,
         )
 
     except BaseException:
         # Abort on any failure (including KeyboardInterrupt, CancelledError)
         try:
-            await uploads.abort(upload_id=upload_id)
+            await uploads.abort(
+                upload_id=upload_id,
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+            )
         except Exception:
             pass  # Best effort abort
         raise
