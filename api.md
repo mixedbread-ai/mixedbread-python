@@ -115,12 +115,35 @@ from mixedbread.types import FileObject, PaginationWithTotal, FileDeleteResponse
 
 Methods:
 
-- <code title="post /v1/files">client.files.<a href="./src/mixedbread/resources/files.py">create</a>(\*\*<a href="src/mixedbread/types/file_create_params.py">params</a>) -> <a href="./src/mixedbread/types/file_object.py">FileObject</a></code>
-- <code title="get /v1/files/{file_id}">client.files.<a href="./src/mixedbread/resources/files.py">retrieve</a>(file_id) -> <a href="./src/mixedbread/types/file_object.py">FileObject</a></code>
-- <code title="post /v1/files/{file_id}">client.files.<a href="./src/mixedbread/resources/files.py">update</a>(file_id, \*\*<a href="src/mixedbread/types/file_update_params.py">params</a>) -> <a href="./src/mixedbread/types/file_object.py">FileObject</a></code>
-- <code title="get /v1/files">client.files.<a href="./src/mixedbread/resources/files.py">list</a>(\*\*<a href="src/mixedbread/types/file_list_params.py">params</a>) -> <a href="./src/mixedbread/types/file_object.py">SyncCursor[FileObject]</a></code>
-- <code title="delete /v1/files/{file_id}">client.files.<a href="./src/mixedbread/resources/files.py">delete</a>(file_id) -> <a href="./src/mixedbread/types/file_delete_response.py">FileDeleteResponse</a></code>
-- <code title="get /v1/files/{file_id}/content">client.files.<a href="./src/mixedbread/resources/files.py">content</a>(file_id) -> BinaryAPIResponse</code>
+- <code title="post /v1/files">client.files.<a href="./src/mixedbread/resources/files/files.py">create</a>(\*\*<a href="src/mixedbread/types/file_create_params.py">params</a>) -> <a href="./src/mixedbread/types/file_object.py">FileObject</a></code>
+- <code title="get /v1/files/{file_id}">client.files.<a href="./src/mixedbread/resources/files/files.py">retrieve</a>(file_id) -> <a href="./src/mixedbread/types/file_object.py">FileObject</a></code>
+- <code title="post /v1/files/{file_id}">client.files.<a href="./src/mixedbread/resources/files/files.py">update</a>(file_id, \*\*<a href="src/mixedbread/types/file_update_params.py">params</a>) -> <a href="./src/mixedbread/types/file_object.py">FileObject</a></code>
+- <code title="get /v1/files">client.files.<a href="./src/mixedbread/resources/files/files.py">list</a>(\*\*<a href="src/mixedbread/types/file_list_params.py">params</a>) -> <a href="./src/mixedbread/types/file_object.py">SyncCursor[FileObject]</a></code>
+- <code title="delete /v1/files/{file_id}">client.files.<a href="./src/mixedbread/resources/files/files.py">delete</a>(file_id) -> <a href="./src/mixedbread/types/file_delete_response.py">FileDeleteResponse</a></code>
+- <code title="get /v1/files/{file_id}/content">client.files.<a href="./src/mixedbread/resources/files/files.py">content</a>(file_id) -> BinaryAPIResponse</code>
+
+## Uploads
+
+Types:
+
+```python
+from mixedbread.types.files import (
+    MultipartUploadPart,
+    MultipartUploadPartURL,
+    UploadCreateResponse,
+    UploadRetrieveResponse,
+    UploadListResponse,
+    UploadAbortResponse,
+)
+```
+
+Methods:
+
+- <code title="post /v1/files/uploads">client.files.uploads.<a href="./src/mixedbread/resources/files/uploads.py">create</a>(\*\*<a href="src/mixedbread/types/files/upload_create_params.py">params</a>) -> <a href="./src/mixedbread/types/files/upload_create_response.py">UploadCreateResponse</a></code>
+- <code title="get /v1/files/uploads/{upload_id}">client.files.uploads.<a href="./src/mixedbread/resources/files/uploads.py">retrieve</a>(upload_id) -> <a href="./src/mixedbread/types/files/upload_retrieve_response.py">UploadRetrieveResponse</a></code>
+- <code title="get /v1/files/uploads">client.files.uploads.<a href="./src/mixedbread/resources/files/uploads.py">list</a>() -> <a href="./src/mixedbread/types/files/upload_list_response.py">UploadListResponse</a></code>
+- <code title="post /v1/files/uploads/{upload_id}/abort">client.files.uploads.<a href="./src/mixedbread/resources/files/uploads.py">abort</a>(upload_id) -> <a href="./src/mixedbread/types/files/upload_abort_response.py">UploadAbortResponse</a></code>
+- <code title="post /v1/files/uploads/{upload_id}/complete">client.files.uploads.<a href="./src/mixedbread/resources/files/uploads.py">complete</a>(upload_id, \*\*<a href="src/mixedbread/types/files/upload_complete_params.py">params</a>) -> <a href="./src/mixedbread/types/file_object.py">FileObject</a></code>
 
 # Extractions
 

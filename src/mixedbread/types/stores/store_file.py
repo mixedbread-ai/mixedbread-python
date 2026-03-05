@@ -24,6 +24,7 @@ __all__ = [
     "ChunkTextInputChunkGeneratedMetadataCodeChunkGeneratedMetadata",
     "ChunkTextInputChunkGeneratedMetadataAudioChunkGeneratedMetadata",
     "ChunkTextInputChunkGeneratedMetadataVideoChunkGeneratedMetadata",
+    "ChunkTextInputChunkGeneratedMetadataImageChunkGeneratedMetadata",
     "ChunkImageURLInputChunk",
     "ChunkImageURLInputChunkGeneratedMetadata",
     "ChunkImageURLInputChunkGeneratedMetadataMarkdownChunkGeneratedMetadata",
@@ -34,6 +35,7 @@ __all__ = [
     "ChunkImageURLInputChunkGeneratedMetadataCodeChunkGeneratedMetadata",
     "ChunkImageURLInputChunkGeneratedMetadataAudioChunkGeneratedMetadata",
     "ChunkImageURLInputChunkGeneratedMetadataVideoChunkGeneratedMetadata",
+    "ChunkImageURLInputChunkGeneratedMetadataImageChunkGeneratedMetadata",
     "ChunkImageURLInputChunkImageURL",
     "ChunkAudioURLInputChunk",
     "ChunkAudioURLInputChunkGeneratedMetadata",
@@ -45,6 +47,7 @@ __all__ = [
     "ChunkAudioURLInputChunkGeneratedMetadataCodeChunkGeneratedMetadata",
     "ChunkAudioURLInputChunkGeneratedMetadataAudioChunkGeneratedMetadata",
     "ChunkAudioURLInputChunkGeneratedMetadataVideoChunkGeneratedMetadata",
+    "ChunkAudioURLInputChunkGeneratedMetadataImageChunkGeneratedMetadata",
     "ChunkAudioURLInputChunkAudioURL",
     "ChunkVideoURLInputChunk",
     "ChunkVideoURLInputChunkGeneratedMetadata",
@@ -56,6 +59,7 @@ __all__ = [
     "ChunkVideoURLInputChunkGeneratedMetadataCodeChunkGeneratedMetadata",
     "ChunkVideoURLInputChunkGeneratedMetadataAudioChunkGeneratedMetadata",
     "ChunkVideoURLInputChunkGeneratedMetadataVideoChunkGeneratedMetadata",
+    "ChunkVideoURLInputChunkGeneratedMetadataImageChunkGeneratedMetadata",
     "ChunkVideoURLInputChunkVideoURL",
 ]
 
@@ -102,6 +106,8 @@ class ChunkTextInputChunkGeneratedMetadataMarkdownChunkGeneratedMetadata(BaseMod
 
     num_lines: Optional[int] = None
 
+    file_extension: Optional[str] = None
+
     frontmatter: Optional[Dict[str, object]] = None
 
     if TYPE_CHECKING:
@@ -132,6 +138,8 @@ class ChunkTextInputChunkGeneratedMetadataTextChunkGeneratedMetadata(BaseModel):
 
     num_lines: Optional[int] = None
 
+    file_extension: Optional[str] = None
+
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
         # value to this field, so for compatibility we avoid doing it at runtime.
@@ -153,6 +161,8 @@ class ChunkTextInputChunkGeneratedMetadataPdfChunkGeneratedMetadata(BaseModel):
     total_pages: int
 
     total_size: int
+
+    file_extension: Optional[str] = None
 
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
@@ -182,6 +192,8 @@ class ChunkTextInputChunkGeneratedMetadataCodeChunkGeneratedMetadata(BaseModel):
 
     num_lines: Optional[int] = None
 
+    file_extension: Optional[str] = None
+
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
         # value to this field, so for compatibility we avoid doing it at runtime.
@@ -210,6 +222,8 @@ class ChunkTextInputChunkGeneratedMetadataAudioChunkGeneratedMetadata(BaseModel)
 
     audio_format: int
 
+    file_extension: Optional[str] = None
+
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
         # value to this field, so for compatibility we avoid doing it at runtime.
@@ -228,7 +242,7 @@ class ChunkTextInputChunkGeneratedMetadataVideoChunkGeneratedMetadata(BaseModel)
 
     file_type: str
 
-    file_size: int
+    file_size: Optional[int] = None
 
     total_duration_seconds: float
 
@@ -239,6 +253,36 @@ class ChunkTextInputChunkGeneratedMetadataVideoChunkGeneratedMetadata(BaseModel)
     height: int
 
     frame_count: int
+
+    has_audio_stream: Optional[bool] = None
+
+    file_extension: Optional[str] = None
+
+    if TYPE_CHECKING:
+        # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
+        # value to this field, so for compatibility we avoid doing it at runtime.
+        __pydantic_extra__: Dict[str, object] = FieldInfo(init=False)  # pyright: ignore[reportIncompatibleVariableOverride]
+
+        # Stub to indicate that arbitrary properties are accepted.
+        # To access properties that are not valid identifiers you can use `getattr`, e.g.
+        # `getattr(obj, '$type')`
+        def __getattr__(self, attr: str) -> object: ...
+    else:
+        __pydantic_extra__: Dict[str, object]
+
+
+class ChunkTextInputChunkGeneratedMetadataImageChunkGeneratedMetadata(BaseModel):
+    type: Optional[Literal["image"]] = None
+
+    file_type: str
+
+    file_size: int
+
+    width: int
+
+    height: int
+
+    file_extension: Optional[str] = None
 
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
@@ -261,6 +305,7 @@ ChunkTextInputChunkGeneratedMetadata: TypeAlias = Annotated[
         ChunkTextInputChunkGeneratedMetadataCodeChunkGeneratedMetadata,
         ChunkTextInputChunkGeneratedMetadataAudioChunkGeneratedMetadata,
         ChunkTextInputChunkGeneratedMetadataVideoChunkGeneratedMetadata,
+        ChunkTextInputChunkGeneratedMetadataImageChunkGeneratedMetadata,
         None,
     ],
     PropertyInfo(discriminator="type"),
@@ -325,6 +370,8 @@ class ChunkImageURLInputChunkGeneratedMetadataMarkdownChunkGeneratedMetadata(Bas
 
     num_lines: Optional[int] = None
 
+    file_extension: Optional[str] = None
+
     frontmatter: Optional[Dict[str, object]] = None
 
     if TYPE_CHECKING:
@@ -355,6 +402,8 @@ class ChunkImageURLInputChunkGeneratedMetadataTextChunkGeneratedMetadata(BaseMod
 
     num_lines: Optional[int] = None
 
+    file_extension: Optional[str] = None
+
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
         # value to this field, so for compatibility we avoid doing it at runtime.
@@ -376,6 +425,8 @@ class ChunkImageURLInputChunkGeneratedMetadataPdfChunkGeneratedMetadata(BaseMode
     total_pages: int
 
     total_size: int
+
+    file_extension: Optional[str] = None
 
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
@@ -405,6 +456,8 @@ class ChunkImageURLInputChunkGeneratedMetadataCodeChunkGeneratedMetadata(BaseMod
 
     num_lines: Optional[int] = None
 
+    file_extension: Optional[str] = None
+
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
         # value to this field, so for compatibility we avoid doing it at runtime.
@@ -433,6 +486,8 @@ class ChunkImageURLInputChunkGeneratedMetadataAudioChunkGeneratedMetadata(BaseMo
 
     audio_format: int
 
+    file_extension: Optional[str] = None
+
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
         # value to this field, so for compatibility we avoid doing it at runtime.
@@ -451,7 +506,7 @@ class ChunkImageURLInputChunkGeneratedMetadataVideoChunkGeneratedMetadata(BaseMo
 
     file_type: str
 
-    file_size: int
+    file_size: Optional[int] = None
 
     total_duration_seconds: float
 
@@ -462,6 +517,36 @@ class ChunkImageURLInputChunkGeneratedMetadataVideoChunkGeneratedMetadata(BaseMo
     height: int
 
     frame_count: int
+
+    has_audio_stream: Optional[bool] = None
+
+    file_extension: Optional[str] = None
+
+    if TYPE_CHECKING:
+        # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
+        # value to this field, so for compatibility we avoid doing it at runtime.
+        __pydantic_extra__: Dict[str, object] = FieldInfo(init=False)  # pyright: ignore[reportIncompatibleVariableOverride]
+
+        # Stub to indicate that arbitrary properties are accepted.
+        # To access properties that are not valid identifiers you can use `getattr`, e.g.
+        # `getattr(obj, '$type')`
+        def __getattr__(self, attr: str) -> object: ...
+    else:
+        __pydantic_extra__: Dict[str, object]
+
+
+class ChunkImageURLInputChunkGeneratedMetadataImageChunkGeneratedMetadata(BaseModel):
+    type: Optional[Literal["image"]] = None
+
+    file_type: str
+
+    file_size: int
+
+    width: int
+
+    height: int
+
+    file_extension: Optional[str] = None
 
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
@@ -484,6 +569,7 @@ ChunkImageURLInputChunkGeneratedMetadata: TypeAlias = Annotated[
         ChunkImageURLInputChunkGeneratedMetadataCodeChunkGeneratedMetadata,
         ChunkImageURLInputChunkGeneratedMetadataAudioChunkGeneratedMetadata,
         ChunkImageURLInputChunkGeneratedMetadataVideoChunkGeneratedMetadata,
+        ChunkImageURLInputChunkGeneratedMetadataImageChunkGeneratedMetadata,
         None,
     ],
     PropertyInfo(discriminator="type"),
@@ -561,6 +647,8 @@ class ChunkAudioURLInputChunkGeneratedMetadataMarkdownChunkGeneratedMetadata(Bas
 
     num_lines: Optional[int] = None
 
+    file_extension: Optional[str] = None
+
     frontmatter: Optional[Dict[str, object]] = None
 
     if TYPE_CHECKING:
@@ -591,6 +679,8 @@ class ChunkAudioURLInputChunkGeneratedMetadataTextChunkGeneratedMetadata(BaseMod
 
     num_lines: Optional[int] = None
 
+    file_extension: Optional[str] = None
+
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
         # value to this field, so for compatibility we avoid doing it at runtime.
@@ -612,6 +702,8 @@ class ChunkAudioURLInputChunkGeneratedMetadataPdfChunkGeneratedMetadata(BaseMode
     total_pages: int
 
     total_size: int
+
+    file_extension: Optional[str] = None
 
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
@@ -641,6 +733,8 @@ class ChunkAudioURLInputChunkGeneratedMetadataCodeChunkGeneratedMetadata(BaseMod
 
     num_lines: Optional[int] = None
 
+    file_extension: Optional[str] = None
+
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
         # value to this field, so for compatibility we avoid doing it at runtime.
@@ -669,6 +763,8 @@ class ChunkAudioURLInputChunkGeneratedMetadataAudioChunkGeneratedMetadata(BaseMo
 
     audio_format: int
 
+    file_extension: Optional[str] = None
+
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
         # value to this field, so for compatibility we avoid doing it at runtime.
@@ -687,7 +783,7 @@ class ChunkAudioURLInputChunkGeneratedMetadataVideoChunkGeneratedMetadata(BaseMo
 
     file_type: str
 
-    file_size: int
+    file_size: Optional[int] = None
 
     total_duration_seconds: float
 
@@ -698,6 +794,36 @@ class ChunkAudioURLInputChunkGeneratedMetadataVideoChunkGeneratedMetadata(BaseMo
     height: int
 
     frame_count: int
+
+    has_audio_stream: Optional[bool] = None
+
+    file_extension: Optional[str] = None
+
+    if TYPE_CHECKING:
+        # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
+        # value to this field, so for compatibility we avoid doing it at runtime.
+        __pydantic_extra__: Dict[str, object] = FieldInfo(init=False)  # pyright: ignore[reportIncompatibleVariableOverride]
+
+        # Stub to indicate that arbitrary properties are accepted.
+        # To access properties that are not valid identifiers you can use `getattr`, e.g.
+        # `getattr(obj, '$type')`
+        def __getattr__(self, attr: str) -> object: ...
+    else:
+        __pydantic_extra__: Dict[str, object]
+
+
+class ChunkAudioURLInputChunkGeneratedMetadataImageChunkGeneratedMetadata(BaseModel):
+    type: Optional[Literal["image"]] = None
+
+    file_type: str
+
+    file_size: int
+
+    width: int
+
+    height: int
+
+    file_extension: Optional[str] = None
 
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
@@ -720,6 +846,7 @@ ChunkAudioURLInputChunkGeneratedMetadata: TypeAlias = Annotated[
         ChunkAudioURLInputChunkGeneratedMetadataCodeChunkGeneratedMetadata,
         ChunkAudioURLInputChunkGeneratedMetadataAudioChunkGeneratedMetadata,
         ChunkAudioURLInputChunkGeneratedMetadataVideoChunkGeneratedMetadata,
+        ChunkAudioURLInputChunkGeneratedMetadataImageChunkGeneratedMetadata,
         None,
     ],
     PropertyInfo(discriminator="type"),
@@ -797,6 +924,8 @@ class ChunkVideoURLInputChunkGeneratedMetadataMarkdownChunkGeneratedMetadata(Bas
 
     num_lines: Optional[int] = None
 
+    file_extension: Optional[str] = None
+
     frontmatter: Optional[Dict[str, object]] = None
 
     if TYPE_CHECKING:
@@ -827,6 +956,8 @@ class ChunkVideoURLInputChunkGeneratedMetadataTextChunkGeneratedMetadata(BaseMod
 
     num_lines: Optional[int] = None
 
+    file_extension: Optional[str] = None
+
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
         # value to this field, so for compatibility we avoid doing it at runtime.
@@ -848,6 +979,8 @@ class ChunkVideoURLInputChunkGeneratedMetadataPdfChunkGeneratedMetadata(BaseMode
     total_pages: int
 
     total_size: int
+
+    file_extension: Optional[str] = None
 
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
@@ -877,6 +1010,8 @@ class ChunkVideoURLInputChunkGeneratedMetadataCodeChunkGeneratedMetadata(BaseMod
 
     num_lines: Optional[int] = None
 
+    file_extension: Optional[str] = None
+
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
         # value to this field, so for compatibility we avoid doing it at runtime.
@@ -905,6 +1040,8 @@ class ChunkVideoURLInputChunkGeneratedMetadataAudioChunkGeneratedMetadata(BaseMo
 
     audio_format: int
 
+    file_extension: Optional[str] = None
+
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
         # value to this field, so for compatibility we avoid doing it at runtime.
@@ -923,7 +1060,7 @@ class ChunkVideoURLInputChunkGeneratedMetadataVideoChunkGeneratedMetadata(BaseMo
 
     file_type: str
 
-    file_size: int
+    file_size: Optional[int] = None
 
     total_duration_seconds: float
 
@@ -934,6 +1071,36 @@ class ChunkVideoURLInputChunkGeneratedMetadataVideoChunkGeneratedMetadata(BaseMo
     height: int
 
     frame_count: int
+
+    has_audio_stream: Optional[bool] = None
+
+    file_extension: Optional[str] = None
+
+    if TYPE_CHECKING:
+        # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
+        # value to this field, so for compatibility we avoid doing it at runtime.
+        __pydantic_extra__: Dict[str, object] = FieldInfo(init=False)  # pyright: ignore[reportIncompatibleVariableOverride]
+
+        # Stub to indicate that arbitrary properties are accepted.
+        # To access properties that are not valid identifiers you can use `getattr`, e.g.
+        # `getattr(obj, '$type')`
+        def __getattr__(self, attr: str) -> object: ...
+    else:
+        __pydantic_extra__: Dict[str, object]
+
+
+class ChunkVideoURLInputChunkGeneratedMetadataImageChunkGeneratedMetadata(BaseModel):
+    type: Optional[Literal["image"]] = None
+
+    file_type: str
+
+    file_size: int
+
+    width: int
+
+    height: int
+
+    file_extension: Optional[str] = None
 
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
@@ -956,6 +1123,7 @@ ChunkVideoURLInputChunkGeneratedMetadata: TypeAlias = Annotated[
         ChunkVideoURLInputChunkGeneratedMetadataCodeChunkGeneratedMetadata,
         ChunkVideoURLInputChunkGeneratedMetadataAudioChunkGeneratedMetadata,
         ChunkVideoURLInputChunkGeneratedMetadataVideoChunkGeneratedMetadata,
+        ChunkVideoURLInputChunkGeneratedMetadataImageChunkGeneratedMetadata,
         None,
     ],
     PropertyInfo(discriminator="type"),

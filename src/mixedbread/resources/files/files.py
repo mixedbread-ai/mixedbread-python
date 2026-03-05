@@ -6,12 +6,20 @@ from typing import Mapping, Optional, cast
 
 import httpx
 
-from ..types import file_list_params, file_create_params, file_update_params
-from .._types import Body, Omit, Query, Headers, NotGiven, FileTypes, omit, not_given
-from .._utils import extract_files, maybe_transform, deepcopy_minimal, async_maybe_transform
-from .._compat import cached_property
-from .._resource import SyncAPIResource, AsyncAPIResource
-from .._response import (
+from ...types import file_list_params, file_create_params, file_update_params
+from .uploads import (
+    UploadsResource,
+    AsyncUploadsResource,
+    UploadsResourceWithRawResponse,
+    AsyncUploadsResourceWithRawResponse,
+    UploadsResourceWithStreamingResponse,
+    AsyncUploadsResourceWithStreamingResponse,
+)
+from ..._types import Body, Omit, Query, Headers, NotGiven, FileTypes, omit, not_given
+from ..._utils import extract_files, maybe_transform, deepcopy_minimal, async_maybe_transform
+from ..._compat import cached_property
+from ..._resource import SyncAPIResource, AsyncAPIResource
+from ..._response import (
     BinaryAPIResponse,
     AsyncBinaryAPIResponse,
     StreamedBinaryAPIResponse,
@@ -25,15 +33,25 @@ from .._response import (
     async_to_custom_raw_response_wrapper,
     async_to_custom_streamed_response_wrapper,
 )
-from ..pagination import SyncCursor, AsyncCursor
-from .._base_client import AsyncPaginator, make_request_options
-from ..types.file_object import FileObject
-from ..types.file_delete_response import FileDeleteResponse
+from ...pagination import SyncCursor, AsyncCursor
+from ..._base_client import AsyncPaginator, make_request_options
+from ...types.file_object import FileObject
+from ...lib.multipart_upload import (
+    MultipartUploadOptions,
+    _get_file_size,
+    multipart_create_sync,
+    multipart_create_async,
+)
+from ...types.file_delete_response import FileDeleteResponse
 
 __all__ = ["FilesResource", "AsyncFilesResource"]
 
 
 class FilesResource(SyncAPIResource):
+    @cached_property
+    def uploads(self) -> UploadsResource:
+        return UploadsResource(self._client)
+
     @cached_property
     def with_raw_response(self) -> FilesResourceWithRawResponse:
         """
@@ -57,6 +75,7 @@ class FilesResource(SyncAPIResource):
         self,
         *,
         file: FileTypes,
+        multipart_upload: bool | MultipartUploadOptions | None = None,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -67,12 +86,20 @@ class FilesResource(SyncAPIResource):
         """
         Upload a new file.
 
+        Automatically uses multipart uploads for large files (>100MB by default).
+
         Args: file: The file to upload.
 
         Returns: FileResponse: The response containing the details of the uploaded file.
 
         Args:
           file: The file to upload
+
+          multipart_upload: Controls multipart upload behavior.
+              None (default) auto-detects based on file size.
+              True forces multipart with default options.
+              False disables multipart.
+              MultipartUploadOptions for custom settings.
 
           extra_headers: Send extra headers
 
@@ -82,6 +109,29 @@ class FilesResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        if multipart_upload is not False:
+            if isinstance(multipart_upload, MultipartUploadOptions):
+                _opts = multipart_upload
+                _use_multipart = True
+            elif multipart_upload is True:
+                _opts = MultipartUploadOptions()
+                _use_multipart = True
+            else:  # None — auto-detect
+                _opts = MultipartUploadOptions()
+                try:
+                    _use_multipart = _get_file_size(file) >= _opts.threshold
+                except (TypeError, OSError):
+                    _use_multipart = False
+
+            if _use_multipart:
+                return multipart_create_sync(
+                    self.uploads, file, _opts,
+                    extra_headers=extra_headers,
+                    extra_query=extra_query,
+                    extra_body=extra_body,
+                    timeout=timeout,
+                )
+
         body = deepcopy_minimal({"file": file})
         files = extract_files(cast(Mapping[str, object], body), paths=[["file"]])
         # It should be noted that the actual Content-Type header that will be
@@ -334,6 +384,10 @@ class FilesResource(SyncAPIResource):
 
 class AsyncFilesResource(AsyncAPIResource):
     @cached_property
+    def uploads(self) -> AsyncUploadsResource:
+        return AsyncUploadsResource(self._client)
+
+    @cached_property
     def with_raw_response(self) -> AsyncFilesResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return
@@ -356,6 +410,7 @@ class AsyncFilesResource(AsyncAPIResource):
         self,
         *,
         file: FileTypes,
+        multipart_upload: bool | MultipartUploadOptions | None = None,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -366,12 +421,20 @@ class AsyncFilesResource(AsyncAPIResource):
         """
         Upload a new file.
 
+        Automatically uses multipart uploads for large files (>100MB by default).
+
         Args: file: The file to upload.
 
         Returns: FileResponse: The response containing the details of the uploaded file.
 
         Args:
           file: The file to upload
+
+          multipart_upload: Controls multipart upload behavior.
+              None (default) auto-detects based on file size.
+              True forces multipart with default options.
+              False disables multipart.
+              MultipartUploadOptions for custom settings.
 
           extra_headers: Send extra headers
 
@@ -381,6 +444,29 @@ class AsyncFilesResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        if multipart_upload is not False:
+            if isinstance(multipart_upload, MultipartUploadOptions):
+                _opts = multipart_upload
+                _use_multipart = True
+            elif multipart_upload is True:
+                _opts = MultipartUploadOptions()
+                _use_multipart = True
+            else:  # None — auto-detect
+                _opts = MultipartUploadOptions()
+                try:
+                    _use_multipart = _get_file_size(file) >= _opts.threshold
+                except (TypeError, OSError):
+                    _use_multipart = False
+
+            if _use_multipart:
+                return await multipart_create_async(
+                    self.uploads, file, _opts,
+                    extra_headers=extra_headers,
+                    extra_query=extra_query,
+                    extra_body=extra_body,
+                    timeout=timeout,
+                )
+
         body = deepcopy_minimal({"file": file})
         files = extract_files(cast(Mapping[str, object], body), paths=[["file"]])
         # It should be noted that the actual Content-Type header that will be
@@ -655,6 +741,10 @@ class FilesResourceWithRawResponse:
             BinaryAPIResponse,
         )
 
+    @cached_property
+    def uploads(self) -> UploadsResourceWithRawResponse:
+        return UploadsResourceWithRawResponse(self._files.uploads)
+
 
 class AsyncFilesResourceWithRawResponse:
     def __init__(self, files: AsyncFilesResource) -> None:
@@ -679,6 +769,10 @@ class AsyncFilesResourceWithRawResponse:
             files.content,
             AsyncBinaryAPIResponse,
         )
+
+    @cached_property
+    def uploads(self) -> AsyncUploadsResourceWithRawResponse:
+        return AsyncUploadsResourceWithRawResponse(self._files.uploads)
 
 
 class FilesResourceWithStreamingResponse:
@@ -705,6 +799,10 @@ class FilesResourceWithStreamingResponse:
             StreamedBinaryAPIResponse,
         )
 
+    @cached_property
+    def uploads(self) -> UploadsResourceWithStreamingResponse:
+        return UploadsResourceWithStreamingResponse(self._files.uploads)
+
 
 class AsyncFilesResourceWithStreamingResponse:
     def __init__(self, files: AsyncFilesResource) -> None:
@@ -729,3 +827,7 @@ class AsyncFilesResourceWithStreamingResponse:
             files.content,
             AsyncStreamedBinaryAPIResponse,
         )
+
+    @cached_property
+    def uploads(self) -> AsyncUploadsResourceWithStreamingResponse:
+        return AsyncUploadsResourceWithStreamingResponse(self._files.uploads)

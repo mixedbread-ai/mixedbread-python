@@ -1,5 +1,44 @@
 # Changelog
 
+## 0.47.0 (2026-03-05)
+
+Full Changelog: [v1.0.0...v0.47.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v1.0.0...v0.47.0)
+
+### Features
+
+* **api:** add uploads (multipart) subresource to files ([f510cc9](https://github.com/mixedbread-ai/mixedbread-python/commit/f510cc9d7ae96b0874ee2e7ed9b6f4bf37fe8a07))
+* **api:** api update ([e95f5f1](https://github.com/mixedbread-ai/mixedbread-python/commit/e95f5f1ca1ad4215a5d2bc2fa3e5e6838bd17c3c))
+* **api:** api update ([eb27c60](https://github.com/mixedbread-ai/mixedbread-python/commit/eb27c606437eea717438344e343c1adfa5ebff16))
+* **api:** api update ([c4be5ae](https://github.com/mixedbread-ai/mixedbread-python/commit/c4be5ae024212e1fd1feaabdc1d2b07c14228eb7))
+* **api:** api update ([153c4ba](https://github.com/mixedbread-ai/mixedbread-python/commit/153c4ba201048975a882983f882491352a1d7bd3))
+* **api:** api update ([216baf6](https://github.com/mixedbread-ai/mixedbread-python/commit/216baf6093ec37db5b57d0fb675a7c7212bea750))
+* **api:** api update ([8fef561](https://github.com/mixedbread-ai/mixedbread-python/commit/8fef5613483e10652fd1e35ba3e2097a26a5cfcd))
+* **api:** api update ([10a541d](https://github.com/mixedbread-ai/mixedbread-python/commit/10a541d3fa4015fdb5e2b6720fdf1f97322b5439))
+* **api:** files uploads (multipart) subresource ([93a98e6](https://github.com/mixedbread-ai/mixedbread-python/commit/93a98e6c38cce16f1de10df080e6a81e9be25f93))
+* **api:** manual updates ([e38a505](https://github.com/mixedbread-ai/mixedbread-python/commit/e38a505829b962ad8115859cfb3eff149e3c6cb3))
+* **api:** manual updates ([860868e](https://github.com/mixedbread-ai/mixedbread-python/commit/860868e1b9d9c56570fe05e9525bd17bcf427515))
+* **api:** manual updates ([33abdc9](https://github.com/mixedbread-ai/mixedbread-python/commit/33abdc949c57c09804841b7d53c0fec22a02133a))
+* use multipart uploads API for large files automatically with optional config ([#18](https://github.com/mixedbread-ai/mixedbread-python/issues/18)) ([ff0f83f](https://github.com/mixedbread-ai/mixedbread-python/commit/ff0f83fda625c0c67d478bd4cccd6cd179fea44a))
+
+
+### Bug Fixes
+
+* cancel orphaned upload tasks and fix file size calc for io bytes ([#21](https://github.com/mixedbread-ai/mixedbread-python/issues/21)) ([46aea64](https://github.com/mixedbread-ai/mixedbread-python/commit/46aea647e9aa19ee8095dd1bafe8c54d9f1d7bb9))
+* count uploaded bytes correctly even if parts finish out of order ([#20](https://github.com/mixedbread-ai/mixedbread-python/issues/20)) ([eb8af86](https://github.com/mixedbread-ai/mixedbread-python/commit/eb8af86bcc757e50199d5fc963cb203897b704b6))
+* do not block event loop for read_part on async coroutine in multipart upload ([#19](https://github.com/mixedbread-ai/mixedbread-python/issues/19)) ([537f825](https://github.com/mixedbread-ai/mixedbread-python/commit/537f8254bfa0e11fe3a32c14d5705fdac5b9bc04))
+* do not drop request uptions on multipart upload path ([#23](https://github.com/mixedbread-ai/mixedbread-python/issues/23)) ([2859304](https://github.com/mixedbread-ai/mixedbread-python/commit/2859304036ccc25bcee28d6f5a1c564c6a70ca9e))
+* explicit multipart upload config in store files APIs ([#22](https://github.com/mixedbread-ai/mixedbread-python/issues/22)) ([0ebb7b0](https://github.com/mixedbread-ai/mixedbread-python/commit/0ebb7b0d4cbdd0fd41842e5ac2caa8a4b0d3d9aa))
+
+
+### Chores
+
+* format all `api.md` files ([d167e2d](https://github.com/mixedbread-ai/mixedbread-python/commit/d167e2d222b34334f86313213bb01d7c8a003f18))
+* **internal:** add request options to SSE classes ([f241bf6](https://github.com/mixedbread-ai/mixedbread-python/commit/f241bf6d47c31faf166869ef96219d7c7d4c8e10))
+* **internal:** fix lint error on Python 3.14 ([72f3d05](https://github.com/mixedbread-ai/mixedbread-python/commit/72f3d05d8e2b6bea43db9001270d836f21254a9e))
+* **internal:** make `test_proxy_environment_variables` more resilient ([d0ec2d9](https://github.com/mixedbread-ai/mixedbread-python/commit/d0ec2d97d74bbf31468fd8ef537f8d142dc92fc7))
+* **internal:** make `test_proxy_environment_variables` more resilient to env ([c287c24](https://github.com/mixedbread-ai/mixedbread-python/commit/c287c24551007387ccd78ce9faea8d4bae02719e))
+* update mock server docs ([b3523db](https://github.com/mixedbread-ai/mixedbread-python/commit/b3523db2445a8a389ca9828deea5d991c095bd0f))
+
 ## 1.0.0 (2026-02-12)
 
 Full Changelog: [v0.46.0...v1.0.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.46.0...v1.0.0)
