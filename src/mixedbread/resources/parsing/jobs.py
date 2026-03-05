@@ -10,6 +10,7 @@ import httpx
 
 from ...lib import polling
 from ..._types import Body, Omit, Query, Headers, NotGiven, FileTypes, omit, not_given
+from ...lib.multipart_upload import MultipartUploadOptions
 from ..._utils import maybe_transform, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
@@ -403,13 +404,14 @@ class JobsResource(SyncAPIResource):
         ]
         | NotGiven = not_given,
         return_format: Literal["html", "markdown", "plain"] | NotGiven = not_given,
+        multipart_upload: bool | MultipartUploadOptions | None = None,
         **kwargs: Any,
     ) -> ParsingJob:
         """Upload a file to the `files` API and then create a parsing job for it.
         Note the job will be asynchronously processed (you can use the alternative
         polling helper method to wait for processing to complete).
         """
-        file_obj = self._client.files.create(file=file, **kwargs)
+        file_obj = self._client.files.create(file=file, multipart_upload=multipart_upload, **kwargs)
         return self.create(
             file_id=file_obj.id,
             chunking_strategy=chunking_strategy,
@@ -442,11 +444,12 @@ class JobsResource(SyncAPIResource):
         ]
         | NotGiven = not_given,
         return_format: Literal["html", "markdown", "plain"] | NotGiven = not_given,
+        multipart_upload: bool | MultipartUploadOptions | None = None,
         poll_interval_ms: int | NotGiven = not_given,
         **kwargs: Any,
     ) -> ParsingJob:
         """Upload a file and create a parsing job, then poll until processing is complete."""
-        file_obj = self._client.files.create(file=file, **kwargs)
+        file_obj = self._client.files.create(file=file, multipart_upload=multipart_upload, **kwargs)
         return self.create_and_poll(
             file_id=file_obj.id,
             chunking_strategy=chunking_strategy,
@@ -827,13 +830,14 @@ class AsyncJobsResource(AsyncAPIResource):
         ]
         | NotGiven = not_given,
         return_format: Literal["html", "markdown", "plain"] | NotGiven = not_given,
+        multipart_upload: bool | MultipartUploadOptions | None = None,
         **kwargs: Any,
     ) -> ParsingJob:
         """Upload a file to the `files` API and then create a parsing job for it.
         Note the job will be asynchronously processed (you can use the alternative
         polling helper method to wait for processing to complete).
         """
-        file_obj = await self._client.files.create(file=file, **kwargs)
+        file_obj = await self._client.files.create(file=file, multipart_upload=multipart_upload, **kwargs)
         return await self.create(
             file_id=file_obj.id,
             chunking_strategy=chunking_strategy,
@@ -866,11 +870,12 @@ class AsyncJobsResource(AsyncAPIResource):
         ]
         | NotGiven = not_given,
         return_format: Literal["html", "markdown", "plain"] | NotGiven = not_given,
+        multipart_upload: bool | MultipartUploadOptions | None = None,
         poll_interval_ms: int | NotGiven = not_given,
         **kwargs: Any,
     ) -> ParsingJob:
         """Upload a file and create a parsing job, then poll until processing is complete."""
-        file_obj = await self._client.files.create(file=file, **kwargs)
+        file_obj = await self._client.files.create(file=file, multipart_upload=multipart_upload, **kwargs)
         return await self.create_and_poll(
             file_id=file_obj.id,
             chunking_strategy=chunking_strategy,

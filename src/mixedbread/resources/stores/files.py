@@ -9,6 +9,7 @@ import httpx
 
 from ...lib import polling
 from ..._types import Body, Omit, Query, Headers, NotGiven, FileTypes, SequenceNotStr, omit, not_given
+from ...lib.multipart_upload import MultipartUploadOptions
 from ..._utils import maybe_transform, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
@@ -495,6 +496,7 @@ class FilesResource(SyncAPIResource):
         external_id: Optional[str] | Omit = omit,
         overwrite: bool | Omit = omit,
         experimental: file_create_params.Experimental | Omit = omit,
+        multipart_upload: bool | MultipartUploadOptions | None = None,
         **kwargs: Any,
     ) -> StoreFile:
         """Upload a file to the `files` API and then attach it to the given store.
@@ -509,6 +511,11 @@ class FilesResource(SyncAPIResource):
           external_id: External identifier for this file in the store
           overwrite: If true, overwrite an existing file with the same external_id
           experimental: Configuration for a file.
+          multipart_upload: Controls multipart upload behavior for the file upload.
+              None (default) auto-detects based on file size.
+              True forces multipart with default options.
+              False disables multipart.
+              MultipartUploadOptions for custom settings.
           extra_headers: Send extra headers
           extra_query: Add additional query parameters to the request
           extra_body: Add additional JSON properties to the request
@@ -516,7 +523,7 @@ class FilesResource(SyncAPIResource):
         Returns:
             The file object once it reaches a terminal state
         """
-        file_obj = self._client.files.create(file=file, **kwargs)
+        file_obj = self._client.files.create(file=file, multipart_upload=multipart_upload, **kwargs)
         return self.create(
             store_identifier=store_identifier,
             file_id=file_obj.id,
@@ -538,12 +545,13 @@ class FilesResource(SyncAPIResource):
         external_id: Optional[str] | Omit = omit,
         overwrite: bool | Omit = omit,
         experimental: file_create_params.Experimental | Omit = omit,
+        multipart_upload: bool | MultipartUploadOptions | None = None,
         poll_interval_ms: int | NotGiven = not_given,
         poll_timeout_ms: float | NotGiven = not_given,
         **kwargs: Any,
     ) -> StoreFile:
         """Add a file to a store and poll until processing is complete.
-        
+
         Args:
             store_identifier: The ID or name of the store
             file: The file to upload
@@ -552,12 +560,17 @@ class FilesResource(SyncAPIResource):
             external_id: External identifier for this file in the store
             overwrite: If true, overwrite an existing file with the same external_id
             experimental: Configuration for a file.
+            multipart_upload: Controls multipart upload behavior for the file upload.
+                None (default) auto-detects based on file size.
+                True forces multipart with default options.
+                False disables multipart.
+                MultipartUploadOptions for custom settings.
             poll_interval_ms: The interval between polls in milliseconds
             poll_timeout_ms: The maximum time to poll for in milliseconds
         Returns:
             The file object once it reaches a terminal state
         """
-        file_obj = self._client.files.create(file=file, **kwargs)
+        file_obj = self._client.files.create(file=file, multipart_upload=multipart_upload, **kwargs)
         return self.create_and_poll(
             store_identifier=store_identifier,
             file_id=file_obj.id,
@@ -1038,6 +1051,7 @@ class AsyncFilesResource(AsyncAPIResource):
         external_id: Optional[str] | Omit = omit,
         overwrite: bool | Omit = omit,
         experimental: file_create_params.Experimental | Omit = omit,
+        multipart_upload: bool | MultipartUploadOptions | None = None,
         **kwargs: Any,
     ) -> StoreFile:
         """Upload a file to the `files` API and then attach it to the given vector store.
@@ -1052,12 +1066,15 @@ class AsyncFilesResource(AsyncAPIResource):
             external_id: External identifier for this file in the store
             overwrite: If true, overwrite an existing file with the same external_id
             experimental: Configuration for a file.
-            poll_interval_ms: The interval between polls in milliseconds
-            poll_timeout_ms: The maximum time to poll for in milliseconds
+            multipart_upload: Controls multipart upload behavior for the file upload.
+                None (default) auto-detects based on file size.
+                True forces multipart with default options.
+                False disables multipart.
+                MultipartUploadOptions for custom settings.
         Returns:
             The file object once it reaches a terminal state
         """
-        file_obj = await self._client.files.create(file=file, **kwargs)
+        file_obj = await self._client.files.create(file=file, multipart_upload=multipart_upload, **kwargs)
         return await self.create(
             store_identifier=store_identifier,
             file_id=file_obj.id,
@@ -1079,12 +1096,13 @@ class AsyncFilesResource(AsyncAPIResource):
         external_id: Optional[str] | Omit = omit,
         overwrite: bool | Omit = omit,
         experimental: file_create_params.Experimental | Omit = omit,
+        multipart_upload: bool | MultipartUploadOptions | None = None,
         poll_interval_ms: int | NotGiven = not_given,
         poll_timeout_ms: float | NotGiven = not_given,
         **kwargs: Any,
     ) -> StoreFile:
         """Add a file to a store and poll until processing is complete.
-        
+
         Args:
             store_identifier: The ID or name of the store
             file: The file to upload
@@ -1093,12 +1111,17 @@ class AsyncFilesResource(AsyncAPIResource):
             external_id: External identifier for this file in the store
             overwrite: If true, overwrite an existing file with the same external_id
             experimental: Configuration for a file.
+            multipart_upload: Controls multipart upload behavior for the file upload.
+                None (default) auto-detects based on file size.
+                True forces multipart with default options.
+                False disables multipart.
+                MultipartUploadOptions for custom settings.
             poll_interval_ms: The interval between polls in milliseconds
             poll_timeout_ms: The maximum time to poll for in milliseconds
         Returns:
             The file object once it reaches a terminal state
         """
-        file_obj = await self._client.files.create(file=file, **kwargs)
+        file_obj = await self._client.files.create(file=file, multipart_upload=multipart_upload, **kwargs)
         return await self.create_and_poll(
             store_identifier=store_identifier,
             file_id=file_obj.id,
