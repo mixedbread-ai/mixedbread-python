@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.47.1 (2026-03-12)
+
+Full Changelog: [v0.47.0...v0.47.1](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.47.0...v0.47.1)
+
+### Chores
+
+* **ci:** skip uploading artifacts on stainless-internal branches ([ffb6f62](https://github.com/mixedbread-ai/mixedbread-python/commit/ffb6f62c5ad6afb7b6330ef4159a32f35327b1b9))
+* **test:** do not count install time for mock server timeout ([5094a5c](https://github.com/mixedbread-ai/mixedbread-python/commit/5094a5c23d75363566963e806d60bf214575c89d))
+* update placeholder string ([eeb1328](https://github.com/mixedbread-ai/mixedbread-python/commit/eeb13288a93f42b17d3f21a7980d22c34c7afc8b))
+
 ## 0.47.0 (2026-03-05)
 
 Full Changelog: [v1.0.0...v0.47.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v1.0.0...v0.47.0)
