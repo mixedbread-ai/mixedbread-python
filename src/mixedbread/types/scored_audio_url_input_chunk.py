@@ -171,6 +171,8 @@ class GeneratedMetadataAudioChunkGeneratedMetadata(BaseModel):
 
     audio_format: int
 
+    bpm: Optional[int] = None
+
     file_extension: Optional[str] = None
 
     if TYPE_CHECKING:
@@ -204,6 +206,8 @@ class GeneratedMetadataVideoChunkGeneratedMetadata(BaseModel):
     frame_count: int
 
     has_audio_stream: Optional[bool] = None
+
+    bpm: Optional[int] = None
 
     file_extension: Optional[str] = None
 

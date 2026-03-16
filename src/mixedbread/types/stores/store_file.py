@@ -222,6 +222,8 @@ class ChunkTextInputChunkGeneratedMetadataAudioChunkGeneratedMetadata(BaseModel)
 
     audio_format: int
 
+    bpm: Optional[int] = None
+
     file_extension: Optional[str] = None
 
     if TYPE_CHECKING:
@@ -255,6 +257,8 @@ class ChunkTextInputChunkGeneratedMetadataVideoChunkGeneratedMetadata(BaseModel)
     frame_count: int
 
     has_audio_stream: Optional[bool] = None
+
+    bpm: Optional[int] = None
 
     file_extension: Optional[str] = None
 
@@ -486,6 +490,8 @@ class ChunkImageURLInputChunkGeneratedMetadataAudioChunkGeneratedMetadata(BaseMo
 
     audio_format: int
 
+    bpm: Optional[int] = None
+
     file_extension: Optional[str] = None
 
     if TYPE_CHECKING:
@@ -519,6 +525,8 @@ class ChunkImageURLInputChunkGeneratedMetadataVideoChunkGeneratedMetadata(BaseMo
     frame_count: int
 
     has_audio_stream: Optional[bool] = None
+
+    bpm: Optional[int] = None
 
     file_extension: Optional[str] = None
 
@@ -763,6 +771,8 @@ class ChunkAudioURLInputChunkGeneratedMetadataAudioChunkGeneratedMetadata(BaseMo
 
     audio_format: int
 
+    bpm: Optional[int] = None
+
     file_extension: Optional[str] = None
 
     if TYPE_CHECKING:
@@ -796,6 +806,8 @@ class ChunkAudioURLInputChunkGeneratedMetadataVideoChunkGeneratedMetadata(BaseMo
     frame_count: int
 
     has_audio_stream: Optional[bool] = None
+
+    bpm: Optional[int] = None
 
     file_extension: Optional[str] = None
 
@@ -1040,6 +1052,8 @@ class ChunkVideoURLInputChunkGeneratedMetadataAudioChunkGeneratedMetadata(BaseMo
 
     audio_format: int
 
+    bpm: Optional[int] = None
+
     file_extension: Optional[str] = None
 
     if TYPE_CHECKING:
@@ -1073,6 +1087,8 @@ class ChunkVideoURLInputChunkGeneratedMetadataVideoChunkGeneratedMetadata(BaseMo
     frame_count: int
 
     has_audio_stream: Optional[bool] = None
+
+    bpm: Optional[int] = None
 
     file_extension: Optional[str] = None
 
