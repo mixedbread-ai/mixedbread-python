@@ -40,11 +40,11 @@ class GeneratedMetadataMarkdownChunkGeneratedMetadata(BaseModel):
 
     file_type: Optional[Literal["text/markdown"]] = None
 
-    language: str
+    language: Optional[str] = None
 
-    word_count: int
+    word_count: Optional[int] = None
 
-    file_size: int
+    file_size: Optional[int] = None
 
     chunk_headings: Optional[List[GeneratedMetadataMarkdownChunkGeneratedMetadataChunkHeading]] = None
 
@@ -76,11 +76,11 @@ class GeneratedMetadataTextChunkGeneratedMetadata(BaseModel):
 
     file_type: Optional[Literal["text/plain"]] = None
 
-    language: str
+    language: Optional[str] = None
 
-    word_count: int
+    word_count: Optional[int] = None
 
-    file_size: int
+    file_size: Optional[int] = None
 
     start_line: Optional[int] = None
 
@@ -106,9 +106,9 @@ class GeneratedMetadataPdfChunkGeneratedMetadata(BaseModel):
 
     file_type: Optional[Literal["application/pdf"]] = None
 
-    total_pages: int
+    total_pages: Optional[int] = None
 
-    total_size: int
+    total_size: Optional[int] = None
 
     file_extension: Optional[str] = None
 
@@ -130,11 +130,11 @@ class GeneratedMetadataCodeChunkGeneratedMetadata(BaseModel):
 
     file_type: str
 
-    language: str
+    language: Optional[str] = None
 
-    word_count: int
+    word_count: Optional[int] = None
 
-    file_size: int
+    file_size: Optional[int] = None
 
     start_line: Optional[int] = None
 
@@ -158,17 +158,17 @@ class GeneratedMetadataCodeChunkGeneratedMetadata(BaseModel):
 class GeneratedMetadataAudioChunkGeneratedMetadata(BaseModel):
     type: Optional[Literal["audio"]] = None
 
-    file_type: str
+    file_type: Optional[str] = None
 
-    file_size: int
+    file_size: Optional[int] = None
 
-    total_duration_seconds: float
+    total_duration_seconds: Optional[float] = None
 
-    sample_rate: int
+    sample_rate: Optional[int] = None
 
-    channels: int
+    channels: Optional[int] = None
 
-    audio_format: int
+    audio_format: Optional[int] = None
 
     bpm: Optional[int] = None
 
@@ -190,19 +190,19 @@ class GeneratedMetadataAudioChunkGeneratedMetadata(BaseModel):
 class GeneratedMetadataVideoChunkGeneratedMetadata(BaseModel):
     type: Optional[Literal["video"]] = None
 
-    file_type: str
+    file_type: Optional[str] = None
 
     file_size: Optional[int] = None
 
-    total_duration_seconds: float
+    total_duration_seconds: Optional[float] = None
 
-    fps: float
+    fps: Optional[float] = None
 
-    width: int
+    width: Optional[int] = None
 
-    height: int
+    height: Optional[int] = None
 
-    frame_count: int
+    frame_count: Optional[int] = None
 
     has_audio_stream: Optional[bool] = None
 
@@ -226,13 +226,13 @@ class GeneratedMetadataVideoChunkGeneratedMetadata(BaseModel):
 class GeneratedMetadataImageChunkGeneratedMetadata(BaseModel):
     type: Optional[Literal["image"]] = None
 
-    file_type: str
+    file_type: Optional[str] = None
 
-    file_size: int
+    file_size: Optional[int] = None
 
-    width: int
+    width: Optional[int] = None
 
-    height: int
+    height: Optional[int] = None
 
     file_extension: Optional[str] = None
 

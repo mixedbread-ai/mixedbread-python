@@ -88,11 +88,11 @@ class ChunkTextInputChunkGeneratedMetadataMarkdownChunkGeneratedMetadata(BaseMod
 
     file_type: Optional[Literal["text/markdown"]] = None
 
-    language: str
+    language: Optional[str] = None
 
-    word_count: int
+    word_count: Optional[int] = None
 
-    file_size: int
+    file_size: Optional[int] = None
 
     chunk_headings: Optional[List[ChunkTextInputChunkGeneratedMetadataMarkdownChunkGeneratedMetadataChunkHeading]] = (
         None
@@ -128,11 +128,11 @@ class ChunkTextInputChunkGeneratedMetadataTextChunkGeneratedMetadata(BaseModel):
 
     file_type: Optional[Literal["text/plain"]] = None
 
-    language: str
+    language: Optional[str] = None
 
-    word_count: int
+    word_count: Optional[int] = None
 
-    file_size: int
+    file_size: Optional[int] = None
 
     start_line: Optional[int] = None
 
@@ -158,9 +158,9 @@ class ChunkTextInputChunkGeneratedMetadataPdfChunkGeneratedMetadata(BaseModel):
 
     file_type: Optional[Literal["application/pdf"]] = None
 
-    total_pages: int
+    total_pages: Optional[int] = None
 
-    total_size: int
+    total_size: Optional[int] = None
 
     file_extension: Optional[str] = None
 
@@ -182,11 +182,11 @@ class ChunkTextInputChunkGeneratedMetadataCodeChunkGeneratedMetadata(BaseModel):
 
     file_type: str
 
-    language: str
+    language: Optional[str] = None
 
-    word_count: int
+    word_count: Optional[int] = None
 
-    file_size: int
+    file_size: Optional[int] = None
 
     start_line: Optional[int] = None
 
@@ -210,17 +210,17 @@ class ChunkTextInputChunkGeneratedMetadataCodeChunkGeneratedMetadata(BaseModel):
 class ChunkTextInputChunkGeneratedMetadataAudioChunkGeneratedMetadata(BaseModel):
     type: Optional[Literal["audio"]] = None
 
-    file_type: str
+    file_type: Optional[str] = None
 
-    file_size: int
+    file_size: Optional[int] = None
 
-    total_duration_seconds: float
+    total_duration_seconds: Optional[float] = None
 
-    sample_rate: int
+    sample_rate: Optional[int] = None
 
-    channels: int
+    channels: Optional[int] = None
 
-    audio_format: int
+    audio_format: Optional[int] = None
 
     bpm: Optional[int] = None
 
@@ -242,19 +242,19 @@ class ChunkTextInputChunkGeneratedMetadataAudioChunkGeneratedMetadata(BaseModel)
 class ChunkTextInputChunkGeneratedMetadataVideoChunkGeneratedMetadata(BaseModel):
     type: Optional[Literal["video"]] = None
 
-    file_type: str
+    file_type: Optional[str] = None
 
     file_size: Optional[int] = None
 
-    total_duration_seconds: float
+    total_duration_seconds: Optional[float] = None
 
-    fps: float
+    fps: Optional[float] = None
 
-    width: int
+    width: Optional[int] = None
 
-    height: int
+    height: Optional[int] = None
 
-    frame_count: int
+    frame_count: Optional[int] = None
 
     has_audio_stream: Optional[bool] = None
 
@@ -278,13 +278,13 @@ class ChunkTextInputChunkGeneratedMetadataVideoChunkGeneratedMetadata(BaseModel)
 class ChunkTextInputChunkGeneratedMetadataImageChunkGeneratedMetadata(BaseModel):
     type: Optional[Literal["image"]] = None
 
-    file_type: str
+    file_type: Optional[str] = None
 
-    file_size: int
+    file_size: Optional[int] = None
 
-    width: int
+    width: Optional[int] = None
 
-    height: int
+    height: Optional[int] = None
 
     file_extension: Optional[str] = None
 
@@ -356,11 +356,11 @@ class ChunkImageURLInputChunkGeneratedMetadataMarkdownChunkGeneratedMetadata(Bas
 
     file_type: Optional[Literal["text/markdown"]] = None
 
-    language: str
+    language: Optional[str] = None
 
-    word_count: int
+    word_count: Optional[int] = None
 
-    file_size: int
+    file_size: Optional[int] = None
 
     chunk_headings: Optional[
         List[ChunkImageURLInputChunkGeneratedMetadataMarkdownChunkGeneratedMetadataChunkHeading]
@@ -396,11 +396,11 @@ class ChunkImageURLInputChunkGeneratedMetadataTextChunkGeneratedMetadata(BaseMod
 
     file_type: Optional[Literal["text/plain"]] = None
 
-    language: str
+    language: Optional[str] = None
 
-    word_count: int
+    word_count: Optional[int] = None
 
-    file_size: int
+    file_size: Optional[int] = None
 
     start_line: Optional[int] = None
 
@@ -426,9 +426,9 @@ class ChunkImageURLInputChunkGeneratedMetadataPdfChunkGeneratedMetadata(BaseMode
 
     file_type: Optional[Literal["application/pdf"]] = None
 
-    total_pages: int
+    total_pages: Optional[int] = None
 
-    total_size: int
+    total_size: Optional[int] = None
 
     file_extension: Optional[str] = None
 
@@ -450,11 +450,11 @@ class ChunkImageURLInputChunkGeneratedMetadataCodeChunkGeneratedMetadata(BaseMod
 
     file_type: str
 
-    language: str
+    language: Optional[str] = None
 
-    word_count: int
+    word_count: Optional[int] = None
 
-    file_size: int
+    file_size: Optional[int] = None
 
     start_line: Optional[int] = None
 
@@ -478,17 +478,17 @@ class ChunkImageURLInputChunkGeneratedMetadataCodeChunkGeneratedMetadata(BaseMod
 class ChunkImageURLInputChunkGeneratedMetadataAudioChunkGeneratedMetadata(BaseModel):
     type: Optional[Literal["audio"]] = None
 
-    file_type: str
+    file_type: Optional[str] = None
 
-    file_size: int
+    file_size: Optional[int] = None
 
-    total_duration_seconds: float
+    total_duration_seconds: Optional[float] = None
 
-    sample_rate: int
+    sample_rate: Optional[int] = None
 
-    channels: int
+    channels: Optional[int] = None
 
-    audio_format: int
+    audio_format: Optional[int] = None
 
     bpm: Optional[int] = None
 
@@ -510,19 +510,19 @@ class ChunkImageURLInputChunkGeneratedMetadataAudioChunkGeneratedMetadata(BaseMo
 class ChunkImageURLInputChunkGeneratedMetadataVideoChunkGeneratedMetadata(BaseModel):
     type: Optional[Literal["video"]] = None
 
-    file_type: str
+    file_type: Optional[str] = None
 
     file_size: Optional[int] = None
 
-    total_duration_seconds: float
+    total_duration_seconds: Optional[float] = None
 
-    fps: float
+    fps: Optional[float] = None
 
-    width: int
+    width: Optional[int] = None
 
-    height: int
+    height: Optional[int] = None
 
-    frame_count: int
+    frame_count: Optional[int] = None
 
     has_audio_stream: Optional[bool] = None
 
@@ -546,13 +546,13 @@ class ChunkImageURLInputChunkGeneratedMetadataVideoChunkGeneratedMetadata(BaseMo
 class ChunkImageURLInputChunkGeneratedMetadataImageChunkGeneratedMetadata(BaseModel):
     type: Optional[Literal["image"]] = None
 
-    file_type: str
+    file_type: Optional[str] = None
 
-    file_size: int
+    file_size: Optional[int] = None
 
-    width: int
+    width: Optional[int] = None
 
-    height: int
+    height: Optional[int] = None
 
     file_extension: Optional[str] = None
 
@@ -637,11 +637,11 @@ class ChunkAudioURLInputChunkGeneratedMetadataMarkdownChunkGeneratedMetadata(Bas
 
     file_type: Optional[Literal["text/markdown"]] = None
 
-    language: str
+    language: Optional[str] = None
 
-    word_count: int
+    word_count: Optional[int] = None
 
-    file_size: int
+    file_size: Optional[int] = None
 
     chunk_headings: Optional[
         List[ChunkAudioURLInputChunkGeneratedMetadataMarkdownChunkGeneratedMetadataChunkHeading]
@@ -677,11 +677,11 @@ class ChunkAudioURLInputChunkGeneratedMetadataTextChunkGeneratedMetadata(BaseMod
 
     file_type: Optional[Literal["text/plain"]] = None
 
-    language: str
+    language: Optional[str] = None
 
-    word_count: int
+    word_count: Optional[int] = None
 
-    file_size: int
+    file_size: Optional[int] = None
 
     start_line: Optional[int] = None
 
@@ -707,9 +707,9 @@ class ChunkAudioURLInputChunkGeneratedMetadataPdfChunkGeneratedMetadata(BaseMode
 
     file_type: Optional[Literal["application/pdf"]] = None
 
-    total_pages: int
+    total_pages: Optional[int] = None
 
-    total_size: int
+    total_size: Optional[int] = None
 
     file_extension: Optional[str] = None
 
@@ -731,11 +731,11 @@ class ChunkAudioURLInputChunkGeneratedMetadataCodeChunkGeneratedMetadata(BaseMod
 
     file_type: str
 
-    language: str
+    language: Optional[str] = None
 
-    word_count: int
+    word_count: Optional[int] = None
 
-    file_size: int
+    file_size: Optional[int] = None
 
     start_line: Optional[int] = None
 
@@ -759,17 +759,17 @@ class ChunkAudioURLInputChunkGeneratedMetadataCodeChunkGeneratedMetadata(BaseMod
 class ChunkAudioURLInputChunkGeneratedMetadataAudioChunkGeneratedMetadata(BaseModel):
     type: Optional[Literal["audio"]] = None
 
-    file_type: str
+    file_type: Optional[str] = None
 
-    file_size: int
+    file_size: Optional[int] = None
 
-    total_duration_seconds: float
+    total_duration_seconds: Optional[float] = None
 
-    sample_rate: int
+    sample_rate: Optional[int] = None
 
-    channels: int
+    channels: Optional[int] = None
 
-    audio_format: int
+    audio_format: Optional[int] = None
 
     bpm: Optional[int] = None
 
@@ -791,19 +791,19 @@ class ChunkAudioURLInputChunkGeneratedMetadataAudioChunkGeneratedMetadata(BaseMo
 class ChunkAudioURLInputChunkGeneratedMetadataVideoChunkGeneratedMetadata(BaseModel):
     type: Optional[Literal["video"]] = None
 
-    file_type: str
+    file_type: Optional[str] = None
 
     file_size: Optional[int] = None
 
-    total_duration_seconds: float
+    total_duration_seconds: Optional[float] = None
 
-    fps: float
+    fps: Optional[float] = None
 
-    width: int
+    width: Optional[int] = None
 
-    height: int
+    height: Optional[int] = None
 
-    frame_count: int
+    frame_count: Optional[int] = None
 
     has_audio_stream: Optional[bool] = None
 
@@ -827,13 +827,13 @@ class ChunkAudioURLInputChunkGeneratedMetadataVideoChunkGeneratedMetadata(BaseMo
 class ChunkAudioURLInputChunkGeneratedMetadataImageChunkGeneratedMetadata(BaseModel):
     type: Optional[Literal["image"]] = None
 
-    file_type: str
+    file_type: Optional[str] = None
 
-    file_size: int
+    file_size: Optional[int] = None
 
-    width: int
+    width: Optional[int] = None
 
-    height: int
+    height: Optional[int] = None
 
     file_extension: Optional[str] = None
 
@@ -918,11 +918,11 @@ class ChunkVideoURLInputChunkGeneratedMetadataMarkdownChunkGeneratedMetadata(Bas
 
     file_type: Optional[Literal["text/markdown"]] = None
 
-    language: str
+    language: Optional[str] = None
 
-    word_count: int
+    word_count: Optional[int] = None
 
-    file_size: int
+    file_size: Optional[int] = None
 
     chunk_headings: Optional[
         List[ChunkVideoURLInputChunkGeneratedMetadataMarkdownChunkGeneratedMetadataChunkHeading]
@@ -958,11 +958,11 @@ class ChunkVideoURLInputChunkGeneratedMetadataTextChunkGeneratedMetadata(BaseMod
 
     file_type: Optional[Literal["text/plain"]] = None
 
-    language: str
+    language: Optional[str] = None
 
-    word_count: int
+    word_count: Optional[int] = None
 
-    file_size: int
+    file_size: Optional[int] = None
 
     start_line: Optional[int] = None
 
@@ -988,9 +988,9 @@ class ChunkVideoURLInputChunkGeneratedMetadataPdfChunkGeneratedMetadata(BaseMode
 
     file_type: Optional[Literal["application/pdf"]] = None
 
-    total_pages: int
+    total_pages: Optional[int] = None
 
-    total_size: int
+    total_size: Optional[int] = None
 
     file_extension: Optional[str] = None
 
@@ -1012,11 +1012,11 @@ class ChunkVideoURLInputChunkGeneratedMetadataCodeChunkGeneratedMetadata(BaseMod
 
     file_type: str
 
-    language: str
+    language: Optional[str] = None
 
-    word_count: int
+    word_count: Optional[int] = None
 
-    file_size: int
+    file_size: Optional[int] = None
 
     start_line: Optional[int] = None
 
@@ -1040,17 +1040,17 @@ class ChunkVideoURLInputChunkGeneratedMetadataCodeChunkGeneratedMetadata(BaseMod
 class ChunkVideoURLInputChunkGeneratedMetadataAudioChunkGeneratedMetadata(BaseModel):
     type: Optional[Literal["audio"]] = None
 
-    file_type: str
+    file_type: Optional[str] = None
 
-    file_size: int
+    file_size: Optional[int] = None
 
-    total_duration_seconds: float
+    total_duration_seconds: Optional[float] = None
 
-    sample_rate: int
+    sample_rate: Optional[int] = None
 
-    channels: int
+    channels: Optional[int] = None
 
-    audio_format: int
+    audio_format: Optional[int] = None
 
     bpm: Optional[int] = None
 
@@ -1072,19 +1072,19 @@ class ChunkVideoURLInputChunkGeneratedMetadataAudioChunkGeneratedMetadata(BaseMo
 class ChunkVideoURLInputChunkGeneratedMetadataVideoChunkGeneratedMetadata(BaseModel):
     type: Optional[Literal["video"]] = None
 
-    file_type: str
+    file_type: Optional[str] = None
 
     file_size: Optional[int] = None
 
-    total_duration_seconds: float
+    total_duration_seconds: Optional[float] = None
 
-    fps: float
+    fps: Optional[float] = None
 
-    width: int
+    width: Optional[int] = None
 
-    height: int
+    height: Optional[int] = None
 
-    frame_count: int
+    frame_count: Optional[int] = None
 
     has_audio_stream: Optional[bool] = None
 
@@ -1108,13 +1108,13 @@ class ChunkVideoURLInputChunkGeneratedMetadataVideoChunkGeneratedMetadata(BaseMo
 class ChunkVideoURLInputChunkGeneratedMetadataImageChunkGeneratedMetadata(BaseModel):
     type: Optional[Literal["image"]] = None
 
-    file_type: str
+    file_type: Optional[str] = None
 
-    file_size: int
+    file_size: Optional[int] = None
 
-    width: int
+    width: Optional[int] = None
 
-    height: int
+    height: Optional[int] = None
 
     file_extension: Optional[str] = None
 
