@@ -422,6 +422,7 @@ class StoresResource(SyncAPIResource):
         file_ids: Union[Iterable[object], SequenceNotStr[str], None] | Omit = omit,
         search_options: StoreChunkSearchOptionsParam | Omit = omit,
         stream: bool | Omit = omit,
+        instructions: Optional[str] | Omit = omit,
         qa_options: store_question_answering_params.QaOptions | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -450,6 +451,9 @@ class StoresResource(SyncAPIResource):
 
           stream: Whether to stream the answer
 
+          instructions: Additional custom instructions (followed only when not in conflict with existing
+              rules)
+
           qa_options: Question answering configuration options
 
           extra_headers: Send extra headers
@@ -471,6 +475,7 @@ class StoresResource(SyncAPIResource):
                     "file_ids": file_ids,
                     "search_options": search_options,
                     "stream": stream,
+                    "instructions": instructions,
                     "qa_options": qa_options,
                 },
                 store_question_answering_params.StoreQuestionAnsweringParams,
@@ -938,6 +943,7 @@ class AsyncStoresResource(AsyncAPIResource):
         file_ids: Union[Iterable[object], SequenceNotStr[str], None] | Omit = omit,
         search_options: StoreChunkSearchOptionsParam | Omit = omit,
         stream: bool | Omit = omit,
+        instructions: Optional[str] | Omit = omit,
         qa_options: store_question_answering_params.QaOptions | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -966,6 +972,9 @@ class AsyncStoresResource(AsyncAPIResource):
 
           stream: Whether to stream the answer
 
+          instructions: Additional custom instructions (followed only when not in conflict with existing
+              rules)
+
           qa_options: Question answering configuration options
 
           extra_headers: Send extra headers
@@ -987,6 +996,7 @@ class AsyncStoresResource(AsyncAPIResource):
                     "file_ids": file_ids,
                     "search_options": search_options,
                     "stream": stream,
+                    "instructions": instructions,
                     "qa_options": qa_options,
                 },
                 store_question_answering_params.StoreQuestionAnsweringParams,
