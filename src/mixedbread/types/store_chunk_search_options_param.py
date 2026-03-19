@@ -38,6 +38,12 @@ class AgenticAgenticSearchConfig(TypedDict, total=False):
     queries_per_round: int
     """Maximum queries per round"""
 
+    instructions: Optional[str]
+    """
+    Additional custom instructions (followed only when not in conflict with existing
+    rules)
+    """
+
 
 Agentic: TypeAlias = Union[bool, AgenticAgenticSearchConfig]
 
