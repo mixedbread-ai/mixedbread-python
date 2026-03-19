@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.48.0 (2026-03-18)
+
+Full Changelog: [v0.47.1...v0.48.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.47.1...v0.48.0)
+
+### Features
+
+* **api:** api update ([d6162fc](https://github.com/mixedbread-ai/mixedbread-python/commit/d6162fc5da00d48833fd957e7fcea8f8031fbb50))
+* **api:** api update ([4405e7f](https://github.com/mixedbread-ai/mixedbread-python/commit/4405e7fb5f927cde5ab0f282fa588faa7e09bbd3))
+
+
+### Bug Fixes
+
+* **deps:** bump minimum typing-extensions version ([b7a8459](https://github.com/mixedbread-ai/mixedbread-python/commit/b7a84597b8d41c54ab99197d818326327dbf9e06))
+* **pydantic:** do not pass `by_alias` unless set ([d37406c](https://github.com/mixedbread-ai/mixedbread-python/commit/d37406cba3065f5b61c1d76fa228df3ef3133e3d))
+
+
+### Chores
+
+* **internal:** tweak CI branches ([a1dbb21](https://github.com/mixedbread-ai/mixedbread-python/commit/a1dbb2102fd91079706db5c0bb82cbb01b280459))
+
 ## 0.47.1 (2026-03-12)
 
 Full Changelog: [v0.47.0...v0.47.1](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.47.0...v0.47.1)
