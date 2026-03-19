@@ -37,6 +37,12 @@ class StoreQuestionAnsweringParams(TypedDict, total=False):
     stream: bool
     """Whether to stream the answer"""
 
+    instructions: Optional[str]
+    """
+    Additional custom instructions (followed only when not in conflict with existing
+    rules)
+    """
+
     qa_options: QaOptions
     """Question answering configuration options"""
 

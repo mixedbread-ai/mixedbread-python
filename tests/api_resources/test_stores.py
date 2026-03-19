@@ -316,6 +316,7 @@ class TestStores:
                 "apply_search_rules": True,
             },
             stream=True,
+            instructions="x",
             qa_options={
                 "cite": True,
                 "multimodal": True,
@@ -702,6 +703,7 @@ class TestAsyncStores:
                 "apply_search_rules": True,
             },
             stream=True,
+            instructions="x",
             qa_options={
                 "cite": True,
                 "multimodal": True,
