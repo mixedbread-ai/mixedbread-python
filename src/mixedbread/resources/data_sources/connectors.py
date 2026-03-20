@@ -7,7 +7,7 @@ from typing import Dict, Union, Optional
 import httpx
 
 from ..._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
-from ..._utils import maybe_transform, async_maybe_transform
+from ..._utils import path_template, maybe_transform, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
 from ..._response import (
@@ -98,7 +98,7 @@ class ConnectorsResource(SyncAPIResource):
         if not data_source_id:
             raise ValueError(f"Expected a non-empty value for `data_source_id` but received {data_source_id!r}")
         return self._post(
-            f"/v1/data_sources/{data_source_id}/connectors",
+            path_template("/v1/data_sources/{data_source_id}/connectors", data_source_id=data_source_id),
             body=maybe_transform(
                 {
                     "store_id": store_id,
@@ -153,7 +153,11 @@ class ConnectorsResource(SyncAPIResource):
         if not connector_id:
             raise ValueError(f"Expected a non-empty value for `connector_id` but received {connector_id!r}")
         return self._get(
-            f"/v1/data_sources/{data_source_id}/connectors/{connector_id}",
+            path_template(
+                "/v1/data_sources/{data_source_id}/connectors/{connector_id}",
+                data_source_id=data_source_id,
+                connector_id=connector_id,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -216,7 +220,11 @@ class ConnectorsResource(SyncAPIResource):
         if not connector_id:
             raise ValueError(f"Expected a non-empty value for `connector_id` but received {connector_id!r}")
         return self._put(
-            f"/v1/data_sources/{data_source_id}/connectors/{connector_id}",
+            path_template(
+                "/v1/data_sources/{data_source_id}/connectors/{connector_id}",
+                data_source_id=data_source_id,
+                connector_id=connector_id,
+            ),
             body=maybe_transform(
                 {
                     "name": name,
@@ -279,7 +287,7 @@ class ConnectorsResource(SyncAPIResource):
         if not data_source_id:
             raise ValueError(f"Expected a non-empty value for `data_source_id` but received {data_source_id!r}")
         return self._get_api_list(
-            f"/v1/data_sources/{data_source_id}/connectors",
+            path_template("/v1/data_sources/{data_source_id}/connectors", data_source_id=data_source_id),
             page=SyncCursor[DataSourceConnector],
             options=make_request_options(
                 extra_headers=extra_headers,
@@ -337,7 +345,11 @@ class ConnectorsResource(SyncAPIResource):
         if not connector_id:
             raise ValueError(f"Expected a non-empty value for `connector_id` but received {connector_id!r}")
         return self._delete(
-            f"/v1/data_sources/{data_source_id}/connectors/{connector_id}",
+            path_template(
+                "/v1/data_sources/{data_source_id}/connectors/{connector_id}",
+                data_source_id=data_source_id,
+                connector_id=connector_id,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -418,7 +430,7 @@ class AsyncConnectorsResource(AsyncAPIResource):
         if not data_source_id:
             raise ValueError(f"Expected a non-empty value for `data_source_id` but received {data_source_id!r}")
         return await self._post(
-            f"/v1/data_sources/{data_source_id}/connectors",
+            path_template("/v1/data_sources/{data_source_id}/connectors", data_source_id=data_source_id),
             body=await async_maybe_transform(
                 {
                     "store_id": store_id,
@@ -473,7 +485,11 @@ class AsyncConnectorsResource(AsyncAPIResource):
         if not connector_id:
             raise ValueError(f"Expected a non-empty value for `connector_id` but received {connector_id!r}")
         return await self._get(
-            f"/v1/data_sources/{data_source_id}/connectors/{connector_id}",
+            path_template(
+                "/v1/data_sources/{data_source_id}/connectors/{connector_id}",
+                data_source_id=data_source_id,
+                connector_id=connector_id,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -536,7 +552,11 @@ class AsyncConnectorsResource(AsyncAPIResource):
         if not connector_id:
             raise ValueError(f"Expected a non-empty value for `connector_id` but received {connector_id!r}")
         return await self._put(
-            f"/v1/data_sources/{data_source_id}/connectors/{connector_id}",
+            path_template(
+                "/v1/data_sources/{data_source_id}/connectors/{connector_id}",
+                data_source_id=data_source_id,
+                connector_id=connector_id,
+            ),
             body=await async_maybe_transform(
                 {
                     "name": name,
@@ -599,7 +619,7 @@ class AsyncConnectorsResource(AsyncAPIResource):
         if not data_source_id:
             raise ValueError(f"Expected a non-empty value for `data_source_id` but received {data_source_id!r}")
         return self._get_api_list(
-            f"/v1/data_sources/{data_source_id}/connectors",
+            path_template("/v1/data_sources/{data_source_id}/connectors", data_source_id=data_source_id),
             page=AsyncCursor[DataSourceConnector],
             options=make_request_options(
                 extra_headers=extra_headers,
@@ -657,7 +677,11 @@ class AsyncConnectorsResource(AsyncAPIResource):
         if not connector_id:
             raise ValueError(f"Expected a non-empty value for `connector_id` but received {connector_id!r}")
         return await self._delete(
-            f"/v1/data_sources/{data_source_id}/connectors/{connector_id}",
+            path_template(
+                "/v1/data_sources/{data_source_id}/connectors/{connector_id}",
+                data_source_id=data_source_id,
+                connector_id=connector_id,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
