@@ -10,7 +10,7 @@ import httpx
 from ...lib import polling
 from ..._types import Body, Omit, Query, Headers, NotGiven, FileTypes, SequenceNotStr, omit, not_given
 from ...lib.multipart_upload import MultipartUploadOptions
-from ..._utils import maybe_transform, async_maybe_transform
+from ..._utils import path_template, maybe_transform, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
 from ..._response import (
@@ -108,7 +108,7 @@ class FilesResource(SyncAPIResource):
         if not store_identifier:
             raise ValueError(f"Expected a non-empty value for `store_identifier` but received {store_identifier!r}")
         return self._post(
-            f"/v1/stores/{store_identifier}/files",
+            path_template("/v1/stores/{store_identifier}/files", store_identifier=store_identifier),
             body=maybe_transform(
                 {
                     "metadata": metadata,
@@ -169,7 +169,11 @@ class FilesResource(SyncAPIResource):
         if not file_identifier:
             raise ValueError(f"Expected a non-empty value for `file_identifier` but received {file_identifier!r}")
         return self._get(
-            f"/v1/stores/{store_identifier}/files/{file_identifier}",
+            path_template(
+                "/v1/stores/{store_identifier}/files/{file_identifier}",
+                store_identifier=store_identifier,
+                file_identifier=file_identifier,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -221,7 +225,11 @@ class FilesResource(SyncAPIResource):
         if not file_identifier:
             raise ValueError(f"Expected a non-empty value for `file_identifier` but received {file_identifier!r}")
         return self._patch(
-            f"/v1/stores/{store_identifier}/files/{file_identifier}",
+            path_template(
+                "/v1/stores/{store_identifier}/files/{file_identifier}",
+                store_identifier=store_identifier,
+                file_identifier=file_identifier,
+            ),
             body=maybe_transform({"metadata": metadata}, file_update_params.FileUpdateParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
@@ -285,7 +293,7 @@ class FilesResource(SyncAPIResource):
         if not store_identifier:
             raise ValueError(f"Expected a non-empty value for `store_identifier` but received {store_identifier!r}")
         return self._post(
-            f"/v1/stores/{store_identifier}/files/list",
+            path_template("/v1/stores/{store_identifier}/files/list", store_identifier=store_identifier),
             body=maybe_transform(
                 {
                     "limit": limit,
@@ -343,7 +351,11 @@ class FilesResource(SyncAPIResource):
         if not file_identifier:
             raise ValueError(f"Expected a non-empty value for `file_identifier` but received {file_identifier!r}")
         return self._delete(
-            f"/v1/stores/{store_identifier}/files/{file_identifier}",
+            path_template(
+                "/v1/stores/{store_identifier}/files/{file_identifier}",
+                store_identifier=store_identifier,
+                file_identifier=file_identifier,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -657,7 +669,7 @@ class AsyncFilesResource(AsyncAPIResource):
         if not store_identifier:
             raise ValueError(f"Expected a non-empty value for `store_identifier` but received {store_identifier!r}")
         return await self._post(
-            f"/v1/stores/{store_identifier}/files",
+            path_template("/v1/stores/{store_identifier}/files", store_identifier=store_identifier),
             body=await async_maybe_transform(
                 {
                     "metadata": metadata,
@@ -718,7 +730,11 @@ class AsyncFilesResource(AsyncAPIResource):
         if not file_identifier:
             raise ValueError(f"Expected a non-empty value for `file_identifier` but received {file_identifier!r}")
         return await self._get(
-            f"/v1/stores/{store_identifier}/files/{file_identifier}",
+            path_template(
+                "/v1/stores/{store_identifier}/files/{file_identifier}",
+                store_identifier=store_identifier,
+                file_identifier=file_identifier,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -772,7 +788,11 @@ class AsyncFilesResource(AsyncAPIResource):
         if not file_identifier:
             raise ValueError(f"Expected a non-empty value for `file_identifier` but received {file_identifier!r}")
         return await self._patch(
-            f"/v1/stores/{store_identifier}/files/{file_identifier}",
+            path_template(
+                "/v1/stores/{store_identifier}/files/{file_identifier}",
+                store_identifier=store_identifier,
+                file_identifier=file_identifier,
+            ),
             body=await async_maybe_transform({"metadata": metadata}, file_update_params.FileUpdateParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
@@ -836,7 +856,7 @@ class AsyncFilesResource(AsyncAPIResource):
         if not store_identifier:
             raise ValueError(f"Expected a non-empty value for `store_identifier` but received {store_identifier!r}")
         return await self._post(
-            f"/v1/stores/{store_identifier}/files/list",
+            path_template("/v1/stores/{store_identifier}/files/list", store_identifier=store_identifier),
             body=await async_maybe_transform(
                 {
                     "limit": limit,
@@ -894,7 +914,11 @@ class AsyncFilesResource(AsyncAPIResource):
         if not file_identifier:
             raise ValueError(f"Expected a non-empty value for `file_identifier` but received {file_identifier!r}")
         return await self._delete(
-            f"/v1/stores/{store_identifier}/files/{file_identifier}",
+            path_template(
+                "/v1/stores/{store_identifier}/files/{file_identifier}",
+                store_identifier=store_identifier,
+                file_identifier=file_identifier,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),

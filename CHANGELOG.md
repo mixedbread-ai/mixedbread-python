@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.49.1 (2026-03-21)
+
+Full Changelog: [v0.49.0...v0.49.1](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.49.0...v0.49.1)
+
+### Bug Fixes
+
+* sanitize endpoint path params ([7d519be](https://github.com/mixedbread-ai/mixedbread-python/commit/7d519be7f4ea6b2ce11c9915ee1ac903ebb97cea))
+
+
+### Chores
+
+* **tests:** bump steady to v0.19.4 ([d6e32d5](https://github.com/mixedbread-ai/mixedbread-python/commit/d6e32d5abe0e137375ea79373033c07057b22c83))
+* **tests:** bump steady to v0.19.5 ([59351b9](https://github.com/mixedbread-ai/mixedbread-python/commit/59351b9dcb0eaf2578c985c80a0501d610ff357d))
+
+
+### Refactors
+
+* **tests:** switch from prism to steady ([cc454cf](https://github.com/mixedbread-ai/mixedbread-python/commit/cc454cfbe5752c8e439361c52fb31d2d2b14180d))
+
 ## 0.49.0 (2026-03-19)
 
 Full Changelog: [v0.48.0...v0.49.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.48.0...v0.49.0)
