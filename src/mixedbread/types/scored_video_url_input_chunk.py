@@ -309,8 +309,5 @@ class ScoredVideoURLInputChunk(BaseModel):
     transcription: Optional[str] = None
     """speech recognition (sr) text of the video"""
 
-    summary: Optional[str] = None
-    """summary of the video"""
-
     video_url: Optional[VideoURL] = None
     """Model for video URL validation."""

@@ -73,5 +73,8 @@ class ScoredStoreFile(BaseModel):
     chunks: Optional[List[Chunk]] = None
     """Array of scored file chunks"""
 
+    content_url: str
+    """Presigned URL for file content"""
+
     score: float
     """score of the file"""

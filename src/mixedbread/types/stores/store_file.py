@@ -891,9 +891,6 @@ class ChunkAudioURLInputChunk(BaseModel):
     transcription: Optional[str] = None
     """speech recognition (sr) text of the audio"""
 
-    summary: Optional[str] = None
-    """summary of the audio"""
-
     audio_url: Optional[ChunkAudioURLInputChunkAudioURL] = None
     """Model for audio URL validation."""
 
@@ -1172,9 +1169,6 @@ class ChunkVideoURLInputChunk(BaseModel):
     transcription: Optional[str] = None
     """speech recognition (sr) text of the video"""
 
-    summary: Optional[str] = None
-    """summary of the video"""
-
     video_url: Optional[ChunkVideoURLInputChunkVideoURL] = None
     """Model for video URL validation."""
 
@@ -1229,3 +1223,6 @@ class StoreFile(BaseModel):
 
     chunks: Optional[List[Chunk]] = None
     """chunks"""
+
+    content_url: str
+    """Presigned URL for file content"""
