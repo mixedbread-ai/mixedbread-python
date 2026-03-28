@@ -13,7 +13,6 @@ from mixedbread.types.stores import (
     StoreFile,
     FileListResponse,
     FileDeleteResponse,
-    FileSearchResponse,
 )
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
@@ -295,65 +294,6 @@ class TestFiles:
                 store_identifier="store_identifier",
             )
 
-    @parametrize
-    def test_method_search(self, client: Mixedbread) -> None:
-        file = client.stores.files.search(
-            query="how to configure SSL",
-            store_identifiers=["string"],
-        )
-        assert_matches_type(FileSearchResponse, file, path=["response"])
-
-    @parametrize
-    def test_method_search_with_all_params(self, client: Mixedbread) -> None:
-        file = client.stores.files.search(
-            query="how to configure SSL",
-            store_identifiers=["string"],
-            top_k=1,
-            filters={
-                "all": [{}, {}],
-                "any": [{}, {}],
-                "none": [{}, {}],
-            },
-            file_ids=["123e4567-e89b-12d3-a456-426614174000", "123e4567-e89b-12d3-a456-426614174001"],
-            search_options={
-                "score_threshold": 0,
-                "rewrite_query": True,
-                "rerank": True,
-                "agentic": True,
-                "return_metadata": True,
-                "return_chunks": True,
-                "chunks_per_file": 0,
-                "apply_search_rules": True,
-            },
-        )
-        assert_matches_type(FileSearchResponse, file, path=["response"])
-
-    @parametrize
-    def test_raw_response_search(self, client: Mixedbread) -> None:
-        response = client.stores.files.with_raw_response.search(
-            query="how to configure SSL",
-            store_identifiers=["string"],
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        file = response.parse()
-        assert_matches_type(FileSearchResponse, file, path=["response"])
-
-    @parametrize
-    def test_streaming_response_search(self, client: Mixedbread) -> None:
-        with client.stores.files.with_streaming_response.search(
-            query="how to configure SSL",
-            store_identifiers=["string"],
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            file = response.parse()
-            assert_matches_type(FileSearchResponse, file, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
 
 class TestAsyncFiles:
     parametrize = pytest.mark.parametrize(
@@ -632,62 +572,3 @@ class TestAsyncFiles:
                 file_identifier="",
                 store_identifier="store_identifier",
             )
-
-    @parametrize
-    async def test_method_search(self, async_client: AsyncMixedbread) -> None:
-        file = await async_client.stores.files.search(
-            query="how to configure SSL",
-            store_identifiers=["string"],
-        )
-        assert_matches_type(FileSearchResponse, file, path=["response"])
-
-    @parametrize
-    async def test_method_search_with_all_params(self, async_client: AsyncMixedbread) -> None:
-        file = await async_client.stores.files.search(
-            query="how to configure SSL",
-            store_identifiers=["string"],
-            top_k=1,
-            filters={
-                "all": [{}, {}],
-                "any": [{}, {}],
-                "none": [{}, {}],
-            },
-            file_ids=["123e4567-e89b-12d3-a456-426614174000", "123e4567-e89b-12d3-a456-426614174001"],
-            search_options={
-                "score_threshold": 0,
-                "rewrite_query": True,
-                "rerank": True,
-                "agentic": True,
-                "return_metadata": True,
-                "return_chunks": True,
-                "chunks_per_file": 0,
-                "apply_search_rules": True,
-            },
-        )
-        assert_matches_type(FileSearchResponse, file, path=["response"])
-
-    @parametrize
-    async def test_raw_response_search(self, async_client: AsyncMixedbread) -> None:
-        response = await async_client.stores.files.with_raw_response.search(
-            query="how to configure SSL",
-            store_identifiers=["string"],
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        file = await response.parse()
-        assert_matches_type(FileSearchResponse, file, path=["response"])
-
-    @parametrize
-    async def test_streaming_response_search(self, async_client: AsyncMixedbread) -> None:
-        async with async_client.stores.files.with_streaming_response.search(
-            query="how to configure SSL",
-            store_identifiers=["string"],
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            file = await response.parse()
-            assert_matches_type(FileSearchResponse, file, path=["response"])
-
-        assert cast(Any, response.is_closed) is True

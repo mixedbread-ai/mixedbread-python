@@ -8,7 +8,7 @@ from typing import Any, Dict, List, Union, Iterable, Optional
 import httpx
 
 from ...lib import polling
-from ..._types import Body, Omit, Query, Headers, NotGiven, FileTypes, SequenceNotStr, omit, not_given
+from ..._types import Body, Omit, Query, Headers, NotGiven, FileTypes, omit, not_given
 from ...lib.multipart_upload import MultipartUploadOptions
 from ..._utils import path_template, maybe_transform, async_maybe_transform
 from ..._compat import cached_property
@@ -20,18 +20,11 @@ from ..._response import (
     async_to_streamed_response_wrapper,
 )
 from ..._base_client import make_request_options
-from ...types.stores import (
-    file_list_params,
-    file_create_params,
-    file_search_params,
-    file_update_params,
-    file_retrieve_params,
-)
+from ...types.stores import file_list_params, file_create_params, file_update_params, file_retrieve_params
 from ...types.stores.store_file import StoreFile
 from ...types.stores.store_file_status import StoreFileStatus
 from ...types.stores.file_list_response import FileListResponse
 from ...types.stores.file_delete_response import FileDeleteResponse
-from ...types.stores.file_search_response import FileSearchResponse
 
 __all__ = ["FilesResource", "AsyncFilesResource"]
 
@@ -360,71 +353,6 @@ class FilesResource(SyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=FileDeleteResponse,
-        )
-
-    def search(
-        self,
-        *,
-        query: file_search_params.Query,
-        store_identifiers: SequenceNotStr[str],
-        top_k: int | Omit = omit,
-        filters: Optional[file_search_params.Filters] | Omit = omit,
-        file_ids: Union[Iterable[object], SequenceNotStr[str], None] | Omit = omit,
-        search_options: file_search_params.SearchOptions | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileSearchResponse:
-        """
-        Search for files within a store based on semantic similarity.
-
-        Args: store_identifier: The ID or name of the store to search within
-        search_params: Search configuration including query text, pagination, and
-        filters
-
-        Returns: StoreFileSearchResponse: List of matching files with relevance scores
-
-        Args:
-          query: Search query text
-
-          store_identifiers: IDs or names of stores to search
-
-          top_k: Number of results to return
-
-          filters: Optional filter conditions
-
-          file_ids: Optional list of file IDs to filter chunks by (inclusion filter)
-
-          search_options: Search configuration options
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return self._post(
-            "/v1/stores/files/search",
-            body=maybe_transform(
-                {
-                    "query": query,
-                    "store_identifiers": store_identifiers,
-                    "top_k": top_k,
-                    "filters": filters,
-                    "file_ids": file_ids,
-                    "search_options": search_options,
-                },
-                file_search_params.FileSearchParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=FileSearchResponse,
         )
 
     def poll(
@@ -925,71 +853,6 @@ class AsyncFilesResource(AsyncAPIResource):
             cast_to=FileDeleteResponse,
         )
 
-    async def search(
-        self,
-        *,
-        query: file_search_params.Query,
-        store_identifiers: SequenceNotStr[str],
-        top_k: int | Omit = omit,
-        filters: Optional[file_search_params.Filters] | Omit = omit,
-        file_ids: Union[Iterable[object], SequenceNotStr[str], None] | Omit = omit,
-        search_options: file_search_params.SearchOptions | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileSearchResponse:
-        """
-        Search for files within a store based on semantic similarity.
-
-        Args: store_identifier: The ID or name of the store to search within
-        search_params: Search configuration including query text, pagination, and
-        filters
-
-        Returns: StoreFileSearchResponse: List of matching files with relevance scores
-
-        Args:
-          query: Search query text
-
-          store_identifiers: IDs or names of stores to search
-
-          top_k: Number of results to return
-
-          filters: Optional filter conditions
-
-          file_ids: Optional list of file IDs to filter chunks by (inclusion filter)
-
-          search_options: Search configuration options
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return await self._post(
-            "/v1/stores/files/search",
-            body=await async_maybe_transform(
-                {
-                    "query": query,
-                    "store_identifiers": store_identifiers,
-                    "top_k": top_k,
-                    "filters": filters,
-                    "file_ids": file_ids,
-                    "search_options": search_options,
-                },
-                file_search_params.FileSearchParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=FileSearchResponse,
-        )
-
     async def poll(
         self,
         file_identifier: str,
@@ -1179,9 +1042,6 @@ class FilesResourceWithRawResponse:
         self.delete = to_raw_response_wrapper(
             files.delete,
         )
-        self.search = to_raw_response_wrapper(
-            files.search,
-        )
 
 
 class AsyncFilesResourceWithRawResponse:
@@ -1202,9 +1062,6 @@ class AsyncFilesResourceWithRawResponse:
         )
         self.delete = async_to_raw_response_wrapper(
             files.delete,
-        )
-        self.search = async_to_raw_response_wrapper(
-            files.search,
         )
 
 
@@ -1227,9 +1084,6 @@ class FilesResourceWithStreamingResponse:
         self.delete = to_streamed_response_wrapper(
             files.delete,
         )
-        self.search = to_streamed_response_wrapper(
-            files.search,
-        )
 
 
 class AsyncFilesResourceWithStreamingResponse:
@@ -1250,7 +1104,4 @@ class AsyncFilesResourceWithStreamingResponse:
         )
         self.delete = async_to_streamed_response_wrapper(
             files.delete,
-        )
-        self.search = async_to_streamed_response_wrapper(
-            files.search,
         )
