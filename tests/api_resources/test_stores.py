@@ -35,6 +35,7 @@ class TestStores:
             name="technical-documentation",
             description="Contains technical specifications and guides",
             is_public=False,
+            license="license",
             expires_after={
                 "anchor": "last_active_at",
                 "days": 0,
@@ -120,6 +121,7 @@ class TestStores:
             name="x",
             description="description",
             is_public=True,
+            license="license",
             expires_after={
                 "anchor": "last_active_at",
                 "days": 0,
@@ -422,6 +424,7 @@ class TestAsyncStores:
             name="technical-documentation",
             description="Contains technical specifications and guides",
             is_public=False,
+            license="license",
             expires_after={
                 "anchor": "last_active_at",
                 "days": 0,
@@ -507,6 +510,7 @@ class TestAsyncStores:
             name="x",
             description="description",
             is_public=True,
+            license="license",
             expires_after={
                 "anchor": "last_active_at",
                 "days": 0,

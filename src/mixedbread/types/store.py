@@ -75,6 +75,9 @@ class Store(BaseModel):
     is_public: Optional[bool] = None
     """Whether the store can be accessed by anyone with valid login credentials"""
 
+    license: Optional[str] = None
+    """License for public stores"""
+
     metadata: Optional[object] = None
     """Additional metadata associated with the store"""
 
