@@ -75,6 +75,7 @@ class StoresResource(SyncAPIResource):
         name: Optional[str] | Omit = omit,
         description: Optional[str] | Omit = omit,
         is_public: bool | Omit = omit,
+        license: Optional[str] | Omit = omit,
         expires_after: Optional[ExpiresAfterParam] | Omit = omit,
         metadata: object | Omit = omit,
         config: Optional[store_create_params.Config] | Omit = omit,
@@ -102,6 +103,8 @@ class StoresResource(SyncAPIResource):
 
           is_public: Whether the store can be accessed by anyone with valid login credentials
 
+          license: License for public stores
+
           expires_after: Represents an expiration policy for a store.
 
           metadata: Optional metadata key-value pairs
@@ -125,6 +128,7 @@ class StoresResource(SyncAPIResource):
                     "name": name,
                     "description": description,
                     "is_public": is_public,
+                    "license": license,
                     "expires_after": expires_after,
                     "metadata": metadata,
                     "config": config,
@@ -184,6 +188,7 @@ class StoresResource(SyncAPIResource):
         name: Optional[str] | Omit = omit,
         description: Optional[str] | Omit = omit,
         is_public: Optional[bool] | Omit = omit,
+        license: Optional[str] | Omit = omit,
         expires_after: Optional[ExpiresAfterParam] | Omit = omit,
         metadata: object | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -211,6 +216,8 @@ class StoresResource(SyncAPIResource):
 
           is_public: Whether the store can be accessed by anyone with valid login credentials
 
+          license: License for public stores
+
           expires_after: Represents an expiration policy for a store.
 
           metadata: Optional metadata key-value pairs
@@ -232,6 +239,7 @@ class StoresResource(SyncAPIResource):
                     "name": name,
                     "description": description,
                     "is_public": is_public,
+                    "license": license,
                     "expires_after": expires_after,
                     "metadata": metadata,
                 },
@@ -596,6 +604,7 @@ class AsyncStoresResource(AsyncAPIResource):
         name: Optional[str] | Omit = omit,
         description: Optional[str] | Omit = omit,
         is_public: bool | Omit = omit,
+        license: Optional[str] | Omit = omit,
         expires_after: Optional[ExpiresAfterParam] | Omit = omit,
         metadata: object | Omit = omit,
         config: Optional[store_create_params.Config] | Omit = omit,
@@ -623,6 +632,8 @@ class AsyncStoresResource(AsyncAPIResource):
 
           is_public: Whether the store can be accessed by anyone with valid login credentials
 
+          license: License for public stores
+
           expires_after: Represents an expiration policy for a store.
 
           metadata: Optional metadata key-value pairs
@@ -646,6 +657,7 @@ class AsyncStoresResource(AsyncAPIResource):
                     "name": name,
                     "description": description,
                     "is_public": is_public,
+                    "license": license,
                     "expires_after": expires_after,
                     "metadata": metadata,
                     "config": config,
@@ -705,6 +717,7 @@ class AsyncStoresResource(AsyncAPIResource):
         name: Optional[str] | Omit = omit,
         description: Optional[str] | Omit = omit,
         is_public: Optional[bool] | Omit = omit,
+        license: Optional[str] | Omit = omit,
         expires_after: Optional[ExpiresAfterParam] | Omit = omit,
         metadata: object | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -732,6 +745,8 @@ class AsyncStoresResource(AsyncAPIResource):
 
           is_public: Whether the store can be accessed by anyone with valid login credentials
 
+          license: License for public stores
+
           expires_after: Represents an expiration policy for a store.
 
           metadata: Optional metadata key-value pairs
@@ -753,6 +768,7 @@ class AsyncStoresResource(AsyncAPIResource):
                     "name": name,
                     "description": description,
                     "is_public": is_public,
+                    "license": license,
                     "expires_after": expires_after,
                     "metadata": metadata,
                 },
