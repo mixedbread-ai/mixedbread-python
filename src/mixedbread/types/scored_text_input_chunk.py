@@ -303,3 +303,6 @@ class ScoredTextInputChunk(BaseModel):
 
     text: Optional[str] = None
     """Text content"""
+
+    context: Optional[str] = None
+    """LLM-generated context that situates this chunk within its source document"""

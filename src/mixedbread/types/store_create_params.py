@@ -49,6 +49,13 @@ class ConfigContextualizationContextualizationConfig(TypedDict, total=False):
     included.
     """
 
+    with_file_context: bool
+    """
+    Use an LLM to generate a short context for each text chunk that situates it
+    within the full document, improving retrieval accuracy. Only applies to text
+    content during non-sliced ingestion.
+    """
+
 
 ConfigContextualization: TypeAlias = Union[bool, ConfigContextualizationContextualizationConfig]
 
