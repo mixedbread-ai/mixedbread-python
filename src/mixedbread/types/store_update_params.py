@@ -23,6 +23,9 @@ class StoreUpdateParams(TypedDict, total=False):
     is_public: Optional[bool]
     """Whether the store can be accessed by anyone with valid login credentials"""
 
+    license: Optional[str]
+    """License for public stores"""
+
     expires_after: Optional[ExpiresAfterParam]
     """Represents an expiration policy for a store."""
 

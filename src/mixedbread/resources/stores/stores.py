@@ -23,7 +23,7 @@ from ...types import (
     store_question_answering_params,
 )
 from ..._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
-from ..._utils import maybe_transform, async_maybe_transform
+from ..._utils import path_template, maybe_transform, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
 from ..._response import (
@@ -35,6 +35,7 @@ from ..._response import (
 from ...pagination import SyncCursor, AsyncCursor
 from ...types.store import Store
 from ..._base_client import AsyncPaginator, make_request_options
+from ...types.store_config_param import StoreConfigParam
 from ...types.expires_after_param import ExpiresAfterParam
 from ...types.store_delete_response import StoreDeleteResponse
 from ...types.store_search_response import StoreSearchResponse
@@ -75,9 +76,10 @@ class StoresResource(SyncAPIResource):
         name: Optional[str] | Omit = omit,
         description: Optional[str] | Omit = omit,
         is_public: bool | Omit = omit,
+        license: Optional[str] | Omit = omit,
         expires_after: Optional[ExpiresAfterParam] | Omit = omit,
         metadata: object | Omit = omit,
-        config: Optional[store_create_params.Config] | Omit = omit,
+        config: Optional[StoreConfigParam] | Omit = omit,
         file_ids: Optional[SequenceNotStr[str]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -102,6 +104,8 @@ class StoresResource(SyncAPIResource):
 
           is_public: Whether the store can be accessed by anyone with valid login credentials
 
+          license: License for public stores
+
           expires_after: Represents an expiration policy for a store.
 
           metadata: Optional metadata key-value pairs
@@ -125,6 +129,7 @@ class StoresResource(SyncAPIResource):
                     "name": name,
                     "description": description,
                     "is_public": is_public,
+                    "license": license,
                     "expires_after": expires_after,
                     "metadata": metadata,
                     "config": config,
@@ -170,7 +175,7 @@ class StoresResource(SyncAPIResource):
         if not store_identifier:
             raise ValueError(f"Expected a non-empty value for `store_identifier` but received {store_identifier!r}")
         return self._get(
-            f"/v1/stores/{store_identifier}",
+            path_template("/v1/stores/{store_identifier}", store_identifier=store_identifier),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -184,6 +189,7 @@ class StoresResource(SyncAPIResource):
         name: Optional[str] | Omit = omit,
         description: Optional[str] | Omit = omit,
         is_public: Optional[bool] | Omit = omit,
+        license: Optional[str] | Omit = omit,
         expires_after: Optional[ExpiresAfterParam] | Omit = omit,
         metadata: object | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -211,6 +217,8 @@ class StoresResource(SyncAPIResource):
 
           is_public: Whether the store can be accessed by anyone with valid login credentials
 
+          license: License for public stores
+
           expires_after: Represents an expiration policy for a store.
 
           metadata: Optional metadata key-value pairs
@@ -226,12 +234,13 @@ class StoresResource(SyncAPIResource):
         if not store_identifier:
             raise ValueError(f"Expected a non-empty value for `store_identifier` but received {store_identifier!r}")
         return self._put(
-            f"/v1/stores/{store_identifier}",
+            path_template("/v1/stores/{store_identifier}", store_identifier=store_identifier),
             body=maybe_transform(
                 {
                     "name": name,
                     "description": description,
                     "is_public": is_public,
+                    "license": license,
                     "expires_after": expires_after,
                     "metadata": metadata,
                 },
@@ -342,7 +351,7 @@ class StoresResource(SyncAPIResource):
         if not store_identifier:
             raise ValueError(f"Expected a non-empty value for `store_identifier` but received {store_identifier!r}")
         return self._delete(
-            f"/v1/stores/{store_identifier}",
+            path_template("/v1/stores/{store_identifier}", store_identifier=store_identifier),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -596,9 +605,10 @@ class AsyncStoresResource(AsyncAPIResource):
         name: Optional[str] | Omit = omit,
         description: Optional[str] | Omit = omit,
         is_public: bool | Omit = omit,
+        license: Optional[str] | Omit = omit,
         expires_after: Optional[ExpiresAfterParam] | Omit = omit,
         metadata: object | Omit = omit,
-        config: Optional[store_create_params.Config] | Omit = omit,
+        config: Optional[StoreConfigParam] | Omit = omit,
         file_ids: Optional[SequenceNotStr[str]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -623,6 +633,8 @@ class AsyncStoresResource(AsyncAPIResource):
 
           is_public: Whether the store can be accessed by anyone with valid login credentials
 
+          license: License for public stores
+
           expires_after: Represents an expiration policy for a store.
 
           metadata: Optional metadata key-value pairs
@@ -646,6 +658,7 @@ class AsyncStoresResource(AsyncAPIResource):
                     "name": name,
                     "description": description,
                     "is_public": is_public,
+                    "license": license,
                     "expires_after": expires_after,
                     "metadata": metadata,
                     "config": config,
@@ -691,7 +704,7 @@ class AsyncStoresResource(AsyncAPIResource):
         if not store_identifier:
             raise ValueError(f"Expected a non-empty value for `store_identifier` but received {store_identifier!r}")
         return await self._get(
-            f"/v1/stores/{store_identifier}",
+            path_template("/v1/stores/{store_identifier}", store_identifier=store_identifier),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -705,6 +718,7 @@ class AsyncStoresResource(AsyncAPIResource):
         name: Optional[str] | Omit = omit,
         description: Optional[str] | Omit = omit,
         is_public: Optional[bool] | Omit = omit,
+        license: Optional[str] | Omit = omit,
         expires_after: Optional[ExpiresAfterParam] | Omit = omit,
         metadata: object | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -732,6 +746,8 @@ class AsyncStoresResource(AsyncAPIResource):
 
           is_public: Whether the store can be accessed by anyone with valid login credentials
 
+          license: License for public stores
+
           expires_after: Represents an expiration policy for a store.
 
           metadata: Optional metadata key-value pairs
@@ -747,12 +763,13 @@ class AsyncStoresResource(AsyncAPIResource):
         if not store_identifier:
             raise ValueError(f"Expected a non-empty value for `store_identifier` but received {store_identifier!r}")
         return await self._put(
-            f"/v1/stores/{store_identifier}",
+            path_template("/v1/stores/{store_identifier}", store_identifier=store_identifier),
             body=await async_maybe_transform(
                 {
                     "name": name,
                     "description": description,
                     "is_public": is_public,
+                    "license": license,
                     "expires_after": expires_after,
                     "metadata": metadata,
                 },
@@ -863,7 +880,7 @@ class AsyncStoresResource(AsyncAPIResource):
         if not store_identifier:
             raise ValueError(f"Expected a non-empty value for `store_identifier` but received {store_identifier!r}")
         return await self._delete(
-            f"/v1/stores/{store_identifier}",
+            path_template("/v1/stores/{store_identifier}", store_identifier=store_identifier),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),

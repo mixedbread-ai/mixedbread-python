@@ -30,13 +30,29 @@ Types:
 
 ```python
 from mixedbread.types import (
+    AgenticSearchConfig,
+    AudioChunkGeneratedMetadata,
+    AudioURL,
+    CodeChunkGeneratedMetadata,
+    ContextualizationConfig,
     ExpiresAfter,
+    FileCounts,
+    ImageChunkGeneratedMetadata,
+    ImageURLOutput,
+    MarkdownChunkGeneratedMetadata,
+    MarkdownHeading,
+    PdfChunkGeneratedMetadata,
+    RerankConfig,
     ScoredAudioURLInputChunk,
     ScoredImageURLInputChunk,
     ScoredTextInputChunk,
     ScoredVideoURLInputChunk,
     Store,
     StoreChunkSearchOptions,
+    StoreConfig,
+    TextChunkGeneratedMetadata,
+    VideoChunkGeneratedMetadata,
+    VideoURL,
     StoreDeleteResponse,
     StoreMetadataFacetsResponse,
     StoreQuestionAnsweringResponse,
@@ -61,12 +77,15 @@ Types:
 
 ```python
 from mixedbread.types.stores import (
-    ScoredStoreFile,
-    StoreFileStatus,
+    AudioURLInputChunk,
+    ImageURLInputChunk,
     StoreFile,
+    StoreFileConfig,
+    StoreFileStatus,
+    TextInputChunk,
+    VideoURLInputChunk,
     FileListResponse,
     FileDeleteResponse,
-    FileSearchResponse,
 )
 ```
 
@@ -77,7 +96,6 @@ Methods:
 - <code title="patch /v1/stores/{store_identifier}/files/{file_identifier}">client.stores.files.<a href="./src/mixedbread/resources/stores/files.py">update</a>(file_identifier, \*, store_identifier, \*\*<a href="src/mixedbread/types/stores/file_update_params.py">params</a>) -> <a href="./src/mixedbread/types/stores/store_file.py">StoreFile</a></code>
 - <code title="post /v1/stores/{store_identifier}/files/list">client.stores.files.<a href="./src/mixedbread/resources/stores/files.py">list</a>(store_identifier, \*\*<a href="src/mixedbread/types/stores/file_list_params.py">params</a>) -> <a href="./src/mixedbread/types/stores/file_list_response.py">FileListResponse</a></code>
 - <code title="delete /v1/stores/{store_identifier}/files/{file_identifier}">client.stores.files.<a href="./src/mixedbread/resources/stores/files.py">delete</a>(file_identifier, \*, store_identifier) -> <a href="./src/mixedbread/types/stores/file_delete_response.py">FileDeleteResponse</a></code>
-- <code title="post /v1/stores/files/search">client.stores.files.<a href="./src/mixedbread/resources/stores/files.py">search</a>(\*\*<a href="src/mixedbread/types/stores/file_search_params.py">params</a>) -> <a href="./src/mixedbread/types/stores/file_search_response.py">FileSearchResponse</a></code>
 
 # Parsing
 
@@ -87,10 +105,13 @@ Types:
 
 ```python
 from mixedbread.types.parsing import (
+    Chunk,
+    ChunkElement,
     ChunkingStrategy,
+    DocumentParserResult,
     ElementType,
-    ParsingJobStatus,
     ParsingJob,
+    ParsingJobStatus,
     ReturnFormat,
     JobListResponse,
     JobDeleteResponse,
@@ -204,7 +225,9 @@ Types:
 
 ```python
 from mixedbread.types import (
+    APIKeyCreateOrUpdateParams,
     DataSource,
+    DataSourceAPIKeyParams,
     DataSourceOauth2Params,
     DataSourceType,
     LinearDataSource,
@@ -243,7 +266,7 @@ Methods:
 Types:
 
 ```python
-from mixedbread.types import APIKey, APIKeyCreated, APIKeyDeleteResponse
+from mixedbread.types import APIKey, APIKeyCreated, Scope, APIKeyDeleteResponse
 ```
 
 Methods:

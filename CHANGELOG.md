@@ -1,5 +1,50 @@
 # Changelog
 
+## 0.50.0 (2026-04-23)
+
+Full Changelog: [v0.49.0...v0.50.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.49.0...v0.50.0)
+
+### Features
+
+* **api:** api update ([9cb94bc](https://github.com/mixedbread-ai/mixedbread-python/commit/9cb94bcfc4cf74adfd82b1ff6e8166d5bf597bf7))
+* **api:** api update ([c7f1a92](https://github.com/mixedbread-ai/mixedbread-python/commit/c7f1a92a897408fe54d22ae773e617c0eb9be584))
+* **api:** api update ([34d8ca8](https://github.com/mixedbread-ai/mixedbread-python/commit/34d8ca84c2ed2fd3a7bf77a84047741b537a178a))
+* **api:** api update ([4ad956c](https://github.com/mixedbread-ai/mixedbread-python/commit/4ad956c1b52e6a08dc44958cb331451f5bec75af))
+* **api:** api update ([a24ebe9](https://github.com/mixedbread-ai/mixedbread-python/commit/a24ebe9e241e075c2958cefecfe9e972a5bcd55f))
+* include results in store search events response ([8bb1069](https://github.com/mixedbread-ai/mixedbread-python/commit/8bb1069f016d97cf24bf4f7031c180ca3752e07d))
+* **internal:** implement indices array format for query and form serialization ([e52e262](https://github.com/mixedbread-ai/mixedbread-python/commit/e52e262bd9acd3caa49cf9ba08a29b260b722bf0))
+
+
+### Bug Fixes
+
+* **client:** preserve hardcoded query params when merging with user params ([83d3f20](https://github.com/mixedbread-ai/mixedbread-python/commit/83d3f201d14edd8afa08a6046c2315097d6509d4))
+* ensure file data are only sent as 1 parameter ([0957f16](https://github.com/mixedbread-ai/mixedbread-python/commit/0957f16bb9a20c72499ae6ee86b9494c1e1ee5c8))
+* sanitize endpoint path params ([7d519be](https://github.com/mixedbread-ai/mixedbread-python/commit/7d519be7f4ea6b2ce11c9915ee1ac903ebb97cea))
+
+
+### Performance Improvements
+
+* **client:** optimize file structure copying in multipart requests ([63a2728](https://github.com/mixedbread-ai/mixedbread-python/commit/63a272878dc28300f5169d38cb523cc641498fed))
+
+
+### Chores
+
+* **ci:** skip lint on metadata-only changes ([a3ec133](https://github.com/mixedbread-ai/mixedbread-python/commit/a3ec133b88d1a70a066c17e29dd2ebd5decffb25))
+* **internal:** more robust bootstrap script ([5b52286](https://github.com/mixedbread-ai/mixedbread-python/commit/5b5228640759a7bf277d9478f10eeca3d358e10f))
+* **internal:** update gitignore ([cf3aa78](https://github.com/mixedbread-ai/mixedbread-python/commit/cf3aa78ec44036bbedce95735ee7ab43cc4d566a))
+* **tests:** bump steady to v0.19.4 ([d6e32d5](https://github.com/mixedbread-ai/mixedbread-python/commit/d6e32d5abe0e137375ea79373033c07057b22c83))
+* **tests:** bump steady to v0.19.5 ([59351b9](https://github.com/mixedbread-ai/mixedbread-python/commit/59351b9dcb0eaf2578c985c80a0501d610ff357d))
+* **tests:** bump steady to v0.19.6 ([ac0e7ac](https://github.com/mixedbread-ai/mixedbread-python/commit/ac0e7acc35384a0ae9f78040b60bce03f8258d81))
+* **tests:** bump steady to v0.19.7 ([839ee9c](https://github.com/mixedbread-ai/mixedbread-python/commit/839ee9c7c60749ae03a125f84e87a7be9365daac))
+* **tests:** bump steady to v0.20.1 ([31e2274](https://github.com/mixedbread-ai/mixedbread-python/commit/31e2274bfe265fbebae02c86beae2f575f9b7b18))
+* **tests:** bump steady to v0.20.2 ([6879b15](https://github.com/mixedbread-ai/mixedbread-python/commit/6879b159d830df5df58696899c7551c709595ed4))
+* **tests:** bump steady to v0.22.1 ([3f6450d](https://github.com/mixedbread-ai/mixedbread-python/commit/3f6450dbda2fe9baeee031495fd10f4d87fa815a))
+
+
+### Refactors
+
+* **tests:** switch from prism to steady ([cc454cf](https://github.com/mixedbread-ai/mixedbread-python/commit/cc454cfbe5752c8e439361c52fb31d2d2b14180d))
+
 ## 0.49.0 (2026-03-19)
 
 Full Changelog: [v0.48.0...v0.49.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.48.0...v0.49.0)

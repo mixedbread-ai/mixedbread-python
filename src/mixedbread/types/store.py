@@ -1,63 +1,15 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import List, Union, Optional
+from typing import Optional
 from datetime import datetime
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import Literal
 
 from .._models import BaseModel
+from .file_counts import FileCounts
+from .store_config import StoreConfig
 from .expires_after import ExpiresAfter
 
-__all__ = ["Store", "Config", "ConfigContextualization", "ConfigContextualizationContextualizationConfig", "FileCounts"]
-
-
-class ConfigContextualizationContextualizationConfig(BaseModel):
-    with_metadata: Union[bool, List[str], None] = None
-    """Include all metadata or specific fields in the contextualization.
-
-    Supports dot notation for nested fields (e.g., 'author.name'). When True, all
-    metadata is included (flattened). When a list, only specified fields are
-    included.
-    """
-
-
-ConfigContextualization: TypeAlias = Union[bool, ConfigContextualizationContextualizationConfig]
-
-
-class Config(BaseModel):
-    """Configuration for a store."""
-
-    contextualization: Optional[ConfigContextualization] = None
-    """Contextualize files with metadata"""
-
-    save_content: Optional[bool] = None
-    """Whether to save original content in the store.
-
-    When False, only vectors are indexed without the original content (index-only
-    mode). This is useful for data privacy. Note: Reranking is not supported when
-    content is not saved.
-    """
-
-
-class FileCounts(BaseModel):
-    """Counts of files in different states"""
-
-    pending: Optional[int] = None
-    """Number of files waiting to be processed"""
-
-    in_progress: Optional[int] = None
-    """Number of files currently being processed"""
-
-    cancelled: Optional[int] = None
-    """Number of files whose processing was cancelled"""
-
-    completed: Optional[int] = None
-    """Number of successfully processed files"""
-
-    failed: Optional[int] = None
-    """Number of files that failed processing"""
-
-    total: Optional[int] = None
-    """Total number of files"""
+__all__ = ["Store"]
 
 
 class Store(BaseModel):
@@ -75,10 +27,13 @@ class Store(BaseModel):
     is_public: Optional[bool] = None
     """Whether the store can be accessed by anyone with valid login credentials"""
 
+    license: Optional[str] = None
+    """License for public stores"""
+
     metadata: Optional[object] = None
     """Additional metadata associated with the store"""
 
-    config: Optional[Config] = None
+    config: Optional[StoreConfig] = None
     """Configuration for a store."""
 
     file_counts: Optional[FileCounts] = None
