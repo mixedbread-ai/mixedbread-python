@@ -35,6 +35,7 @@ from ..._response import (
 from ...pagination import SyncCursor, AsyncCursor
 from ...types.store import Store
 from ..._base_client import AsyncPaginator, make_request_options
+from ...types.store_config_param import StoreConfigParam
 from ...types.expires_after_param import ExpiresAfterParam
 from ...types.store_delete_response import StoreDeleteResponse
 from ...types.store_search_response import StoreSearchResponse
@@ -78,7 +79,7 @@ class StoresResource(SyncAPIResource):
         license: Optional[str] | Omit = omit,
         expires_after: Optional[ExpiresAfterParam] | Omit = omit,
         metadata: object | Omit = omit,
-        config: Optional[store_create_params.Config] | Omit = omit,
+        config: Optional[StoreConfigParam] | Omit = omit,
         file_ids: Optional[SequenceNotStr[str]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -607,7 +608,7 @@ class AsyncStoresResource(AsyncAPIResource):
         license: Optional[str] | Omit = omit,
         expires_after: Optional[ExpiresAfterParam] | Omit = omit,
         metadata: object | Omit = omit,
-        config: Optional[store_create_params.Config] | Omit = omit,
+        config: Optional[StoreConfigParam] | Omit = omit,
         file_ids: Optional[SequenceNotStr[str]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.

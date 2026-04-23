@@ -30,13 +30,29 @@ Types:
 
 ```python
 from mixedbread.types import (
+    AgenticSearchConfig,
+    AudioChunkGeneratedMetadata,
+    AudioURL,
+    CodeChunkGeneratedMetadata,
+    ContextualizationConfig,
     ExpiresAfter,
+    FileCounts,
+    ImageChunkGeneratedMetadata,
+    ImageURLOutput,
+    MarkdownChunkGeneratedMetadata,
+    MarkdownHeading,
+    PdfChunkGeneratedMetadata,
+    RerankConfig,
     ScoredAudioURLInputChunk,
     ScoredImageURLInputChunk,
     ScoredTextInputChunk,
     ScoredVideoURLInputChunk,
     Store,
     StoreChunkSearchOptions,
+    StoreConfig,
+    TextChunkGeneratedMetadata,
+    VideoChunkGeneratedMetadata,
+    VideoURL,
     StoreDeleteResponse,
     StoreMetadataFacetsResponse,
     StoreQuestionAnsweringResponse,
@@ -60,7 +76,17 @@ Methods:
 Types:
 
 ```python
-from mixedbread.types.stores import StoreFileStatus, StoreFile, FileListResponse, FileDeleteResponse
+from mixedbread.types.stores import (
+    AudioURLInputChunk,
+    ImageURLInputChunk,
+    StoreFile,
+    StoreFileConfig,
+    StoreFileStatus,
+    TextInputChunk,
+    VideoURLInputChunk,
+    FileListResponse,
+    FileDeleteResponse,
+)
 ```
 
 Methods:
@@ -79,10 +105,13 @@ Types:
 
 ```python
 from mixedbread.types.parsing import (
+    Chunk,
+    ChunkElement,
     ChunkingStrategy,
+    DocumentParserResult,
     ElementType,
-    ParsingJobStatus,
     ParsingJob,
+    ParsingJobStatus,
     ReturnFormat,
     JobListResponse,
     JobDeleteResponse,
@@ -196,7 +225,9 @@ Types:
 
 ```python
 from mixedbread.types import (
+    APIKeyCreateOrUpdateParams,
     DataSource,
+    DataSourceAPIKeyParams,
     DataSourceOauth2Params,
     DataSourceType,
     LinearDataSource,
@@ -235,7 +266,7 @@ Methods:
 Types:
 
 ```python
-from mixedbread.types import APIKey, APIKeyCreated, APIKeyDeleteResponse
+from mixedbread.types import APIKey, APIKeyCreated, Scope, APIKeyDeleteResponse
 ```
 
 Methods:

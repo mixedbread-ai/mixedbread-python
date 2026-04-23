@@ -21,6 +21,7 @@ from .._response import (
 from ..pagination import SyncLimitOffset, AsyncLimitOffset
 from .._base_client import AsyncPaginator, make_request_options
 from ..types.api_key import APIKey
+from ..types.scope_param import ScopeParam
 from ..types.api_key_created import APIKeyCreated
 from ..types.api_key_delete_response import APIKeyDeleteResponse
 
@@ -51,7 +52,7 @@ class APIKeysResource(SyncAPIResource):
         self,
         *,
         name: str | Omit = omit,
-        scope: Optional[Iterable[api_key_create_params.Scope]] | Omit = omit,
+        scope: Optional[Iterable[ScopeParam]] | Omit = omit,
         expires_at: Union[str, datetime, None] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -335,7 +336,7 @@ class AsyncAPIKeysResource(AsyncAPIResource):
         self,
         *,
         name: str | Omit = omit,
-        scope: Optional[Iterable[api_key_create_params.Scope]] | Omit = omit,
+        scope: Optional[Iterable[ScopeParam]] | Omit = omit,
         expires_at: Union[str, datetime, None] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.

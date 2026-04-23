@@ -6,20 +6,11 @@ from typing import Union, Optional
 from typing_extensions import Literal, Required, TypeAlias, TypedDict
 
 from .oauth2_params import Oauth2Params
+from .api_key_create_or_update_params import APIKeyCreateOrUpdateParams
 
-__all__ = ["NotionDataSourceParam", "AuthParams", "AuthParamsAPIKeyCreateOrUpdateParams"]
+__all__ = ["NotionDataSourceParam", "AuthParams"]
 
-
-class AuthParamsAPIKeyCreateOrUpdateParams(TypedDict, total=False):
-    """Base class for API key create or update parameters."""
-
-    type: Literal["api_key"]
-
-    api_key: Required[str]
-    """The API key"""
-
-
-AuthParams: TypeAlias = Union[Oauth2Params, AuthParamsAPIKeyCreateOrUpdateParams]
+AuthParams: TypeAlias = Union[Oauth2Params, APIKeyCreateOrUpdateParams]
 
 
 class NotionDataSourceParam(TypedDict, total=False):

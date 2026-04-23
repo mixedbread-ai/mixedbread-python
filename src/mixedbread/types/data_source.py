@@ -8,21 +8,12 @@ from .._utils import PropertyInfo
 from .._models import BaseModel
 from .data_source_type import DataSourceType
 from .data_source_oauth2_params import DataSourceOauth2Params
+from .data_source_api_key_params import DataSourceAPIKeyParams
 
-__all__ = ["DataSource", "AuthParams", "AuthParamsDataSourceAPIKeyParams"]
-
-
-class AuthParamsDataSourceAPIKeyParams(BaseModel):
-    """Authentication parameters for a API key data source."""
-
-    type: Optional[Literal["api_key"]] = None
-
-    api_key: str
-    """The API key"""
-
+__all__ = ["DataSource", "AuthParams"]
 
 AuthParams: TypeAlias = Annotated[
-    Union[DataSourceOauth2Params, AuthParamsDataSourceAPIKeyParams, None], PropertyInfo(discriminator="type")
+    Union[DataSourceOauth2Params, DataSourceAPIKeyParams, None], PropertyInfo(discriminator="type")
 ]
 
 
