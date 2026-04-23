@@ -3,16 +3,18 @@
 from __future__ import annotations
 
 from typing import Optional
-from typing_extensions import Literal, Required, TypedDict
+from typing_extensions import Required, TypedDict
 
-__all__ = ["FileCreateParams", "Config", "Experimental"]
+from .store_file_config_param import StoreFileConfigParam
+
+__all__ = ["FileCreateParams"]
 
 
 class FileCreateParams(TypedDict, total=False):
     metadata: object
     """Optional metadata for the file"""
 
-    config: Config
+    config: StoreFileConfigParam
     """Configuration for adding the file"""
 
     external_id: Optional[str]
@@ -24,19 +26,5 @@ class FileCreateParams(TypedDict, total=False):
     file_id: Required[str]
     """ID of the file to add"""
 
-    experimental: Optional[Experimental]
+    experimental: Optional[StoreFileConfigParam]
     """Configuration for a file."""
-
-
-class Config(TypedDict, total=False):
-    """Configuration for adding the file"""
-
-    parsing_strategy: Literal["fast", "high_quality"]
-    """Strategy for adding the file, this overrides the store-level default"""
-
-
-class Experimental(TypedDict, total=False):
-    """Configuration for a file."""
-
-    parsing_strategy: Literal["fast", "high_quality"]
-    """Strategy for adding the file, this overrides the store-level default"""

@@ -17,11 +17,17 @@ from ..._response import (
     async_to_streamed_response_wrapper,
 )
 from ..._base_client import make_request_options
-from ...types.stores import file_list_params, file_create_params, file_update_params, file_retrieve_params
+from ...types.stores import (
+    file_list_params,
+    file_create_params,
+    file_update_params,
+    file_retrieve_params,
+)
 from ...types.stores.store_file import StoreFile
 from ...types.stores.store_file_status import StoreFileStatus
 from ...types.stores.file_list_response import FileListResponse
 from ...types.stores.file_delete_response import FileDeleteResponse
+from ...types.stores.store_file_config_param import StoreFileConfigParam
 
 __all__ = ["FilesResource", "AsyncFilesResource"]
 
@@ -51,11 +57,11 @@ class FilesResource(SyncAPIResource):
         store_identifier: str,
         *,
         metadata: object | Omit = omit,
-        config: file_create_params.Config | Omit = omit,
+        config: StoreFileConfigParam | Omit = omit,
         external_id: Optional[str] | Omit = omit,
         overwrite: bool | Omit = omit,
         file_id: str,
-        experimental: Optional[file_create_params.Experimental] | Omit = omit,
+        experimental: Optional[StoreFileConfigParam] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -378,11 +384,11 @@ class AsyncFilesResource(AsyncAPIResource):
         store_identifier: str,
         *,
         metadata: object | Omit = omit,
-        config: file_create_params.Config | Omit = omit,
+        config: StoreFileConfigParam | Omit = omit,
         external_id: Optional[str] | Omit = omit,
         overwrite: bool | Omit = omit,
         file_id: str,
-        experimental: Optional[file_create_params.Experimental] | Omit = omit,
+        experimental: Optional[StoreFileConfigParam] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,

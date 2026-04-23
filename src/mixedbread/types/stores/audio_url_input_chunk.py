@@ -3,18 +3,18 @@
 from typing import Union, Optional
 from typing_extensions import Literal, Annotated, TypeAlias
 
-from .._utils import PropertyInfo
-from .._models import BaseModel
-from .audio_url import AudioURL
-from .pdf_chunk_generated_metadata import PdfChunkGeneratedMetadata
-from .code_chunk_generated_metadata import CodeChunkGeneratedMetadata
-from .text_chunk_generated_metadata import TextChunkGeneratedMetadata
-from .audio_chunk_generated_metadata import AudioChunkGeneratedMetadata
-from .image_chunk_generated_metadata import ImageChunkGeneratedMetadata
-from .video_chunk_generated_metadata import VideoChunkGeneratedMetadata
-from .markdown_chunk_generated_metadata import MarkdownChunkGeneratedMetadata
+from ..._utils import PropertyInfo
+from ..._models import BaseModel
+from ..audio_url import AudioURL
+from ..pdf_chunk_generated_metadata import PdfChunkGeneratedMetadata
+from ..code_chunk_generated_metadata import CodeChunkGeneratedMetadata
+from ..text_chunk_generated_metadata import TextChunkGeneratedMetadata
+from ..audio_chunk_generated_metadata import AudioChunkGeneratedMetadata
+from ..image_chunk_generated_metadata import ImageChunkGeneratedMetadata
+from ..video_chunk_generated_metadata import VideoChunkGeneratedMetadata
+from ..markdown_chunk_generated_metadata import MarkdownChunkGeneratedMetadata
 
-__all__ = ["ScoredAudioURLInputChunk", "GeneratedMetadata"]
+__all__ = ["AudioURLInputChunk", "GeneratedMetadata"]
 
 GeneratedMetadata: TypeAlias = Annotated[
     Union[
@@ -31,7 +31,7 @@ GeneratedMetadata: TypeAlias = Annotated[
 ]
 
 
-class ScoredAudioURLInputChunk(BaseModel):
+class AudioURLInputChunk(BaseModel):
     chunk_index: int
     """position of the chunk in a file"""
 
@@ -43,24 +43,6 @@ class ScoredAudioURLInputChunk(BaseModel):
 
     model: Optional[str] = None
     """model used for this chunk"""
-
-    score: float
-    """score of the chunk"""
-
-    file_id: str
-    """file id"""
-
-    filename: str
-    """filename"""
-
-    store_id: str
-    """store id"""
-
-    external_id: Optional[str] = None
-    """external identifier for this file"""
-
-    metadata: Optional[object] = None
-    """file metadata"""
 
     type: Optional[Literal["audio_url"]] = None
     """Input type identifier"""

@@ -1,73 +1,14 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import Dict, List, Optional
+from typing import Dict, Optional
 from datetime import datetime
 from typing_extensions import Literal
 
 from ..._models import BaseModel
-from .element_type import ElementType
-from .return_format import ReturnFormat
-from .chunking_strategy import ChunkingStrategy
 from .parsing_job_status import ParsingJobStatus
+from .document_parser_result import DocumentParserResult
 
-__all__ = ["ParsingJob", "Result", "ResultChunk", "ResultChunkElement"]
-
-
-class ResultChunkElement(BaseModel):
-    """Represents an extracted element from a document with its content and metadata."""
-
-    type: ElementType
-    """The type of the extracted element"""
-
-    confidence: float
-    """The confidence score of the extraction"""
-
-    bbox: List[object]
-    """The bounding box coordinates [x1, y1, x2, y2]"""
-
-    page: int
-    """The page number where the element was found"""
-
-    content: str
-    """The extracted text content of the element"""
-
-    summary: Optional[str] = None
-    """A brief summary of the element's content"""
-
-    image: Optional[str] = None
-    """The base64-encoded image data for figure elements"""
-
-
-class ResultChunk(BaseModel):
-    """A chunk of text extracted from a document page."""
-
-    content: Optional[str] = None
-    """The full content of the chunk"""
-
-    content_to_embed: str
-    """The content of the chunk to embed"""
-
-    elements: List[ResultChunkElement]
-    """List of elements contained in this chunk"""
-
-
-class Result(BaseModel):
-    """Result of document parsing operation."""
-
-    chunking_strategy: ChunkingStrategy
-    """The strategy used for chunking the document"""
-
-    return_format: ReturnFormat
-    """The format of the returned content"""
-
-    element_types: List[ElementType]
-    """The types of elements extracted"""
-
-    chunks: List[ResultChunk]
-    """List of extracted chunks from the document"""
-
-    page_sizes: Optional[List[List[object]]] = None
-    """List of (width, height) tuples for each page"""
+__all__ = ["ParsingJob"]
 
 
 class ParsingJob(BaseModel):
@@ -88,7 +29,7 @@ class ParsingJob(BaseModel):
     error: Optional[Dict[str, object]] = None
     """The error of the job"""
 
-    result: Optional[Result] = None
+    result: Optional[DocumentParserResult] = None
     """Result of document parsing operation."""
 
     started_at: Optional[datetime] = None

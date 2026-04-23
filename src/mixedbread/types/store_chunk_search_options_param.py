@@ -5,47 +5,14 @@ from __future__ import annotations
 from typing import Union, Optional
 from typing_extensions import TypeAlias, TypedDict
 
-from .._types import SequenceNotStr
+from .rerank_config_param import RerankConfigParam
+from .agentic_search_config_param import AgenticSearchConfigParam
 
-__all__ = ["StoreChunkSearchOptionsParam", "Rerank", "RerankRerankConfig", "Agentic", "AgenticAgenticSearchConfig"]
+__all__ = ["StoreChunkSearchOptionsParam", "Rerank", "Agentic"]
 
+Rerank: TypeAlias = Union[bool, RerankConfigParam]
 
-class RerankRerankConfig(TypedDict, total=False):
-    """Represents a reranking configuration."""
-
-    model: str
-    """The name of the reranking model"""
-
-    with_metadata: Union[bool, SequenceNotStr[str]]
-    """Whether to include metadata in the reranked results"""
-
-    top_k: Optional[int]
-    """Maximum number of results to return after reranking.
-
-    If None, returns all reranked results.
-    """
-
-
-Rerank: TypeAlias = Union[bool, RerankRerankConfig]
-
-
-class AgenticAgenticSearchConfig(TypedDict, total=False):
-    """Configuration for agentic multi-query search."""
-
-    max_rounds: int
-    """Maximum number of search rounds"""
-
-    queries_per_round: int
-    """Maximum queries per round"""
-
-    instructions: Optional[str]
-    """
-    Additional custom instructions (followed only when not in conflict with existing
-    rules)
-    """
-
-
-Agentic: TypeAlias = Union[bool, AgenticAgenticSearchConfig]
+Agentic: TypeAlias = Union[bool, AgenticSearchConfigParam]
 
 
 class StoreChunkSearchOptionsParam(TypedDict, total=False):
