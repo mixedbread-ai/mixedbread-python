@@ -17,6 +17,15 @@ class AgenticSearchConfigParam(TypedDict, total=False):
     queries_per_round: int
     """Maximum queries per round"""
 
+    strict_top_k: bool
+    """
+    Whether to enforce top_k by truncating agent rankings and backfilling short
+    rankings
+    """
+
+    multimodal: bool
+    """Whether to provide image content to the agent when image URLs are available"""
+
     instructions: Optional[str]
     """
     Additional custom instructions (followed only when not in conflict with existing
