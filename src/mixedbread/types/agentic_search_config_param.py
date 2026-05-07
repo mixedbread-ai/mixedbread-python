@@ -18,13 +18,10 @@ class AgenticSearchConfigParam(TypedDict, total=False):
     """Maximum queries per round"""
 
     strict_top_k: bool
-    """
-    Whether to enforce top_k by truncating agent rankings and backfilling short
-    rankings
-    """
+    """Whether the final retrieved chunk list must provide exactly top_k ranked chunks"""
 
     multimodal: bool
-    """Whether to provide image content to the agent when image URLs are available"""
+    """Whether to provide media content to the agent for non-text modalities"""
 
     instructions: Optional[str]
     """
