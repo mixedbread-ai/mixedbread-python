@@ -368,6 +368,9 @@ class StoresResource(SyncAPIResource):
         file_ids: Union[Iterable[object], SequenceNotStr[str], None] | Omit = omit,
         search_options: StoreChunkSearchOptionsParam | Omit = omit,
         facets: Optional[SequenceNotStr[str]] | Omit = omit,
+        max_fields: int | Omit = omit,
+        max_values_per_field: int | Omit = omit,
+        max_files: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -393,6 +396,12 @@ class StoresResource(SyncAPIResource):
 
           facets: Optional list of facets to return. Use dot for nested fields.
 
+          max_fields: Maximum number of distinct metadata fields (keys) to return.
+
+          max_values_per_field: Maximum number of distinct values returned per field, ranked by count.
+
+          max_files: Maximum number of store files scanned to compute facets.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -412,6 +421,9 @@ class StoresResource(SyncAPIResource):
                     "file_ids": file_ids,
                     "search_options": search_options,
                     "facets": facets,
+                    "max_fields": max_fields,
+                    "max_values_per_field": max_values_per_field,
+                    "max_files": max_files,
                 },
                 store_metadata_facets_params.StoreMetadataFacetsParams,
             ),
@@ -897,6 +909,9 @@ class AsyncStoresResource(AsyncAPIResource):
         file_ids: Union[Iterable[object], SequenceNotStr[str], None] | Omit = omit,
         search_options: StoreChunkSearchOptionsParam | Omit = omit,
         facets: Optional[SequenceNotStr[str]] | Omit = omit,
+        max_fields: int | Omit = omit,
+        max_values_per_field: int | Omit = omit,
+        max_files: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -922,6 +937,12 @@ class AsyncStoresResource(AsyncAPIResource):
 
           facets: Optional list of facets to return. Use dot for nested fields.
 
+          max_fields: Maximum number of distinct metadata fields (keys) to return.
+
+          max_values_per_field: Maximum number of distinct values returned per field, ranked by count.
+
+          max_files: Maximum number of store files scanned to compute facets.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -941,6 +962,9 @@ class AsyncStoresResource(AsyncAPIResource):
                     "file_ids": file_ids,
                     "search_options": search_options,
                     "facets": facets,
+                    "max_fields": max_fields,
+                    "max_values_per_field": max_values_per_field,
+                    "max_files": max_files,
                 },
                 store_metadata_facets_params.StoreMetadataFacetsParams,
             ),

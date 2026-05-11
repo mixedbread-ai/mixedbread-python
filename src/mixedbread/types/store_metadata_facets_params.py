@@ -34,6 +34,15 @@ class StoreMetadataFacetsParams(TypedDict, total=False):
     facets: Optional[SequenceNotStr[str]]
     """Optional list of facets to return. Use dot for nested fields."""
 
+    max_fields: int
+    """Maximum number of distinct metadata fields (keys) to return."""
+
+    max_values_per_field: int
+    """Maximum number of distinct values returned per field, ranked by count."""
+
+    max_files: int
+    """Maximum number of store files scanned to compute facets."""
+
 
 FiltersUnionMember2: TypeAlias = Union["SearchFilter", SearchFilterCondition]
 
