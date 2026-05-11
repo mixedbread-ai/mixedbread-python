@@ -263,6 +263,9 @@ class TestStores:
                 "apply_search_rules": True,
             },
             facets=["string"],
+            max_fields=1,
+            max_values_per_field=1,
+            max_files=1,
         )
         assert_matches_type(StoreMetadataFacetsResponse, store, path=["response"])
 
@@ -652,6 +655,9 @@ class TestAsyncStores:
                 "apply_search_rules": True,
             },
             facets=["string"],
+            max_fields=1,
+            max_values_per_field=1,
+            max_files=1,
         )
         assert_matches_type(StoreMetadataFacetsResponse, store, path=["response"])
 
