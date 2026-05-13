@@ -361,11 +361,11 @@ class StoresResource(SyncAPIResource):
     def metadata_facets(
         self,
         *,
-        query: Optional[str] | Omit = omit,
         store_identifiers: SequenceNotStr[str],
         top_k: int | Omit = omit,
         filters: Optional[store_metadata_facets_params.Filters] | Omit = omit,
         file_ids: Union[Iterable[object], SequenceNotStr[str], None] | Omit = omit,
+        query: Optional[str] | Omit = omit,
         search_options: StoreChunkSearchOptionsParam | Omit = omit,
         facets: Optional[SequenceNotStr[str]] | Omit = omit,
         max_fields: int | Omit = omit,
@@ -382,15 +382,15 @@ class StoresResource(SyncAPIResource):
         Get metadata facets
 
         Args:
-          query: Search query text
-
-          store_identifiers: IDs or names of stores to search
+          store_identifiers: IDs or names of stores
 
           top_k: Number of results to return
 
           filters: Optional filter conditions
 
           file_ids: Optional list of file IDs to filter chunks by (inclusion filter)
+
+          query: Search query text
 
           search_options: Search configuration options
 
@@ -414,11 +414,11 @@ class StoresResource(SyncAPIResource):
             "/v1/stores/metadata-facets",
             body=maybe_transform(
                 {
-                    "query": query,
                     "store_identifiers": store_identifiers,
                     "top_k": top_k,
                     "filters": filters,
                     "file_ids": file_ids,
+                    "query": query,
                     "search_options": search_options,
                     "facets": facets,
                     "max_fields": max_fields,
@@ -436,11 +436,11 @@ class StoresResource(SyncAPIResource):
     def question_answering(
         self,
         *,
-        query: str | Omit = omit,
         store_identifiers: SequenceNotStr[str],
         top_k: int | Omit = omit,
         filters: Optional[store_question_answering_params.Filters] | Omit = omit,
         file_ids: Union[Iterable[object], SequenceNotStr[str], None] | Omit = omit,
+        query: str | Omit = omit,
         search_options: StoreChunkSearchOptionsParam | Omit = omit,
         stream: bool | Omit = omit,
         instructions: Optional[str] | Omit = omit,
@@ -452,21 +452,20 @@ class StoresResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> StoreQuestionAnsweringResponse:
-        """Question answering
+        """
+        Question answering
 
         Args:
-          query: Question to answer.
-
-        If not provided, the question will be extracted from the
-              passed messages.
-
-          store_identifiers: IDs or names of stores to search
+          store_identifiers: IDs or names of stores
 
           top_k: Number of results to return
 
           filters: Optional filter conditions
 
           file_ids: Optional list of file IDs to filter chunks by (inclusion filter)
+
+          query: Question to answer. If not provided, the question will be extracted from the
+              passed messages.
 
           search_options: Search configuration options
 
@@ -489,11 +488,11 @@ class StoresResource(SyncAPIResource):
             "/v1/stores/question-answering",
             body=maybe_transform(
                 {
-                    "query": query,
                     "store_identifiers": store_identifiers,
                     "top_k": top_k,
                     "filters": filters,
                     "file_ids": file_ids,
+                    "query": query,
                     "search_options": search_options,
                     "stream": stream,
                     "instructions": instructions,
@@ -510,11 +509,11 @@ class StoresResource(SyncAPIResource):
     def search(
         self,
         *,
-        query: store_search_params.Query,
         store_identifiers: SequenceNotStr[str],
         top_k: int | Omit = omit,
         filters: Optional[store_search_params.Filters] | Omit = omit,
         file_ids: Union[Iterable[object], SequenceNotStr[str], None] | Omit = omit,
+        query: store_search_params.Query,
         search_options: StoreChunkSearchOptionsParam | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -547,15 +546,15 @@ class StoresResource(SyncAPIResource):
         (404): If no vector stores are found to search
 
         Args:
-          query: Search query text
-
-          store_identifiers: IDs or names of stores to search
+          store_identifiers: IDs or names of stores
 
           top_k: Number of results to return
 
           filters: Optional filter conditions
 
           file_ids: Optional list of file IDs to filter chunks by (inclusion filter)
+
+          query: Search query text
 
           search_options: Search configuration options
 
@@ -571,11 +570,11 @@ class StoresResource(SyncAPIResource):
             "/v1/stores/search",
             body=maybe_transform(
                 {
-                    "query": query,
                     "store_identifiers": store_identifiers,
                     "top_k": top_k,
                     "filters": filters,
                     "file_ids": file_ids,
+                    "query": query,
                     "search_options": search_options,
                 },
                 store_search_params.StoreSearchParams,
@@ -902,11 +901,11 @@ class AsyncStoresResource(AsyncAPIResource):
     async def metadata_facets(
         self,
         *,
-        query: Optional[str] | Omit = omit,
         store_identifiers: SequenceNotStr[str],
         top_k: int | Omit = omit,
         filters: Optional[store_metadata_facets_params.Filters] | Omit = omit,
         file_ids: Union[Iterable[object], SequenceNotStr[str], None] | Omit = omit,
+        query: Optional[str] | Omit = omit,
         search_options: StoreChunkSearchOptionsParam | Omit = omit,
         facets: Optional[SequenceNotStr[str]] | Omit = omit,
         max_fields: int | Omit = omit,
@@ -923,15 +922,15 @@ class AsyncStoresResource(AsyncAPIResource):
         Get metadata facets
 
         Args:
-          query: Search query text
-
-          store_identifiers: IDs or names of stores to search
+          store_identifiers: IDs or names of stores
 
           top_k: Number of results to return
 
           filters: Optional filter conditions
 
           file_ids: Optional list of file IDs to filter chunks by (inclusion filter)
+
+          query: Search query text
 
           search_options: Search configuration options
 
@@ -955,11 +954,11 @@ class AsyncStoresResource(AsyncAPIResource):
             "/v1/stores/metadata-facets",
             body=await async_maybe_transform(
                 {
-                    "query": query,
                     "store_identifiers": store_identifiers,
                     "top_k": top_k,
                     "filters": filters,
                     "file_ids": file_ids,
+                    "query": query,
                     "search_options": search_options,
                     "facets": facets,
                     "max_fields": max_fields,
@@ -977,11 +976,11 @@ class AsyncStoresResource(AsyncAPIResource):
     async def question_answering(
         self,
         *,
-        query: str | Omit = omit,
         store_identifiers: SequenceNotStr[str],
         top_k: int | Omit = omit,
         filters: Optional[store_question_answering_params.Filters] | Omit = omit,
         file_ids: Union[Iterable[object], SequenceNotStr[str], None] | Omit = omit,
+        query: str | Omit = omit,
         search_options: StoreChunkSearchOptionsParam | Omit = omit,
         stream: bool | Omit = omit,
         instructions: Optional[str] | Omit = omit,
@@ -993,21 +992,20 @@ class AsyncStoresResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> StoreQuestionAnsweringResponse:
-        """Question answering
+        """
+        Question answering
 
         Args:
-          query: Question to answer.
-
-        If not provided, the question will be extracted from the
-              passed messages.
-
-          store_identifiers: IDs or names of stores to search
+          store_identifiers: IDs or names of stores
 
           top_k: Number of results to return
 
           filters: Optional filter conditions
 
           file_ids: Optional list of file IDs to filter chunks by (inclusion filter)
+
+          query: Question to answer. If not provided, the question will be extracted from the
+              passed messages.
 
           search_options: Search configuration options
 
@@ -1030,11 +1028,11 @@ class AsyncStoresResource(AsyncAPIResource):
             "/v1/stores/question-answering",
             body=await async_maybe_transform(
                 {
-                    "query": query,
                     "store_identifiers": store_identifiers,
                     "top_k": top_k,
                     "filters": filters,
                     "file_ids": file_ids,
+                    "query": query,
                     "search_options": search_options,
                     "stream": stream,
                     "instructions": instructions,
@@ -1051,11 +1049,11 @@ class AsyncStoresResource(AsyncAPIResource):
     async def search(
         self,
         *,
-        query: store_search_params.Query,
         store_identifiers: SequenceNotStr[str],
         top_k: int | Omit = omit,
         filters: Optional[store_search_params.Filters] | Omit = omit,
         file_ids: Union[Iterable[object], SequenceNotStr[str], None] | Omit = omit,
+        query: store_search_params.Query,
         search_options: StoreChunkSearchOptionsParam | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -1088,15 +1086,15 @@ class AsyncStoresResource(AsyncAPIResource):
         (404): If no vector stores are found to search
 
         Args:
-          query: Search query text
-
-          store_identifiers: IDs or names of stores to search
+          store_identifiers: IDs or names of stores
 
           top_k: Number of results to return
 
           filters: Optional filter conditions
 
           file_ids: Optional list of file IDs to filter chunks by (inclusion filter)
+
+          query: Search query text
 
           search_options: Search configuration options
 
@@ -1112,11 +1110,11 @@ class AsyncStoresResource(AsyncAPIResource):
             "/v1/stores/search",
             body=await async_maybe_transform(
                 {
-                    "query": query,
                     "store_identifiers": store_identifiers,
                     "top_k": top_k,
                     "filters": filters,
                     "file_ids": file_ids,
+                    "query": query,
                     "search_options": search_options,
                 },
                 store_search_params.StoreSearchParams,

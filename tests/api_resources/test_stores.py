@@ -245,15 +245,48 @@ class TestStores:
     @parametrize
     def test_method_metadata_facets_with_all_params(self, client: Mixedbread) -> None:
         store = client.stores.metadata_facets(
-            query="how to configure SSL",
             store_identifiers=["string"],
             top_k=1,
             filters={
-                "all": [{}, {}],
-                "any": [{}, {}],
-                "none": [{}, {}],
+                "all": [
+                    {
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
+                    },
+                    {
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
+                    },
+                ],
+                "any": [
+                    {
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
+                    },
+                    {
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
+                    },
+                ],
+                "none": [
+                    {
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
+                    },
+                    {
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
+                    },
+                ],
             },
             file_ids=["123e4567-e89b-12d3-a456-426614174000", "123e4567-e89b-12d3-a456-426614174001"],
+            query="how to configure SSL",
             search_options={
                 "score_threshold": 0,
                 "rewrite_query": True,
@@ -303,15 +336,48 @@ class TestStores:
     @parametrize
     def test_method_question_answering_with_all_params(self, client: Mixedbread) -> None:
         store = client.stores.question_answering(
-            query="x",
             store_identifiers=["string"],
             top_k=1,
             filters={
-                "all": [{}, {}],
-                "any": [{}, {}],
-                "none": [{}, {}],
+                "all": [
+                    {
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
+                    },
+                    {
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
+                    },
+                ],
+                "any": [
+                    {
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
+                    },
+                    {
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
+                    },
+                ],
+                "none": [
+                    {
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
+                    },
+                    {
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
+                    },
+                ],
             },
             file_ids=["123e4567-e89b-12d3-a456-426614174000", "123e4567-e89b-12d3-a456-426614174001"],
+            query="x",
             search_options={
                 "score_threshold": 0,
                 "rewrite_query": True,
@@ -356,23 +422,56 @@ class TestStores:
     @parametrize
     def test_method_search(self, client: Mixedbread) -> None:
         store = client.stores.search(
-            query="how to configure SSL",
             store_identifiers=["string"],
+            query="how to configure SSL",
         )
         assert_matches_type(StoreSearchResponse, store, path=["response"])
 
     @parametrize
     def test_method_search_with_all_params(self, client: Mixedbread) -> None:
         store = client.stores.search(
-            query="how to configure SSL",
             store_identifiers=["string"],
             top_k=1,
             filters={
-                "all": [{}, {}],
-                "any": [{}, {}],
-                "none": [{}, {}],
+                "all": [
+                    {
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
+                    },
+                    {
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
+                    },
+                ],
+                "any": [
+                    {
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
+                    },
+                    {
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
+                    },
+                ],
+                "none": [
+                    {
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
+                    },
+                    {
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
+                    },
+                ],
             },
             file_ids=["123e4567-e89b-12d3-a456-426614174000", "123e4567-e89b-12d3-a456-426614174001"],
+            query="how to configure SSL",
             search_options={
                 "score_threshold": 0,
                 "rewrite_query": True,
@@ -387,8 +486,8 @@ class TestStores:
     @parametrize
     def test_raw_response_search(self, client: Mixedbread) -> None:
         response = client.stores.with_raw_response.search(
-            query="how to configure SSL",
             store_identifiers=["string"],
+            query="how to configure SSL",
         )
 
         assert response.is_closed is True
@@ -399,8 +498,8 @@ class TestStores:
     @parametrize
     def test_streaming_response_search(self, client: Mixedbread) -> None:
         with client.stores.with_streaming_response.search(
-            query="how to configure SSL",
             store_identifiers=["string"],
+            query="how to configure SSL",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -637,15 +736,48 @@ class TestAsyncStores:
     @parametrize
     async def test_method_metadata_facets_with_all_params(self, async_client: AsyncMixedbread) -> None:
         store = await async_client.stores.metadata_facets(
-            query="how to configure SSL",
             store_identifiers=["string"],
             top_k=1,
             filters={
-                "all": [{}, {}],
-                "any": [{}, {}],
-                "none": [{}, {}],
+                "all": [
+                    {
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
+                    },
+                    {
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
+                    },
+                ],
+                "any": [
+                    {
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
+                    },
+                    {
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
+                    },
+                ],
+                "none": [
+                    {
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
+                    },
+                    {
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
+                    },
+                ],
             },
             file_ids=["123e4567-e89b-12d3-a456-426614174000", "123e4567-e89b-12d3-a456-426614174001"],
+            query="how to configure SSL",
             search_options={
                 "score_threshold": 0,
                 "rewrite_query": True,
@@ -695,15 +827,48 @@ class TestAsyncStores:
     @parametrize
     async def test_method_question_answering_with_all_params(self, async_client: AsyncMixedbread) -> None:
         store = await async_client.stores.question_answering(
-            query="x",
             store_identifiers=["string"],
             top_k=1,
             filters={
-                "all": [{}, {}],
-                "any": [{}, {}],
-                "none": [{}, {}],
+                "all": [
+                    {
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
+                    },
+                    {
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
+                    },
+                ],
+                "any": [
+                    {
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
+                    },
+                    {
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
+                    },
+                ],
+                "none": [
+                    {
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
+                    },
+                    {
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
+                    },
+                ],
             },
             file_ids=["123e4567-e89b-12d3-a456-426614174000", "123e4567-e89b-12d3-a456-426614174001"],
+            query="x",
             search_options={
                 "score_threshold": 0,
                 "rewrite_query": True,
@@ -748,23 +913,56 @@ class TestAsyncStores:
     @parametrize
     async def test_method_search(self, async_client: AsyncMixedbread) -> None:
         store = await async_client.stores.search(
-            query="how to configure SSL",
             store_identifiers=["string"],
+            query="how to configure SSL",
         )
         assert_matches_type(StoreSearchResponse, store, path=["response"])
 
     @parametrize
     async def test_method_search_with_all_params(self, async_client: AsyncMixedbread) -> None:
         store = await async_client.stores.search(
-            query="how to configure SSL",
             store_identifiers=["string"],
             top_k=1,
             filters={
-                "all": [{}, {}],
-                "any": [{}, {}],
-                "none": [{}, {}],
+                "all": [
+                    {
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
+                    },
+                    {
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
+                    },
+                ],
+                "any": [
+                    {
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
+                    },
+                    {
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
+                    },
+                ],
+                "none": [
+                    {
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
+                    },
+                    {
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
+                    },
+                ],
             },
             file_ids=["123e4567-e89b-12d3-a456-426614174000", "123e4567-e89b-12d3-a456-426614174001"],
+            query="how to configure SSL",
             search_options={
                 "score_threshold": 0,
                 "rewrite_query": True,
@@ -779,8 +977,8 @@ class TestAsyncStores:
     @parametrize
     async def test_raw_response_search(self, async_client: AsyncMixedbread) -> None:
         response = await async_client.stores.with_raw_response.search(
-            query="how to configure SSL",
             store_identifiers=["string"],
+            query="how to configure SSL",
         )
 
         assert response.is_closed is True
@@ -791,8 +989,8 @@ class TestAsyncStores:
     @parametrize
     async def test_streaming_response_search(self, async_client: AsyncMixedbread) -> None:
         async with async_client.stores.with_streaming_response.search(
-            query="how to configure SSL",
             store_identifiers=["string"],
+            query="how to configure SSL",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
