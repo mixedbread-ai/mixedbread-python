@@ -2,11 +2,9 @@
 
 from __future__ import annotations
 
-from . import shared
-from .. import _compat
 from .scope import Scope as Scope
 from .store import Store as Store
-from .shared import Usage as Usage, SearchFilter as SearchFilter, SearchFilterCondition as SearchFilterCondition
+from .shared import Usage as Usage, SearchFilterCondition as SearchFilterCondition
 from .api_key import APIKey as APIKey
 from .audio_url import AudioURL as AudioURL
 from .embedding import Embedding as Embedding
@@ -75,12 +73,3 @@ from .store_question_answering_params import StoreQuestionAnsweringParams as Sto
 from .store_chunk_search_options_param import StoreChunkSearchOptionsParam as StoreChunkSearchOptionsParam
 from .markdown_chunk_generated_metadata import MarkdownChunkGeneratedMetadata as MarkdownChunkGeneratedMetadata
 from .store_question_answering_response import StoreQuestionAnsweringResponse as StoreQuestionAnsweringResponse
-
-# Rebuild cyclical models only after all modules are imported.
-# This ensures that, when building the deferred (due to cyclical references) model schema,
-# Pydantic can resolve the necessary references.
-# See: https://github.com/pydantic/pydantic/issues/11250 for more context.
-if _compat.PYDANTIC_V1:
-    shared.search_filter.SearchFilter.update_forward_refs()  # type: ignore
-else:
-    shared.search_filter.SearchFilter.model_rebuild(_parent_namespace_depth=0)
