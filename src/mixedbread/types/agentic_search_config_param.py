@@ -32,3 +32,10 @@ class AgenticSearchConfigParam(TypedDict, total=False):
     Additional custom instructions (followed only when not in conflict with existing
     rules)
     """
+
+    verbose: bool
+    """
+    Internal: when set, the response includes a `trace` field with the full
+    tool-call timeline. Used by the Mixedbread playground; not part of the
+    documented public API.
+    """
