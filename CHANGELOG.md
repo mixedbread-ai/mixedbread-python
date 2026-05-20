@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.52.0 (2026-05-20)
+
+Full Changelog: [v0.51.0...v0.52.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.51.0...v0.52.0)
+
+### Features
+
+* **api:** add grep ([3b53a40](https://github.com/mixedbread-ai/mixedbread-python/commit/3b53a40d4edb99c688ec00efafefcb2a46f008cc))
+
 ## 0.51.0 (2026-05-20)
 
 Full Changelog: [v0.50.0...v0.51.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.50.0...v0.51.0)

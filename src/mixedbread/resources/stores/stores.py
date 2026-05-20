@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 
-from typing import Union, Iterable, Optional
+from typing import List, Union, Iterable, Optional
+from typing_extensions import Literal
 
 import httpx
 
@@ -15,6 +16,7 @@ from .files import (
     AsyncFilesResourceWithStreamingResponse,
 )
 from ...types import (
+    store_grep_params,
     store_list_params,
     store_create_params,
     store_search_params,
@@ -37,6 +39,7 @@ from ...types.store import Store
 from ..._base_client import AsyncPaginator, make_request_options
 from ...types.store_config_param import StoreConfigParam
 from ...types.expires_after_param import ExpiresAfterParam
+from ...types.store_grep_response import StoreGrepResponse
 from ...types.store_delete_response import StoreDeleteResponse
 from ...types.store_search_response import StoreSearchResponse
 from ...types.store_metadata_facets_response import StoreMetadataFacetsResponse
@@ -356,6 +359,94 @@ class StoresResource(SyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=StoreDeleteResponse,
+        )
+
+    def grep(
+        self,
+        *,
+        store_identifiers: SequenceNotStr[str],
+        top_k: int | Omit = omit,
+        filters: Optional[store_grep_params.Filters] | Omit = omit,
+        file_ids: Union[Iterable[object], SequenceNotStr[str], None] | Omit = omit,
+        pattern: str,
+        targets: List[Literal["text", "generated"]] | Omit = omit,
+        case_sensitive: bool | Omit = omit,
+        return_metadata: bool | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> StoreGrepResponse:
+        """
+        Match store chunks against a regular expression.
+
+        Unlike `/stores/search`, this performs exact text matching — no embeddings, no
+        semantic similarity, no reranking. Use it to find chunks containing a specific
+        token, identifier, error code, or literal phrase.
+
+        grep targets a single store and does not support pagination; raise `top_k` to
+        retrieve more matches.
+
+        Args: grep_params: Grep configuration including: - pattern: RE2 regular
+        expression matched against chunk text - targets: chunk content groups to match
+        (`text`, `generated`) - case_sensitive: whether the pattern is case-sensitive -
+        store_identifiers: the single store to grep - file_ids: optional list of file
+        IDs to filter chunks by - filters: optional metadata filter conditions - top_k:
+        number of matches to return
+
+        Returns: StoreGrepResponse containing the list of matching chunks.
+
+        Raises: HTTPException (400): If grep parameters are invalid HTTPException (404):
+        If the store is not found
+
+        Args:
+          store_identifiers: IDs or names of stores
+
+          top_k: Number of results to return
+
+          filters: Optional filter conditions
+
+          file_ids: Optional list of file IDs to filter chunks by (inclusion filter)
+
+          pattern: Regular expression (RE2 syntax) matched against chunk text
+
+          targets: Chunk content groups to match against. `text` matches the original text of text
+              chunks; `generated` matches ingestion-derived fields (transcription, OCR text,
+              summaries).
+
+          case_sensitive: Whether the regular expression is case-sensitive
+
+          return_metadata: Whether to return file metadata
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._post(
+            "/v1/stores/grep",
+            body=maybe_transform(
+                {
+                    "store_identifiers": store_identifiers,
+                    "top_k": top_k,
+                    "filters": filters,
+                    "file_ids": file_ids,
+                    "pattern": pattern,
+                    "targets": targets,
+                    "case_sensitive": case_sensitive,
+                    "return_metadata": return_metadata,
+                },
+                store_grep_params.StoreGrepParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=StoreGrepResponse,
         )
 
     def metadata_facets(
@@ -898,6 +989,94 @@ class AsyncStoresResource(AsyncAPIResource):
             cast_to=StoreDeleteResponse,
         )
 
+    async def grep(
+        self,
+        *,
+        store_identifiers: SequenceNotStr[str],
+        top_k: int | Omit = omit,
+        filters: Optional[store_grep_params.Filters] | Omit = omit,
+        file_ids: Union[Iterable[object], SequenceNotStr[str], None] | Omit = omit,
+        pattern: str,
+        targets: List[Literal["text", "generated"]] | Omit = omit,
+        case_sensitive: bool | Omit = omit,
+        return_metadata: bool | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> StoreGrepResponse:
+        """
+        Match store chunks against a regular expression.
+
+        Unlike `/stores/search`, this performs exact text matching — no embeddings, no
+        semantic similarity, no reranking. Use it to find chunks containing a specific
+        token, identifier, error code, or literal phrase.
+
+        grep targets a single store and does not support pagination; raise `top_k` to
+        retrieve more matches.
+
+        Args: grep_params: Grep configuration including: - pattern: RE2 regular
+        expression matched against chunk text - targets: chunk content groups to match
+        (`text`, `generated`) - case_sensitive: whether the pattern is case-sensitive -
+        store_identifiers: the single store to grep - file_ids: optional list of file
+        IDs to filter chunks by - filters: optional metadata filter conditions - top_k:
+        number of matches to return
+
+        Returns: StoreGrepResponse containing the list of matching chunks.
+
+        Raises: HTTPException (400): If grep parameters are invalid HTTPException (404):
+        If the store is not found
+
+        Args:
+          store_identifiers: IDs or names of stores
+
+          top_k: Number of results to return
+
+          filters: Optional filter conditions
+
+          file_ids: Optional list of file IDs to filter chunks by (inclusion filter)
+
+          pattern: Regular expression (RE2 syntax) matched against chunk text
+
+          targets: Chunk content groups to match against. `text` matches the original text of text
+              chunks; `generated` matches ingestion-derived fields (transcription, OCR text,
+              summaries).
+
+          case_sensitive: Whether the regular expression is case-sensitive
+
+          return_metadata: Whether to return file metadata
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._post(
+            "/v1/stores/grep",
+            body=await async_maybe_transform(
+                {
+                    "store_identifiers": store_identifiers,
+                    "top_k": top_k,
+                    "filters": filters,
+                    "file_ids": file_ids,
+                    "pattern": pattern,
+                    "targets": targets,
+                    "case_sensitive": case_sensitive,
+                    "return_metadata": return_metadata,
+                },
+                store_grep_params.StoreGrepParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=StoreGrepResponse,
+        )
+
     async def metadata_facets(
         self,
         *,
@@ -1145,6 +1324,9 @@ class StoresResourceWithRawResponse:
         self.delete = to_raw_response_wrapper(
             stores.delete,
         )
+        self.grep = to_raw_response_wrapper(
+            stores.grep,
+        )
         self.metadata_facets = to_raw_response_wrapper(
             stores.metadata_facets,
         )
@@ -1178,6 +1360,9 @@ class AsyncStoresResourceWithRawResponse:
         )
         self.delete = async_to_raw_response_wrapper(
             stores.delete,
+        )
+        self.grep = async_to_raw_response_wrapper(
+            stores.grep,
         )
         self.metadata_facets = async_to_raw_response_wrapper(
             stores.metadata_facets,
@@ -1213,6 +1398,9 @@ class StoresResourceWithStreamingResponse:
         self.delete = to_streamed_response_wrapper(
             stores.delete,
         )
+        self.grep = to_streamed_response_wrapper(
+            stores.grep,
+        )
         self.metadata_facets = to_streamed_response_wrapper(
             stores.metadata_facets,
         )
@@ -1246,6 +1434,9 @@ class AsyncStoresResourceWithStreamingResponse:
         )
         self.delete = async_to_streamed_response_wrapper(
             stores.delete,
+        )
+        self.grep = async_to_streamed_response_wrapper(
+            stores.grep,
         )
         self.metadata_facets = async_to_streamed_response_wrapper(
             stores.metadata_facets,
