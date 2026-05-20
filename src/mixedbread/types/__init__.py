@@ -24,6 +24,7 @@ from .data_source_type import DataSourceType as DataSourceType
 from .file_list_params import FileListParams as FileListParams
 from .image_url_output import ImageURLOutput as ImageURLOutput
 from .markdown_heading import MarkdownHeading as MarkdownHeading
+from .store_grep_params import StoreGrepParams as StoreGrepParams
 from .store_list_params import StoreListParams as StoreListParams
 from .file_create_params import FileCreateParams as FileCreateParams
 from .file_update_params import FileUpdateParams as FileUpdateParams
@@ -33,6 +34,7 @@ from .client_embed_params import ClientEmbedParams as ClientEmbedParams
 from .expires_after_param import ExpiresAfterParam as ExpiresAfterParam
 from .rerank_config_param import RerankConfigParam as RerankConfigParam
 from .store_create_params import StoreCreateParams as StoreCreateParams
+from .store_grep_response import StoreGrepResponse as StoreGrepResponse
 from .store_search_params import StoreSearchParams as StoreSearchParams
 from .store_update_params import StoreUpdateParams as StoreUpdateParams
 from .client_rerank_params import ClientRerankParams as ClientRerankParams
