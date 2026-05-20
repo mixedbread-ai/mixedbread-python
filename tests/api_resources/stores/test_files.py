@@ -207,9 +207,42 @@ class TestFiles:
             include_total=False,
             statuses=["pending"],
             metadata_filter={
-                "all": [{}, {}],
-                "any": [{}, {}],
-                "none": [{}, {}],
+                "all": [
+                    {
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
+                    },
+                    {
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
+                    },
+                ],
+                "any": [
+                    {
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
+                    },
+                    {
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
+                    },
+                ],
+                "none": [
+                    {
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
+                    },
+                    {
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
+                    },
+                ],
             },
             q="x",
         )
@@ -486,9 +519,42 @@ class TestAsyncFiles:
             include_total=False,
             statuses=["pending"],
             metadata_filter={
-                "all": [{}, {}],
-                "any": [{}, {}],
-                "none": [{}, {}],
+                "all": [
+                    {
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
+                    },
+                    {
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
+                    },
+                ],
+                "any": [
+                    {
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
+                    },
+                    {
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
+                    },
+                ],
+                "none": [
+                    {
+                        "key": "price",
+                        "value": "100",
+                        "operator": "gt",
+                    },
+                    {
+                        "key": "color",
+                        "value": "red",
+                        "operator": "eq",
+                    },
+                ],
             },
             q="x",
         )

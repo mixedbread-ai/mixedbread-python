@@ -9,15 +9,24 @@ from .._types import SequenceNotStr
 from .store_chunk_search_options_param import StoreChunkSearchOptionsParam
 from .shared_params.search_filter_condition import SearchFilterCondition
 
-__all__ = ["StoreMetadataFacetsParams", "Filters", "FiltersUnionMember2"]
+__all__ = [
+    "StoreMetadataFacetsParams",
+    "Filters",
+    "FiltersSearchFilterInput",
+    "FiltersSearchFilterInputAll",
+    "FiltersSearchFilterInputAny",
+    "FiltersSearchFilterInputNone",
+    "FiltersUnionMember2",
+    "FiltersUnionMember2SearchFilterInput",
+    "FiltersUnionMember2SearchFilterInputAll",
+    "FiltersUnionMember2SearchFilterInputAny",
+    "FiltersUnionMember2SearchFilterInputNone",
+]
 
 
 class StoreMetadataFacetsParams(TypedDict, total=False):
-    query: Optional[str]
-    """Search query text"""
-
     store_identifiers: Required[SequenceNotStr[str]]
-    """IDs or names of stores to search"""
+    """IDs or names of stores"""
 
     top_k: int
     """Number of results to return"""
@@ -28,15 +37,65 @@ class StoreMetadataFacetsParams(TypedDict, total=False):
     file_ids: Union[Iterable[object], SequenceNotStr[str], None]
     """Optional list of file IDs to filter chunks by (inclusion filter)"""
 
+    query: Optional[str]
+    """Search query text"""
+
     search_options: StoreChunkSearchOptionsParam
     """Search configuration options"""
 
     facets: Optional[SequenceNotStr[str]]
     """Optional list of facets to return. Use dot for nested fields."""
 
+    max_fields: int
+    """Maximum number of distinct metadata fields (keys) to return."""
 
-FiltersUnionMember2: TypeAlias = Union["SearchFilter", SearchFilterCondition]
+    max_values_per_field: int
+    """Maximum number of distinct values returned per field, ranked by count."""
 
-Filters: TypeAlias = Union["SearchFilter", SearchFilterCondition, Iterable[FiltersUnionMember2]]
+    max_files: int
+    """Maximum number of store files scanned to compute facets."""
 
-from .shared_params.search_filter import SearchFilter
+
+FiltersSearchFilterInputAll: TypeAlias = Union[SearchFilterCondition, object]
+
+FiltersSearchFilterInputAny: TypeAlias = Union[SearchFilterCondition, object]
+
+FiltersSearchFilterInputNone: TypeAlias = Union[SearchFilterCondition, object]
+
+
+class FiltersSearchFilterInput(TypedDict, total=False):
+    """Represents a filter with AND, OR, and NOT conditions."""
+
+    all: Optional[Iterable[FiltersSearchFilterInputAll]]
+    """List of conditions or filters to be ANDed together"""
+
+    any: Optional[Iterable[FiltersSearchFilterInputAny]]
+    """List of conditions or filters to be ORed together"""
+
+    none: Optional[Iterable[FiltersSearchFilterInputNone]]
+    """List of conditions or filters to be NOTed"""
+
+
+FiltersUnionMember2SearchFilterInputAll: TypeAlias = Union[SearchFilterCondition, object]
+
+FiltersUnionMember2SearchFilterInputAny: TypeAlias = Union[SearchFilterCondition, object]
+
+FiltersUnionMember2SearchFilterInputNone: TypeAlias = Union[SearchFilterCondition, object]
+
+
+class FiltersUnionMember2SearchFilterInput(TypedDict, total=False):
+    """Represents a filter with AND, OR, and NOT conditions."""
+
+    all: Optional[Iterable[FiltersUnionMember2SearchFilterInputAll]]
+    """List of conditions or filters to be ANDed together"""
+
+    any: Optional[Iterable[FiltersUnionMember2SearchFilterInputAny]]
+    """List of conditions or filters to be ORed together"""
+
+    none: Optional[Iterable[FiltersUnionMember2SearchFilterInputNone]]
+    """List of conditions or filters to be NOTed"""
+
+
+FiltersUnionMember2: TypeAlias = Union[FiltersUnionMember2SearchFilterInput, SearchFilterCondition]
+
+Filters: TypeAlias = Union[FiltersSearchFilterInput, SearchFilterCondition, Iterable[FiltersUnionMember2]]

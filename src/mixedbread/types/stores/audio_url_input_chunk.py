@@ -50,6 +50,9 @@ class AudioURLInputChunk(BaseModel):
     transcription: Optional[str] = None
     """speech recognition (sr) text of the audio"""
 
+    summary: Optional[str] = None
+    """summary of the audio"""
+
     audio_url: Optional[AudioURL] = None
     """Model for audio URL validation."""
 
