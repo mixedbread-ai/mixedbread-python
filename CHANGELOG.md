@@ -1,5 +1,30 @@
 # Changelog
 
+## 0.51.0 (2026-05-20)
+
+Full Changelog: [v0.50.0...v0.51.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.50.0...v0.51.0)
+
+### Features
+
+* **api:** api update ([c59f556](https://github.com/mixedbread-ai/mixedbread-python/commit/c59f5561b5e782ae7e35b9cbfb498f357856c8f8))
+* **api:** api update ([842efa8](https://github.com/mixedbread-ai/mixedbread-python/commit/842efa840415d1a6d8f754f9c1594655283858c9))
+* **api:** api update ([6fe066e](https://github.com/mixedbread-ai/mixedbread-python/commit/6fe066e17443211a47a21f677344bf8c349e6fde))
+* **api:** api update ([eac4b8f](https://github.com/mixedbread-ai/mixedbread-python/commit/eac4b8f34275c9377765cfe62f677d5ca36cf061))
+* **api:** api update ([66aa7dc](https://github.com/mixedbread-ai/mixedbread-python/commit/66aa7dc394357766b869a3d067e4c130cdf482e8))
+* **internal/types:** support eagerly validating pydantic iterators ([3e9c5ac](https://github.com/mixedbread-ai/mixedbread-python/commit/3e9c5ac9ab56db4eddf8a6a2f219a8789c9c45ac))
+* support setting headers via env ([38de0ee](https://github.com/mixedbread-ai/mixedbread-python/commit/38de0ee2781d9e27d6aecafe89f5a5b5baaed75c))
+
+
+### Bug Fixes
+
+* **client:** add missing f-string prefix in file type error message ([fe74792](https://github.com/mixedbread-ai/mixedbread-python/commit/fe74792cd81bb58bd62e58c086d6d1ee6c233c25))
+* use correct field name format for multipart file arrays ([361fcd6](https://github.com/mixedbread-ai/mixedbread-python/commit/361fcd66f8422020375b076d4c70a83c2b82241d))
+
+
+### Chores
+
+* **internal:** reformat pyproject.toml ([8802c53](https://github.com/mixedbread-ai/mixedbread-python/commit/8802c53023895e9248f03b92477c9a17013ec7b7))
+
 ## 0.50.0 (2026-04-23)
 
 Full Changelog: [v0.49.0...v0.50.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.49.0...v0.50.0)
