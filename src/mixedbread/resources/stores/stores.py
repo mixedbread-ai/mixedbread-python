@@ -21,6 +21,7 @@ from ...types import (
     store_create_params,
     store_search_params,
     store_update_params,
+    store_list_chunks_params,
     store_metadata_facets_params,
     store_question_answering_params,
 )
@@ -42,6 +43,7 @@ from ...types.expires_after_param import ExpiresAfterParam
 from ...types.store_grep_response import StoreGrepResponse
 from ...types.store_delete_response import StoreDeleteResponse
 from ...types.store_search_response import StoreSearchResponse
+from ...types.store_list_chunks_response import StoreListChunksResponse
 from ...types.store_metadata_facets_response import StoreMetadataFacetsResponse
 from ...types.store_chunk_search_options_param import StoreChunkSearchOptionsParam
 from ...types.store_question_answering_response import StoreQuestionAnsweringResponse
@@ -447,6 +449,88 @@ class StoresResource(SyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=StoreGrepResponse,
+        )
+
+    def list_chunks(
+        self,
+        *,
+        store_identifiers: SequenceNotStr[str],
+        top_k: int | Omit = omit,
+        filters: Optional[store_list_chunks_params.Filters] | Omit = omit,
+        file_ids: Union[Iterable[object], SequenceNotStr[str], None] | Omit = omit,
+        sort_by: Union[str, Iterable[object], None] | Omit = omit,
+        search_options: StoreChunkSearchOptionsParam | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> StoreListChunksResponse:
+        """
+        List store chunks purely by metadata filters — no embeddings, no semantic
+        similarity, no reranking.
+
+        Unlike `/stores/search`, this endpoint does not require a query and never runs a
+        vector lookup. It returns chunks whose file and chunk metadata satisfy
+        `filters`, optionally ordered by a numeric metadata field via `sort_by`. Useful
+        for ranked retrieval over numeric attributes (e.g. price, BPM) and for
+        reproducing the agentic `filter_chunks` tool externally.
+
+        list-chunks targets a single store and does not support pagination; raise
+        `top_k` to retrieve more chunks.
+
+        Args: filter_params: Filter configuration including: - store_identifiers: the
+        single store to filter against - filters: optional metadata filter conditions -
+        file_ids: optional list of file IDs to filter chunks by - sort_by: optional
+        metadata field path, or `(field, ascending)` tuple, for numeric ordering -
+        top_k: number of chunks to return
+
+        Returns: StoreListChunksResponse containing the list of matching chunks.
+
+        Raises: HTTPException (400): If filter parameters are invalid or multiple stores
+        are passed HTTPException (404): If the store is not found
+
+        Args:
+          store_identifiers: IDs or names of stores
+
+          top_k: Number of results to return
+
+          filters: Optional filter conditions
+
+          file_ids: Optional list of file IDs to filter chunks by (inclusion filter)
+
+          sort_by: Optional sort applied to the returned chunks. Pass a metadata field path or a
+              tuple of (field path, ascending). Unprefixed dot paths target file metadata;
+              generated_metadata.\\** targets chunk metadata.
+
+          search_options: Search configuration options
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._post(
+            "/v1/stores/list-chunks",
+            body=maybe_transform(
+                {
+                    "store_identifiers": store_identifiers,
+                    "top_k": top_k,
+                    "filters": filters,
+                    "file_ids": file_ids,
+                    "sort_by": sort_by,
+                    "search_options": search_options,
+                },
+                store_list_chunks_params.StoreListChunksParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=StoreListChunksResponse,
         )
 
     def metadata_facets(
@@ -1077,6 +1161,88 @@ class AsyncStoresResource(AsyncAPIResource):
             cast_to=StoreGrepResponse,
         )
 
+    async def list_chunks(
+        self,
+        *,
+        store_identifiers: SequenceNotStr[str],
+        top_k: int | Omit = omit,
+        filters: Optional[store_list_chunks_params.Filters] | Omit = omit,
+        file_ids: Union[Iterable[object], SequenceNotStr[str], None] | Omit = omit,
+        sort_by: Union[str, Iterable[object], None] | Omit = omit,
+        search_options: StoreChunkSearchOptionsParam | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> StoreListChunksResponse:
+        """
+        List store chunks purely by metadata filters — no embeddings, no semantic
+        similarity, no reranking.
+
+        Unlike `/stores/search`, this endpoint does not require a query and never runs a
+        vector lookup. It returns chunks whose file and chunk metadata satisfy
+        `filters`, optionally ordered by a numeric metadata field via `sort_by`. Useful
+        for ranked retrieval over numeric attributes (e.g. price, BPM) and for
+        reproducing the agentic `filter_chunks` tool externally.
+
+        list-chunks targets a single store and does not support pagination; raise
+        `top_k` to retrieve more chunks.
+
+        Args: filter_params: Filter configuration including: - store_identifiers: the
+        single store to filter against - filters: optional metadata filter conditions -
+        file_ids: optional list of file IDs to filter chunks by - sort_by: optional
+        metadata field path, or `(field, ascending)` tuple, for numeric ordering -
+        top_k: number of chunks to return
+
+        Returns: StoreListChunksResponse containing the list of matching chunks.
+
+        Raises: HTTPException (400): If filter parameters are invalid or multiple stores
+        are passed HTTPException (404): If the store is not found
+
+        Args:
+          store_identifiers: IDs or names of stores
+
+          top_k: Number of results to return
+
+          filters: Optional filter conditions
+
+          file_ids: Optional list of file IDs to filter chunks by (inclusion filter)
+
+          sort_by: Optional sort applied to the returned chunks. Pass a metadata field path or a
+              tuple of (field path, ascending). Unprefixed dot paths target file metadata;
+              generated_metadata.\\** targets chunk metadata.
+
+          search_options: Search configuration options
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._post(
+            "/v1/stores/list-chunks",
+            body=await async_maybe_transform(
+                {
+                    "store_identifiers": store_identifiers,
+                    "top_k": top_k,
+                    "filters": filters,
+                    "file_ids": file_ids,
+                    "sort_by": sort_by,
+                    "search_options": search_options,
+                },
+                store_list_chunks_params.StoreListChunksParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=StoreListChunksResponse,
+        )
+
     async def metadata_facets(
         self,
         *,
@@ -1327,6 +1493,9 @@ class StoresResourceWithRawResponse:
         self.grep = to_raw_response_wrapper(
             stores.grep,
         )
+        self.list_chunks = to_raw_response_wrapper(
+            stores.list_chunks,
+        )
         self.metadata_facets = to_raw_response_wrapper(
             stores.metadata_facets,
         )
@@ -1363,6 +1532,9 @@ class AsyncStoresResourceWithRawResponse:
         )
         self.grep = async_to_raw_response_wrapper(
             stores.grep,
+        )
+        self.list_chunks = async_to_raw_response_wrapper(
+            stores.list_chunks,
         )
         self.metadata_facets = async_to_raw_response_wrapper(
             stores.metadata_facets,
@@ -1401,6 +1573,9 @@ class StoresResourceWithStreamingResponse:
         self.grep = to_streamed_response_wrapper(
             stores.grep,
         )
+        self.list_chunks = to_streamed_response_wrapper(
+            stores.list_chunks,
+        )
         self.metadata_facets = to_streamed_response_wrapper(
             stores.metadata_facets,
         )
@@ -1437,6 +1612,9 @@ class AsyncStoresResourceWithStreamingResponse:
         )
         self.grep = async_to_streamed_response_wrapper(
             stores.grep,
+        )
+        self.list_chunks = async_to_streamed_response_wrapper(
+            stores.list_chunks,
         )
         self.metadata_facets = async_to_streamed_response_wrapper(
             stores.metadata_facets,
