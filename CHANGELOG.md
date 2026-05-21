@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.53.0 (2026-05-21)
+
+Full Changelog: [v0.52.0...v0.53.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.52.0...v0.53.0)
+
+### Features
+
+* **api:** api update ([0cc719f](https://github.com/mixedbread-ai/mixedbread-python/commit/0cc719f25fcb12f2990cb027069d04f336987870))
+
 ## 0.52.0 (2026-05-20)
 
 Full Changelog: [v0.51.0...v0.52.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.51.0...v0.52.0)
