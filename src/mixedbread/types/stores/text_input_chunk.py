@@ -54,3 +54,6 @@ class TextInputChunk(BaseModel):
 
     context: Optional[str] = None
     """LLM-generated context that situates this chunk within its source document"""
+
+    summary: Optional[str] = None
+    """summary of the text chunk"""
