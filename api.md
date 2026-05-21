@@ -55,6 +55,7 @@ from mixedbread.types import (
     VideoURL,
     StoreDeleteResponse,
     StoreGrepResponse,
+    StoreListChunksResponse,
     StoreMetadataFacetsResponse,
     StoreQuestionAnsweringResponse,
     StoreSearchResponse,
@@ -69,6 +70,7 @@ Methods:
 - <code title="get /v1/stores">client.stores.<a href="./src/mixedbread/resources/stores/stores.py">list</a>(\*\*<a href="src/mixedbread/types/store_list_params.py">params</a>) -> <a href="./src/mixedbread/types/store.py">SyncCursor[Store]</a></code>
 - <code title="delete /v1/stores/{store_identifier}">client.stores.<a href="./src/mixedbread/resources/stores/stores.py">delete</a>(store_identifier) -> <a href="./src/mixedbread/types/store_delete_response.py">StoreDeleteResponse</a></code>
 - <code title="post /v1/stores/grep">client.stores.<a href="./src/mixedbread/resources/stores/stores.py">grep</a>(\*\*<a href="src/mixedbread/types/store_grep_params.py">params</a>) -> <a href="./src/mixedbread/types/store_grep_response.py">StoreGrepResponse</a></code>
+- <code title="post /v1/stores/list-chunks">client.stores.<a href="./src/mixedbread/resources/stores/stores.py">list_chunks</a>(\*\*<a href="src/mixedbread/types/store_list_chunks_params.py">params</a>) -> <a href="./src/mixedbread/types/store_list_chunks_response.py">StoreListChunksResponse</a></code>
 - <code title="post /v1/stores/metadata-facets">client.stores.<a href="./src/mixedbread/resources/stores/stores.py">metadata_facets</a>(\*\*<a href="src/mixedbread/types/store_metadata_facets_params.py">params</a>) -> <a href="./src/mixedbread/types/store_metadata_facets_response.py">StoreMetadataFacetsResponse</a></code>
 - <code title="post /v1/stores/question-answering">client.stores.<a href="./src/mixedbread/resources/stores/stores.py">question_answering</a>(\*\*<a href="src/mixedbread/types/store_question_answering_params.py">params</a>) -> <a href="./src/mixedbread/types/store_question_answering_response.py">StoreQuestionAnsweringResponse</a></code>
 - <code title="post /v1/stores/search">client.stores.<a href="./src/mixedbread/resources/stores/stores.py">search</a>(\*\*<a href="src/mixedbread/types/store_search_params.py">params</a>) -> <a href="./src/mixedbread/types/store_search_response.py">StoreSearchResponse</a></code>
