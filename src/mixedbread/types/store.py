@@ -36,6 +36,9 @@ class Store(BaseModel):
     config: Optional[StoreConfig] = None
     """Configuration for a store."""
 
+    bucket_id: Optional[str] = None
+    """Customer bucket backing this store's storage; null = platform default"""
+
     file_counts: Optional[FileCounts] = None
     """Counts of files in different states"""
 
