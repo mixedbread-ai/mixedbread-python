@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.56.0 (2026-08-20)
+
+Full Changelog: [v0.55.0...v0.56.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.55.0...v0.56.0)
+
+### Features
+
+* **stlc:** configurable CI runner and private-production-repo support in workflow templates ([2361f07](https://github.com/mixedbread-ai/mixedbread-python/commit/2361f07b73462be8e2684937caed9206ede74a8f))
+
+
+### Chores
+
+* **internal:** allow the mock server port to be set with STAINLESS_MOCK_PORT ([ead74f7](https://github.com/mixedbread-ai/mixedbread-python/commit/ead74f737c6fd44fe148267b072be96e7e137b0f))
+
 ## 0.55.0 (2026-06-17)
 
 Full Changelog: [v0.54.0...v0.55.0](https://github.com/mixedbread-ai/mixedbread-python/compare/v0.54.0...v0.55.0)
