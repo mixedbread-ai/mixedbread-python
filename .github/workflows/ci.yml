@@ -1,104 +1,33 @@
 name: CI
+
+# Lints, type-checks and builds the package. The code in this repository is generated from
+# Mixedbread's monorepo, whose CI also runs the test suite against a mock server before a
+# change reaches main here.
+
 on:
   push:
-    branches:
-      - '**'
-      - '!integrated/**'
-      - '!stl-preview-head/**'
-      - '!stl-preview-base/**'
-      - '!generated'
-      - '!codegen/**'
-      - 'codegen/stl/**'
+    branches: [main]
   pull_request:
-    branches-ignore:
-      - 'stl-preview-head/**'
-      - 'stl-preview-base/**'
 
 jobs:
   lint:
-    timeout-minutes: 10
-    name: lint
-    runs-on: ${{ github.repository == 'stainless-sdks/mixedbread-python' && 'depot-ubuntu-24.04' || 'ubuntu-latest' }}
-    if: (github.event_name == 'push' || github.event.pull_request.head.repo.fork) && (github.event_name != 'push' || github.event.head_commit.message != 'codegen metadata')
+    name: lint and build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-
-      - name: Install Rye
-        run: |
-          curl -sSf https://rye.astral.sh/get | bash
-          echo "$HOME/.rye/shims" >> $GITHUB_PATH
-        env:
-          RYE_VERSION: '0.44.0'
-          RYE_INSTALL_OPTION: '--yes'
-
-      - name: Install dependencies
-        run: rye sync --all-features
-
-      - name: Run lints
-        run: ./scripts/lint
-
-  build:
-    if: (github.event_name == 'push' || github.event.pull_request.head.repo.fork) && (github.event_name != 'push' || github.event.head_commit.message != 'codegen metadata')
-    timeout-minutes: 10
-    name: build
-    permissions:
-      contents: read
-      id-token: write
-    runs-on: ${{ github.repository == 'stainless-sdks/mixedbread-python' && 'depot-ubuntu-24.04' || 'ubuntu-latest' }}
-    steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-
-      - name: Install Rye
-        run: |
-          curl -sSf https://rye.astral.sh/get | bash
-          echo "$HOME/.rye/shims" >> $GITHUB_PATH
-        env:
-          RYE_VERSION: '0.44.0'
-          RYE_INSTALL_OPTION: '--yes'
-
-      - name: Install dependencies
-        run: rye sync --all-features
-
-      - name: Run build
-        run: rye build
-
-      - name: Get GitHub OIDC Token
-        if: |-
-          github.repository == 'stainless-sdks/mixedbread-python' &&
-          !startsWith(github.ref, 'refs/heads/stl/')
-        id: github-oidc
-        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8.0.0
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v7
         with:
-          script: core.setOutput('github_token', await core.getIDToken());
-
-      - name: Upload tarball
-        if: |-
-          github.repository == 'stainless-sdks/mixedbread-python' &&
-          !startsWith(github.ref, 'refs/heads/stl/')
-        env:
-          URL: https://pkg.stainless.com/s
-          AUTH: ${{ steps.github-oidc.outputs.github_token }}
-          SHA: ${{ github.sha }}
-        run: ./scripts/utils/upload-artifact.sh
-
-  test:
-    timeout-minutes: 10
-    name: test
-    runs-on: ${{ github.repository == 'stainless-sdks/mixedbread-python' && 'depot-ubuntu-24.04' || 'ubuntu-latest' }}
-    if: github.event_name == 'push' || github.event.pull_request.head.repo.fork
-    steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-
-      - name: Install Rye
+          version: "0.8.16"
+      - name: Install dependencies
+        run: uv sync --locked --group dev --all-extras
+      - name: Lint
         run: |
-          curl -sSf https://rye.astral.sh/get | bash
-          echo "$HOME/.rye/shims" >> $GITHUB_PATH
-        env:
-          RYE_VERSION: '0.44.0'
-          RYE_INSTALL_OPTION: '--yes'
-
-      - name: Bootstrap
-        run: ./scripts/bootstrap
-
-      - name: Run tests
-        run: ./scripts/test
+          uv run ruff check .
+          uv run ruff format --check .
+      - name: Type-check
+        run: |
+          uv run pyright
+          uv run mypy .
+      - name: Build
+        run: uv build
