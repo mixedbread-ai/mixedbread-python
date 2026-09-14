@@ -35,6 +35,7 @@ from mixedbread.types import (
     AudioURL,
     CodeChunkGeneratedMetadata,
     ContextualizationConfig,
+    CsvChunkGeneratedMetadata,
     ExpiresAfter,
     FileCounts,
     ImageChunkGeneratedMetadata,

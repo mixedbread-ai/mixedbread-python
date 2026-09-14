@@ -5,6 +5,7 @@ from typing_extensions import Literal, Annotated, TypeAlias
 
 from .._utils import PropertyInfo
 from .._models import BaseModel
+from .csv_chunk_generated_metadata import CsvChunkGeneratedMetadata
 from .pdf_chunk_generated_metadata import PdfChunkGeneratedMetadata
 from .code_chunk_generated_metadata import CodeChunkGeneratedMetadata
 from .text_chunk_generated_metadata import TextChunkGeneratedMetadata
@@ -19,6 +20,7 @@ GeneratedMetadata: TypeAlias = Annotated[
     Union[
         MarkdownChunkGeneratedMetadata,
         TextChunkGeneratedMetadata,
+        CsvChunkGeneratedMetadata,
         PdfChunkGeneratedMetadata,
         CodeChunkGeneratedMetadata,
         AudioChunkGeneratedMetadata,
