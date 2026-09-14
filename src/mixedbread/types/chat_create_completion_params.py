@@ -66,6 +66,11 @@ __all__ = [
     "ToolChoiceToolChoiceStoreGrep",
     "ToolChoiceToolChoiceStoreListChunks",
     "ToolChoiceToolChoiceMetadataFacets",
+    "ResponseFormat",
+    "ResponseFormatResponseFormatText",
+    "ResponseFormatResponseFormatJsonObject",
+    "ResponseFormatResponseFormatJsonSchema",
+    "ResponseFormatResponseFormatJsonSchemaJsonSchema",
     "PreviousMessage",
     "PreviousMessageSystemMessage",
     "PreviousMessageSystemMessageContentUnionMember1",
@@ -609,6 +614,68 @@ ToolChoice: TypeAlias = Union[
 ]
 
 
+class ResponseFormatResponseFormatText(TypedDict, total=False):
+    """The shape of the answer: plain text, any JSON object, or JSON matching a schema.
+
+    A JSON answer is grammar-constrained on the final generation; tool calls are
+    unaffected
+    """
+
+    type: Literal["text"]
+
+
+class ResponseFormatResponseFormatJsonObject(TypedDict, total=False):
+    """The shape of the answer: plain text, any JSON object, or JSON matching a schema.
+
+    A JSON answer is grammar-constrained on the final generation; tool calls are
+    unaffected
+    """
+
+    type: Literal["json_object"]
+
+
+class ResponseFormatResponseFormatJsonSchemaJsonSchema(TypedDict, total=False):
+    """The schema of a `json_schema` response format, as in the OpenAI API."""
+
+    name: Required[str]
+
+    schema: Required[Dict[str, object]]
+    """The JSON schema the answer must match; decoding is constrained to it.
+
+    The dialect is JSON Schema 2020-12 (`$schema`, if given, names it at the root
+    only). References must point into the schema itself, `pattern` and
+    `patternProperties` regexes use RE2 syntax (no backreferences or lookaround),
+    and `unevaluatedProperties` cannot be combined with `patternProperties`
+    """
+
+    description: Optional[str]
+
+    strict: Optional[bool]
+    """Accepted for compatibility.
+
+    The answer is grammar-constrained to the schema either way, and the schema is
+    not narrowed to OpenAI's strict subset
+    """
+
+
+class ResponseFormatResponseFormatJsonSchema(TypedDict, total=False):
+    """The shape of the answer: plain text, any JSON object, or JSON matching a schema.
+
+    A JSON answer is grammar-constrained on the final generation; tool calls are
+    unaffected
+    """
+
+    type: Literal["json_schema"]
+
+    json_schema: Required[ResponseFormatResponseFormatJsonSchemaJsonSchema]
+    """The schema of a `json_schema` response format, as in the OpenAI API."""
+
+
+ResponseFormat: TypeAlias = Union[
+    ResponseFormatResponseFormatText, ResponseFormatResponseFormatJsonObject, ResponseFormatResponseFormatJsonSchema
+]
+
+
 class PreviousMessageSystemMessageContentUnionMember1(TypedDict, total=False):
     type: Literal["text"]
 
@@ -785,6 +852,13 @@ class ChatCreateCompletionParams(TypedDict, total=False):
     """
 
     tool_choice: ToolChoice
+
+    response_format: Optional[ResponseFormat]
+    """The shape of the answer: plain text, any JSON object, or JSON matching a schema.
+
+    A JSON answer is grammar-constrained on the final generation; tool calls are
+    unaffected
+    """
 
     store: bool
     """Whether to persist this completion for later retrieval"""

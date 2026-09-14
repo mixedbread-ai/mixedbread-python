@@ -110,6 +110,8 @@ class ChoiceMessage(BaseModel):
 
     content: Optional[str] = None
 
+    refusal: Optional[str] = None
+
     tool_calls: Optional[List[ChoiceMessageToolCall]] = None
 
     reasoning_content: Optional[str] = None

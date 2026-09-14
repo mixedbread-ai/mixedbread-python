@@ -50,6 +50,7 @@ class ChatResource(SyncAPIResource):
         model: str | Omit = omit,
         tools: Iterable[chat_create_completion_params.Tool] | Omit = omit,
         tool_choice: chat_create_completion_params.ToolChoice | Omit = omit,
+        response_format: Optional[chat_create_completion_params.ResponseFormat] | Omit = omit,
         store: bool | Omit = omit,
         previous_completion_id: Optional[str] | Omit = omit,
         previous_messages: Optional[Iterable[chat_create_completion_params.PreviousMessage]] | Omit = omit,
@@ -100,6 +101,10 @@ class ChatResource(SyncAPIResource):
           tools: Tools the model may call; the hosted tools are opt-in and run server-side for
               the completions that declare them
 
+          response_format: The shape of the answer: plain text, any JSON object, or JSON matching a schema.
+              A JSON answer is grammar-constrained on the final generation; tool calls are
+              unaffected
+
           store: Whether to persist this completion for later retrieval
 
           previous_completion_id: ID of a stored completion this one continues (Mixedbread extension). Groups
@@ -145,6 +150,7 @@ class ChatResource(SyncAPIResource):
                     "model": model,
                     "tools": tools,
                     "tool_choice": tool_choice,
+                    "response_format": response_format,
                     "store": store,
                     "previous_completion_id": previous_completion_id,
                     "previous_messages": previous_messages,
@@ -196,6 +202,7 @@ class AsyncChatResource(AsyncAPIResource):
         model: str | Omit = omit,
         tools: Iterable[chat_create_completion_params.Tool] | Omit = omit,
         tool_choice: chat_create_completion_params.ToolChoice | Omit = omit,
+        response_format: Optional[chat_create_completion_params.ResponseFormat] | Omit = omit,
         store: bool | Omit = omit,
         previous_completion_id: Optional[str] | Omit = omit,
         previous_messages: Optional[Iterable[chat_create_completion_params.PreviousMessage]] | Omit = omit,
@@ -246,6 +253,10 @@ class AsyncChatResource(AsyncAPIResource):
           tools: Tools the model may call; the hosted tools are opt-in and run server-side for
               the completions that declare them
 
+          response_format: The shape of the answer: plain text, any JSON object, or JSON matching a schema.
+              A JSON answer is grammar-constrained on the final generation; tool calls are
+              unaffected
+
           store: Whether to persist this completion for later retrieval
 
           previous_completion_id: ID of a stored completion this one continues (Mixedbread extension). Groups
@@ -291,6 +302,7 @@ class AsyncChatResource(AsyncAPIResource):
                     "model": model,
                     "tools": tools,
                     "tool_choice": tool_choice,
+                    "response_format": response_format,
                     "store": store,
                     "previous_completion_id": previous_completion_id,
                     "previous_messages": previous_messages,

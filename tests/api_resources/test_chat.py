@@ -86,6 +86,7 @@ class TestChat:
                 }
             ],
             tool_choice="auto",
+            response_format={"type": "text"},
             store=True,
             previous_completion_id="previous_completion_id",
             previous_messages=[
@@ -217,6 +218,7 @@ class TestAsyncChat:
                 }
             ],
             tool_choice="auto",
+            response_format={"type": "text"},
             store=True,
             previous_completion_id="previous_completion_id",
             previous_messages=[
