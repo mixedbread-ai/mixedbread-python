@@ -1,11 +1,11 @@
-# File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+# File generated from our OpenAPI spec by sdkgen. See CONTRIBUTING.md for details.
 
 from typing import Dict, Optional
 from datetime import datetime
 
 from ..._models import BaseModel
 from .extraction_result import ExtractionResult
-from ..parsing.parsing_job_status import ParsingJobStatus
+from ..stores.store_file_status import StoreFileStatus
 
 __all__ = ["ExtractionJob"]
 
@@ -34,7 +34,7 @@ class ExtractionJob(BaseModel):
     finished_at: Optional[datetime] = None
     """When the job finished processing"""
 
-    status: ParsingJobStatus
+    status: StoreFileStatus
     """Current status of the job"""
 
     result: Optional[ExtractionResult] = None

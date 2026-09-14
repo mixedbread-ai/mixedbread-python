@@ -1,4 +1,4 @@
-# File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+# File generated from our OpenAPI spec by sdkgen. See CONTRIBUTING.md for details.
 
 from typing_extensions import Literal
 
@@ -17,6 +17,6 @@ class SearchFilterCondition(BaseModel):
     """The value to compare against"""
 
     operator: Literal[
-        "eq", "not_eq", "gt", "gte", "lt", "lte", "in", "not_in", "like", "starts_with", "not_like", "regex"
+        "eq", "not_eq", "gt", "gte", "lt", "lte", "in", "not_in", "like", "contains", "starts_with", "not_like", "regex"
     ]
     """The operator for the condition"""

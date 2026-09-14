@@ -1,4 +1,4 @@
-# File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+# File generated from our OpenAPI spec by sdkgen. See CONTRIBUTING.md for details.
 
 from __future__ import annotations
 
@@ -16,6 +16,7 @@ from .files import (
     AsyncFilesResourceWithStreamingResponse,
 )
 from ...types import (
+    store_copy_params,
     store_grep_params,
     store_list_params,
     store_create_params,
@@ -26,7 +27,7 @@ from ...types import (
     store_question_answering_params,
 )
 from ..._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
-from ..._utils import path_template, maybe_transform, async_maybe_transform
+from ..._utils import path_template, maybe_transform, strip_not_given, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
 from ..._response import (
@@ -35,6 +36,7 @@ from ..._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
+from ...lib.stores import StoreHelpers, AsyncStoreHelpers
 from ...pagination import SyncCursor, AsyncCursor
 from ...types.store import Store
 from ..._base_client import AsyncPaginator, make_request_options
@@ -51,7 +53,7 @@ from ...types.store_question_answering_response import StoreQuestionAnsweringRes
 __all__ = ["StoresResource", "AsyncStoresResource"]
 
 
-class StoresResource(SyncAPIResource):
+class StoresResourceBase(SyncAPIResource):
     @cached_property
     def files(self) -> FilesResource:
         return FilesResource(self._client)
@@ -204,10 +206,11 @@ class StoresResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Store:
-        """
-        Update a store by ID or name.
+        """Update a store by ID or name.
 
-        Args: store_identifier: The ID or name of the store to update. store_update:
+        Args: store_identifier: The ID or name of the store to update.
+
+        store_update:
         StoreCreate object containing the name, description, and metadata.
 
         Returns: Store: The response containing the updated store details.
@@ -363,9 +366,75 @@ class StoresResource(SyncAPIResource):
             cast_to=StoreDeleteResponse,
         )
 
+    def copy(
+        self,
+        store_identifier: str,
+        *,
+        name: str,
+        description: Optional[str] | Omit = omit,
+        metadata: object | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> Store:
+        """Copy a store into a new store with the given name.
+
+        The copy keeps every file, its metadata and its indexed chunks, without
+        re-parsing or re-embedding anything. It runs in the background: both stores
+        report the progress in `copy_state`, and the new store's `status` is
+        `in_progress` until the copy completes. Neither store accepts file changes while
+        the copy runs, and the source must have no files still being processed.
+
+        Args: store_identifier: The ID or name of the store to copy.
+
+        params: The name of
+        the copy and optional description and metadata overrides.
+
+        Returns: Store: The new store.
+
+        Args:
+          store_identifier: The ID or name of the store to copy
+
+          name: Name for the copy. Can only contain lowercase letters, numbers, periods (.), and
+              hyphens (-).
+
+          description: Description of the copy; defaults to the source store's description
+
+          metadata: Metadata for the copy; defaults to the source store's metadata
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not store_identifier:
+            raise ValueError(f"Expected a non-empty value for `store_identifier` but received {store_identifier!r}")
+        return self._post(
+            path_template("/v1/stores/{store_identifier}/copy", store_identifier=store_identifier),
+            body=maybe_transform(
+                {
+                    "name": name,
+                    "description": description,
+                    "metadata": metadata,
+                },
+                store_copy_params.StoreCopyParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=Store,
+        )
+
     def grep(
         self,
         *,
+        x_mxbai_tool_ticket: str | Omit = omit,
         store_identifiers: SequenceNotStr[str],
         top_k: int | Omit = omit,
         filters: Optional[store_grep_params.Filters] | Omit = omit,
@@ -388,15 +457,18 @@ class StoresResource(SyncAPIResource):
         chunk. Use it to find chunks containing a specific token, identifier, error
         code, or literal phrase.
 
-        grep targets a single store and does not support pagination; raise `top_k` to
-        retrieve more matches.
+        grep matches across all requested stores and returns at most `top_k` chunks in
+        total. Matches are unranked and interleaved across stores in the order
+        requested, preserving each store's result order. Pagination is not supported;
+        raise `top_k` to retrieve more matches.
 
-        Args: grep_params: Grep configuration including: - pattern: RE2 regular
-        expression matched against chunk text - targets: chunk content groups to match
-        (`text`, `generated`) - case_sensitive: whether the pattern is case-sensitive -
-        store_identifiers: the single store to grep - file_ids: optional list of file
-        IDs to filter chunks by - filters: optional metadata filter conditions - top_k:
-        number of matches to return
+        Args: grep_params: Grep configuration including:
+
+        - pattern: RE2 regular expression matched against chunk text - targets: chunk
+        content groups to match (`text`, `generated`) - case_sensitive: whether the
+        pattern is case-sensitive - store_identifiers: IDs or names of the stores to
+        grep - file_ids: optional list of file IDs to filter chunks by - filters:
+        optional metadata filter conditions - top_k: number of matches to return
 
         Returns: StoreGrepResponse containing the list of matching chunks.
 
@@ -404,6 +476,10 @@ class StoresResource(SyncAPIResource):
         If the store is not found
 
         Args:
+          x_mxbai_tool_ticket: Ticket from a chat completion's `tool_tickets`, proving this call runs a tool
+              call that completion asked for. Redeems once, and bills the operation at the
+              discounted agent rate.
+
           store_identifiers: IDs or names of stores
 
           top_k: Number of results to return
@@ -430,6 +506,7 @@ class StoresResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        extra_headers = {**strip_not_given({"X-Mxbai-Tool-Ticket": x_mxbai_tool_ticket}), **(extra_headers or {})}
         return self._post(
             "/v1/stores/grep",
             body=maybe_transform(
@@ -477,19 +554,23 @@ class StoresResource(SyncAPIResource):
         for ranked retrieval over numeric attributes (e.g. price, BPM) and for
         reproducing the agentic `filter_chunks` tool externally.
 
-        list-chunks targets a single store and does not support pagination; raise
-        `top_k` to retrieve more chunks.
+        list-chunks filters across all requested stores and returns at most `top_k`
+        chunks in total. With `sort_by`, results are ordered globally by that field.
+        Otherwise results are interleaved across stores in the order requested,
+        preserving each store's result order. Pagination is not supported; raise `top_k`
+        to retrieve more chunks.
 
-        Args: filter_params: Filter configuration including: - store_identifiers: the
-        single store to filter against - filters: optional metadata filter conditions -
-        file_ids: optional list of file IDs to filter chunks by - sort_by: optional
-        metadata field path, or `(field, ascending)` tuple, for numeric ordering -
-        top_k: number of chunks to return
+        Args: filter_params: Filter configuration including:
+
+        - store_identifiers: IDs or names of the stores to filter against - filters:
+        optional metadata filter conditions - file_ids: optional list of file IDs to
+        filter chunks by - sort_by: optional metadata field path, or `(field,
+        ascending)` tuple, for numeric ordering - top_k: number of chunks to return
 
         Returns: StoreListChunksResponse containing the list of matching chunks.
 
-        Raises: HTTPException (400): If filter parameters are invalid or multiple stores
-        are passed HTTPException (404): If the store is not found
+        Raises: HTTPException (400): If filter parameters are invalid HTTPException
+        (404): If the store is not found
 
         Args:
           store_identifiers: IDs or names of stores
@@ -502,7 +583,7 @@ class StoresResource(SyncAPIResource):
 
           sort_by: Optional sort applied to the returned chunks. Pass a metadata field path or a
               tuple of (field path, ascending). Unprefixed dot paths target file metadata;
-              generated_metadata.\\** targets chunk metadata.
+              generated_metadata.* targets chunk metadata.
 
           search_options: Search configuration options
 
@@ -644,7 +725,9 @@ class StoresResource(SyncAPIResource):
 
           search_options: Search configuration options
 
-          stream: Whether to stream the answer
+          stream: Internal: when set, the response is a server-sent event stream of the retrieved
+              chunks, live trace events, and finally the answer. Used by the Mixedbread
+              playground; not part of the documented public API.
 
           instructions: Additional custom instructions (followed only when not in conflict with existing
               rules)
@@ -684,12 +767,14 @@ class StoresResource(SyncAPIResource):
     def search(
         self,
         *,
+        x_mxbai_tool_ticket: str | Omit = omit,
         store_identifiers: SequenceNotStr[str],
         top_k: int | Omit = omit,
         filters: Optional[store_search_params.Filters] | Omit = omit,
         file_ids: Union[Iterable[object], SequenceNotStr[str], None] | Omit = omit,
         query: store_search_params.Query,
         search_options: StoreChunkSearchOptionsParam | Omit = omit,
+        stream: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -702,25 +787,34 @@ class StoresResource(SyncAPIResource):
 
         This endpoint searches through store chunks using semantic similarity matching.
         It supports complex search queries with filters and returns relevance-scored
-        results.
+        results. Agentic searches can set `stream=true` to receive live trace events as
+        server-sent events while the search runs, followed by the final search response.
 
         For the special 'mixedbread/web' store, this endpoint performs web search using
         a mixture of different providers instead of semantic search. Web search results
         are always reranked for consistent scoring.
 
-        Args: search_params: Search configuration including: - query text or
-        embeddings - store_identifiers: List of store identifiers to search - file_ids:
-        Optional list of file IDs to filter chunks by (or tuple of list and condition
-        operator) - metadata filters - pagination parameters - sorting preferences
-        \\__state: API state dependency \\__ctx: Service context dependency
+        Args: search_params: Search configuration including:
 
-        Returns: StoreSearchResponse containing: - List of matched chunks with relevance
-        scores - Pagination details including total result count
+        - query text or embeddings - store_identifiers: List of store identifiers to
+        search - file_ids: Optional list of file IDs to filter chunks by (or tuple of
+        list and condition operator) - metadata filters - pagination parameters -
+        sorting preferences _state: API state dependency _ctx: Service context
+        dependency
+
+        Returns: StoreSearchResponse containing:
+
+        - List of matched chunks with relevance scores - Pagination details including
+        total result count
 
         Raises: HTTPException (400): If search parameters are invalid HTTPException
         (404): If no vector stores are found to search
 
         Args:
+          x_mxbai_tool_ticket: Ticket from a chat completion's `tool_tickets`, proving this call runs a tool
+              call that completion asked for. Redeems once, and bills the operation at the
+              discounted agent rate.
+
           store_identifiers: IDs or names of stores
 
           top_k: Number of results to return
@@ -733,6 +827,11 @@ class StoresResource(SyncAPIResource):
 
           search_options: Search configuration options
 
+          stream: When true, return the search as a server-sent event stream: live agentic-search
+              trace events when the search is agentic, and nothing before the results
+              otherwise. A successful stream ends with a search.completed event containing the
+              final search response, followed by [DONE].
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -741,6 +840,7 @@ class StoresResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        extra_headers = {**strip_not_given({"X-Mxbai-Tool-Ticket": x_mxbai_tool_ticket}), **(extra_headers or {})}
         return self._post(
             "/v1/stores/search",
             body=maybe_transform(
@@ -751,6 +851,7 @@ class StoresResource(SyncAPIResource):
                     "file_ids": file_ids,
                     "query": query,
                     "search_options": search_options,
+                    "stream": stream,
                 },
                 store_search_params.StoreSearchParams,
             ),
@@ -761,7 +862,7 @@ class StoresResource(SyncAPIResource):
         )
 
 
-class AsyncStoresResource(AsyncAPIResource):
+class AsyncStoresResourceBase(AsyncAPIResource):
     @cached_property
     def files(self) -> AsyncFilesResource:
         return AsyncFilesResource(self._client)
@@ -914,10 +1015,11 @@ class AsyncStoresResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Store:
-        """
-        Update a store by ID or name.
+        """Update a store by ID or name.
 
-        Args: store_identifier: The ID or name of the store to update. store_update:
+        Args: store_identifier: The ID or name of the store to update.
+
+        store_update:
         StoreCreate object containing the name, description, and metadata.
 
         Returns: Store: The response containing the updated store details.
@@ -1073,9 +1175,75 @@ class AsyncStoresResource(AsyncAPIResource):
             cast_to=StoreDeleteResponse,
         )
 
+    async def copy(
+        self,
+        store_identifier: str,
+        *,
+        name: str,
+        description: Optional[str] | Omit = omit,
+        metadata: object | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> Store:
+        """Copy a store into a new store with the given name.
+
+        The copy keeps every file, its metadata and its indexed chunks, without
+        re-parsing or re-embedding anything. It runs in the background: both stores
+        report the progress in `copy_state`, and the new store's `status` is
+        `in_progress` until the copy completes. Neither store accepts file changes while
+        the copy runs, and the source must have no files still being processed.
+
+        Args: store_identifier: The ID or name of the store to copy.
+
+        params: The name of
+        the copy and optional description and metadata overrides.
+
+        Returns: Store: The new store.
+
+        Args:
+          store_identifier: The ID or name of the store to copy
+
+          name: Name for the copy. Can only contain lowercase letters, numbers, periods (.), and
+              hyphens (-).
+
+          description: Description of the copy; defaults to the source store's description
+
+          metadata: Metadata for the copy; defaults to the source store's metadata
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not store_identifier:
+            raise ValueError(f"Expected a non-empty value for `store_identifier` but received {store_identifier!r}")
+        return await self._post(
+            path_template("/v1/stores/{store_identifier}/copy", store_identifier=store_identifier),
+            body=await async_maybe_transform(
+                {
+                    "name": name,
+                    "description": description,
+                    "metadata": metadata,
+                },
+                store_copy_params.StoreCopyParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=Store,
+        )
+
     async def grep(
         self,
         *,
+        x_mxbai_tool_ticket: str | Omit = omit,
         store_identifiers: SequenceNotStr[str],
         top_k: int | Omit = omit,
         filters: Optional[store_grep_params.Filters] | Omit = omit,
@@ -1098,15 +1266,18 @@ class AsyncStoresResource(AsyncAPIResource):
         chunk. Use it to find chunks containing a specific token, identifier, error
         code, or literal phrase.
 
-        grep targets a single store and does not support pagination; raise `top_k` to
-        retrieve more matches.
+        grep matches across all requested stores and returns at most `top_k` chunks in
+        total. Matches are unranked and interleaved across stores in the order
+        requested, preserving each store's result order. Pagination is not supported;
+        raise `top_k` to retrieve more matches.
 
-        Args: grep_params: Grep configuration including: - pattern: RE2 regular
-        expression matched against chunk text - targets: chunk content groups to match
-        (`text`, `generated`) - case_sensitive: whether the pattern is case-sensitive -
-        store_identifiers: the single store to grep - file_ids: optional list of file
-        IDs to filter chunks by - filters: optional metadata filter conditions - top_k:
-        number of matches to return
+        Args: grep_params: Grep configuration including:
+
+        - pattern: RE2 regular expression matched against chunk text - targets: chunk
+        content groups to match (`text`, `generated`) - case_sensitive: whether the
+        pattern is case-sensitive - store_identifiers: IDs or names of the stores to
+        grep - file_ids: optional list of file IDs to filter chunks by - filters:
+        optional metadata filter conditions - top_k: number of matches to return
 
         Returns: StoreGrepResponse containing the list of matching chunks.
 
@@ -1114,6 +1285,10 @@ class AsyncStoresResource(AsyncAPIResource):
         If the store is not found
 
         Args:
+          x_mxbai_tool_ticket: Ticket from a chat completion's `tool_tickets`, proving this call runs a tool
+              call that completion asked for. Redeems once, and bills the operation at the
+              discounted agent rate.
+
           store_identifiers: IDs or names of stores
 
           top_k: Number of results to return
@@ -1140,6 +1315,7 @@ class AsyncStoresResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        extra_headers = {**strip_not_given({"X-Mxbai-Tool-Ticket": x_mxbai_tool_ticket}), **(extra_headers or {})}
         return await self._post(
             "/v1/stores/grep",
             body=await async_maybe_transform(
@@ -1187,19 +1363,23 @@ class AsyncStoresResource(AsyncAPIResource):
         for ranked retrieval over numeric attributes (e.g. price, BPM) and for
         reproducing the agentic `filter_chunks` tool externally.
 
-        list-chunks targets a single store and does not support pagination; raise
-        `top_k` to retrieve more chunks.
+        list-chunks filters across all requested stores and returns at most `top_k`
+        chunks in total. With `sort_by`, results are ordered globally by that field.
+        Otherwise results are interleaved across stores in the order requested,
+        preserving each store's result order. Pagination is not supported; raise `top_k`
+        to retrieve more chunks.
 
-        Args: filter_params: Filter configuration including: - store_identifiers: the
-        single store to filter against - filters: optional metadata filter conditions -
-        file_ids: optional list of file IDs to filter chunks by - sort_by: optional
-        metadata field path, or `(field, ascending)` tuple, for numeric ordering -
-        top_k: number of chunks to return
+        Args: filter_params: Filter configuration including:
+
+        - store_identifiers: IDs or names of the stores to filter against - filters:
+        optional metadata filter conditions - file_ids: optional list of file IDs to
+        filter chunks by - sort_by: optional metadata field path, or `(field,
+        ascending)` tuple, for numeric ordering - top_k: number of chunks to return
 
         Returns: StoreListChunksResponse containing the list of matching chunks.
 
-        Raises: HTTPException (400): If filter parameters are invalid or multiple stores
-        are passed HTTPException (404): If the store is not found
+        Raises: HTTPException (400): If filter parameters are invalid HTTPException
+        (404): If the store is not found
 
         Args:
           store_identifiers: IDs or names of stores
@@ -1212,7 +1392,7 @@ class AsyncStoresResource(AsyncAPIResource):
 
           sort_by: Optional sort applied to the returned chunks. Pass a metadata field path or a
               tuple of (field path, ascending). Unprefixed dot paths target file metadata;
-              generated_metadata.\\** targets chunk metadata.
+              generated_metadata.* targets chunk metadata.
 
           search_options: Search configuration options
 
@@ -1354,7 +1534,9 @@ class AsyncStoresResource(AsyncAPIResource):
 
           search_options: Search configuration options
 
-          stream: Whether to stream the answer
+          stream: Internal: when set, the response is a server-sent event stream of the retrieved
+              chunks, live trace events, and finally the answer. Used by the Mixedbread
+              playground; not part of the documented public API.
 
           instructions: Additional custom instructions (followed only when not in conflict with existing
               rules)
@@ -1394,12 +1576,14 @@ class AsyncStoresResource(AsyncAPIResource):
     async def search(
         self,
         *,
+        x_mxbai_tool_ticket: str | Omit = omit,
         store_identifiers: SequenceNotStr[str],
         top_k: int | Omit = omit,
         filters: Optional[store_search_params.Filters] | Omit = omit,
         file_ids: Union[Iterable[object], SequenceNotStr[str], None] | Omit = omit,
         query: store_search_params.Query,
         search_options: StoreChunkSearchOptionsParam | Omit = omit,
+        stream: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -1412,25 +1596,34 @@ class AsyncStoresResource(AsyncAPIResource):
 
         This endpoint searches through store chunks using semantic similarity matching.
         It supports complex search queries with filters and returns relevance-scored
-        results.
+        results. Agentic searches can set `stream=true` to receive live trace events as
+        server-sent events while the search runs, followed by the final search response.
 
         For the special 'mixedbread/web' store, this endpoint performs web search using
         a mixture of different providers instead of semantic search. Web search results
         are always reranked for consistent scoring.
 
-        Args: search_params: Search configuration including: - query text or
-        embeddings - store_identifiers: List of store identifiers to search - file_ids:
-        Optional list of file IDs to filter chunks by (or tuple of list and condition
-        operator) - metadata filters - pagination parameters - sorting preferences
-        \\__state: API state dependency \\__ctx: Service context dependency
+        Args: search_params: Search configuration including:
 
-        Returns: StoreSearchResponse containing: - List of matched chunks with relevance
-        scores - Pagination details including total result count
+        - query text or embeddings - store_identifiers: List of store identifiers to
+        search - file_ids: Optional list of file IDs to filter chunks by (or tuple of
+        list and condition operator) - metadata filters - pagination parameters -
+        sorting preferences _state: API state dependency _ctx: Service context
+        dependency
+
+        Returns: StoreSearchResponse containing:
+
+        - List of matched chunks with relevance scores - Pagination details including
+        total result count
 
         Raises: HTTPException (400): If search parameters are invalid HTTPException
         (404): If no vector stores are found to search
 
         Args:
+          x_mxbai_tool_ticket: Ticket from a chat completion's `tool_tickets`, proving this call runs a tool
+              call that completion asked for. Redeems once, and bills the operation at the
+              discounted agent rate.
+
           store_identifiers: IDs or names of stores
 
           top_k: Number of results to return
@@ -1443,6 +1636,11 @@ class AsyncStoresResource(AsyncAPIResource):
 
           search_options: Search configuration options
 
+          stream: When true, return the search as a server-sent event stream: live agentic-search
+              trace events when the search is agentic, and nothing before the results
+              otherwise. A successful stream ends with a search.completed event containing the
+              final search response, followed by [DONE].
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -1451,6 +1649,7 @@ class AsyncStoresResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        extra_headers = {**strip_not_given({"X-Mxbai-Tool-Ticket": x_mxbai_tool_ticket}), **(extra_headers or {})}
         return await self._post(
             "/v1/stores/search",
             body=await async_maybe_transform(
@@ -1461,6 +1660,7 @@ class AsyncStoresResource(AsyncAPIResource):
                     "file_ids": file_ids,
                     "query": query,
                     "search_options": search_options,
+                    "stream": stream,
                 },
                 store_search_params.StoreSearchParams,
             ),
@@ -1471,8 +1671,16 @@ class AsyncStoresResource(AsyncAPIResource):
         )
 
 
+class StoresResource(StoreHelpers, StoresResourceBase):
+    pass
+
+
+class AsyncStoresResource(AsyncStoreHelpers, AsyncStoresResourceBase):
+    pass
+
+
 class StoresResourceWithRawResponse:
-    def __init__(self, stores: StoresResource) -> None:
+    def __init__(self, stores: StoresResourceBase) -> None:
         self._stores = stores
 
         self.create = to_raw_response_wrapper(
@@ -1489,6 +1697,9 @@ class StoresResourceWithRawResponse:
         )
         self.delete = to_raw_response_wrapper(
             stores.delete,
+        )
+        self.copy = to_raw_response_wrapper(
+            stores.copy,
         )
         self.grep = to_raw_response_wrapper(
             stores.grep,
@@ -1512,7 +1723,7 @@ class StoresResourceWithRawResponse:
 
 
 class AsyncStoresResourceWithRawResponse:
-    def __init__(self, stores: AsyncStoresResource) -> None:
+    def __init__(self, stores: AsyncStoresResourceBase) -> None:
         self._stores = stores
 
         self.create = async_to_raw_response_wrapper(
@@ -1529,6 +1740,9 @@ class AsyncStoresResourceWithRawResponse:
         )
         self.delete = async_to_raw_response_wrapper(
             stores.delete,
+        )
+        self.copy = async_to_raw_response_wrapper(
+            stores.copy,
         )
         self.grep = async_to_raw_response_wrapper(
             stores.grep,
@@ -1552,7 +1766,7 @@ class AsyncStoresResourceWithRawResponse:
 
 
 class StoresResourceWithStreamingResponse:
-    def __init__(self, stores: StoresResource) -> None:
+    def __init__(self, stores: StoresResourceBase) -> None:
         self._stores = stores
 
         self.create = to_streamed_response_wrapper(
@@ -1569,6 +1783,9 @@ class StoresResourceWithStreamingResponse:
         )
         self.delete = to_streamed_response_wrapper(
             stores.delete,
+        )
+        self.copy = to_streamed_response_wrapper(
+            stores.copy,
         )
         self.grep = to_streamed_response_wrapper(
             stores.grep,
@@ -1592,7 +1809,7 @@ class StoresResourceWithStreamingResponse:
 
 
 class AsyncStoresResourceWithStreamingResponse:
-    def __init__(self, stores: AsyncStoresResource) -> None:
+    def __init__(self, stores: AsyncStoresResourceBase) -> None:
         self._stores = stores
 
         self.create = async_to_streamed_response_wrapper(
@@ -1609,6 +1826,9 @@ class AsyncStoresResourceWithStreamingResponse:
         )
         self.delete = async_to_streamed_response_wrapper(
             stores.delete,
+        )
+        self.copy = async_to_streamed_response_wrapper(
+            stores.copy,
         )
         self.grep = async_to_streamed_response_wrapper(
             stores.grep,

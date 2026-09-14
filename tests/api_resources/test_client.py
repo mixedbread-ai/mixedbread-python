@@ -1,4 +1,4 @@
-# File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+# File generated from our OpenAPI spec by sdkgen. See CONTRIBUTING.md for details.
 
 from __future__ import annotations
 
@@ -103,7 +103,7 @@ class TestClient:
     @parametrize
     def test_method_rerank_with_all_params(self, client: Mixedbread) -> None:
         client_ = client.rerank(
-            model="mixedbread-ai/mxbai-rerank-large-v2",
+            model="mixedbread-ai/mxbai-rerank-v3.1-listwise",
             query="What are the key features of the Mixedbread embedding model?",
             input=["Document 1", "Document 2"],
             rank_fields=["content", "title"],
@@ -227,7 +227,7 @@ class TestAsyncClient:
     @parametrize
     async def test_method_rerank_with_all_params(self, async_client: AsyncMixedbread) -> None:
         client = await async_client.rerank(
-            model="mixedbread-ai/mxbai-rerank-large-v2",
+            model="mixedbread-ai/mxbai-rerank-v3.1-listwise",
             query="What are the key features of the Mixedbread embedding model?",
             input=["Document 1", "Document 2"],
             rank_fields=["content", "title"],

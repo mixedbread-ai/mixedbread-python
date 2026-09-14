@@ -1,16 +1,13 @@
-# File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+# File generated from our OpenAPI spec by sdkgen. See CONTRIBUTING.md for details.
 
 from __future__ import annotations
 
-import functools
-from typing import Any, List, Optional
+from typing import List, Optional
 from typing_extensions import Literal
 
 import httpx
 
-from ...lib import polling
-from ..._types import Body, Omit, Query, Headers, NotGiven, FileTypes, omit, not_given
-from ...lib.multipart_upload import MultipartUploadOptions
+from ..._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
 from ..._utils import path_template, maybe_transform, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
@@ -22,7 +19,8 @@ from ..._response import (
 )
 from ...pagination import SyncCursor, AsyncCursor
 from ..._base_client import AsyncPaginator, make_request_options
-from ...types.parsing import ReturnFormat, ChunkingStrategy, job_list_params, job_create_params
+from ...types.parsing import job_list_params, job_create_params
+from ...lib.parsing_jobs import ParsingJobHelpers, AsyncParsingJobHelpers
 from ...types.parsing.parsing_job import ParsingJob
 from ...types.parsing.element_type import ElementType
 from ...types.parsing.return_format import ReturnFormat
@@ -34,7 +32,7 @@ from ...types.parsing.job_delete_response import JobDeleteResponse
 __all__ = ["JobsResource", "AsyncJobsResource"]
 
 
-class JobsResource(SyncAPIResource):
+class JobsResourceBase(SyncAPIResource):
     @cached_property
     def with_raw_response(self) -> JobsResourceWithRawResponse:
         """
@@ -300,167 +298,8 @@ class JobsResource(SyncAPIResource):
             cast_to=ParsingJob,
         )
 
-    def poll(
-        self,
-        job_id: str,
-        *,
-        poll_interval_ms: int | NotGiven = not_given,
-        poll_timeout_ms: float | NotGiven = not_given,
-        **kwargs: Any,
-    ) -> ParsingJob:
-        """
-        Poll for a job's status until it reaches a terminal state.
-        Args:
-            job_id: The ID of the job to poll
-            poll_interval_ms: The interval between polls in milliseconds
-            poll_timeout_ms: The maximum time to poll for in milliseconds
-        Returns:
-            The job object once it reaches a terminal state
-        """
-        polling_interval_ms = poll_interval_ms or 500
-        polling_timeout_ms = poll_timeout_ms or None
-        return polling.poll(
-            fn=functools.partial(self.retrieve, job_id, **kwargs),
-            condition=lambda res: res.status == "completed" or res.status == "failed" or res.status == "cancelled",
-            interval_seconds=polling_interval_ms / 1000,
-            timeout_seconds=polling_timeout_ms / 1000 if polling_timeout_ms else None,
-        )
 
-    def create_and_poll(
-        self,
-        *,
-        file_id: str,
-        chunking_strategy: Literal["page"] | NotGiven = not_given,
-        element_types: Optional[
-            List[
-                Literal[
-                    "caption",
-                    "footnote",
-                    "formula",
-                    "list-item",
-                    "page-footer",
-                    "page-header",
-                    "picture",
-                    "section-header",
-                    "table",
-                    "text",
-                    "title",
-                ]
-            ]
-        ]
-        | NotGiven = not_given,
-        return_format: Literal["html", "markdown", "plain"] | NotGiven = not_given,
-        poll_interval_ms: int | NotGiven = not_given,
-        poll_timeout_ms: float | NotGiven = not_given,
-        **kwargs: Any,
-    ) -> ParsingJob:
-        """
-        Create a parsing job and wait for it to complete.
-        Args:
-            file_id: The ID of the file to parse
-            chunking_strategy: The strategy to use for chunking the content
-            element_types: The elements to extract from the document
-            return_format: The format of the returned content
-            poll_interval_ms: The interval between polls in milliseconds
-            poll_timeout_ms: The maximum time to poll for in milliseconds
-        Returns:
-            The job object once it reaches a terminal state
-        """
-        job = self.create(
-            file_id=file_id,
-            chunking_strategy=chunking_strategy,
-            element_types=element_types,
-            return_format=return_format,
-            **kwargs,
-        )
-        return self.poll(
-            job.id,
-            poll_interval_ms=poll_interval_ms,
-            poll_timeout_ms=poll_timeout_ms,
-            **kwargs,
-        )
-
-    def upload(
-        self,
-        *,
-        file: FileTypes,
-        chunking_strategy: Literal["page"] | NotGiven = not_given,
-        element_types: Optional[
-            List[
-                Literal[
-                    "caption",
-                    "footnote",
-                    "formula",
-                    "list-item",
-                    "page-footer",
-                    "page-header",
-                    "picture",
-                    "section-header",
-                    "table",
-                    "text",
-                    "title",
-                ]
-            ]
-        ]
-        | NotGiven = not_given,
-        return_format: Literal["html", "markdown", "plain"] | NotGiven = not_given,
-        multipart_upload: bool | MultipartUploadOptions | None = None,
-        **kwargs: Any,
-    ) -> ParsingJob:
-        """Upload a file to the `files` API and then create a parsing job for it.
-        Note the job will be asynchronously processed (you can use the alternative
-        polling helper method to wait for processing to complete).
-        """
-        file_obj = self._client.files.create(file=file, multipart_upload=multipart_upload, **kwargs)
-        return self.create(
-            file_id=file_obj.id,
-            chunking_strategy=chunking_strategy,
-            element_types=element_types,
-            return_format=return_format,
-            **kwargs,
-        )
-
-    def upload_and_poll(
-        self,
-        *,
-        file: FileTypes,
-        chunking_strategy: Literal["page"] | NotGiven = not_given,
-        element_types: Optional[
-            List[
-                Literal[
-                    "caption",
-                    "footnote",
-                    "formula",
-                    "list-item",
-                    "page-footer",
-                    "page-header",
-                    "picture",
-                    "section-header",
-                    "table",
-                    "text",
-                    "title",
-                ]
-            ]
-        ]
-        | NotGiven = not_given,
-        return_format: Literal["html", "markdown", "plain"] | NotGiven = not_given,
-        multipart_upload: bool | MultipartUploadOptions | None = None,
-        poll_interval_ms: int | NotGiven = not_given,
-        **kwargs: Any,
-    ) -> ParsingJob:
-        """Upload a file and create a parsing job, then poll until processing is complete."""
-        file_obj = self._client.files.create(file=file, multipart_upload=multipart_upload, **kwargs)
-        return self.create_and_poll(
-            file_id=file_obj.id,
-            chunking_strategy=chunking_strategy,
-            element_types=element_types,
-            return_format=return_format,
-            poll_interval_ms=poll_interval_ms,
-            **kwargs,
-        )
-
-
-class AsyncJobsResource(AsyncAPIResource):
+class AsyncJobsResourceBase(AsyncAPIResource):
     @cached_property
     def with_raw_response(self) -> AsyncJobsResourceWithRawResponse:
         """
@@ -726,168 +565,17 @@ class AsyncJobsResource(AsyncAPIResource):
             cast_to=ParsingJob,
         )
 
-    async def poll(
-        self,
-        job_id: str,
-        *,
-        poll_interval_ms: int | NotGiven = not_given,
-        poll_timeout_ms: float | NotGiven = not_given,
-        **kwargs: Any,
-    ) -> ParsingJob:
-        """
-        Poll for a job's status until it reaches a terminal state.
-        Args:
-            job_id: The ID of the job to poll
-            poll_interval_ms: The interval between polls in milliseconds
-            poll_timeout_ms: The maximum time to poll for in milliseconds
-        Returns:
-            The job object once it reaches a terminal state
-        """
-        polling_interval_ms = poll_interval_ms or 500
-        polling_timeout_ms = poll_timeout_ms or None
-        return await polling.poll_async(
-            fn=functools.partial(self.retrieve, job_id, **kwargs),
-            condition=lambda res: res.status == "completed" or res.status == "failed" or res.status == "cancelled",
-            interval_seconds=polling_interval_ms / 1000,
-            timeout_seconds=polling_timeout_ms / 1000 if polling_timeout_ms else None,
-        )
 
-    async def create_and_poll(
-        self,
-        *,
-        file_id: str,
-        chunking_strategy: Literal["page"] | NotGiven = not_given,
-        element_types: Optional[
-            List[
-                Literal[
-                    "caption",
-                    "footnote",
-                    "formula",
-                    "list-item",
-                    "page-footer",
-                    "page-header",
-                    "picture",
-                    "section-header",
-                    "table",
-                    "text",
-                    "title",
-                ]
-            ]
-        ]
-        | NotGiven = not_given,
-        return_format: Literal["html", "markdown", "plain"] | NotGiven = not_given,
-        poll_interval_ms: int | NotGiven = not_given,
-        poll_timeout_ms: float | NotGiven = not_given,
-        **kwargs: Any,
-    ) -> ParsingJob:
-        """
-        Create a parsing job and wait for it to complete.
-        Args:
-            file_id: The ID of the file to parse
-            chunking_strategy: The strategy to use for chunking the content
-            element_types: The elements to extract from the document
-            return_format: The format of the returned content
-            poll_interval_ms: The interval between polls in milliseconds
-            poll_timeout_ms: The maximum time to poll for in milliseconds
-        Returns:
-            The job object once it reaches a terminal state
-        """
-        job = await self.create(
-            file_id=file_id,
-            chunking_strategy=chunking_strategy,
-            element_types=element_types,
-            return_format=return_format,
-            **kwargs,
-        )
-        return await self.poll(
-            job.id,
-            poll_interval_ms=poll_interval_ms,
-            poll_timeout_ms=poll_timeout_ms,
-            **kwargs,
-        )
+class JobsResource(ParsingJobHelpers, JobsResourceBase):
+    pass
 
-    async def upload(
-        self,
-        *,
-        file: FileTypes,
-        chunking_strategy: Literal["page"] | NotGiven = not_given,
-        element_types: Optional[
-            List[
-                Literal[
-                    "caption",
-                    "footnote",
-                    "formula",
-                    "list-item",
-                    "page-footer",
-                    "page-header",
-                    "picture",
-                    "section-header",
-                    "table",
-                    "text",
-                    "title",
-                ]
-            ]
-        ]
-        | NotGiven = not_given,
-        return_format: Literal["html", "markdown", "plain"] | NotGiven = not_given,
-        multipart_upload: bool | MultipartUploadOptions | None = None,
-        **kwargs: Any,
-    ) -> ParsingJob:
-        """Upload a file to the `files` API and then create a parsing job for it.
-        Note the job will be asynchronously processed (you can use the alternative
-        polling helper method to wait for processing to complete).
-        """
-        file_obj = await self._client.files.create(file=file, multipart_upload=multipart_upload, **kwargs)
-        return await self.create(
-            file_id=file_obj.id,
-            chunking_strategy=chunking_strategy,
-            element_types=element_types,
-            return_format=return_format,
-            **kwargs,
-        )
 
-    async def upload_and_poll(
-        self,
-        *,
-        file: FileTypes,
-        chunking_strategy: Literal["page"] | NotGiven = not_given,
-        element_types: Optional[
-            List[
-                Literal[
-                    "caption",
-                    "footnote",
-                    "formula",
-                    "list-item",
-                    "page-footer",
-                    "page-header",
-                    "picture",
-                    "section-header",
-                    "table",
-                    "text",
-                    "title",
-                ]
-            ]
-        ]
-        | NotGiven = not_given,
-        return_format: Literal["html", "markdown", "plain"] | NotGiven = not_given,
-        multipart_upload: bool | MultipartUploadOptions | None = None,
-        poll_interval_ms: int | NotGiven = not_given,
-        **kwargs: Any,
-    ) -> ParsingJob:
-        """Upload a file and create a parsing job, then poll until processing is complete."""
-        file_obj = await self._client.files.create(file=file, multipart_upload=multipart_upload, **kwargs)
-        return await self.create_and_poll(
-            file_id=file_obj.id,
-            chunking_strategy=chunking_strategy,
-            element_types=element_types,
-            return_format=return_format,
-            poll_interval_ms=poll_interval_ms,
-            **kwargs,
-        )
+class AsyncJobsResource(AsyncParsingJobHelpers, AsyncJobsResourceBase):
+    pass
 
 
 class JobsResourceWithRawResponse:
-    def __init__(self, jobs: JobsResource) -> None:
+    def __init__(self, jobs: JobsResourceBase) -> None:
         self._jobs = jobs
 
         self.create = to_raw_response_wrapper(
@@ -908,7 +596,7 @@ class JobsResourceWithRawResponse:
 
 
 class AsyncJobsResourceWithRawResponse:
-    def __init__(self, jobs: AsyncJobsResource) -> None:
+    def __init__(self, jobs: AsyncJobsResourceBase) -> None:
         self._jobs = jobs
 
         self.create = async_to_raw_response_wrapper(
@@ -929,7 +617,7 @@ class AsyncJobsResourceWithRawResponse:
 
 
 class JobsResourceWithStreamingResponse:
-    def __init__(self, jobs: JobsResource) -> None:
+    def __init__(self, jobs: JobsResourceBase) -> None:
         self._jobs = jobs
 
         self.create = to_streamed_response_wrapper(
@@ -950,7 +638,7 @@ class JobsResourceWithStreamingResponse:
 
 
 class AsyncJobsResourceWithStreamingResponse:
-    def __init__(self, jobs: AsyncJobsResource) -> None:
+    def __init__(self, jobs: AsyncJobsResourceBase) -> None:
         self._jobs = jobs
 
         self.create = async_to_streamed_response_wrapper(

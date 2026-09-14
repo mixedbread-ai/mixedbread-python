@@ -1,4 +1,4 @@
-# File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+# File generated from our OpenAPI spec by sdkgen. See CONTRIBUTING.md for details.
 
 from typing import List
 
@@ -8,6 +8,8 @@ __all__ = ["UploadListResponse", "Data"]
 
 
 class Data(BaseModel):
+    """List of in-progress multipart uploads"""
+
     id: str
     """The multipart upload record ID"""
 

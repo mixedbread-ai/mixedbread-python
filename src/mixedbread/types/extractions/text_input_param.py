@@ -1,4 +1,4 @@
-# File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+# File generated from our OpenAPI spec by sdkgen. See CONTRIBUTING.md for details.
 
 from __future__ import annotations
 
@@ -10,9 +10,8 @@ __all__ = ["TextInputParam"]
 class TextInputParam(TypedDict, total=False):
     """Model for text input validation.
 
-    Attributes:
-        type: Input type identifier, always "text"
-        text: The actual text content, with length and whitespace constraints
+    Attributes: type: Input type identifier, always "text" text: The actual text
+    content, with length and whitespace constraints
     """
 
     type: Literal["text"]

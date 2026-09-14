@@ -1,10 +1,10 @@
-# File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+# File generated from our OpenAPI spec by sdkgen. See CONTRIBUTING.md for details.
 
 from __future__ import annotations
 
 from .scope import Scope as Scope
 from .store import Store as Store
-from .shared import Usage as Usage, SearchFilterCondition as SearchFilterCondition
+from .shared import Usage as Usage, SearchFilter as SearchFilter, SearchFilterCondition as SearchFilterCondition
 from .api_key import APIKey as APIKey
 from .audio_url import AudioURL as AudioURL
 from .embedding import Embedding as Embedding
@@ -24,6 +24,7 @@ from .data_source_type import DataSourceType as DataSourceType
 from .file_list_params import FileListParams as FileListParams
 from .image_url_output import ImageURLOutput as ImageURLOutput
 from .markdown_heading import MarkdownHeading as MarkdownHeading
+from .store_copy_params import StoreCopyParams as StoreCopyParams
 from .store_grep_params import StoreGrepParams as StoreGrepParams
 from .store_list_params import StoreListParams as StoreListParams
 from .file_create_params import FileCreateParams as FileCreateParams
@@ -65,6 +66,7 @@ from .scored_audio_url_input_chunk import ScoredAudioURLInputChunk as ScoredAudi
 from .scored_image_url_input_chunk import ScoredImageURLInputChunk as ScoredImageURLInputChunk
 from .scored_video_url_input_chunk import ScoredVideoURLInputChunk as ScoredVideoURLInputChunk
 from .store_metadata_facets_params import StoreMetadataFacetsParams as StoreMetadataFacetsParams
+from .chat_create_completion_params import ChatCreateCompletionParams as ChatCreateCompletionParams
 from .code_chunk_generated_metadata import CodeChunkGeneratedMetadata as CodeChunkGeneratedMetadata
 from .text_chunk_generated_metadata import TextChunkGeneratedMetadata as TextChunkGeneratedMetadata
 from .audio_chunk_generated_metadata import AudioChunkGeneratedMetadata as AudioChunkGeneratedMetadata
@@ -73,6 +75,7 @@ from .image_chunk_generated_metadata import ImageChunkGeneratedMetadata as Image
 from .store_metadata_facets_response import StoreMetadataFacetsResponse as StoreMetadataFacetsResponse
 from .video_chunk_generated_metadata import VideoChunkGeneratedMetadata as VideoChunkGeneratedMetadata
 from .api_key_create_or_update_params import APIKeyCreateOrUpdateParams as APIKeyCreateOrUpdateParams
+from .chat_create_completion_response import ChatCreateCompletionResponse as ChatCreateCompletionResponse
 from .store_question_answering_params import StoreQuestionAnsweringParams as StoreQuestionAnsweringParams
 from .store_chunk_search_options_param import StoreChunkSearchOptionsParam as StoreChunkSearchOptionsParam
 from .markdown_chunk_generated_metadata import MarkdownChunkGeneratedMetadata as MarkdownChunkGeneratedMetadata

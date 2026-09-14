@@ -1,4 +1,4 @@
-# File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+# File generated from our OpenAPI spec by sdkgen. See CONTRIBUTING.md for details.
 
 from __future__ import annotations
 
@@ -21,7 +21,6 @@ class ContextualizationConfigParam(TypedDict, total=False):
 
     with_file_context: bool
     """
-    Use an LLM to generate a short context for each text chunk that situates it
-    within the full document, improving retrieval accuracy. Only applies to text
-    content during non-sliced ingestion.
+    Use an LLM to generate a short context for each chunk that situates it within
+    the full document, improving retrieval accuracy.
     """

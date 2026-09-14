@@ -1,4 +1,4 @@
-# File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+# File generated from our OpenAPI spec by sdkgen. See CONTRIBUTING.md for details.
 
 from __future__ import annotations
 
@@ -18,13 +18,18 @@ class AgenticSearchConfigParam(TypedDict, total=False):
     """Maximum queries per round"""
 
     strict_top_k: bool
-    """Whether the final retrieved chunk list must provide exactly top_k ranked chunks"""
+    """
+    Whether the agent fills the final ranking to top_k chunks from what it
+    retrieved, capped at top_k, instead of returning only the chunks it judged
+    relevant
+    """
 
     media_content: Literal["auto", "never", "always"]
     """Controls when retrieved image content is provided to the agent.
 
     `auto` sends images only when no OCR text or summary is available, `never`
     disables image content, and `always` sends image content when available.
+    Currently not forwarded: the search agent runs without image content.
     """
 
     instructions: Optional[str]

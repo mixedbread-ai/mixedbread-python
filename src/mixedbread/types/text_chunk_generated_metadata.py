@@ -1,4 +1,4 @@
-# File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+# File generated from our OpenAPI spec by sdkgen. See CONTRIBUTING.md for details.
 
 from typing import TYPE_CHECKING, Dict, Optional
 from typing_extensions import Literal
@@ -13,7 +13,7 @@ __all__ = ["TextChunkGeneratedMetadata"]
 class TextChunkGeneratedMetadata(BaseModel):
     type: Optional[Literal["text"]] = None
 
-    file_type: Optional[Literal["text/plain"]] = None
+    file_type: Optional[Literal["text/plain", "message/rfc822"]] = None
 
     language: Optional[str] = None
 

@@ -1,33 +1,29 @@
-# File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+# File generated from our OpenAPI spec by sdkgen. See CONTRIBUTING.md for details.
 
 from __future__ import annotations
 
 from typing import Union, Iterable, Optional
-from typing_extensions import Required, TypeAlias, TypedDict
+from typing_extensions import Required, Annotated, TypeAlias, TypedDict
 
 from .._types import SequenceNotStr
+from .._utils import PropertyInfo
+from .shared_params.search_filter import SearchFilter
 from .extractions.text_input_param import TextInputParam
 from .store_chunk_search_options_param import StoreChunkSearchOptionsParam
 from .extractions.image_url_input_param import ImageURLInputParam
 from .shared_params.search_filter_condition import SearchFilterCondition
 
-__all__ = [
-    "StoreSearchParams",
-    "Filters",
-    "FiltersSearchFilterInput",
-    "FiltersSearchFilterInputAll",
-    "FiltersSearchFilterInputAny",
-    "FiltersSearchFilterInputNone",
-    "FiltersUnionMember2",
-    "FiltersUnionMember2SearchFilterInput",
-    "FiltersUnionMember2SearchFilterInputAll",
-    "FiltersUnionMember2SearchFilterInputAny",
-    "FiltersUnionMember2SearchFilterInputNone",
-    "Query",
-]
+__all__ = ["StoreSearchParams", "Filters", "FiltersUnionMember2", "Query"]
 
 
 class StoreSearchParams(TypedDict, total=False):
+    x_mxbai_tool_ticket: Annotated[str, PropertyInfo(alias="X-Mxbai-Tool-Ticket")]
+    """
+    Ticket from a chat completion's `tool_tickets`, proving this call runs a tool
+    call that completion asked for. Redeems once, and bills the operation at the
+    discounted agent rate.
+    """
+
     store_identifiers: Required[SequenceNotStr[str]]
     """IDs or names of stores"""
 
@@ -46,49 +42,17 @@ class StoreSearchParams(TypedDict, total=False):
     search_options: StoreChunkSearchOptionsParam
     """Search configuration options"""
 
-
-FiltersSearchFilterInputAll: TypeAlias = Union[SearchFilterCondition, object]
-
-FiltersSearchFilterInputAny: TypeAlias = Union[SearchFilterCondition, object]
-
-FiltersSearchFilterInputNone: TypeAlias = Union[SearchFilterCondition, object]
-
-
-class FiltersSearchFilterInput(TypedDict, total=False):
-    """Represents a filter with AND, OR, and NOT conditions."""
-
-    all: Optional[Iterable[FiltersSearchFilterInputAll]]
-    """List of conditions or filters to be ANDed together"""
-
-    any: Optional[Iterable[FiltersSearchFilterInputAny]]
-    """List of conditions or filters to be ORed together"""
-
-    none: Optional[Iterable[FiltersSearchFilterInputNone]]
-    """List of conditions or filters to be NOTed"""
+    stream: bool
+    """
+    When true, return the search as a server-sent event stream: live agentic-search
+    trace events when the search is agentic, and nothing before the results
+    otherwise. A successful stream ends with a search.completed event containing the
+    final search response, followed by [DONE].
+    """
 
 
-FiltersUnionMember2SearchFilterInputAll: TypeAlias = Union[SearchFilterCondition, object]
+FiltersUnionMember2: TypeAlias = Union[SearchFilter, SearchFilterCondition]
 
-FiltersUnionMember2SearchFilterInputAny: TypeAlias = Union[SearchFilterCondition, object]
-
-FiltersUnionMember2SearchFilterInputNone: TypeAlias = Union[SearchFilterCondition, object]
-
-
-class FiltersUnionMember2SearchFilterInput(TypedDict, total=False):
-    """Represents a filter with AND, OR, and NOT conditions."""
-
-    all: Optional[Iterable[FiltersUnionMember2SearchFilterInputAll]]
-    """List of conditions or filters to be ANDed together"""
-
-    any: Optional[Iterable[FiltersUnionMember2SearchFilterInputAny]]
-    """List of conditions or filters to be ORed together"""
-
-    none: Optional[Iterable[FiltersUnionMember2SearchFilterInputNone]]
-    """List of conditions or filters to be NOTed"""
-
-
-FiltersUnionMember2: TypeAlias = Union[FiltersUnionMember2SearchFilterInput, SearchFilterCondition]
-
-Filters: TypeAlias = Union[FiltersSearchFilterInput, SearchFilterCondition, Iterable[FiltersUnionMember2]]
+Filters: TypeAlias = Union[SearchFilter, SearchFilterCondition, Iterable[FiltersUnionMember2]]
 
 Query: TypeAlias = Union[str, ImageURLInputParam, TextInputParam]

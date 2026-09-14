@@ -1,4 +1,4 @@
-# File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+# File generated from our OpenAPI spec by sdkgen. See CONTRIBUTING.md for details.
 
 from __future__ import annotations
 
@@ -260,7 +260,6 @@ class TestFiles:
         assert cast(Any, file.is_closed) is True
 
     @parametrize
-    @pytest.mark.respx(base_url=base_url)
     def test_path_params_content(self, client: Mixedbread) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `file_id` but received ''"):
             client.files.with_raw_response.content(
@@ -507,7 +506,6 @@ class TestAsyncFiles:
         assert cast(Any, file.is_closed) is True
 
     @parametrize
-    @pytest.mark.respx(base_url=base_url)
     async def test_path_params_content(self, async_client: AsyncMixedbread) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `file_id` but received ''"):
             await async_client.files.with_raw_response.content(

@@ -1,4 +1,4 @@
-# File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+# File generated from our OpenAPI spec by sdkgen. See CONTRIBUTING.md for details.
 
 from __future__ import annotations
 
@@ -210,37 +210,37 @@ class TestFiles:
                 "all": [
                     {
                         "key": "price",
-                        "value": "100",
                         "operator": "gt",
+                        "value": "100",
                     },
                     {
                         "key": "color",
-                        "value": "red",
                         "operator": "eq",
+                        "value": "red",
                     },
                 ],
                 "any": [
                     {
                         "key": "price",
-                        "value": "100",
                         "operator": "gt",
+                        "value": "100",
                     },
                     {
                         "key": "color",
-                        "value": "red",
                         "operator": "eq",
+                        "value": "red",
                     },
                 ],
                 "none": [
                     {
                         "key": "price",
-                        "value": "100",
                         "operator": "gt",
+                        "value": "100",
                     },
                     {
                         "key": "color",
-                        "value": "red",
                         "operator": "eq",
+                        "value": "red",
                     },
                 ],
             },
@@ -522,37 +522,37 @@ class TestAsyncFiles:
                 "all": [
                     {
                         "key": "price",
-                        "value": "100",
                         "operator": "gt",
+                        "value": "100",
                     },
                     {
                         "key": "color",
-                        "value": "red",
                         "operator": "eq",
+                        "value": "red",
                     },
                 ],
                 "any": [
                     {
                         "key": "price",
-                        "value": "100",
                         "operator": "gt",
+                        "value": "100",
                     },
                     {
                         "key": "color",
-                        "value": "red",
                         "operator": "eq",
+                        "value": "red",
                     },
                 ],
                 "none": [
                     {
                         "key": "price",
-                        "value": "100",
                         "operator": "gt",
+                        "value": "100",
                     },
                     {
                         "key": "color",
-                        "value": "red",
                         "operator": "eq",
+                        "value": "red",
                     },
                 ],
             },

@@ -1,4 +1,4 @@
-# File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+# File generated from our OpenAPI spec by sdkgen. See CONTRIBUTING.md for details.
 
 from __future__ import annotations
 
@@ -7,7 +7,7 @@ from typing_extensions import Literal, overload
 
 import httpx
 
-from ...types import Oauth2Params, data_source_list_params, data_source_create_params, data_source_update_params
+from ...types import data_source_list_params, data_source_create_params, data_source_update_params
 from ..._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
 from ..._utils import path_template, required_args, maybe_transform, async_maybe_transform
 from ..._compat import cached_property

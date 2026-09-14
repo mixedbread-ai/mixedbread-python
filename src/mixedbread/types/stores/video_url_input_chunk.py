@@ -1,4 +1,4 @@
-# File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+# File generated from our OpenAPI spec by sdkgen. See CONTRIBUTING.md for details.
 
 from typing import Union, Optional
 from typing_extensions import Literal, Annotated, TypeAlias
@@ -49,6 +49,9 @@ class VideoURLInputChunk(BaseModel):
 
     transcription: Optional[str] = None
     """speech recognition (sr) text of the video"""
+
+    context: Optional[str] = None
+    """LLM-generated context that situates this video chunk within its source file"""
 
     summary: Optional[str] = None
     """summary of the video"""

@@ -1,15 +1,12 @@
-# File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+# File generated from our OpenAPI spec by sdkgen. See CONTRIBUTING.md for details.
 
 from __future__ import annotations
 
-import functools
-from typing import Any, Dict, List, Union, Iterable, Optional
+from typing import Dict, List, Union, Iterable, Optional
 
 import httpx
 
-from ...lib import polling
-from ..._types import Body, Omit, Query, Headers, NotGiven, FileTypes, omit, not_given
-from ...lib.multipart_upload import MultipartUploadOptions
+from ..._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
 from ..._utils import path_template, maybe_transform, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
@@ -20,12 +17,8 @@ from ..._response import (
     async_to_streamed_response_wrapper,
 )
 from ..._base_client import make_request_options
-from ...types.stores import (
-    file_list_params,
-    file_create_params,
-    file_update_params,
-    file_retrieve_params,
-)
+from ...types.stores import file_list_params, file_create_params, file_update_params, file_retrieve_params
+from ...lib.store_files import StoreFileHelpers, AsyncStoreFileHelpers
 from ...types.stores.store_file import StoreFile
 from ...types.stores.store_file_status import StoreFileStatus
 from ...types.stores.file_list_response import FileListResponse
@@ -35,7 +28,7 @@ from ...types.stores.store_file_config_param import StoreFileConfigParam
 __all__ = ["FilesResource", "AsyncFilesResource"]
 
 
-class FilesResource(SyncAPIResource):
+class FilesResourceBase(SyncAPIResource):
     @cached_property
     def with_raw_response(self) -> FilesResourceWithRawResponse:
         """
@@ -196,10 +189,11 @@ class FilesResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> StoreFile:
-        """
-        Update metadata on a file within a store.
+        """Update metadata on a file within a store.
 
-        Args: store_identifier: The ID or name of the store. file_identifier: The ID or
+        Args: store_identifier: The ID or name of the store.
+
+        file_identifier: The ID or
         name of the file to update. update_params: Metadata update payload.
 
         Returns: StoreFile: The updated file details.
@@ -361,177 +355,8 @@ class FilesResource(SyncAPIResource):
             cast_to=FileDeleteResponse,
         )
 
-    def poll(
-        self,
-        file_identifier: str,
-        *,
-        store_identifier: str,
-        poll_interval_ms: int | NotGiven = not_given,
-        poll_timeout_ms: float | NotGiven = not_given,
-        **kwargs: Any,
-    ) -> StoreFile:
-        """
-        Poll for a file's status until it reaches a terminal state.
-        Args:
-            file_identifier: The ID or external_id of the file to poll
-            store_identifier: The ID of the store
-            poll_interval_ms: The interval between polls in milliseconds
-            poll_timeout_ms: The maximum time to poll for in milliseconds
-        Returns:
-            The file object once it reaches a terminal state
-        """
-        polling_interval_ms = poll_interval_ms or 500
-        polling_timeout_ms = poll_timeout_ms or None
-        return polling.poll(
-            fn=functools.partial(self.retrieve, file_identifier, store_identifier=store_identifier, **kwargs),
-            condition=lambda res: res.status == "completed" or res.status == "failed" or res.status == "cancelled",
-            interval_seconds=polling_interval_ms / 1000,
-            timeout_seconds=polling_timeout_ms / 1000 if polling_timeout_ms else None,
-        )
 
-    def create_and_poll(
-        self,
-        file_id: str,
-        *,
-        store_identifier: str,
-        metadata: Optional[object] | NotGiven = not_given,
-        config: file_create_params.Config | Omit = omit,
-        external_id: Optional[str] | Omit = omit,
-        overwrite: bool | Omit = omit,
-        experimental: file_create_params.Experimental | Omit = omit,
-        poll_interval_ms: int | NotGiven = not_given,
-        poll_timeout_ms: float | NotGiven = not_given,
-        **kwargs: Any,
-    ) -> StoreFile:
-        """
-        Attach a file to the given store and wait for it to be processed.
-        Args:
-            file_id: The ID of the file to poll
-            store_identifier: The ID of the store
-            metadata: The metadata to attach to the file
-            poll_interval_ms: The interval between polls in milliseconds
-            poll_timeout_ms: The maximum time to poll for in milliseconds
-        Returns:
-            The file object once it reaches a terminal state
-        """
-        self.create(
-            store_identifier=store_identifier,
-            file_id=file_id,
-            metadata=metadata,
-            config=config,
-            external_id=external_id,
-            overwrite=overwrite,
-            experimental=experimental,
-            **kwargs,
-        )
-        return self.poll(
-            file_id,
-            store_identifier=store_identifier,
-            poll_interval_ms=poll_interval_ms,
-            poll_timeout_ms=poll_timeout_ms,
-            **kwargs,
-        )
-
-    def upload(
-        self,
-        *,
-        store_identifier: str,
-        file: FileTypes,
-        metadata: Optional[object] | Omit = omit,
-        config: file_create_params.Config | Omit = omit,
-        external_id: Optional[str] | Omit = omit,
-        overwrite: bool | Omit = omit,
-        experimental: file_create_params.Experimental | Omit = omit,
-        multipart_upload: bool | MultipartUploadOptions | None = None,
-        **kwargs: Any,
-    ) -> StoreFile:
-        """Upload a file to the `files` API and then attach it to the given store.
-        Note the file will be asynchronously processed (you can use the alternative
-        polling helper method to wait for processing to complete).
-
-        Args:
-          store_identifier: The ID or name of the store
-          file: The file to upload
-          metadata: Optional metadata for the file
-          config: Configuration for adding the file
-          external_id: External identifier for this file in the store
-          overwrite: If true, overwrite an existing file with the same external_id
-          experimental: Configuration for a file.
-          multipart_upload: Controls multipart upload behavior for the file upload.
-              None (default) auto-detects based on file size.
-              True forces multipart with default options.
-              False disables multipart.
-              MultipartUploadOptions for custom settings.
-          extra_headers: Send extra headers
-          extra_query: Add additional query parameters to the request
-          extra_body: Add additional JSON properties to the request
-          timeout: Override the client-level default timeout for this request, in seconds
-        Returns:
-            The file object once it reaches a terminal state
-        """
-        file_obj = self._client.files.create(file=file, multipart_upload=multipart_upload, **kwargs)
-        return self.create(
-            store_identifier=store_identifier,
-            file_id=file_obj.id,
-            metadata=metadata,
-            config=config,
-            external_id=external_id,
-            overwrite=overwrite,
-            experimental=experimental,
-            **kwargs,
-        )
-
-    def upload_and_poll(
-        self,
-        *,
-        store_identifier: str,
-        file: FileTypes,
-        metadata: Optional[object] | NotGiven = not_given,
-        config: file_create_params.Config | Omit = omit,
-        external_id: Optional[str] | Omit = omit,
-        overwrite: bool | Omit = omit,
-        experimental: file_create_params.Experimental | Omit = omit,
-        multipart_upload: bool | MultipartUploadOptions | None = None,
-        poll_interval_ms: int | NotGiven = not_given,
-        poll_timeout_ms: float | NotGiven = not_given,
-        **kwargs: Any,
-    ) -> StoreFile:
-        """Add a file to a store and poll until processing is complete.
-
-        Args:
-            store_identifier: The ID or name of the store
-            file: The file to upload
-            metadata: Optional metadata for the file
-            config: Configuration for adding the file
-            external_id: External identifier for this file in the store
-            overwrite: If true, overwrite an existing file with the same external_id
-            experimental: Configuration for a file.
-            multipart_upload: Controls multipart upload behavior for the file upload.
-                None (default) auto-detects based on file size.
-                True forces multipart with default options.
-                False disables multipart.
-                MultipartUploadOptions for custom settings.
-            poll_interval_ms: The interval between polls in milliseconds
-            poll_timeout_ms: The maximum time to poll for in milliseconds
-        Returns:
-            The file object once it reaches a terminal state
-        """
-        file_obj = self._client.files.create(file=file, multipart_upload=multipart_upload, **kwargs)
-        return self.create_and_poll(
-            store_identifier=store_identifier,
-            file_id=file_obj.id,
-            metadata=metadata,
-            config=config,
-            external_id=external_id,
-            overwrite=overwrite,
-            experimental=experimental,
-            poll_interval_ms=poll_interval_ms,
-            poll_timeout_ms=poll_timeout_ms,
-            **kwargs,
-        )
-
-
-class AsyncFilesResource(AsyncAPIResource):
+class AsyncFilesResourceBase(AsyncAPIResource):
     @cached_property
     def with_raw_response(self) -> AsyncFilesResourceWithRawResponse:
         """
@@ -674,9 +499,7 @@ class AsyncFilesResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=await async_maybe_transform(
-                    {"return_chunks": return_chunks}, file_retrieve_params.FileRetrieveParams
-                ),
+                query=maybe_transform({"return_chunks": return_chunks}, file_retrieve_params.FileRetrieveParams),
             ),
             cast_to=StoreFile,
         )
@@ -694,10 +517,11 @@ class AsyncFilesResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> StoreFile:
-        """
-        Update metadata on a file within a store.
+        """Update metadata on a file within a store.
 
-        Args: store_identifier: The ID or name of the store. file_identifier: The ID or
+        Args: store_identifier: The ID or name of the store.
+
+        file_identifier: The ID or
         name of the file to update. update_params: Metadata update payload.
 
         Returns: StoreFile: The updated file details.
@@ -859,178 +683,17 @@ class AsyncFilesResource(AsyncAPIResource):
             cast_to=FileDeleteResponse,
         )
 
-    async def poll(
-        self,
-        file_identifier: str,
-        *,
-        store_identifier: str,
-        poll_interval_ms: int | NotGiven = not_given,
-        poll_timeout_ms: float | NotGiven = not_given,
-        **kwargs: Any,
-    ) -> StoreFile:
-        """
-        Poll for a file's status until it reaches a terminal state.
-        Args:
-            file_identifier: The ID or external_id of the file to poll
-            store_identifier: The ID of the store
-            poll_interval_ms: The interval between polls in milliseconds
-            poll_timeout_ms: The maximum time to poll for in milliseconds
-        Returns:
-            The file object once it reaches a terminal state
-        """
-        polling_interval_ms = poll_interval_ms or 500
-        polling_timeout_ms = poll_timeout_ms or None
-        return await polling.poll_async(
-            fn=functools.partial(self.retrieve, file_identifier, store_identifier=store_identifier, **kwargs),
-            condition=lambda res: res.status == "completed" or res.status == "failed" or res.status == "cancelled",
-            interval_seconds=polling_interval_ms / 1000,
-            timeout_seconds=polling_timeout_ms / 1000 if polling_timeout_ms else None,
-        )
 
-    async def create_and_poll(
-        self,
-        file_id: str,
-        *,
-        store_identifier: str,
-        metadata: Optional[object] | NotGiven = not_given,
-        config: file_create_params.Config | Omit = omit,
-        external_id: Optional[str] | Omit = omit,
-        overwrite: bool | Omit = omit,
-        experimental: file_create_params.Experimental | Omit = omit,
-        poll_interval_ms: int | NotGiven = not_given,
-        poll_timeout_ms: float | NotGiven = not_given,
-        **kwargs: Any,
-    ) -> StoreFile:
-        """
-        Attach a file to the given vector store and wait for it to be processed.
-        Args:
-            file_id: The ID of the file to poll
-            store_identifier: The ID of the store
-            metadata: The metadata to attach to the file
-            config: Configuration for adding the file
-            external_id: External identifier for this file in the store
-            overwrite: If true, overwrite an existing file with the same external_id
-            experimental: Configuration for a file.
-            poll_interval_ms: The interval between polls in milliseconds
-            poll_timeout_ms: The maximum time to poll for in milliseconds
-        Returns:
-            The file object once it reaches a terminal state
-        """
-        await self.create(
-            store_identifier=store_identifier,
-            file_id=file_id,
-            metadata=metadata,
-            config=config,
-            external_id=external_id,
-            overwrite=overwrite,
-            experimental=experimental,
-            **kwargs,
-        )
-        return await self.poll(
-            file_id,
-            store_identifier=store_identifier,
-            poll_interval_ms=poll_interval_ms,
-            poll_timeout_ms=poll_timeout_ms,
-            **kwargs,
-        )
+class FilesResource(StoreFileHelpers, FilesResourceBase):
+    pass
 
-    async def upload(
-        self,
-        *,
-        store_identifier: str,
-        file: FileTypes,
-        metadata: Optional[object] | NotGiven = not_given,
-        config: file_create_params.Config | Omit = omit,
-        external_id: Optional[str] | Omit = omit,
-        overwrite: bool | Omit = omit,
-        experimental: file_create_params.Experimental | Omit = omit,
-        multipart_upload: bool | MultipartUploadOptions | None = None,
-        **kwargs: Any,
-    ) -> StoreFile:
-        """Upload a file to the `files` API and then attach it to the given vector store.
-        Note the file will be asynchronously processed (you can use the alternative
-        polling helper method to wait for processing to complete).
 
-        Args:
-            store_identifier: The ID or name of the store
-            file: The file to upload
-            metadata: Optional metadata for the file
-            config: Configuration for adding the file
-            external_id: External identifier for this file in the store
-            overwrite: If true, overwrite an existing file with the same external_id
-            experimental: Configuration for a file.
-            multipart_upload: Controls multipart upload behavior for the file upload.
-                None (default) auto-detects based on file size.
-                True forces multipart with default options.
-                False disables multipart.
-                MultipartUploadOptions for custom settings.
-        Returns:
-            The file object once it reaches a terminal state
-        """
-        file_obj = await self._client.files.create(file=file, multipart_upload=multipart_upload, **kwargs)
-        return await self.create(
-            store_identifier=store_identifier,
-            file_id=file_obj.id,
-            metadata=metadata,
-            config=config,
-            external_id=external_id,
-            overwrite=overwrite,
-            experimental=experimental,
-            **kwargs,
-        )
-
-    async def upload_and_poll(
-        self,
-        *,
-        store_identifier: str,
-        file: FileTypes,
-        metadata: Optional[object] | NotGiven = not_given,
-        config: file_create_params.Config | Omit = omit,
-        external_id: Optional[str] | Omit = omit,
-        overwrite: bool | Omit = omit,
-        experimental: file_create_params.Experimental | Omit = omit,
-        multipart_upload: bool | MultipartUploadOptions | None = None,
-        poll_interval_ms: int | NotGiven = not_given,
-        poll_timeout_ms: float | NotGiven = not_given,
-        **kwargs: Any,
-    ) -> StoreFile:
-        """Add a file to a store and poll until processing is complete.
-
-        Args:
-            store_identifier: The ID or name of the store
-            file: The file to upload
-            metadata: Optional metadata for the file
-            config: Configuration for adding the file
-            external_id: External identifier for this file in the store
-            overwrite: If true, overwrite an existing file with the same external_id
-            experimental: Configuration for a file.
-            multipart_upload: Controls multipart upload behavior for the file upload.
-                None (default) auto-detects based on file size.
-                True forces multipart with default options.
-                False disables multipart.
-                MultipartUploadOptions for custom settings.
-            poll_interval_ms: The interval between polls in milliseconds
-            poll_timeout_ms: The maximum time to poll for in milliseconds
-        Returns:
-            The file object once it reaches a terminal state
-        """
-        file_obj = await self._client.files.create(file=file, multipart_upload=multipart_upload, **kwargs)
-        return await self.create_and_poll(
-            store_identifier=store_identifier,
-            file_id=file_obj.id,
-            metadata=metadata,
-            config=config,
-            external_id=external_id,
-            overwrite=overwrite,
-            experimental=experimental,
-            poll_interval_ms=poll_interval_ms,
-            poll_timeout_ms=poll_timeout_ms,
-            **kwargs,
-        )
+class AsyncFilesResource(AsyncStoreFileHelpers, AsyncFilesResourceBase):
+    pass
 
 
 class FilesResourceWithRawResponse:
-    def __init__(self, files: FilesResource) -> None:
+    def __init__(self, files: FilesResourceBase) -> None:
         self._files = files
 
         self.create = to_raw_response_wrapper(
@@ -1051,7 +714,7 @@ class FilesResourceWithRawResponse:
 
 
 class AsyncFilesResourceWithRawResponse:
-    def __init__(self, files: AsyncFilesResource) -> None:
+    def __init__(self, files: AsyncFilesResourceBase) -> None:
         self._files = files
 
         self.create = async_to_raw_response_wrapper(
@@ -1072,7 +735,7 @@ class AsyncFilesResourceWithRawResponse:
 
 
 class FilesResourceWithStreamingResponse:
-    def __init__(self, files: FilesResource) -> None:
+    def __init__(self, files: FilesResourceBase) -> None:
         self._files = files
 
         self.create = to_streamed_response_wrapper(
@@ -1093,7 +756,7 @@ class FilesResourceWithStreamingResponse:
 
 
 class AsyncFilesResourceWithStreamingResponse:
-    def __init__(self, files: AsyncFilesResource) -> None:
+    def __init__(self, files: AsyncFilesResourceBase) -> None:
         self._files = files
 
         self.create = async_to_streamed_response_wrapper(

@@ -17,7 +17,6 @@ if TYPE_CHECKING:
     from ..resources.files.uploads import UploadsResource, AsyncUploadsResource
 
 from .._types import Body, Query, Headers, NotGiven, not_given
-
 from ..types.file_object import FileObject
 from ..types.files.multipart_upload_part_param import MultipartUploadPartParam
 
@@ -58,7 +57,7 @@ class _ResolvedFile:
     mime_type: str
 
 
-def _get_file_size(file: FileTypes) -> int:
+def get_file_size(file: FileTypes) -> int:
     """Get file size without reading the entire file into memory.
 
     Raises TypeError if the size cannot be determined.
@@ -166,7 +165,7 @@ def _upload_single_part(
     """Upload a single part to its presigned URL. Returns the ETag."""
     response = http_client.put(url, content=data)
     response.raise_for_status()
-    return response.headers.get("etag", "")
+    return str(response.headers.get("etag", ""))
 
 
 async def _async_upload_single_part(
@@ -177,7 +176,7 @@ async def _async_upload_single_part(
     """Upload a single part to its presigned URL asynchronously. Returns the ETag."""
     response = await http_client.put(url, content=data)
     response.raise_for_status()
-    return response.headers.get("etag", "")
+    return str(response.headers.get("etag", ""))
 
 
 def multipart_create_sync(

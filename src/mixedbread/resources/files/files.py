@@ -1,4 +1,4 @@
-# File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+# File generated from our OpenAPI spec by sdkgen. See CONTRIBUTING.md for details.
 
 from __future__ import annotations
 
@@ -34,21 +34,16 @@ from ..._response import (
     async_to_custom_raw_response_wrapper,
     async_to_custom_streamed_response_wrapper,
 )
+from ...lib.files import FileHelpers, AsyncFileHelpers
 from ...pagination import SyncCursor, AsyncCursor
 from ..._base_client import AsyncPaginator, make_request_options
 from ...types.file_object import FileObject
-from ...lib.multipart_upload import (
-    MultipartUploadOptions,
-    _get_file_size,
-    multipart_create_sync,
-    multipart_create_async,
-)
 from ...types.file_delete_response import FileDeleteResponse
 
 __all__ = ["FilesResource", "AsyncFilesResource"]
 
 
-class FilesResource(SyncAPIResource):
+class FilesResourceBase(SyncAPIResource):
     @cached_property
     def uploads(self) -> UploadsResource:
         return UploadsResource(self._client)
@@ -76,7 +71,6 @@ class FilesResource(SyncAPIResource):
         self,
         *,
         file: FileTypes,
-        multipart_upload: bool | MultipartUploadOptions | None = None,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -87,20 +81,12 @@ class FilesResource(SyncAPIResource):
         """
         Upload a new file.
 
-        Automatically uses multipart uploads for large files (>100MB by default).
-
         Args: file: The file to upload.
 
         Returns: FileResponse: The response containing the details of the uploaded file.
 
         Args:
           file: The file to upload
-
-          multipart_upload: Controls multipart upload behavior.
-              None (default) auto-detects based on file size.
-              True forces multipart with default options.
-              False disables multipart.
-              MultipartUploadOptions for custom settings.
 
           extra_headers: Send extra headers
 
@@ -110,30 +96,12 @@ class FilesResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if multipart_upload is not False:
-            if isinstance(multipart_upload, MultipartUploadOptions):
-                _opts = multipart_upload
-                _use_multipart = True
-            elif multipart_upload is True:
-                _opts = MultipartUploadOptions()
-                _use_multipart = True
-            else:  # None — auto-detect
-                _opts = MultipartUploadOptions()
-                try:
-                    _use_multipart = _get_file_size(file) >= _opts.threshold
-                except (TypeError, OSError):
-                    _use_multipart = False
-
-            if _use_multipart:
-                return multipart_create_sync(
-                    self.uploads, file, _opts,
-                    extra_headers=extra_headers,
-                    extra_query=extra_query,
-                    extra_body=extra_body,
-                    timeout=timeout,
-                )
-
-        body = deepcopy_with_paths({"file": file}, [["file"]])
+        body = deepcopy_with_paths(
+            {
+                "file": file,
+            },
+            [["file"]],
+        )
         files = extract_files(cast(Mapping[str, object], body), paths=[["file"]])
         # It should be noted that the actual Content-Type header that will be
         # sent to the server will contain a `boundary` parameter, e.g.
@@ -200,10 +168,11 @@ class FilesResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> FileObject:
-        """
-        Update the details of a specific file.
+        """Update the details of a specific file.
 
-        Args: file_id: The ID of the file to update. file: The new details for the file.
+        Args: file_id: The ID of the file to update.
+
+        file: The new details for the file.
 
         Returns: FileObject: The updated file details.
 
@@ -222,7 +191,12 @@ class FilesResource(SyncAPIResource):
         """
         if not file_id:
             raise ValueError(f"Expected a non-empty value for `file_id` but received {file_id!r}")
-        body = deepcopy_with_paths({"file": file}, [["file"]])
+        body = deepcopy_with_paths(
+            {
+                "file": file,
+            },
+            [["file"]],
+        )
         files = extract_files(cast(Mapping[str, object], body), paths=[["file"]])
         # It should be noted that the actual Content-Type header that will be
         # sent to the server will contain a `boundary` parameter, e.g.
@@ -317,6 +291,9 @@ class FilesResource(SyncAPIResource):
         """
         Delete a specific file by its ID.
 
+        Removes the file from every store that references it (cleaning up chunks and
+        store stats) before deleting the file object itself.
+
         Args: file_id: The ID of the file to delete.
 
         Returns: FileDeleted: The response containing the details of the deleted file.
@@ -383,7 +360,7 @@ class FilesResource(SyncAPIResource):
         )
 
 
-class AsyncFilesResource(AsyncAPIResource):
+class AsyncFilesResourceBase(AsyncAPIResource):
     @cached_property
     def uploads(self) -> AsyncUploadsResource:
         return AsyncUploadsResource(self._client)
@@ -411,7 +388,6 @@ class AsyncFilesResource(AsyncAPIResource):
         self,
         *,
         file: FileTypes,
-        multipart_upload: bool | MultipartUploadOptions | None = None,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -422,20 +398,12 @@ class AsyncFilesResource(AsyncAPIResource):
         """
         Upload a new file.
 
-        Automatically uses multipart uploads for large files (>100MB by default).
-
         Args: file: The file to upload.
 
         Returns: FileResponse: The response containing the details of the uploaded file.
 
         Args:
           file: The file to upload
-
-          multipart_upload: Controls multipart upload behavior.
-              None (default) auto-detects based on file size.
-              True forces multipart with default options.
-              False disables multipart.
-              MultipartUploadOptions for custom settings.
 
           extra_headers: Send extra headers
 
@@ -445,30 +413,12 @@ class AsyncFilesResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if multipart_upload is not False:
-            if isinstance(multipart_upload, MultipartUploadOptions):
-                _opts = multipart_upload
-                _use_multipart = True
-            elif multipart_upload is True:
-                _opts = MultipartUploadOptions()
-                _use_multipart = True
-            else:  # None — auto-detect
-                _opts = MultipartUploadOptions()
-                try:
-                    _use_multipart = _get_file_size(file) >= _opts.threshold
-                except (TypeError, OSError):
-                    _use_multipart = False
-
-            if _use_multipart:
-                return await multipart_create_async(
-                    self.uploads, file, _opts,
-                    extra_headers=extra_headers,
-                    extra_query=extra_query,
-                    extra_body=extra_body,
-                    timeout=timeout,
-                )
-
-        body = deepcopy_with_paths({"file": file}, [["file"]])
+        body = deepcopy_with_paths(
+            {
+                "file": file,
+            },
+            [["file"]],
+        )
         files = extract_files(cast(Mapping[str, object], body), paths=[["file"]])
         # It should be noted that the actual Content-Type header that will be
         # sent to the server will contain a `boundary` parameter, e.g.
@@ -535,10 +485,11 @@ class AsyncFilesResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> FileObject:
-        """
-        Update the details of a specific file.
+        """Update the details of a specific file.
 
-        Args: file_id: The ID of the file to update. file: The new details for the file.
+        Args: file_id: The ID of the file to update.
+
+        file: The new details for the file.
 
         Returns: FileObject: The updated file details.
 
@@ -557,7 +508,12 @@ class AsyncFilesResource(AsyncAPIResource):
         """
         if not file_id:
             raise ValueError(f"Expected a non-empty value for `file_id` but received {file_id!r}")
-        body = deepcopy_with_paths({"file": file}, [["file"]])
+        body = deepcopy_with_paths(
+            {
+                "file": file,
+            },
+            [["file"]],
+        )
         files = extract_files(cast(Mapping[str, object], body), paths=[["file"]])
         # It should be noted that the actual Content-Type header that will be
         # sent to the server will contain a `boundary` parameter, e.g.
@@ -652,6 +608,9 @@ class AsyncFilesResource(AsyncAPIResource):
         """
         Delete a specific file by its ID.
 
+        Removes the file from every store that references it (cleaning up chunks and
+        store stats) before deleting the file object itself.
+
         Args: file_id: The ID of the file to delete.
 
         Returns: FileDeleted: The response containing the details of the deleted file.
@@ -718,8 +677,16 @@ class AsyncFilesResource(AsyncAPIResource):
         )
 
 
+class FilesResource(FileHelpers, FilesResourceBase):
+    pass
+
+
+class AsyncFilesResource(AsyncFileHelpers, AsyncFilesResourceBase):
+    pass
+
+
 class FilesResourceWithRawResponse:
-    def __init__(self, files: FilesResource) -> None:
+    def __init__(self, files: FilesResourceBase) -> None:
         self._files = files
 
         self.create = to_raw_response_wrapper(
@@ -748,7 +715,7 @@ class FilesResourceWithRawResponse:
 
 
 class AsyncFilesResourceWithRawResponse:
-    def __init__(self, files: AsyncFilesResource) -> None:
+    def __init__(self, files: AsyncFilesResourceBase) -> None:
         self._files = files
 
         self.create = async_to_raw_response_wrapper(
@@ -777,7 +744,7 @@ class AsyncFilesResourceWithRawResponse:
 
 
 class FilesResourceWithStreamingResponse:
-    def __init__(self, files: FilesResource) -> None:
+    def __init__(self, files: FilesResourceBase) -> None:
         self._files = files
 
         self.create = to_streamed_response_wrapper(
@@ -806,7 +773,7 @@ class FilesResourceWithStreamingResponse:
 
 
 class AsyncFilesResourceWithStreamingResponse:
-    def __init__(self, files: AsyncFilesResource) -> None:
+    def __init__(self, files: AsyncFilesResourceBase) -> None:
         self._files = files
 
         self.create = async_to_streamed_response_wrapper(

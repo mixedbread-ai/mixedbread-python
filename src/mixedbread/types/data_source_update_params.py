@@ -1,4 +1,4 @@
-# File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+# File generated from our OpenAPI spec by sdkgen. See CONTRIBUTING.md for details.
 
 from __future__ import annotations
 
@@ -12,6 +12,8 @@ __all__ = ["DataSourceUpdateParams", "NotionDataSource", "NotionDataSourceAuthPa
 
 
 class NotionDataSource(TypedDict, total=False):
+    """Parameters for creating or updating a Notion data source."""
+
     type: Literal["notion"]
     """The type of data source to create"""
 
@@ -32,6 +34,8 @@ NotionDataSourceAuthParams: TypeAlias = Union[Oauth2Params, APIKeyCreateOrUpdate
 
 
 class LinearDataSource(TypedDict, total=False):
+    """Parameters for creating or updating a Linear data source."""
+
     type: Literal["linear"]
     """The type of data source to create"""
 

@@ -1,4 +1,4 @@
-# File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+# File generated from our OpenAPI spec by sdkgen. See CONTRIBUTING.md for details.
 
 from __future__ import annotations
 
@@ -46,6 +46,7 @@ class TestStores:
             config={
                 "contextualization": True,
                 "save_content": True,
+                "lsf": {"foo": "bar"},
             },
             file_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
         )
@@ -238,6 +239,58 @@ class TestStores:
             )
 
     @parametrize
+    def test_method_copy(self, client: Mixedbread) -> None:
+        store = client.stores.copy(
+            store_identifier="store_identifier",
+            name="technical-documentation-copy",
+        )
+        assert_matches_type(Store, store, path=["response"])
+
+    @parametrize
+    def test_method_copy_with_all_params(self, client: Mixedbread) -> None:
+        store = client.stores.copy(
+            store_identifier="store_identifier",
+            name="technical-documentation-copy",
+            description="description",
+            metadata={},
+        )
+        assert_matches_type(Store, store, path=["response"])
+
+    @parametrize
+    def test_raw_response_copy(self, client: Mixedbread) -> None:
+        response = client.stores.with_raw_response.copy(
+            store_identifier="store_identifier",
+            name="technical-documentation-copy",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        store = response.parse()
+        assert_matches_type(Store, store, path=["response"])
+
+    @parametrize
+    def test_streaming_response_copy(self, client: Mixedbread) -> None:
+        with client.stores.with_streaming_response.copy(
+            store_identifier="store_identifier",
+            name="technical-documentation-copy",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            store = response.parse()
+            assert_matches_type(Store, store, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    def test_path_params_copy(self, client: Mixedbread) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `store_identifier` but received ''"):
+            client.stores.with_raw_response.copy(
+                store_identifier="",
+                name="technical-documentation-copy",
+            )
+
+    @parametrize
     def test_method_grep(self, client: Mixedbread) -> None:
         store = client.stores.grep(
             store_identifiers=["string"],
@@ -248,43 +301,44 @@ class TestStores:
     @parametrize
     def test_method_grep_with_all_params(self, client: Mixedbread) -> None:
         store = client.stores.grep(
+            x_mxbai_tool_ticket="X-Mxbai-Tool-Ticket",
             store_identifiers=["string"],
             top_k=1,
             filters={
                 "all": [
                     {
                         "key": "price",
-                        "value": "100",
                         "operator": "gt",
+                        "value": "100",
                     },
                     {
                         "key": "color",
-                        "value": "red",
                         "operator": "eq",
+                        "value": "red",
                     },
                 ],
                 "any": [
                     {
                         "key": "price",
-                        "value": "100",
                         "operator": "gt",
+                        "value": "100",
                     },
                     {
                         "key": "color",
-                        "value": "red",
                         "operator": "eq",
+                        "value": "red",
                     },
                 ],
                 "none": [
                     {
                         "key": "price",
-                        "value": "100",
                         "operator": "gt",
+                        "value": "100",
                     },
                     {
                         "key": "color",
-                        "value": "red",
                         "operator": "eq",
+                        "value": "red",
                     },
                 ],
             },
@@ -338,37 +392,37 @@ class TestStores:
                 "all": [
                     {
                         "key": "price",
-                        "value": "100",
                         "operator": "gt",
+                        "value": "100",
                     },
                     {
                         "key": "color",
-                        "value": "red",
                         "operator": "eq",
+                        "value": "red",
                     },
                 ],
                 "any": [
                     {
                         "key": "price",
-                        "value": "100",
                         "operator": "gt",
+                        "value": "100",
                     },
                     {
                         "key": "color",
-                        "value": "red",
                         "operator": "eq",
+                        "value": "red",
                     },
                 ],
                 "none": [
                     {
                         "key": "price",
-                        "value": "100",
                         "operator": "gt",
+                        "value": "100",
                     },
                     {
                         "key": "color",
-                        "value": "red",
                         "operator": "eq",
+                        "value": "red",
                     },
                 ],
             },
@@ -379,6 +433,7 @@ class TestStores:
                 "rewrite_query": True,
                 "rerank": True,
                 "agentic": True,
+                "lsf": True,
                 "return_metadata": True,
                 "apply_search_rules": True,
             },
@@ -425,37 +480,37 @@ class TestStores:
                 "all": [
                     {
                         "key": "price",
-                        "value": "100",
                         "operator": "gt",
+                        "value": "100",
                     },
                     {
                         "key": "color",
-                        "value": "red",
                         "operator": "eq",
+                        "value": "red",
                     },
                 ],
                 "any": [
                     {
                         "key": "price",
-                        "value": "100",
                         "operator": "gt",
+                        "value": "100",
                     },
                     {
                         "key": "color",
-                        "value": "red",
                         "operator": "eq",
+                        "value": "red",
                     },
                 ],
                 "none": [
                     {
                         "key": "price",
-                        "value": "100",
                         "operator": "gt",
+                        "value": "100",
                     },
                     {
                         "key": "color",
-                        "value": "red",
                         "operator": "eq",
+                        "value": "red",
                     },
                 ],
             },
@@ -466,10 +521,11 @@ class TestStores:
                 "rewrite_query": True,
                 "rerank": True,
                 "agentic": True,
+                "lsf": True,
                 "return_metadata": True,
                 "apply_search_rules": True,
             },
-            facets=["string"],
+            facets=["author", "year", "author.name"],
             max_fields=1,
             max_values_per_field=1,
             max_files=1,
@@ -516,37 +572,37 @@ class TestStores:
                 "all": [
                     {
                         "key": "price",
-                        "value": "100",
                         "operator": "gt",
+                        "value": "100",
                     },
                     {
                         "key": "color",
-                        "value": "red",
                         "operator": "eq",
+                        "value": "red",
                     },
                 ],
                 "any": [
                     {
                         "key": "price",
-                        "value": "100",
                         "operator": "gt",
+                        "value": "100",
                     },
                     {
                         "key": "color",
-                        "value": "red",
                         "operator": "eq",
+                        "value": "red",
                     },
                 ],
                 "none": [
                     {
                         "key": "price",
-                        "value": "100",
                         "operator": "gt",
+                        "value": "100",
                     },
                     {
                         "key": "color",
-                        "value": "red",
                         "operator": "eq",
+                        "value": "red",
                     },
                 ],
             },
@@ -557,6 +613,7 @@ class TestStores:
                 "rewrite_query": True,
                 "rerank": True,
                 "agentic": True,
+                "lsf": True,
                 "return_metadata": True,
                 "apply_search_rules": True,
             },
@@ -604,43 +661,44 @@ class TestStores:
     @parametrize
     def test_method_search_with_all_params(self, client: Mixedbread) -> None:
         store = client.stores.search(
+            x_mxbai_tool_ticket="X-Mxbai-Tool-Ticket",
             store_identifiers=["string"],
             top_k=1,
             filters={
                 "all": [
                     {
                         "key": "price",
-                        "value": "100",
                         "operator": "gt",
+                        "value": "100",
                     },
                     {
                         "key": "color",
-                        "value": "red",
                         "operator": "eq",
+                        "value": "red",
                     },
                 ],
                 "any": [
                     {
                         "key": "price",
-                        "value": "100",
                         "operator": "gt",
+                        "value": "100",
                     },
                     {
                         "key": "color",
-                        "value": "red",
                         "operator": "eq",
+                        "value": "red",
                     },
                 ],
                 "none": [
                     {
                         "key": "price",
-                        "value": "100",
                         "operator": "gt",
+                        "value": "100",
                     },
                     {
                         "key": "color",
-                        "value": "red",
                         "operator": "eq",
+                        "value": "red",
                     },
                 ],
             },
@@ -651,9 +709,11 @@ class TestStores:
                 "rewrite_query": True,
                 "rerank": True,
                 "agentic": True,
+                "lsf": True,
                 "return_metadata": True,
                 "apply_search_rules": True,
             },
+            stream=True,
         )
         assert_matches_type(StoreSearchResponse, store, path=["response"])
 
@@ -709,6 +769,7 @@ class TestAsyncStores:
             config={
                 "contextualization": True,
                 "save_content": True,
+                "lsf": {"foo": "bar"},
             },
             file_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
         )
@@ -901,6 +962,58 @@ class TestAsyncStores:
             )
 
     @parametrize
+    async def test_method_copy(self, async_client: AsyncMixedbread) -> None:
+        store = await async_client.stores.copy(
+            store_identifier="store_identifier",
+            name="technical-documentation-copy",
+        )
+        assert_matches_type(Store, store, path=["response"])
+
+    @parametrize
+    async def test_method_copy_with_all_params(self, async_client: AsyncMixedbread) -> None:
+        store = await async_client.stores.copy(
+            store_identifier="store_identifier",
+            name="technical-documentation-copy",
+            description="description",
+            metadata={},
+        )
+        assert_matches_type(Store, store, path=["response"])
+
+    @parametrize
+    async def test_raw_response_copy(self, async_client: AsyncMixedbread) -> None:
+        response = await async_client.stores.with_raw_response.copy(
+            store_identifier="store_identifier",
+            name="technical-documentation-copy",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        store = await response.parse()
+        assert_matches_type(Store, store, path=["response"])
+
+    @parametrize
+    async def test_streaming_response_copy(self, async_client: AsyncMixedbread) -> None:
+        async with async_client.stores.with_streaming_response.copy(
+            store_identifier="store_identifier",
+            name="technical-documentation-copy",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            store = await response.parse()
+            assert_matches_type(Store, store, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    async def test_path_params_copy(self, async_client: AsyncMixedbread) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `store_identifier` but received ''"):
+            await async_client.stores.with_raw_response.copy(
+                store_identifier="",
+                name="technical-documentation-copy",
+            )
+
+    @parametrize
     async def test_method_grep(self, async_client: AsyncMixedbread) -> None:
         store = await async_client.stores.grep(
             store_identifiers=["string"],
@@ -911,43 +1024,44 @@ class TestAsyncStores:
     @parametrize
     async def test_method_grep_with_all_params(self, async_client: AsyncMixedbread) -> None:
         store = await async_client.stores.grep(
+            x_mxbai_tool_ticket="X-Mxbai-Tool-Ticket",
             store_identifiers=["string"],
             top_k=1,
             filters={
                 "all": [
                     {
                         "key": "price",
-                        "value": "100",
                         "operator": "gt",
+                        "value": "100",
                     },
                     {
                         "key": "color",
-                        "value": "red",
                         "operator": "eq",
+                        "value": "red",
                     },
                 ],
                 "any": [
                     {
                         "key": "price",
-                        "value": "100",
                         "operator": "gt",
+                        "value": "100",
                     },
                     {
                         "key": "color",
-                        "value": "red",
                         "operator": "eq",
+                        "value": "red",
                     },
                 ],
                 "none": [
                     {
                         "key": "price",
-                        "value": "100",
                         "operator": "gt",
+                        "value": "100",
                     },
                     {
                         "key": "color",
-                        "value": "red",
                         "operator": "eq",
+                        "value": "red",
                     },
                 ],
             },
@@ -1001,37 +1115,37 @@ class TestAsyncStores:
                 "all": [
                     {
                         "key": "price",
-                        "value": "100",
                         "operator": "gt",
+                        "value": "100",
                     },
                     {
                         "key": "color",
-                        "value": "red",
                         "operator": "eq",
+                        "value": "red",
                     },
                 ],
                 "any": [
                     {
                         "key": "price",
-                        "value": "100",
                         "operator": "gt",
+                        "value": "100",
                     },
                     {
                         "key": "color",
-                        "value": "red",
                         "operator": "eq",
+                        "value": "red",
                     },
                 ],
                 "none": [
                     {
                         "key": "price",
-                        "value": "100",
                         "operator": "gt",
+                        "value": "100",
                     },
                     {
                         "key": "color",
-                        "value": "red",
                         "operator": "eq",
+                        "value": "red",
                     },
                 ],
             },
@@ -1042,6 +1156,7 @@ class TestAsyncStores:
                 "rewrite_query": True,
                 "rerank": True,
                 "agentic": True,
+                "lsf": True,
                 "return_metadata": True,
                 "apply_search_rules": True,
             },
@@ -1088,37 +1203,37 @@ class TestAsyncStores:
                 "all": [
                     {
                         "key": "price",
-                        "value": "100",
                         "operator": "gt",
+                        "value": "100",
                     },
                     {
                         "key": "color",
-                        "value": "red",
                         "operator": "eq",
+                        "value": "red",
                     },
                 ],
                 "any": [
                     {
                         "key": "price",
-                        "value": "100",
                         "operator": "gt",
+                        "value": "100",
                     },
                     {
                         "key": "color",
-                        "value": "red",
                         "operator": "eq",
+                        "value": "red",
                     },
                 ],
                 "none": [
                     {
                         "key": "price",
-                        "value": "100",
                         "operator": "gt",
+                        "value": "100",
                     },
                     {
                         "key": "color",
-                        "value": "red",
                         "operator": "eq",
+                        "value": "red",
                     },
                 ],
             },
@@ -1129,10 +1244,11 @@ class TestAsyncStores:
                 "rewrite_query": True,
                 "rerank": True,
                 "agentic": True,
+                "lsf": True,
                 "return_metadata": True,
                 "apply_search_rules": True,
             },
-            facets=["string"],
+            facets=["author", "year", "author.name"],
             max_fields=1,
             max_values_per_field=1,
             max_files=1,
@@ -1179,37 +1295,37 @@ class TestAsyncStores:
                 "all": [
                     {
                         "key": "price",
-                        "value": "100",
                         "operator": "gt",
+                        "value": "100",
                     },
                     {
                         "key": "color",
-                        "value": "red",
                         "operator": "eq",
+                        "value": "red",
                     },
                 ],
                 "any": [
                     {
                         "key": "price",
-                        "value": "100",
                         "operator": "gt",
+                        "value": "100",
                     },
                     {
                         "key": "color",
-                        "value": "red",
                         "operator": "eq",
+                        "value": "red",
                     },
                 ],
                 "none": [
                     {
                         "key": "price",
-                        "value": "100",
                         "operator": "gt",
+                        "value": "100",
                     },
                     {
                         "key": "color",
-                        "value": "red",
                         "operator": "eq",
+                        "value": "red",
                     },
                 ],
             },
@@ -1220,6 +1336,7 @@ class TestAsyncStores:
                 "rewrite_query": True,
                 "rerank": True,
                 "agentic": True,
+                "lsf": True,
                 "return_metadata": True,
                 "apply_search_rules": True,
             },
@@ -1267,43 +1384,44 @@ class TestAsyncStores:
     @parametrize
     async def test_method_search_with_all_params(self, async_client: AsyncMixedbread) -> None:
         store = await async_client.stores.search(
+            x_mxbai_tool_ticket="X-Mxbai-Tool-Ticket",
             store_identifiers=["string"],
             top_k=1,
             filters={
                 "all": [
                     {
                         "key": "price",
-                        "value": "100",
                         "operator": "gt",
+                        "value": "100",
                     },
                     {
                         "key": "color",
-                        "value": "red",
                         "operator": "eq",
+                        "value": "red",
                     },
                 ],
                 "any": [
                     {
                         "key": "price",
-                        "value": "100",
                         "operator": "gt",
+                        "value": "100",
                     },
                     {
                         "key": "color",
-                        "value": "red",
                         "operator": "eq",
+                        "value": "red",
                     },
                 ],
                 "none": [
                     {
                         "key": "price",
-                        "value": "100",
                         "operator": "gt",
+                        "value": "100",
                     },
                     {
                         "key": "color",
-                        "value": "red",
                         "operator": "eq",
+                        "value": "red",
                     },
                 ],
             },
@@ -1314,9 +1432,11 @@ class TestAsyncStores:
                 "rewrite_query": True,
                 "rerank": True,
                 "agentic": True,
+                "lsf": True,
                 "return_metadata": True,
                 "apply_search_rules": True,
             },
+            stream=True,
         )
         assert_matches_type(StoreSearchResponse, store, path=["response"])
 

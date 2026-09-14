@@ -1,4 +1,4 @@
-# File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+# File generated from our OpenAPI spec by sdkgen. See CONTRIBUTING.md for details.
 
 from __future__ import annotations
 
@@ -114,7 +114,7 @@ class TestJobs:
             after="eyJjcmVhdGVkX2F0IjoiMjAyNC0xMi0zMVQyMzo1OTo1OS4wMDBaIiwiaWQiOiJhYmMxMjMifQ==",
             before="eyJjcmVhdGVkX2F0IjoiMjAyNC0xMi0zMVQyMzo1OTo1OS4wMDBaIiwiaWQiOiJhYmMxMjMifQ==",
             include_total=False,
-            statuses=["pending", "in_progress"],
+            statuses=["pending"],
             q="x",
         )
         assert_matches_type(SyncCursor[JobListResponse], job, path=["response"])
@@ -313,7 +313,7 @@ class TestAsyncJobs:
             after="eyJjcmVhdGVkX2F0IjoiMjAyNC0xMi0zMVQyMzo1OTo1OS4wMDBaIiwiaWQiOiJhYmMxMjMifQ==",
             before="eyJjcmVhdGVkX2F0IjoiMjAyNC0xMi0zMVQyMzo1OTo1OS4wMDBaIiwiaWQiOiJhYmMxMjMifQ==",
             include_total=False,
-            statuses=["pending", "in_progress"],
+            statuses=["pending"],
             q="x",
         )
         assert_matches_type(AsyncCursor[JobListResponse], job, path=["response"])

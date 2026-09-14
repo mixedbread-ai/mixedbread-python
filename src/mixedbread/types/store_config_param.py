@@ -1,8 +1,8 @@
-# File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+# File generated from our OpenAPI spec by sdkgen. See CONTRIBUTING.md for details.
 
 from __future__ import annotations
 
-from typing import Union
+from typing import Dict, Union, Optional
 from typing_extensions import TypeAlias, TypedDict
 
 from .contextualization_config_param import ContextualizationConfigParam
@@ -16,7 +16,7 @@ class StoreConfigParam(TypedDict, total=False):
     """Configuration for a store."""
 
     contextualization: Contextualization
-    """Contextualize files with metadata"""
+    """Include additional context when embedding chunks."""
 
     save_content: bool
     """Whether to save original content in the store.
@@ -25,3 +25,6 @@ class StoreConfigParam(TypedDict, total=False):
     mode). This is useful for data privacy. Note: Reranking is not supported when
     content is not saved.
     """
+
+    lsf: Optional[Dict[str, object]]
+    """Learned-scoring-function settings a store opts into; an empty object enables it."""

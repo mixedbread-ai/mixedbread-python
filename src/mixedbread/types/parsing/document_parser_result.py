@@ -1,4 +1,4 @@
-# File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+# File generated from our OpenAPI spec by sdkgen. See CONTRIBUTING.md for details.
 
 from typing import List, Optional
 
@@ -12,7 +12,7 @@ __all__ = ["DocumentParserResult"]
 
 
 class DocumentParserResult(BaseModel):
-    """Result of document parsing operation."""
+    """The public result of a parsing job."""
 
     chunking_strategy: ChunkingStrategy
     """The strategy used for chunking the document"""

@@ -1,4 +1,4 @@
-# File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+# File generated from our OpenAPI spec by sdkgen. See CONTRIBUTING.md for details.
 
 from typing import Optional
 from datetime import datetime
@@ -9,7 +9,29 @@ from .file_counts import FileCounts
 from .store_config import StoreConfig
 from .expires_after import ExpiresAfter
 
-__all__ = ["Store"]
+__all__ = ["Store", "CopyState"]
+
+
+class CopyState(BaseModel):
+    """
+    Progress of a store copy, present on both the source and the target while it
+    runs.
+    """
+
+    role: Literal["source", "target"]
+    """Whether this store is copied from or into"""
+
+    status: Literal["in_progress", "failed"]
+    """Progress of the copy"""
+
+    peer_store_id: str
+    """The other store of the copy"""
+
+    started_at: datetime
+    """When the copy was requested"""
+
+    error: Optional[str] = None
+    """Why the copy failed, when it did"""
 
 
 class Store(BaseModel):
@@ -45,7 +67,7 @@ class Store(BaseModel):
     expires_after: Optional[ExpiresAfter] = None
     """Represents an expiration policy for a store."""
 
-    status: Optional[Literal["expired", "in_progress", "completed"]] = None
+    status: Optional[Literal["expired", "in_progress", "completed", "failed"]] = None
     """Processing status of the store"""
 
     created_at: datetime
@@ -65,6 +87,12 @@ class Store(BaseModel):
 
     expires_at: Optional[datetime] = None
     """Optional expiration timestamp for the store"""
+
+    copy_state: Optional[CopyState] = None
+    """
+    Progress of a store copy, present on both the source and the target while it
+    runs.
+    """
 
     object: Optional[Literal["store"]] = None
     """Type of the object"""

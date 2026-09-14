@@ -1,4 +1,4 @@
-# File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+# File generated from our OpenAPI spec by sdkgen. See CONTRIBUTING.md for details.
 
 from __future__ import annotations
 
@@ -37,6 +37,12 @@ class StoreChunkSearchOptionsParam(TypedDict, total=False):
     """
     Whether to use agentic multi-query search with automatic query decomposition and
     ranking. When enabled, rewrite_query and rerank options are ignored.
+    """
+
+    lsf: Optional[bool]
+    """Whether to apply the learned scoring function to second-stage scoring.
+
+    Requires weights configured for the searched stores; silently skipped otherwise.
     """
 
     return_metadata: bool

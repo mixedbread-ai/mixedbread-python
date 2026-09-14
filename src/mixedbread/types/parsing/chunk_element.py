@@ -1,4 +1,4 @@
-# File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+# File generated from our OpenAPI spec by sdkgen. See CONTRIBUTING.md for details.
 
 from typing import List, Optional
 
@@ -9,7 +9,7 @@ __all__ = ["ChunkElement"]
 
 
 class ChunkElement(BaseModel):
-    """Represents an extracted element from a document with its content and metadata."""
+    """An element extracted from a document with its content and metadata."""
 
     type: ElementType
     """The type of the extracted element"""

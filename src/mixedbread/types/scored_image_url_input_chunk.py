@@ -1,4 +1,4 @@
-# File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+# File generated from our OpenAPI spec by sdkgen. See CONTRIBUTING.md for details.
 
 from typing import Union, Optional
 from typing_extensions import Literal, Annotated, TypeAlias
@@ -67,6 +67,9 @@ class ScoredImageURLInputChunk(BaseModel):
 
     ocr_text: Optional[str] = None
     """ocr text of the image"""
+
+    context: Optional[str] = None
+    """LLM-generated context that situates this image within its source document"""
 
     summary: Optional[str] = None
     """summary of the image"""

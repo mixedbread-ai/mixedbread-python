@@ -1,4 +1,4 @@
-# File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+# File generated from our OpenAPI spec by sdkgen. See CONTRIBUTING.md for details.
 
 import builtins
 from typing import List, Optional
@@ -11,7 +11,8 @@ __all__ = ["MultiEncodingEmbedding", "Embedding"]
 
 class Embedding(BaseModel):
     """
-    The encoded embedding data by encoding format.Returned, if more than one encoding format is used.
+    The encoded embedding data by encoding format.Returned, if more than one
+    encoding format is used.
     """
 
     float: Optional[List[builtins.float]] = None

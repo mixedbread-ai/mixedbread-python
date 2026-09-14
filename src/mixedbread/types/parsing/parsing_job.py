@@ -1,4 +1,4 @@
-# File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+# File generated from our OpenAPI spec by sdkgen. See CONTRIBUTING.md for details.
 
 from typing import Dict, Optional
 from datetime import datetime
@@ -12,7 +12,7 @@ __all__ = ["ParsingJob"]
 
 
 class ParsingJob(BaseModel):
-    """A job for parsing documents with its current state and result."""
+    """A parsing job with its result narrowed to the public fields."""
 
     id: str
     """The ID of the job"""
@@ -30,7 +30,7 @@ class ParsingJob(BaseModel):
     """The error of the job"""
 
     result: Optional[DocumentParserResult] = None
-    """Result of document parsing operation."""
+    """The public result of a parsing job."""
 
     started_at: Optional[datetime] = None
     """The started time of the job"""

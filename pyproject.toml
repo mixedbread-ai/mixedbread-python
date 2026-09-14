@@ -43,6 +43,27 @@ Repository = "https://github.com/mixedbread-ai/mixedbread-python"
 [project.optional-dependencies]
 aiohttp = ["aiohttp", "httpx_aiohttp>=0.1.9"]
 
+[dependency-groups]
+# Used by `uv sync --group dev`; keep in sync with [tool.rye] dev-dependencies.
+dev = [
+    "pyright==1.1.399",
+    "mypy==1.17.0",
+    "respx==0.22.0",
+    "pytest==8.4.2",
+    "pytest-asyncio==1.2.0",
+    "ruff==0.14.8",
+    "time-machine",
+    "nox",
+    "dirty-equals>=0.6.0",
+    "importlib-metadata>=6.7.0",
+    "rich>=13.7.1",
+    "pytest-xdist>=3.6.1",
+    # pinned so that pyright/mypy see the same runtime the vendored code was written against
+    "pydantic==2.12.5",
+    "httpx==0.28.1",
+    "typing-extensions==4.15.0",
+]
+
 [tool.rye]
 managed = true
 # version pins are in requirements-dev.lock

@@ -1,4 +1,4 @@
-# File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+# File generated from our OpenAPI spec by sdkgen. See CONTRIBUTING.md for details.
 
 from __future__ import annotations
 
@@ -11,6 +11,6 @@ __all__ = ["ScopeParam"]
 class ScopeParam(TypedDict, total=False):
     method: Required[Literal["read", "write", "delete", "list", "create", "search"]]
 
-    resource_type: Optional[Literal["store"]]
+    resource_type: Optional[Literal["store", "completions"]]
 
     resource_id: Optional[str]

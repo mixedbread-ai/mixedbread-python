@@ -1,4 +1,4 @@
-# File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+# File generated from our OpenAPI spec by sdkgen. See CONTRIBUTING.md for details.
 
 from typing import List, Optional
 
@@ -9,7 +9,7 @@ __all__ = ["Chunk"]
 
 
 class Chunk(BaseModel):
-    """A chunk of text extracted from a document page."""
+    """A chunk of a parsed document in a job response."""
 
     content: Optional[str] = None
     """The full content of the chunk"""

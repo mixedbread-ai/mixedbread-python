@@ -1,4 +1,4 @@
-# File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+# File generated from our OpenAPI spec by sdkgen. See CONTRIBUTING.md for details.
 
 from typing import List, Optional
 from typing_extensions import Literal
@@ -10,6 +10,8 @@ __all__ = ["RerankResponse", "Data"]
 
 
 class Data(BaseModel):
+    """The ranked documents."""
+
     index: int
     """The index of the document."""
 

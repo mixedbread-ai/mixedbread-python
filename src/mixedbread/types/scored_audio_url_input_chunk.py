@@ -1,4 +1,4 @@
-# File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+# File generated from our OpenAPI spec by sdkgen. See CONTRIBUTING.md for details.
 
 from typing import Union, Optional
 from typing_extensions import Literal, Annotated, TypeAlias
@@ -67,6 +67,9 @@ class ScoredAudioURLInputChunk(BaseModel):
 
     transcription: Optional[str] = None
     """speech recognition (sr) text of the audio"""
+
+    context: Optional[str] = None
+    """LLM-generated context that situates this audio chunk within its source file"""
 
     summary: Optional[str] = None
     """summary of the audio"""

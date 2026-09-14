@@ -1,7 +1,7 @@
 # Shared Types
 
 ```python
-from mixedbread.types import SearchFilterCondition, Usage
+from mixedbread.types import SearchFilter, SearchFilterCondition, Usage
 ```
 
 # Mixedbread
@@ -69,11 +69,14 @@ Methods:
 - <code title="put /v1/stores/{store_identifier}">client.stores.<a href="./src/mixedbread/resources/stores/stores.py">update</a>(store_identifier, \*\*<a href="src/mixedbread/types/store_update_params.py">params</a>) -> <a href="./src/mixedbread/types/store.py">Store</a></code>
 - <code title="get /v1/stores">client.stores.<a href="./src/mixedbread/resources/stores/stores.py">list</a>(\*\*<a href="src/mixedbread/types/store_list_params.py">params</a>) -> <a href="./src/mixedbread/types/store.py">SyncCursor[Store]</a></code>
 - <code title="delete /v1/stores/{store_identifier}">client.stores.<a href="./src/mixedbread/resources/stores/stores.py">delete</a>(store_identifier) -> <a href="./src/mixedbread/types/store_delete_response.py">StoreDeleteResponse</a></code>
+- <code title="post /v1/stores/{store_identifier}/copy">client.stores.<a href="./src/mixedbread/resources/stores/stores.py">copy</a>(store_identifier, \*\*<a href="src/mixedbread/types/store_copy_params.py">params</a>) -> <a href="./src/mixedbread/types/store.py">Store</a></code>
 - <code title="post /v1/stores/grep">client.stores.<a href="./src/mixedbread/resources/stores/stores.py">grep</a>(\*\*<a href="src/mixedbread/types/store_grep_params.py">params</a>) -> <a href="./src/mixedbread/types/store_grep_response.py">StoreGrepResponse</a></code>
 - <code title="post /v1/stores/list-chunks">client.stores.<a href="./src/mixedbread/resources/stores/stores.py">list_chunks</a>(\*\*<a href="src/mixedbread/types/store_list_chunks_params.py">params</a>) -> <a href="./src/mixedbread/types/store_list_chunks_response.py">StoreListChunksResponse</a></code>
 - <code title="post /v1/stores/metadata-facets">client.stores.<a href="./src/mixedbread/resources/stores/stores.py">metadata_facets</a>(\*\*<a href="src/mixedbread/types/store_metadata_facets_params.py">params</a>) -> <a href="./src/mixedbread/types/store_metadata_facets_response.py">StoreMetadataFacetsResponse</a></code>
 - <code title="post /v1/stores/question-answering">client.stores.<a href="./src/mixedbread/resources/stores/stores.py">question_answering</a>(\*\*<a href="src/mixedbread/types/store_question_answering_params.py">params</a>) -> <a href="./src/mixedbread/types/store_question_answering_response.py">StoreQuestionAnsweringResponse</a></code>
 - <code title="post /v1/stores/search">client.stores.<a href="./src/mixedbread/resources/stores/stores.py">search</a>(\*\*<a href="src/mixedbread/types/store_search_params.py">params</a>) -> <a href="./src/mixedbread/types/store_search_response.py">StoreSearchResponse</a></code>
+- <code>client.stores.<a href="./src/mixedbread/lib/stores.py">poll</a>(…)</code>
+- <code>client.stores.<a href="./src/mixedbread/lib/stores.py">copy_and_poll</a>(…)</code>
 
 ## Files
 
@@ -100,6 +103,10 @@ Methods:
 - <code title="patch /v1/stores/{store_identifier}/files/{file_identifier}">client.stores.files.<a href="./src/mixedbread/resources/stores/files.py">update</a>(file_identifier, \*, store_identifier, \*\*<a href="src/mixedbread/types/stores/file_update_params.py">params</a>) -> <a href="./src/mixedbread/types/stores/store_file.py">StoreFile</a></code>
 - <code title="post /v1/stores/{store_identifier}/files/list">client.stores.files.<a href="./src/mixedbread/resources/stores/files.py">list</a>(store_identifier, \*\*<a href="src/mixedbread/types/stores/file_list_params.py">params</a>) -> <a href="./src/mixedbread/types/stores/file_list_response.py">FileListResponse</a></code>
 - <code title="delete /v1/stores/{store_identifier}/files/{file_identifier}">client.stores.files.<a href="./src/mixedbread/resources/stores/files.py">delete</a>(file_identifier, \*, store_identifier) -> <a href="./src/mixedbread/types/stores/file_delete_response.py">FileDeleteResponse</a></code>
+- <code>client.stores.files.<a href="./src/mixedbread/lib/store_files.py">poll</a>(…)</code>
+- <code>client.stores.files.<a href="./src/mixedbread/lib/store_files.py">create_and_poll</a>(…)</code>
+- <code>client.stores.files.<a href="./src/mixedbread/lib/store_files.py">upload</a>(…)</code>
+- <code>client.stores.files.<a href="./src/mixedbread/lib/store_files.py">upload_and_poll</a>(…)</code>
 
 # Parsing
 
@@ -129,6 +136,10 @@ Methods:
 - <code title="get /v1/parsing/jobs">client.parsing.jobs.<a href="./src/mixedbread/resources/parsing/jobs.py">list</a>(\*\*<a href="src/mixedbread/types/parsing/job_list_params.py">params</a>) -> <a href="./src/mixedbread/types/parsing/job_list_response.py">SyncCursor[JobListResponse]</a></code>
 - <code title="delete /v1/parsing/jobs/{job_id}">client.parsing.jobs.<a href="./src/mixedbread/resources/parsing/jobs.py">delete</a>(job_id) -> <a href="./src/mixedbread/types/parsing/job_delete_response.py">JobDeleteResponse</a></code>
 - <code title="patch /v1/parsing/jobs/{job_id}">client.parsing.jobs.<a href="./src/mixedbread/resources/parsing/jobs.py">cancel</a>(job_id) -> <a href="./src/mixedbread/types/parsing/parsing_job.py">ParsingJob</a></code>
+- <code>client.parsing.jobs.<a href="./src/mixedbread/lib/parsing_jobs.py">poll</a>(…)</code>
+- <code>client.parsing.jobs.<a href="./src/mixedbread/lib/parsing_jobs.py">create_and_poll</a>(…)</code>
+- <code>client.parsing.jobs.<a href="./src/mixedbread/lib/parsing_jobs.py">upload</a>(…)</code>
+- <code>client.parsing.jobs.<a href="./src/mixedbread/lib/parsing_jobs.py">upload_and_poll</a>(…)</code>
 
 # Files
 
@@ -284,6 +295,13 @@ Methods:
 
 # Chat
 
+Types:
+
+```python
+from mixedbread.types import ChatCreateCompletionResponse
+```
+
 Methods:
 
-- <code title="post /v1/chat/completions">client.chat.<a href="./src/mixedbread/resources/chat.py">create_completion</a>() -> object</code>
+- <code title="post /v1/chat/completions">client.chat.<a href="./src/mixedbread/resources/chat.py">create_completion</a>(\*\*<a href="src/mixedbread/types/chat_create_completion_params.py">params</a>) -> <a href="./src/mixedbread/types/chat_create_completion_response.py">ChatCreateCompletionResponse</a></code>
+
