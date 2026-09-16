@@ -1,6 +1,6 @@
 # File generated from our OpenAPI spec by sdkgen. See CONTRIBUTING.md for details.
 
-from typing import Optional
+from typing import List, Optional
 from datetime import datetime
 from typing_extensions import Literal
 
@@ -54,6 +54,9 @@ class Store(BaseModel):
 
     metadata: Optional[object] = None
     """Additional metadata associated with the store"""
+
+    tags: Optional[List[str]] = None
+    """Tags for organizing stores"""
 
     config: Optional[StoreConfig] = None
     """Configuration for a store."""

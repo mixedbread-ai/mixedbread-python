@@ -5,6 +5,8 @@ from __future__ import annotations
 from typing import Optional
 from typing_extensions import TypedDict
 
+from .._types import SequenceNotStr
+
 __all__ = ["StoreListParams"]
 
 
@@ -29,3 +31,6 @@ class StoreListParams(TypedDict, total=False):
 
     q: Optional[str]
     """Search query for fuzzy matching over name and description fields"""
+
+    tags: Optional[SequenceNotStr[str]]
+    """Only return stores that carry every one of these tags"""

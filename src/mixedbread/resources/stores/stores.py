@@ -86,6 +86,7 @@ class StoresResourceBase(SyncAPIResource):
         license: Optional[str] | Omit = omit,
         expires_after: Optional[ExpiresAfterParam] | Omit = omit,
         metadata: object | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         config: Optional[StoreConfigParam] | Omit = omit,
         file_ids: Optional[SequenceNotStr[str]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -117,6 +118,8 @@ class StoresResourceBase(SyncAPIResource):
 
           metadata: Optional metadata key-value pairs
 
+          tags: Tags for organizing stores. Trimmed, lowercased and deduplicated.
+
           config: Configuration for a store.
 
           file_ids: Optional list of file IDs
@@ -139,6 +142,7 @@ class StoresResourceBase(SyncAPIResource):
                     "license": license,
                     "expires_after": expires_after,
                     "metadata": metadata,
+                    "tags": tags,
                     "config": config,
                     "file_ids": file_ids,
                 },
@@ -199,6 +203,7 @@ class StoresResourceBase(SyncAPIResource):
         license: Optional[str] | Omit = omit,
         expires_after: Optional[ExpiresAfterParam] | Omit = omit,
         metadata: object | Omit = omit,
+        tags: Optional[SequenceNotStr[str]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -231,6 +236,8 @@ class StoresResourceBase(SyncAPIResource):
 
           metadata: Optional metadata key-value pairs
 
+          tags: New tags for the store, replacing the current ones. Send an empty list to clear.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -251,6 +258,7 @@ class StoresResourceBase(SyncAPIResource):
                     "license": license,
                     "expires_after": expires_after,
                     "metadata": metadata,
+                    "tags": tags,
                 },
                 store_update_params.StoreUpdateParams,
             ),
@@ -268,6 +276,7 @@ class StoresResourceBase(SyncAPIResource):
         before: Optional[str] | Omit = omit,
         include_total: bool | Omit = omit,
         q: Optional[str] | Omit = omit,
+        tags: Optional[SequenceNotStr[str]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -275,12 +284,10 @@ class StoresResourceBase(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SyncCursor[Store]:
-        """List all stores with optional search.
+        """
+        List all stores with optional search and tag filter.
 
-        Args: pagination: The pagination options.
-
-        q: Optional search query to filter
-        vector stores.
+        Args: options: The pagination options, search query and tag filter.
 
         Returns: StoreListResponse: The list of stores.
 
@@ -296,6 +303,8 @@ class StoresResourceBase(SyncAPIResource):
           include_total: Whether to include total count in response (expensive operation)
 
           q: Search query for fuzzy matching over name and description fields
+
+          tags: Only return stores that carry every one of these tags
 
           extra_headers: Send extra headers
 
@@ -320,6 +329,7 @@ class StoresResourceBase(SyncAPIResource):
                         "before": before,
                         "include_total": include_total,
                         "q": q,
+                        "tags": tags,
                     },
                     store_list_params.StoreListParams,
                 ),
@@ -373,6 +383,7 @@ class StoresResourceBase(SyncAPIResource):
         name: str,
         description: Optional[str] | Omit = omit,
         metadata: object | Omit = omit,
+        tags: Optional[SequenceNotStr[str]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -405,6 +416,8 @@ class StoresResourceBase(SyncAPIResource):
 
           metadata: Metadata for the copy; defaults to the source store's metadata
 
+          tags: Tags for the copy; defaults to the source store's tags
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -422,6 +435,7 @@ class StoresResourceBase(SyncAPIResource):
                     "name": name,
                     "description": description,
                     "metadata": metadata,
+                    "tags": tags,
                 },
                 store_copy_params.StoreCopyParams,
             ),
@@ -895,6 +909,7 @@ class AsyncStoresResourceBase(AsyncAPIResource):
         license: Optional[str] | Omit = omit,
         expires_after: Optional[ExpiresAfterParam] | Omit = omit,
         metadata: object | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         config: Optional[StoreConfigParam] | Omit = omit,
         file_ids: Optional[SequenceNotStr[str]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -926,6 +941,8 @@ class AsyncStoresResourceBase(AsyncAPIResource):
 
           metadata: Optional metadata key-value pairs
 
+          tags: Tags for organizing stores. Trimmed, lowercased and deduplicated.
+
           config: Configuration for a store.
 
           file_ids: Optional list of file IDs
@@ -948,6 +965,7 @@ class AsyncStoresResourceBase(AsyncAPIResource):
                     "license": license,
                     "expires_after": expires_after,
                     "metadata": metadata,
+                    "tags": tags,
                     "config": config,
                     "file_ids": file_ids,
                 },
@@ -1008,6 +1026,7 @@ class AsyncStoresResourceBase(AsyncAPIResource):
         license: Optional[str] | Omit = omit,
         expires_after: Optional[ExpiresAfterParam] | Omit = omit,
         metadata: object | Omit = omit,
+        tags: Optional[SequenceNotStr[str]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -1040,6 +1059,8 @@ class AsyncStoresResourceBase(AsyncAPIResource):
 
           metadata: Optional metadata key-value pairs
 
+          tags: New tags for the store, replacing the current ones. Send an empty list to clear.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -1060,6 +1081,7 @@ class AsyncStoresResourceBase(AsyncAPIResource):
                     "license": license,
                     "expires_after": expires_after,
                     "metadata": metadata,
+                    "tags": tags,
                 },
                 store_update_params.StoreUpdateParams,
             ),
@@ -1077,6 +1099,7 @@ class AsyncStoresResourceBase(AsyncAPIResource):
         before: Optional[str] | Omit = omit,
         include_total: bool | Omit = omit,
         q: Optional[str] | Omit = omit,
+        tags: Optional[SequenceNotStr[str]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -1084,12 +1107,10 @@ class AsyncStoresResourceBase(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AsyncPaginator[Store, AsyncCursor[Store]]:
-        """List all stores with optional search.
+        """
+        List all stores with optional search and tag filter.
 
-        Args: pagination: The pagination options.
-
-        q: Optional search query to filter
-        vector stores.
+        Args: options: The pagination options, search query and tag filter.
 
         Returns: StoreListResponse: The list of stores.
 
@@ -1105,6 +1126,8 @@ class AsyncStoresResourceBase(AsyncAPIResource):
           include_total: Whether to include total count in response (expensive operation)
 
           q: Search query for fuzzy matching over name and description fields
+
+          tags: Only return stores that carry every one of these tags
 
           extra_headers: Send extra headers
 
@@ -1129,6 +1152,7 @@ class AsyncStoresResourceBase(AsyncAPIResource):
                         "before": before,
                         "include_total": include_total,
                         "q": q,
+                        "tags": tags,
                     },
                     store_list_params.StoreListParams,
                 ),
@@ -1182,6 +1206,7 @@ class AsyncStoresResourceBase(AsyncAPIResource):
         name: str,
         description: Optional[str] | Omit = omit,
         metadata: object | Omit = omit,
+        tags: Optional[SequenceNotStr[str]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -1214,6 +1239,8 @@ class AsyncStoresResourceBase(AsyncAPIResource):
 
           metadata: Metadata for the copy; defaults to the source store's metadata
 
+          tags: Tags for the copy; defaults to the source store's tags
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -1231,6 +1258,7 @@ class AsyncStoresResourceBase(AsyncAPIResource):
                     "name": name,
                     "description": description,
                     "metadata": metadata,
+                    "tags": tags,
                 },
                 store_copy_params.StoreCopyParams,
             ),

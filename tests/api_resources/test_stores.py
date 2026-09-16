@@ -43,6 +43,7 @@ class TestStores:
                 "days": 0,
             },
             metadata={},
+            tags=["production", "docs"],
             config={
                 "contextualization": True,
                 "save_content": True,
@@ -130,6 +131,7 @@ class TestStores:
                 "days": 0,
             },
             metadata={},
+            tags=["string"],
         )
         assert_matches_type(Store, store, path=["response"])
 
@@ -177,6 +179,7 @@ class TestStores:
             before="eyJjcmVhdGVkX2F0IjoiMjAyNC0xMi0zMVQyMzo1OTo1OS4wMDBaIiwiaWQiOiJhYmMxMjMifQ==",
             include_total=False,
             q="x",
+            tags=["string"],
         )
         assert_matches_type(SyncCursor[Store], store, path=["response"])
 
@@ -253,6 +256,7 @@ class TestStores:
             name="technical-documentation-copy",
             description="description",
             metadata={},
+            tags=["string"],
         )
         assert_matches_type(Store, store, path=["response"])
 
@@ -766,6 +770,7 @@ class TestAsyncStores:
                 "days": 0,
             },
             metadata={},
+            tags=["production", "docs"],
             config={
                 "contextualization": True,
                 "save_content": True,
@@ -853,6 +858,7 @@ class TestAsyncStores:
                 "days": 0,
             },
             metadata={},
+            tags=["string"],
         )
         assert_matches_type(Store, store, path=["response"])
 
@@ -900,6 +906,7 @@ class TestAsyncStores:
             before="eyJjcmVhdGVkX2F0IjoiMjAyNC0xMi0zMVQyMzo1OTo1OS4wMDBaIiwiaWQiOiJhYmMxMjMifQ==",
             include_total=False,
             q="x",
+            tags=["string"],
         )
         assert_matches_type(AsyncCursor[Store], store, path=["response"])
 
@@ -976,6 +983,7 @@ class TestAsyncStores:
             name="technical-documentation-copy",
             description="description",
             metadata={},
+            tags=["string"],
         )
         assert_matches_type(Store, store, path=["response"])
 

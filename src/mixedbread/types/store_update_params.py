@@ -5,6 +5,7 @@ from __future__ import annotations
 from typing import Optional
 from typing_extensions import TypedDict
 
+from .._types import SequenceNotStr
 from .expires_after_param import ExpiresAfterParam
 
 __all__ = ["StoreUpdateParams"]
@@ -31,3 +32,6 @@ class StoreUpdateParams(TypedDict, total=False):
 
     metadata: object
     """Optional metadata key-value pairs"""
+
+    tags: Optional[SequenceNotStr[str]]
+    """New tags for the store, replacing the current ones. Send an empty list to clear."""

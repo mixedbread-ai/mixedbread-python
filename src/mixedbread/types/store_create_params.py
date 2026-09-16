@@ -34,6 +34,9 @@ class StoreCreateParams(TypedDict, total=False):
     metadata: object
     """Optional metadata key-value pairs"""
 
+    tags: SequenceNotStr[str]
+    """Tags for organizing stores. Trimmed, lowercased and deduplicated."""
+
     config: Optional[StoreConfigParam]
     """Configuration for a store."""
 
