@@ -205,6 +205,8 @@ class TestFiles:
             after="eyJjcmVhdGVkX2F0IjoiMjAyNC0xMi0zMVQyMzo1OTo1OS4wMDBaIiwiaWQiOiJhYmMxMjMifQ==",
             before="eyJjcmVhdGVkX2F0IjoiMjAyNC0xMi0zMVQyMzo1OTo1OS4wMDBaIiwiaWQiOiJhYmMxMjMifQ==",
             include_total=False,
+            sort_by="created_at",
+            sort_order="desc",
             statuses=["pending"],
             metadata_filter={
                 "all": [
@@ -517,6 +519,8 @@ class TestAsyncFiles:
             after="eyJjcmVhdGVkX2F0IjoiMjAyNC0xMi0zMVQyMzo1OTo1OS4wMDBaIiwiaWQiOiJhYmMxMjMifQ==",
             before="eyJjcmVhdGVkX2F0IjoiMjAyNC0xMi0zMVQyMzo1OTo1OS4wMDBaIiwiaWQiOiJhYmMxMjMifQ==",
             include_total=False,
+            sort_by="created_at",
+            sort_order="desc",
             statuses=["pending"],
             metadata_filter={
                 "all": [

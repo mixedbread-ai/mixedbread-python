@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from typing import List, Union, Iterable, Optional
-from typing_extensions import TypeAlias, TypedDict
+from typing_extensions import Literal, TypeAlias, TypedDict
 
 from .store_file_status import StoreFileStatus
 from ..shared_params.search_filter import SearchFilter
@@ -30,6 +30,12 @@ class FileListParams(TypedDict, total=False):
 
     include_total: bool
     """Whether to include total count in response (expensive operation)"""
+
+    sort_by: Literal["created_at", "filename", "usage_bytes", "usage_tokens"]
+    """Field to order the files by"""
+
+    sort_order: Literal["asc", "desc"]
+    """Direction of the sort"""
 
     statuses: Optional[List[StoreFileStatus]]
     """Status to filter by"""

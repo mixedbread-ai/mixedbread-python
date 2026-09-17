@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from typing import Dict, List, Union, Iterable, Optional
+from typing_extensions import Literal
 
 import httpx
 
@@ -238,6 +239,8 @@ class FilesResourceBase(SyncAPIResource):
         after: Optional[str] | Omit = omit,
         before: Optional[str] | Omit = omit,
         include_total: bool | Omit = omit,
+        sort_by: Literal["created_at", "filename", "usage_bytes", "usage_tokens"] | Omit = omit,
+        sort_order: Literal["asc", "desc"] | Omit = omit,
         statuses: Optional[List[StoreFileStatus]] | Omit = omit,
         metadata_filter: Optional[file_list_params.MetadataFilter] | Omit = omit,
         q: Optional[str] | Omit = omit,
@@ -269,6 +272,10 @@ class FilesResourceBase(SyncAPIResource):
 
           include_total: Whether to include total count in response (expensive operation)
 
+          sort_by: Field to order the files by
+
+          sort_order: Direction of the sort
+
           statuses: Status to filter by
 
           metadata_filter: Metadata filter to apply to the query
@@ -293,6 +300,8 @@ class FilesResourceBase(SyncAPIResource):
                     "after": after,
                     "before": before,
                     "include_total": include_total,
+                    "sort_by": sort_by,
+                    "sort_order": sort_order,
                     "statuses": statuses,
                     "metadata_filter": metadata_filter,
                     "q": q,
@@ -566,6 +575,8 @@ class AsyncFilesResourceBase(AsyncAPIResource):
         after: Optional[str] | Omit = omit,
         before: Optional[str] | Omit = omit,
         include_total: bool | Omit = omit,
+        sort_by: Literal["created_at", "filename", "usage_bytes", "usage_tokens"] | Omit = omit,
+        sort_order: Literal["asc", "desc"] | Omit = omit,
         statuses: Optional[List[StoreFileStatus]] | Omit = omit,
         metadata_filter: Optional[file_list_params.MetadataFilter] | Omit = omit,
         q: Optional[str] | Omit = omit,
@@ -597,6 +608,10 @@ class AsyncFilesResourceBase(AsyncAPIResource):
 
           include_total: Whether to include total count in response (expensive operation)
 
+          sort_by: Field to order the files by
+
+          sort_order: Direction of the sort
+
           statuses: Status to filter by
 
           metadata_filter: Metadata filter to apply to the query
@@ -621,6 +636,8 @@ class AsyncFilesResourceBase(AsyncAPIResource):
                     "after": after,
                     "before": before,
                     "include_total": include_total,
+                    "sort_by": sort_by,
+                    "sort_order": sort_order,
                     "statuses": statuses,
                     "metadata_filter": metadata_filter,
                     "q": q,
