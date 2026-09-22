@@ -16,7 +16,7 @@ class Data(BaseModel):
     """The index of the document."""
 
     score: float
-    """The score of the document."""
+    """Relevance on a 0-1 scale."""
 
     input: Optional[object] = None
     """The input document."""
