@@ -13,6 +13,8 @@ __all__ = [
     "ChoiceMessageToolCall",
     "ChoiceMessageToolCallFunction",
     "ChoiceMessageAnnotation",
+    "ChoiceMessageAnnotationFileCitation",
+    "ChoiceMessageAnnotationURLCitation",
     "Usage",
     "UsagePromptTokensDetails",
     "UsageCompletionTokensDetails",
@@ -61,6 +63,8 @@ __all__ = [
     "TranscriptAssistantMessageOutputToolCall",
     "TranscriptAssistantMessageOutputToolCallFunction",
     "TranscriptAssistantMessageOutputAnnotation",
+    "TranscriptAssistantMessageOutputAnnotationFileCitation",
+    "TranscriptAssistantMessageOutputAnnotationURLCitation",
     "TranscriptToolMessage",
     "TranscriptToolMessageContentUnionMember1",
 ]
@@ -82,7 +86,7 @@ class ChoiceMessageToolCall(BaseModel):
     function: ChoiceMessageToolCallFunction
 
 
-class ChoiceMessageAnnotation(BaseModel):
+class ChoiceMessageAnnotationFileCitation(BaseModel):
     """The OpenAI ``file_citation`` annotation, plus the chunk it points at.
 
     ``chunk_id`` is the same ``file_id:chunk_index`` reference every hosted result
@@ -101,6 +105,30 @@ class ChoiceMessageAnnotation(BaseModel):
     chunk_id: str
 
     store_id: str
+
+
+class ChoiceMessageAnnotationURLCitation(BaseModel):
+    """
+    The OpenAI ``url_citation`` annotation, for a hit of the web store; ``chunk_id``
+    as on the hosted result.
+    """
+
+    type: Optional[Literal["url_citation"]] = None
+
+    url: str
+
+    title: str
+
+    start_index: int
+
+    end_index: int
+
+    chunk_id: str
+
+
+ChoiceMessageAnnotation: TypeAlias = Annotated[
+    Union[ChoiceMessageAnnotationFileCitation, ChoiceMessageAnnotationURLCitation], PropertyInfo(discriminator="type")
+]
 
 
 class ChoiceMessage(BaseModel):
@@ -742,7 +770,7 @@ class TranscriptAssistantMessageOutputToolCall(BaseModel):
     function: TranscriptAssistantMessageOutputToolCallFunction
 
 
-class TranscriptAssistantMessageOutputAnnotation(BaseModel):
+class TranscriptAssistantMessageOutputAnnotationFileCitation(BaseModel):
     """The OpenAI ``file_citation`` annotation, plus the chunk it points at.
 
     ``chunk_id`` is the same ``file_id:chunk_index`` reference every hosted result
@@ -761,6 +789,33 @@ class TranscriptAssistantMessageOutputAnnotation(BaseModel):
     chunk_id: str
 
     store_id: str
+
+
+class TranscriptAssistantMessageOutputAnnotationURLCitation(BaseModel):
+    """
+    The OpenAI ``url_citation`` annotation, for a hit of the web store; ``chunk_id``
+    as on the hosted result.
+    """
+
+    type: Optional[Literal["url_citation"]] = None
+
+    url: str
+
+    title: str
+
+    start_index: int
+
+    end_index: int
+
+    chunk_id: str
+
+
+TranscriptAssistantMessageOutputAnnotation: TypeAlias = Annotated[
+    Union[
+        TranscriptAssistantMessageOutputAnnotationFileCitation, TranscriptAssistantMessageOutputAnnotationURLCitation
+    ],
+    PropertyInfo(discriminator="type"),
+]
 
 
 class TranscriptAssistantMessageOutput(BaseModel):

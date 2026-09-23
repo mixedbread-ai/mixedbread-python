@@ -23,6 +23,8 @@ __all__ = [
     "MessageAssistantMessageInputToolCall",
     "MessageAssistantMessageInputToolCallFunction",
     "MessageAssistantMessageInputAnnotation",
+    "MessageAssistantMessageInputAnnotationFileCitation",
+    "MessageAssistantMessageInputAnnotationURLCitation",
     "MessageToolMessage",
     "MessageToolMessageContentUnionMember1",
     "Tool",
@@ -83,6 +85,8 @@ __all__ = [
     "PreviousMessageAssistantMessageInputToolCall",
     "PreviousMessageAssistantMessageInputToolCallFunction",
     "PreviousMessageAssistantMessageInputAnnotation",
+    "PreviousMessageAssistantMessageInputAnnotationFileCitation",
+    "PreviousMessageAssistantMessageInputAnnotationURLCitation",
     "PreviousMessageToolMessage",
     "PreviousMessageToolMessageContentUnionMember1",
     "ContextManagement",
@@ -154,7 +158,7 @@ class MessageAssistantMessageInputToolCall(TypedDict, total=False):
     function: Required[MessageAssistantMessageInputToolCallFunction]
 
 
-class MessageAssistantMessageInputAnnotation(TypedDict, total=False):
+class MessageAssistantMessageInputAnnotationFileCitation(TypedDict, total=False):
     """The OpenAI ``file_citation`` annotation, plus the chunk it points at.
 
     ``chunk_id`` is the same ``file_id:chunk_index`` reference every hosted result
@@ -173,6 +177,30 @@ class MessageAssistantMessageInputAnnotation(TypedDict, total=False):
     chunk_id: Required[str]
 
     store_id: Required[str]
+
+
+class MessageAssistantMessageInputAnnotationURLCitation(TypedDict, total=False):
+    """
+    The OpenAI ``url_citation`` annotation, for a hit of the web store; ``chunk_id``
+    as on the hosted result.
+    """
+
+    type: Literal["url_citation"]
+
+    url: Required[str]
+
+    title: Required[str]
+
+    start_index: Required[int]
+
+    end_index: Required[int]
+
+    chunk_id: Required[str]
+
+
+MessageAssistantMessageInputAnnotation: TypeAlias = Union[
+    MessageAssistantMessageInputAnnotationFileCitation, MessageAssistantMessageInputAnnotationURLCitation
+]
 
 
 class MessageAssistantMessageInput(TypedDict, total=False):
@@ -755,7 +783,7 @@ class PreviousMessageAssistantMessageInputToolCall(TypedDict, total=False):
     function: Required[PreviousMessageAssistantMessageInputToolCallFunction]
 
 
-class PreviousMessageAssistantMessageInputAnnotation(TypedDict, total=False):
+class PreviousMessageAssistantMessageInputAnnotationFileCitation(TypedDict, total=False):
     """The OpenAI ``file_citation`` annotation, plus the chunk it points at.
 
     ``chunk_id`` is the same ``file_id:chunk_index`` reference every hosted result
@@ -774,6 +802,31 @@ class PreviousMessageAssistantMessageInputAnnotation(TypedDict, total=False):
     chunk_id: Required[str]
 
     store_id: Required[str]
+
+
+class PreviousMessageAssistantMessageInputAnnotationURLCitation(TypedDict, total=False):
+    """
+    The OpenAI ``url_citation`` annotation, for a hit of the web store; ``chunk_id``
+    as on the hosted result.
+    """
+
+    type: Literal["url_citation"]
+
+    url: Required[str]
+
+    title: Required[str]
+
+    start_index: Required[int]
+
+    end_index: Required[int]
+
+    chunk_id: Required[str]
+
+
+PreviousMessageAssistantMessageInputAnnotation: TypeAlias = Union[
+    PreviousMessageAssistantMessageInputAnnotationFileCitation,
+    PreviousMessageAssistantMessageInputAnnotationURLCitation,
+]
 
 
 class PreviousMessageAssistantMessageInput(TypedDict, total=False):
