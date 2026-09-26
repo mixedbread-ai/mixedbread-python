@@ -14,3 +14,5 @@ class ScopeParam(TypedDict, total=False):
     resource_type: Optional[Literal["store", "completions"]]
 
     resource_id: Optional[str]
+
+    tag: Optional[str]

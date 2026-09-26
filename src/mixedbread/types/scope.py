@@ -14,3 +14,5 @@ class Scope(BaseModel):
     resource_type: Optional[Literal["store", "completions"]] = None
 
     resource_id: Optional[str] = None
+
+    tag: Optional[str] = None

@@ -33,6 +33,7 @@ class TestAPIKeys:
                     "method": "read",
                     "resource_type": "store",
                     "resource_id": "resource_id",
+                    "tag": "tag",
                 }
             ],
             expires_at=parse_datetime("2019-12-27T18:11:19.117Z"),
@@ -264,6 +265,7 @@ class TestAsyncAPIKeys:
                     "method": "read",
                     "resource_type": "store",
                     "resource_id": "resource_id",
+                    "tag": "tag",
                 }
             ],
             expires_at=parse_datetime("2019-12-27T18:11:19.117Z"),
