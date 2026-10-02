@@ -65,7 +65,7 @@ def poll(
         if max_attempts and attempt >= max_attempts:
             raise RuntimeError(f"Maximum attempts ({max_attempts}) reached")
 
-        if timeout_seconds:
+        if timeout_seconds is not None:
             elapsed = (datetime.now() - start_time).total_seconds()
             if elapsed >= timeout_seconds:
                 raise TimeoutError(f"Timeout ({timeout_seconds}s) reached")
@@ -114,7 +114,7 @@ async def poll_async(
         if max_attempts and attempt >= max_attempts:
             raise RuntimeError(f"Maximum attempts ({max_attempts}) reached")
 
-        if timeout_seconds:
+        if timeout_seconds is not None:
             elapsed = (datetime.now() - start_time).total_seconds()
             if elapsed >= timeout_seconds:
                 raise TimeoutError(f"Timeout ({timeout_seconds}s) reached")

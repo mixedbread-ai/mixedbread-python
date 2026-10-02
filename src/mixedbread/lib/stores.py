@@ -12,6 +12,7 @@ from typing import TYPE_CHECKING, Any, Optional
 
 from . import polling
 from .._types import Omit, NotGiven, omit, not_given
+from .._utils import is_given
 from ..types.store import Store
 
 if TYPE_CHECKING:
@@ -51,13 +52,13 @@ class StoreHelpers(_SyncBase):
         Returns:
             The store once it has settled
         """
-        polling_interval_ms = poll_interval_ms or _DEFAULT_POLL_INTERVAL_MS
-        polling_timeout_ms = poll_timeout_ms or None
+        polling_interval_ms = poll_interval_ms if is_given(poll_interval_ms) else _DEFAULT_POLL_INTERVAL_MS
+        polling_timeout_ms = poll_timeout_ms if is_given(poll_timeout_ms) else None
         return polling.poll(
             fn=functools.partial(self.retrieve, store_identifier, **kwargs),
             condition=_is_settled,
             interval_seconds=polling_interval_ms / 1000,
-            timeout_seconds=polling_timeout_ms / 1000 if polling_timeout_ms else None,
+            timeout_seconds=polling_timeout_ms / 1000 if polling_timeout_ms is not None else None,
         )
 
     def copy_and_poll(
@@ -89,13 +90,13 @@ class AsyncStoreHelpers(_AsyncBase):
         **kwargs: Any,
     ) -> Store:
         """Poll a store until it is no longer ``in_progress``."""
-        polling_interval_ms = poll_interval_ms or _DEFAULT_POLL_INTERVAL_MS
-        polling_timeout_ms = poll_timeout_ms or None
+        polling_interval_ms = poll_interval_ms if is_given(poll_interval_ms) else _DEFAULT_POLL_INTERVAL_MS
+        polling_timeout_ms = poll_timeout_ms if is_given(poll_timeout_ms) else None
         return await polling.poll_async(
             fn=functools.partial(self.retrieve, store_identifier, **kwargs),
             condition=_is_settled,
             interval_seconds=polling_interval_ms / 1000,
-            timeout_seconds=polling_timeout_ms / 1000 if polling_timeout_ms else None,
+            timeout_seconds=polling_timeout_ms / 1000 if polling_timeout_ms is not None else None,
         )
 
     async def copy_and_poll(
