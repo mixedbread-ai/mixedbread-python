@@ -18,13 +18,5 @@ class StoreConfigParam(TypedDict, total=False):
     contextualization: Contextualization
     """Include additional context when embedding chunks."""
 
-    save_content: bool
-    """Whether to save original content in the store.
-
-    When False, only vectors are indexed without the original content (index-only
-    mode). This is useful for data privacy. Note: Reranking is not supported when
-    content is not saved.
-    """
-
     lsf: Optional[Dict[str, object]]
     """Learned-scoring-function settings a store opts into; an empty object enables it."""

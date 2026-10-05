@@ -17,13 +17,5 @@ class StoreConfig(BaseModel):
     contextualization: Optional[Contextualization] = None
     """Include additional context when embedding chunks."""
 
-    save_content: Optional[bool] = None
-    """Whether to save original content in the store.
-
-    When False, only vectors are indexed without the original content (index-only
-    mode). This is useful for data privacy. Note: Reranking is not supported when
-    content is not saved.
-    """
-
     lsf: Optional[Dict[str, object]] = None
     """Learned-scoring-function settings a store opts into; an empty object enables it."""

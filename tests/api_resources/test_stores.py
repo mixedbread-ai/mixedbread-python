@@ -46,7 +46,6 @@ class TestStores:
             tags=["production", "docs"],
             config={
                 "contextualization": True,
-                "save_content": True,
                 "lsf": {"foo": "bar"},
             },
             file_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
@@ -773,7 +772,6 @@ class TestAsyncStores:
             tags=["production", "docs"],
             config={
                 "contextualization": True,
-                "save_content": True,
                 "lsf": {"foo": "bar"},
             },
             file_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
