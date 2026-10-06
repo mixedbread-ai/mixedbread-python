@@ -63,6 +63,12 @@ class ScoredTextInputChunk(BaseModel):
     metadata: Optional[object] = None
     """file metadata"""
 
+    file_url: Optional[str] = None
+    """
+    Presigned URL to download the file this chunk belongs to; null when there is no
+    stored file
+    """
+
     type: Optional[Literal["text"]] = None
     """Input type identifier"""
 

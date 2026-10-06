@@ -64,6 +64,12 @@ class ScoredAudioURLInputChunk(BaseModel):
     metadata: Optional[object] = None
     """file metadata"""
 
+    file_url: Optional[str] = None
+    """
+    Presigned URL to download the file this chunk belongs to; null when there is no
+    stored file
+    """
+
     type: Optional[Literal["audio_url"]] = None
     """Input type identifier"""
 
