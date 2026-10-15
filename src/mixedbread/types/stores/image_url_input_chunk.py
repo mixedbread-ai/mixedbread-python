@@ -11,6 +11,7 @@ from ..pdf_chunk_generated_metadata import PdfChunkGeneratedMetadata
 from ..code_chunk_generated_metadata import CodeChunkGeneratedMetadata
 from ..text_chunk_generated_metadata import TextChunkGeneratedMetadata
 from ..audio_chunk_generated_metadata import AudioChunkGeneratedMetadata
+from ..email_chunk_generated_metadata import EmailChunkGeneratedMetadata
 from ..image_chunk_generated_metadata import ImageChunkGeneratedMetadata
 from ..video_chunk_generated_metadata import VideoChunkGeneratedMetadata
 from ..markdown_chunk_generated_metadata import MarkdownChunkGeneratedMetadata
@@ -21,6 +22,7 @@ GeneratedMetadata: TypeAlias = Annotated[
     Union[
         MarkdownChunkGeneratedMetadata,
         TextChunkGeneratedMetadata,
+        EmailChunkGeneratedMetadata,
         CsvChunkGeneratedMetadata,
         PdfChunkGeneratedMetadata,
         CodeChunkGeneratedMetadata,

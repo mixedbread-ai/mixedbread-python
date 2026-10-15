@@ -36,6 +36,7 @@ from mixedbread.types import (
     CodeChunkGeneratedMetadata,
     ContextualizationConfig,
     CsvChunkGeneratedMetadata,
+    EmailChunkGeneratedMetadata,
     ExpiresAfter,
     FileCounts,
     ImageChunkGeneratedMetadata,
