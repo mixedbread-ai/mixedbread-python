@@ -1,13 +1,19 @@
 # File generated from our OpenAPI spec by sdkgen. See CONTRIBUTING.md for details.
 
-from typing import TYPE_CHECKING, Dict, Optional
+from typing import TYPE_CHECKING, Dict, List, Optional
 from typing_extensions import Literal
 
 from pydantic import Field as FieldInfo
 
 from .._models import BaseModel
 
-__all__ = ["VideoChunkGeneratedMetadata"]
+__all__ = ["VideoChunkGeneratedMetadata", "SpeakerTurn"]
+
+
+class SpeakerTurn(BaseModel):
+    speaker: Optional[str] = None
+
+    text: str
 
 
 class VideoChunkGeneratedMetadata(BaseModel):
@@ -30,6 +36,12 @@ class VideoChunkGeneratedMetadata(BaseModel):
     has_audio_stream: Optional[bool] = None
 
     bpm: Optional[int] = None
+
+    speakers: Optional[List[str]] = None
+
+    speaker_count: Optional[int] = None
+
+    speaker_turns: Optional[List[SpeakerTurn]] = None
 
     file_extension: Optional[str] = None
 
