@@ -15,6 +15,10 @@ class SpeakerTurn(BaseModel):
 
     text: str
 
+    start_time_seconds: Optional[float] = None
+
+    end_time_seconds: Optional[float] = None
+
 
 class VideoChunkGeneratedMetadata(BaseModel):
     type: Optional[Literal["video"]] = None

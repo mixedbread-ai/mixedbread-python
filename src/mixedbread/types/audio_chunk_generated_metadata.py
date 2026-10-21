@@ -15,6 +15,10 @@ class SpeakerTurn(BaseModel):
 
     text: str
 
+    start_time_seconds: Optional[float] = None
+
+    end_time_seconds: Optional[float] = None
+
 
 class AudioChunkGeneratedMetadata(BaseModel):
     type: Optional[Literal["audio"]] = None
