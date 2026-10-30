@@ -35,6 +35,7 @@ from .client_embed_params import ClientEmbedParams as ClientEmbedParams
 from .expires_after_param import ExpiresAfterParam as ExpiresAfterParam
 from .rerank_config_param import RerankConfigParam as RerankConfigParam
 from .store_create_params import StoreCreateParams as StoreCreateParams
+from .store_decide_params import StoreDecideParams as StoreDecideParams
 from .store_grep_response import StoreGrepResponse as StoreGrepResponse
 from .store_search_params import StoreSearchParams as StoreSearchParams
 from .store_update_params import StoreUpdateParams as StoreUpdateParams
@@ -42,6 +43,7 @@ from .client_rerank_params import ClientRerankParams as ClientRerankParams
 from .file_delete_response import FileDeleteResponse as FileDeleteResponse
 from .api_key_create_params import APIKeyCreateParams as APIKeyCreateParams
 from .pagination_with_total import PaginationWithTotal as PaginationWithTotal
+from .store_decide_response import StoreDecideResponse as StoreDecideResponse
 from .store_delete_response import StoreDeleteResponse as StoreDeleteResponse
 from .store_search_response import StoreSearchResponse as StoreSearchResponse
 from .api_key_delete_response import APIKeyDeleteResponse as APIKeyDeleteResponse

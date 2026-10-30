@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import List, Union, Iterable, Optional
+from typing import Dict, List, Union, Iterable, Optional
 from typing_extensions import Literal
 
 import httpx
@@ -20,6 +20,7 @@ from ...types import (
     store_grep_params,
     store_list_params,
     store_create_params,
+    store_decide_params,
     store_search_params,
     store_update_params,
     store_list_chunks_params,
@@ -43,6 +44,7 @@ from ..._base_client import AsyncPaginator, make_request_options
 from ...types.store_config_param import StoreConfigParam
 from ...types.expires_after_param import ExpiresAfterParam
 from ...types.store_grep_response import StoreGrepResponse
+from ...types.store_decide_response import StoreDecideResponse
 from ...types.store_delete_response import StoreDeleteResponse
 from ...types.store_search_response import StoreSearchResponse
 from ...types.store_list_chunks_response import StoreListChunksResponse
@@ -443,6 +445,72 @@ class StoresResourceBase(SyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=Store,
+        )
+
+    def decide(
+        self,
+        *,
+        store_identifiers: SequenceNotStr[str],
+        top_k: int | Omit = omit,
+        filters: Optional[store_decide_params.Filters] | Omit = omit,
+        file_ids: Union[Iterable[object], SequenceNotStr[str], None] | Omit = omit,
+        search_options: StoreChunkSearchOptionsParam | Omit = omit,
+        state: Union[str, Dict[str, object], SequenceNotStr[str], None] | Omit = omit,
+        questions: Dict[str, store_decide_params.QuestionsValue],
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> StoreDecideResponse:
+        """
+        Answer typed questions about a state, grounded in the stores' contents.
+
+        Args:
+          store_identifiers: IDs or names of stores
+
+          top_k: Number of chunks retrieved for each question
+
+          filters: Optional filter conditions
+
+          file_ids: Optional list of file IDs to filter chunks by (inclusion filter)
+
+          search_options: Options for each question's search; rerank defaults to true and agentic is not
+              supported. Probabilities are comparable only between calls that use the same
+              options
+
+          state: Optional context shared by all questions, such as the subject they are about; it
+              also steers the search
+
+          questions: The questions, keyed by name
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._post(
+            "/v1/stores/decide",
+            body=maybe_transform(
+                {
+                    "store_identifiers": store_identifiers,
+                    "top_k": top_k,
+                    "filters": filters,
+                    "file_ids": file_ids,
+                    "search_options": search_options,
+                    "state": state,
+                    "questions": questions,
+                },
+                store_decide_params.StoreDecideParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=StoreDecideResponse,
         )
 
     def grep(
@@ -1268,6 +1336,72 @@ class AsyncStoresResourceBase(AsyncAPIResource):
             cast_to=Store,
         )
 
+    async def decide(
+        self,
+        *,
+        store_identifiers: SequenceNotStr[str],
+        top_k: int | Omit = omit,
+        filters: Optional[store_decide_params.Filters] | Omit = omit,
+        file_ids: Union[Iterable[object], SequenceNotStr[str], None] | Omit = omit,
+        search_options: StoreChunkSearchOptionsParam | Omit = omit,
+        state: Union[str, Dict[str, object], SequenceNotStr[str], None] | Omit = omit,
+        questions: Dict[str, store_decide_params.QuestionsValue],
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> StoreDecideResponse:
+        """
+        Answer typed questions about a state, grounded in the stores' contents.
+
+        Args:
+          store_identifiers: IDs or names of stores
+
+          top_k: Number of chunks retrieved for each question
+
+          filters: Optional filter conditions
+
+          file_ids: Optional list of file IDs to filter chunks by (inclusion filter)
+
+          search_options: Options for each question's search; rerank defaults to true and agentic is not
+              supported. Probabilities are comparable only between calls that use the same
+              options
+
+          state: Optional context shared by all questions, such as the subject they are about; it
+              also steers the search
+
+          questions: The questions, keyed by name
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._post(
+            "/v1/stores/decide",
+            body=await async_maybe_transform(
+                {
+                    "store_identifiers": store_identifiers,
+                    "top_k": top_k,
+                    "filters": filters,
+                    "file_ids": file_ids,
+                    "search_options": search_options,
+                    "state": state,
+                    "questions": questions,
+                },
+                store_decide_params.StoreDecideParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=StoreDecideResponse,
+        )
+
     async def grep(
         self,
         *,
@@ -1729,6 +1863,9 @@ class StoresResourceWithRawResponse:
         self.copy = to_raw_response_wrapper(
             stores.copy,
         )
+        self.decide = to_raw_response_wrapper(
+            stores.decide,
+        )
         self.grep = to_raw_response_wrapper(
             stores.grep,
         )
@@ -1771,6 +1908,9 @@ class AsyncStoresResourceWithRawResponse:
         )
         self.copy = async_to_raw_response_wrapper(
             stores.copy,
+        )
+        self.decide = async_to_raw_response_wrapper(
+            stores.decide,
         )
         self.grep = async_to_raw_response_wrapper(
             stores.grep,
@@ -1815,6 +1955,9 @@ class StoresResourceWithStreamingResponse:
         self.copy = to_streamed_response_wrapper(
             stores.copy,
         )
+        self.decide = to_streamed_response_wrapper(
+            stores.decide,
+        )
         self.grep = to_streamed_response_wrapper(
             stores.grep,
         )
@@ -1857,6 +2000,9 @@ class AsyncStoresResourceWithStreamingResponse:
         )
         self.copy = async_to_streamed_response_wrapper(
             stores.copy,
+        )
+        self.decide = async_to_streamed_response_wrapper(
+            stores.decide,
         )
         self.grep = async_to_streamed_response_wrapper(
             stores.grep,

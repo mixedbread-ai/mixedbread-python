@@ -12,6 +12,7 @@ from tests.utils import assert_matches_type
 from mixedbread.types import (
     Store,
     StoreGrepResponse,
+    StoreDecideResponse,
     StoreDeleteResponse,
     StoreSearchResponse,
     StoreListChunksResponse,
@@ -292,6 +293,118 @@ class TestStores:
                 store_identifier="",
                 name="technical-documentation-copy",
             )
+
+    @parametrize
+    def test_method_decide(self, client: Mixedbread) -> None:
+        store = client.stores.decide(
+            store_identifiers=["string"],
+            questions={
+                "foo": {
+                    "type": "noul",
+                    "instructions": "x",
+                },
+            },
+        )
+        assert_matches_type(StoreDecideResponse, store, path=["response"])
+
+    @parametrize
+    def test_method_decide_with_all_params(self, client: Mixedbread) -> None:
+        store = client.stores.decide(
+            store_identifiers=["string"],
+            top_k=1,
+            filters={
+                "all": [
+                    {
+                        "key": "price",
+                        "operator": "gt",
+                        "value": "100",
+                    },
+                    {
+                        "key": "color",
+                        "operator": "eq",
+                        "value": "red",
+                    },
+                ],
+                "any": [
+                    {
+                        "key": "price",
+                        "operator": "gt",
+                        "value": "100",
+                    },
+                    {
+                        "key": "color",
+                        "operator": "eq",
+                        "value": "red",
+                    },
+                ],
+                "none": [
+                    {
+                        "key": "price",
+                        "operator": "gt",
+                        "value": "100",
+                    },
+                    {
+                        "key": "color",
+                        "operator": "eq",
+                        "value": "red",
+                    },
+                ],
+            },
+            file_ids=["123e4567-e89b-12d3-a456-426614174000", "123e4567-e89b-12d3-a456-426614174001"],
+            search_options={
+                "score_threshold": 0,
+                "rewrite_query": True,
+                "rerank": True,
+                "agentic": True,
+                "lsf": True,
+                "return_metadata": True,
+                "apply_search_rules": True,
+            },
+            state={"vendor": "Acme Inc"},
+            questions={
+                "foo": {
+                    "type": "noul",
+                    "instructions": "x",
+                },
+            },
+        )
+        assert_matches_type(StoreDecideResponse, store, path=["response"])
+
+    @parametrize
+    def test_raw_response_decide(self, client: Mixedbread) -> None:
+        response = client.stores.with_raw_response.decide(
+            store_identifiers=["string"],
+            questions={
+                "foo": {
+                    "type": "noul",
+                    "instructions": "x",
+                },
+            },
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        store = response.parse()
+        assert_matches_type(StoreDecideResponse, store, path=["response"])
+
+    @parametrize
+    def test_streaming_response_decide(self, client: Mixedbread) -> None:
+        with client.stores.with_streaming_response.decide(
+            store_identifiers=["string"],
+            questions={
+                "foo": {
+                    "type": "noul",
+                    "instructions": "x",
+                },
+            },
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            store = response.parse()
+            assert_matches_type(StoreDecideResponse, store, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
 
     @parametrize
     def test_method_grep(self, client: Mixedbread) -> None:
@@ -1018,6 +1131,118 @@ class TestAsyncStores:
                 store_identifier="",
                 name="technical-documentation-copy",
             )
+
+    @parametrize
+    async def test_method_decide(self, async_client: AsyncMixedbread) -> None:
+        store = await async_client.stores.decide(
+            store_identifiers=["string"],
+            questions={
+                "foo": {
+                    "type": "noul",
+                    "instructions": "x",
+                },
+            },
+        )
+        assert_matches_type(StoreDecideResponse, store, path=["response"])
+
+    @parametrize
+    async def test_method_decide_with_all_params(self, async_client: AsyncMixedbread) -> None:
+        store = await async_client.stores.decide(
+            store_identifiers=["string"],
+            top_k=1,
+            filters={
+                "all": [
+                    {
+                        "key": "price",
+                        "operator": "gt",
+                        "value": "100",
+                    },
+                    {
+                        "key": "color",
+                        "operator": "eq",
+                        "value": "red",
+                    },
+                ],
+                "any": [
+                    {
+                        "key": "price",
+                        "operator": "gt",
+                        "value": "100",
+                    },
+                    {
+                        "key": "color",
+                        "operator": "eq",
+                        "value": "red",
+                    },
+                ],
+                "none": [
+                    {
+                        "key": "price",
+                        "operator": "gt",
+                        "value": "100",
+                    },
+                    {
+                        "key": "color",
+                        "operator": "eq",
+                        "value": "red",
+                    },
+                ],
+            },
+            file_ids=["123e4567-e89b-12d3-a456-426614174000", "123e4567-e89b-12d3-a456-426614174001"],
+            search_options={
+                "score_threshold": 0,
+                "rewrite_query": True,
+                "rerank": True,
+                "agentic": True,
+                "lsf": True,
+                "return_metadata": True,
+                "apply_search_rules": True,
+            },
+            state={"vendor": "Acme Inc"},
+            questions={
+                "foo": {
+                    "type": "noul",
+                    "instructions": "x",
+                },
+            },
+        )
+        assert_matches_type(StoreDecideResponse, store, path=["response"])
+
+    @parametrize
+    async def test_raw_response_decide(self, async_client: AsyncMixedbread) -> None:
+        response = await async_client.stores.with_raw_response.decide(
+            store_identifiers=["string"],
+            questions={
+                "foo": {
+                    "type": "noul",
+                    "instructions": "x",
+                },
+            },
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        store = await response.parse()
+        assert_matches_type(StoreDecideResponse, store, path=["response"])
+
+    @parametrize
+    async def test_streaming_response_decide(self, async_client: AsyncMixedbread) -> None:
+        async with async_client.stores.with_streaming_response.decide(
+            store_identifiers=["string"],
+            questions={
+                "foo": {
+                    "type": "noul",
+                    "instructions": "x",
+                },
+            },
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            store = await response.parse()
+            assert_matches_type(StoreDecideResponse, store, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
 
     @parametrize
     async def test_method_grep(self, async_client: AsyncMixedbread) -> None:
