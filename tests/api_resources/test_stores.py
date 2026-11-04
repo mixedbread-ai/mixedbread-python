@@ -358,7 +358,6 @@ class TestStores:
                 "agentic": True,
                 "lsf": True,
                 "return_metadata": True,
-                "apply_search_rules": True,
             },
             state={"vendor": "Acme Inc"},
             questions={
@@ -551,7 +550,6 @@ class TestStores:
                 "agentic": True,
                 "lsf": True,
                 "return_metadata": True,
-                "apply_search_rules": True,
             },
         )
         assert_matches_type(StoreListChunksResponse, store, path=["response"])
@@ -639,7 +637,6 @@ class TestStores:
                 "agentic": True,
                 "lsf": True,
                 "return_metadata": True,
-                "apply_search_rules": True,
             },
             facets=["author", "year", "author.name"],
             max_fields=1,
@@ -731,7 +728,6 @@ class TestStores:
                 "agentic": True,
                 "lsf": True,
                 "return_metadata": True,
-                "apply_search_rules": True,
             },
             stream=True,
             instructions="x",
@@ -827,7 +823,6 @@ class TestStores:
                 "agentic": True,
                 "lsf": True,
                 "return_metadata": True,
-                "apply_search_rules": True,
             },
             stream=True,
         )
@@ -1196,7 +1191,6 @@ class TestAsyncStores:
                 "agentic": True,
                 "lsf": True,
                 "return_metadata": True,
-                "apply_search_rules": True,
             },
             state={"vendor": "Acme Inc"},
             questions={
@@ -1389,7 +1383,6 @@ class TestAsyncStores:
                 "agentic": True,
                 "lsf": True,
                 "return_metadata": True,
-                "apply_search_rules": True,
             },
         )
         assert_matches_type(StoreListChunksResponse, store, path=["response"])
@@ -1477,7 +1470,6 @@ class TestAsyncStores:
                 "agentic": True,
                 "lsf": True,
                 "return_metadata": True,
-                "apply_search_rules": True,
             },
             facets=["author", "year", "author.name"],
             max_fields=1,
@@ -1569,7 +1561,6 @@ class TestAsyncStores:
                 "agentic": True,
                 "lsf": True,
                 "return_metadata": True,
-                "apply_search_rules": True,
             },
             stream=True,
             instructions="x",
@@ -1665,7 +1656,6 @@ class TestAsyncStores:
                 "agentic": True,
                 "lsf": True,
                 "return_metadata": True,
-                "apply_search_rules": True,
             },
             stream=True,
         )

@@ -16,6 +16,14 @@ from .stores import (
     StoresResourceWithStreamingResponse,
     AsyncStoresResourceWithStreamingResponse,
 )
+from .file_batches import (
+    FileBatchesResource,
+    AsyncFileBatchesResource,
+    FileBatchesResourceWithRawResponse,
+    AsyncFileBatchesResourceWithRawResponse,
+    FileBatchesResourceWithStreamingResponse,
+    AsyncFileBatchesResourceWithStreamingResponse,
+)
 
 __all__ = [
     "FilesResource",
@@ -24,6 +32,12 @@ __all__ = [
     "AsyncFilesResourceWithRawResponse",
     "FilesResourceWithStreamingResponse",
     "AsyncFilesResourceWithStreamingResponse",
+    "FileBatchesResource",
+    "AsyncFileBatchesResource",
+    "FileBatchesResourceWithRawResponse",
+    "AsyncFileBatchesResourceWithRawResponse",
+    "FileBatchesResourceWithStreamingResponse",
+    "AsyncFileBatchesResourceWithStreamingResponse",
     "StoresResource",
     "AsyncStoresResource",
     "StoresResourceWithRawResponse",

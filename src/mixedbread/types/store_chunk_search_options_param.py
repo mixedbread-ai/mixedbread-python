@@ -47,6 +47,3 @@ class StoreChunkSearchOptionsParam(TypedDict, total=False):
 
     return_metadata: bool
     """Whether to return file metadata"""
-
-    apply_search_rules: bool
-    """Ignored; search rules were removed"""
