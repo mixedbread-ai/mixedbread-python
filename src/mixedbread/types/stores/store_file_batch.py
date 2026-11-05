@@ -25,9 +25,6 @@ class Data(BaseModel):
     file_id: str
     """ID of the file the item named"""
 
-    store_file_id: Optional[str] = None
-    """ID of the created store file"""
-
     status: Optional[StoreFileStatus] = None
     """The lifecycle of a unit of background work.
 
