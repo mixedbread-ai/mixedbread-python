@@ -68,19 +68,18 @@ class _AsyncFileBatches(AsyncFileBatchHelpers):
         return _added(files)
 
 
-def test_upload_adds_per_file_fields_and_uses_multipart_for_large_files() -> None:
+def test_upload_adds_per_file_fields_and_uploads_files_under_100mb_in_one_request() -> None:
     batches = _FileBatches()
 
     files: List[Any] = [
         ("a", b"x"),
-        {"file": ("b", b"x" * 5 * 1024 * 1024), "external_id": "doc-b", "metadata": {"deal": "acme"}},
+        {"file": ("b", b"x" * 6 * 1024 * 1024), "external_id": "doc-b", "metadata": {"deal": "acme"}},
     ]
 
     batches.upload("store", files=files)
 
     modes = {c["file"][0]: c["multipart_upload"] for c in batches.files.calls}
-    assert modes["a"] is False
-    assert isinstance(modes["b"], MultipartUploadOptions)
+    assert modes == {"a": False, "b": False}
     assert batches.batches == [
         [
             {"file_id": "file_a"},

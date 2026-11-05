@@ -31,9 +31,9 @@ else:
     _SyncBase = object
     _AsyncBase = object
 
-# Backfills are mostly documents of a few MB; multipart sends them straight to storage.
-_MULTIPART_THRESHOLD = 5 * 1024 * 1024
 _MAX_FILES = 100
+# Enough in flight that one slow upload does not hold up the batch.
+_MAX_CONCURRENCY = 16
 
 
 def _multipart(
@@ -42,7 +42,7 @@ def _multipart(
     # ``files.create`` treats options as "always multipart", so the size check happens here.
     if isinstance(multipart_upload, bool):
         return multipart_upload
-    options = multipart_upload or MultipartUploadOptions(threshold=_MULTIPART_THRESHOLD)
+    options = multipart_upload or MultipartUploadOptions()
     try:
         return options if get_file_size(file) >= options.threshold else False
     except (TypeError, OSError):
@@ -116,7 +116,7 @@ class FileBatchHelpers(_SyncBase):
         *,
         files: Iterable[Union[FileTypes, FileBatchUploadItem]],
         multipart_upload: bool | MultipartUploadOptions | None = None,
-        max_concurrency: int = 5,
+        max_concurrency: int = _MAX_CONCURRENCY,
         **kwargs: Any,
     ) -> StoreFileBatch:
         """Upload up to 100 files to the ``files`` API and add them to the store in one batch.
@@ -124,7 +124,7 @@ class FileBatchHelpers(_SyncBase):
         Each entry is a file or a ``FileBatchUploadItem`` with its own ``external_id``, ``metadata``
         and ``config``.
         Files are uploaded ``max_concurrency`` at a time and processed asynchronously.
-        ``multipart_upload`` controls the upload: ``None`` uses multipart above 5MB, ``True``/``False``
+        ``multipart_upload`` controls the upload: ``None`` uses multipart above 100MB, ``True``/``False``
         force or disable multipart, ``MultipartUploadOptions`` customises it (its threshold included).
         ``data[i]`` is the outcome of ``files[i]``; a failed upload has an empty ``file_id`` and its error.
         """
@@ -153,7 +153,7 @@ class AsyncFileBatchHelpers(_AsyncBase):
         *,
         files: Iterable[Union[FileTypes, FileBatchUploadItem]],
         multipart_upload: bool | MultipartUploadOptions | None = None,
-        max_concurrency: int = 5,
+        max_concurrency: int = _MAX_CONCURRENCY,
         **kwargs: Any,
     ) -> StoreFileBatch:
         """Upload up to 100 files and add them to the store in one batch (see ``FileBatchHelpers.upload``)."""
