@@ -123,6 +123,7 @@ from mixedbread.types.stores import StoreFileBatch
 Methods:
 
 - <code title="post /v1/stores/{store_identifier}/file_batches">client.stores.file_batches.<a href="./src/mixedbread/resources/stores/file_batches.py">create</a>(store_identifier, \*\*<a href="src/mixedbread/types/stores/file_batch_create_params.py">params</a>) -> <a href="./src/mixedbread/types/stores/store_file_batch.py">StoreFileBatch</a></code>
+- <code>client.stores.file_batches.<a href="./src/mixedbread/lib/file_batches.py">upload</a>(…)</code>
 
 # Parsing
 

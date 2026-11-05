@@ -18,12 +18,13 @@ from ..._response import (
 )
 from ..._base_client import make_request_options
 from ...types.stores import file_batch_create_params
+from ...lib.file_batches import FileBatchHelpers, AsyncFileBatchHelpers
 from ...types.stores.store_file_batch import StoreFileBatch
 
 __all__ = ["FileBatchesResource", "AsyncFileBatchesResource"]
 
 
-class FileBatchesResource(SyncAPIResource):
+class FileBatchesResourceBase(SyncAPIResource):
     @cached_property
     def with_raw_response(self) -> FileBatchesResourceWithRawResponse:
         """
@@ -92,7 +93,7 @@ class FileBatchesResource(SyncAPIResource):
         )
 
 
-class AsyncFileBatchesResource(AsyncAPIResource):
+class AsyncFileBatchesResourceBase(AsyncAPIResource):
     @cached_property
     def with_raw_response(self) -> AsyncFileBatchesResourceWithRawResponse:
         """
@@ -161,8 +162,16 @@ class AsyncFileBatchesResource(AsyncAPIResource):
         )
 
 
+class FileBatchesResource(FileBatchHelpers, FileBatchesResourceBase):
+    pass
+
+
+class AsyncFileBatchesResource(AsyncFileBatchHelpers, AsyncFileBatchesResourceBase):
+    pass
+
+
 class FileBatchesResourceWithRawResponse:
-    def __init__(self, file_batches: FileBatchesResource) -> None:
+    def __init__(self, file_batches: FileBatchesResourceBase) -> None:
         self._file_batches = file_batches
 
         self.create = to_raw_response_wrapper(
@@ -171,7 +180,7 @@ class FileBatchesResourceWithRawResponse:
 
 
 class AsyncFileBatchesResourceWithRawResponse:
-    def __init__(self, file_batches: AsyncFileBatchesResource) -> None:
+    def __init__(self, file_batches: AsyncFileBatchesResourceBase) -> None:
         self._file_batches = file_batches
 
         self.create = async_to_raw_response_wrapper(
@@ -180,7 +189,7 @@ class AsyncFileBatchesResourceWithRawResponse:
 
 
 class FileBatchesResourceWithStreamingResponse:
-    def __init__(self, file_batches: FileBatchesResource) -> None:
+    def __init__(self, file_batches: FileBatchesResourceBase) -> None:
         self._file_batches = file_batches
 
         self.create = to_streamed_response_wrapper(
@@ -189,7 +198,7 @@ class FileBatchesResourceWithStreamingResponse:
 
 
 class AsyncFileBatchesResourceWithStreamingResponse:
-    def __init__(self, file_batches: AsyncFileBatchesResource) -> None:
+    def __init__(self, file_batches: AsyncFileBatchesResourceBase) -> None:
         self._file_batches = file_batches
 
         self.create = async_to_streamed_response_wrapper(
