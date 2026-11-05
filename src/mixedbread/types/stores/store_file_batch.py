@@ -25,6 +25,9 @@ class Data(BaseModel):
     file_id: str
     """ID of the file the item named"""
 
+    external_id: Optional[str] = None
+    """External identifier the item named"""
+
     status: Optional[StoreFileStatus] = None
     """The lifecycle of a unit of background work.
 
