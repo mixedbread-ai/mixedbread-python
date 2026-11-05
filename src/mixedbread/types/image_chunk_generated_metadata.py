@@ -19,6 +19,10 @@ class LayoutElement(BaseModel):
 
     text: Optional[str] = None
 
+    category: Optional[str] = None
+
+    heading_level: Optional[int] = None
+
 
 class Layout(BaseModel):
     """Per-page layout for chunks parsed in high-quality (visual) mode.

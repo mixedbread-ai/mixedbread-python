@@ -1,6 +1,7 @@
 # File generated from our OpenAPI spec by sdkgen. See CONTRIBUTING.md for details.
 
 from typing import List, Optional
+from typing_extensions import Literal
 
 from ..._models import BaseModel
 from .element_type import ElementType
@@ -31,3 +32,29 @@ class ChunkElement(BaseModel):
 
     image: Optional[str] = None
     """The base64-encoded image data for figure elements"""
+
+    category: Optional[
+        Literal[
+            "header",
+            "footer",
+            "title",
+            "section-header",
+            "page-number",
+            "figure",
+            "table",
+            "form",
+            "text",
+            "footnote",
+            "caption",
+            "chart",
+            "formula",
+            "code",
+            "table-of-contents",
+            "bibliography",
+            "signature",
+        ]
+    ] = None
+    """Layout categories of extracted elements, finer than their type."""
+
+    heading_level: Optional[int] = None
+    """Section heading level, 1 = top level; set on section-header elements"""
