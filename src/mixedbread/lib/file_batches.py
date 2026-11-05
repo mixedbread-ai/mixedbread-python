@@ -85,11 +85,15 @@ _UPLOAD_ERRORS = (APIError, httpx.HTTPError)
 
 def _upload_failed(item: FileBatchUploadItem, error: Exception) -> Data:
     body: object = error.body if isinstance(error, APIError) else None
-    code = cast(Dict[str, object], body).get("code") if isinstance(body, dict) else None
+    fields = cast(Dict[str, object], body) if isinstance(body, dict) else {}
+    code, message = fields.get("code"), fields.get("message")
     return Data.construct(
         file_id="",
         external_id=item.get("external_id"),
-        error=DataError.construct(code=code if isinstance(code, str) else "upload_error", message=str(error)),
+        error=DataError.construct(
+            code=code if isinstance(code, str) else "upload_error",
+            message=message if isinstance(message, str) else str(error),
+        ),
     )
 
 

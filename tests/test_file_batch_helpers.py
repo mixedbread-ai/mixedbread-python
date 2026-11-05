@@ -132,7 +132,7 @@ def test_a_failed_upload_is_reported_in_place_and_the_other_files_are_still_adde
     assert (added_a.file_id, added_c.file_id) == ("file_a.txt", "file_c.txt")
     assert (failed.file_id, failed.external_id, failed.status) == ("", "doc-bad", None)
     assert failed.error is not None
-    assert (failed.error.code, failed.error.message) == ("file_invalid_error", _INVALID.message)
+    assert (failed.error.code, failed.error.message) == ("file_invalid_error", "Invalid file")
 
 
 def test_when_every_upload_fails_nothing_is_added() -> None:
