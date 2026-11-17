@@ -43,6 +43,7 @@ from .client_rerank_params import ClientRerankParams as ClientRerankParams
 from .file_delete_response import FileDeleteResponse as FileDeleteResponse
 from .api_key_create_params import APIKeyCreateParams as APIKeyCreateParams
 from .pagination_with_total import PaginationWithTotal as PaginationWithTotal
+from .search_distinct_param import SearchDistinctParam as SearchDistinctParam
 from .store_decide_response import StoreDecideResponse as StoreDecideResponse
 from .store_delete_response import StoreDeleteResponse as StoreDeleteResponse
 from .store_search_response import StoreSearchResponse as StoreSearchResponse

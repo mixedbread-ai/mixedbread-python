@@ -6,6 +6,7 @@ from typing import Union, Optional
 from typing_extensions import TypeAlias, TypedDict
 
 from .rerank_config_param import RerankConfigParam
+from .search_distinct_param import SearchDistinctParam
 from .agentic_search_config_param import AgenticSearchConfigParam
 
 __all__ = ["StoreChunkSearchOptionsParam", "Rerank", "Agentic"]
@@ -47,3 +48,6 @@ class StoreChunkSearchOptionsParam(TypedDict, total=False):
 
     return_metadata: bool
     """Whether to return file metadata"""
+
+    distinct: Optional[SearchDistinctParam]
+    """Keep at most `per_value` results per value of a field."""

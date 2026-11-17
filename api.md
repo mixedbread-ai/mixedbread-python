@@ -49,6 +49,7 @@ from mixedbread.types import (
     ScoredImageURLInputChunk,
     ScoredTextInputChunk,
     ScoredVideoURLInputChunk,
+    SearchDistinct,
     Store,
     StoreChunkSearchOptions,
     StoreConfig,

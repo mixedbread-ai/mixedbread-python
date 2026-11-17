@@ -27,9 +27,6 @@ class StoreSearchParams(TypedDict, total=False):
     store_identifiers: Required[SequenceNotStr[str]]
     """IDs or names of stores"""
 
-    top_k: int
-    """Number of results to return"""
-
     filters: Optional[Filters]
     """Optional filter conditions"""
 
@@ -38,6 +35,14 @@ class StoreSearchParams(TypedDict, total=False):
 
     query: Required[Query]
     """Search query text"""
+
+    top_k: Optional[int]
+    """Maximum number of results to return.
+
+    When omitted or null, agentic search returns all chunks selected by the agent
+    without a final-result cap; non-agentic search returns up to 10. Required when
+    strict_top_k is true.
+    """
 
     search_options: StoreChunkSearchOptionsParam
     """Search configuration options"""

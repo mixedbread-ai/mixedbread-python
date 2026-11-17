@@ -17,14 +17,14 @@ class StoreListChunksParams(TypedDict, total=False):
     store_identifiers: Required[SequenceNotStr[str]]
     """IDs or names of stores"""
 
-    top_k: int
-    """Number of results to return"""
-
     filters: Optional[Filters]
     """Optional filter conditions"""
 
     file_ids: Union[Iterable[object], SequenceNotStr[str], None]
     """Optional list of file IDs to filter chunks by (inclusion filter)"""
+
+    top_k: int
+    """Number of results to return"""
 
     sort_by: Union[str, Iterable[object], None]
     """Optional sort applied to the returned chunks.

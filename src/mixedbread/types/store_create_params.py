@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from typing import Optional
-from typing_extensions import TypedDict
+from typing_extensions import Required, TypedDict
 
 from .._types import SequenceNotStr
 from .store_config_param import StoreConfigParam
@@ -13,7 +13,7 @@ __all__ = ["StoreCreateParams"]
 
 
 class StoreCreateParams(TypedDict, total=False):
-    name: Optional[str]
+    name: Required[str]
     """Name for the new store.
 
     Can only contain lowercase letters, numbers, periods (.), and hyphens (-).

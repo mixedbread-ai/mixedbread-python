@@ -94,7 +94,7 @@ class StoresResourceBase(SyncAPIResource):
     def create(
         self,
         *,
-        name: Optional[str] | Omit = omit,
+        name: str,
         description: Optional[str] | Omit = omit,
         is_public: bool | Omit = omit,
         license: Optional[str] | Omit = omit,
@@ -463,9 +463,9 @@ class StoresResourceBase(SyncAPIResource):
         self,
         *,
         store_identifiers: SequenceNotStr[str],
-        top_k: int | Omit = omit,
         filters: Optional[store_decide_params.Filters] | Omit = omit,
         file_ids: Union[Iterable[object], SequenceNotStr[str], None] | Omit = omit,
+        top_k: int | Omit = omit,
         search_options: StoreChunkSearchOptionsParam | Omit = omit,
         state: Union[str, Dict[str, object], SequenceNotStr[str], None] | Omit = omit,
         questions: Dict[str, store_decide_params.QuestionsValue],
@@ -482,11 +482,11 @@ class StoresResourceBase(SyncAPIResource):
         Args:
           store_identifiers: IDs or names of stores
 
-          top_k: Number of chunks retrieved for each question
-
           filters: Optional filter conditions
 
           file_ids: Optional list of file IDs to filter chunks by (inclusion filter)
+
+          top_k: Number of chunks retrieved for each question
 
           search_options: Options for each question's search; rerank defaults to true and agentic is not
               supported. Probabilities are comparable only between calls that use the same
@@ -510,9 +510,9 @@ class StoresResourceBase(SyncAPIResource):
             body=maybe_transform(
                 {
                     "store_identifiers": store_identifiers,
-                    "top_k": top_k,
                     "filters": filters,
                     "file_ids": file_ids,
+                    "top_k": top_k,
                     "search_options": search_options,
                     "state": state,
                     "questions": questions,
@@ -530,9 +530,9 @@ class StoresResourceBase(SyncAPIResource):
         *,
         x_mxbai_tool_ticket: str | Omit = omit,
         store_identifiers: SequenceNotStr[str],
-        top_k: int | Omit = omit,
         filters: Optional[store_grep_params.Filters] | Omit = omit,
         file_ids: Union[Iterable[object], SequenceNotStr[str], None] | Omit = omit,
+        top_k: int | Omit = omit,
         pattern: str,
         targets: List[Literal["text", "generated"]] | Omit = omit,
         case_sensitive: bool | Omit = omit,
@@ -576,11 +576,11 @@ class StoresResourceBase(SyncAPIResource):
 
           store_identifiers: IDs or names of stores
 
-          top_k: Number of results to return
-
           filters: Optional filter conditions
 
           file_ids: Optional list of file IDs to filter chunks by (inclusion filter)
+
+          top_k: Number of results to return
 
           pattern: Regular expression (RE2 syntax) matched against chunk text
 
@@ -606,9 +606,9 @@ class StoresResourceBase(SyncAPIResource):
             body=maybe_transform(
                 {
                     "store_identifiers": store_identifiers,
-                    "top_k": top_k,
                     "filters": filters,
                     "file_ids": file_ids,
+                    "top_k": top_k,
                     "pattern": pattern,
                     "targets": targets,
                     "case_sensitive": case_sensitive,
@@ -626,9 +626,9 @@ class StoresResourceBase(SyncAPIResource):
         self,
         *,
         store_identifiers: SequenceNotStr[str],
-        top_k: int | Omit = omit,
         filters: Optional[store_list_chunks_params.Filters] | Omit = omit,
         file_ids: Union[Iterable[object], SequenceNotStr[str], None] | Omit = omit,
+        top_k: int | Omit = omit,
         sort_by: Union[str, Iterable[object], None] | Omit = omit,
         search_options: StoreChunkSearchOptionsParam | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -669,11 +669,11 @@ class StoresResourceBase(SyncAPIResource):
         Args:
           store_identifiers: IDs or names of stores
 
-          top_k: Number of results to return
-
           filters: Optional filter conditions
 
           file_ids: Optional list of file IDs to filter chunks by (inclusion filter)
+
+          top_k: Number of results to return
 
           sort_by: Optional sort applied to the returned chunks. Pass a metadata field path or a
               tuple of (field path, ascending). Unprefixed dot paths target file metadata;
@@ -694,9 +694,9 @@ class StoresResourceBase(SyncAPIResource):
             body=maybe_transform(
                 {
                     "store_identifiers": store_identifiers,
-                    "top_k": top_k,
                     "filters": filters,
                     "file_ids": file_ids,
+                    "top_k": top_k,
                     "sort_by": sort_by,
                     "search_options": search_options,
                 },
@@ -712,10 +712,10 @@ class StoresResourceBase(SyncAPIResource):
         self,
         *,
         store_identifiers: SequenceNotStr[str],
-        top_k: int | Omit = omit,
         filters: Optional[store_metadata_facets_params.Filters] | Omit = omit,
         file_ids: Union[Iterable[object], SequenceNotStr[str], None] | Omit = omit,
         query: Optional[str] | Omit = omit,
+        top_k: int | Omit = omit,
         search_options: StoreChunkSearchOptionsParam | Omit = omit,
         facets: Optional[SequenceNotStr[str]] | Omit = omit,
         max_fields: int | Omit = omit,
@@ -734,13 +734,13 @@ class StoresResourceBase(SyncAPIResource):
         Args:
           store_identifiers: IDs or names of stores
 
-          top_k: Number of results to return
-
           filters: Optional filter conditions
 
           file_ids: Optional list of file IDs to filter chunks by (inclusion filter)
 
           query: Search query text
+
+          top_k: Number of results to return
 
           search_options: Search configuration options
 
@@ -765,10 +765,10 @@ class StoresResourceBase(SyncAPIResource):
             body=maybe_transform(
                 {
                     "store_identifiers": store_identifiers,
-                    "top_k": top_k,
                     "filters": filters,
                     "file_ids": file_ids,
                     "query": query,
+                    "top_k": top_k,
                     "search_options": search_options,
                     "facets": facets,
                     "max_fields": max_fields,
@@ -787,10 +787,10 @@ class StoresResourceBase(SyncAPIResource):
         self,
         *,
         store_identifiers: SequenceNotStr[str],
-        top_k: int | Omit = omit,
         filters: Optional[store_question_answering_params.Filters] | Omit = omit,
         file_ids: Union[Iterable[object], SequenceNotStr[str], None] | Omit = omit,
         query: str | Omit = omit,
+        top_k: Optional[int] | Omit = omit,
         search_options: StoreChunkSearchOptionsParam | Omit = omit,
         stream: bool | Omit = omit,
         instructions: Optional[str] | Omit = omit,
@@ -808,14 +808,16 @@ class StoresResourceBase(SyncAPIResource):
         Args:
           store_identifiers: IDs or names of stores
 
-          top_k: Number of results to return
-
           filters: Optional filter conditions
 
           file_ids: Optional list of file IDs to filter chunks by (inclusion filter)
 
           query: Question to answer. If not provided, the question will be extracted from the
               passed messages.
+
+          top_k: Maximum number of results to return. When omitted or null, agentic search
+              returns all chunks selected by the agent without a final-result cap; non-agentic
+              search returns up to 10. Required when strict_top_k is true.
 
           search_options: Search configuration options
 
@@ -841,10 +843,10 @@ class StoresResourceBase(SyncAPIResource):
             body=maybe_transform(
                 {
                     "store_identifiers": store_identifiers,
-                    "top_k": top_k,
                     "filters": filters,
                     "file_ids": file_ids,
                     "query": query,
+                    "top_k": top_k,
                     "search_options": search_options,
                     "stream": stream,
                     "instructions": instructions,
@@ -863,10 +865,10 @@ class StoresResourceBase(SyncAPIResource):
         *,
         x_mxbai_tool_ticket: str | Omit = omit,
         store_identifiers: SequenceNotStr[str],
-        top_k: int | Omit = omit,
         filters: Optional[store_search_params.Filters] | Omit = omit,
         file_ids: Union[Iterable[object], SequenceNotStr[str], None] | Omit = omit,
         query: store_search_params.Query,
+        top_k: Optional[int] | Omit = omit,
         search_options: StoreChunkSearchOptionsParam | Omit = omit,
         stream: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -911,13 +913,15 @@ class StoresResourceBase(SyncAPIResource):
 
           store_identifiers: IDs or names of stores
 
-          top_k: Number of results to return
-
           filters: Optional filter conditions
 
           file_ids: Optional list of file IDs to filter chunks by (inclusion filter)
 
           query: Search query text
+
+          top_k: Maximum number of results to return. When omitted or null, agentic search
+              returns all chunks selected by the agent without a final-result cap; non-agentic
+              search returns up to 10. Required when strict_top_k is true.
 
           search_options: Search configuration options
 
@@ -940,10 +944,10 @@ class StoresResourceBase(SyncAPIResource):
             body=maybe_transform(
                 {
                     "store_identifiers": store_identifiers,
-                    "top_k": top_k,
                     "filters": filters,
                     "file_ids": file_ids,
                     "query": query,
+                    "top_k": top_k,
                     "search_options": search_options,
                     "stream": stream,
                 },
@@ -987,7 +991,7 @@ class AsyncStoresResourceBase(AsyncAPIResource):
     async def create(
         self,
         *,
-        name: Optional[str] | Omit = omit,
+        name: str,
         description: Optional[str] | Omit = omit,
         is_public: bool | Omit = omit,
         license: Optional[str] | Omit = omit,
@@ -1356,9 +1360,9 @@ class AsyncStoresResourceBase(AsyncAPIResource):
         self,
         *,
         store_identifiers: SequenceNotStr[str],
-        top_k: int | Omit = omit,
         filters: Optional[store_decide_params.Filters] | Omit = omit,
         file_ids: Union[Iterable[object], SequenceNotStr[str], None] | Omit = omit,
+        top_k: int | Omit = omit,
         search_options: StoreChunkSearchOptionsParam | Omit = omit,
         state: Union[str, Dict[str, object], SequenceNotStr[str], None] | Omit = omit,
         questions: Dict[str, store_decide_params.QuestionsValue],
@@ -1375,11 +1379,11 @@ class AsyncStoresResourceBase(AsyncAPIResource):
         Args:
           store_identifiers: IDs or names of stores
 
-          top_k: Number of chunks retrieved for each question
-
           filters: Optional filter conditions
 
           file_ids: Optional list of file IDs to filter chunks by (inclusion filter)
+
+          top_k: Number of chunks retrieved for each question
 
           search_options: Options for each question's search; rerank defaults to true and agentic is not
               supported. Probabilities are comparable only between calls that use the same
@@ -1403,9 +1407,9 @@ class AsyncStoresResourceBase(AsyncAPIResource):
             body=await async_maybe_transform(
                 {
                     "store_identifiers": store_identifiers,
-                    "top_k": top_k,
                     "filters": filters,
                     "file_ids": file_ids,
+                    "top_k": top_k,
                     "search_options": search_options,
                     "state": state,
                     "questions": questions,
@@ -1423,9 +1427,9 @@ class AsyncStoresResourceBase(AsyncAPIResource):
         *,
         x_mxbai_tool_ticket: str | Omit = omit,
         store_identifiers: SequenceNotStr[str],
-        top_k: int | Omit = omit,
         filters: Optional[store_grep_params.Filters] | Omit = omit,
         file_ids: Union[Iterable[object], SequenceNotStr[str], None] | Omit = omit,
+        top_k: int | Omit = omit,
         pattern: str,
         targets: List[Literal["text", "generated"]] | Omit = omit,
         case_sensitive: bool | Omit = omit,
@@ -1469,11 +1473,11 @@ class AsyncStoresResourceBase(AsyncAPIResource):
 
           store_identifiers: IDs or names of stores
 
-          top_k: Number of results to return
-
           filters: Optional filter conditions
 
           file_ids: Optional list of file IDs to filter chunks by (inclusion filter)
+
+          top_k: Number of results to return
 
           pattern: Regular expression (RE2 syntax) matched against chunk text
 
@@ -1499,9 +1503,9 @@ class AsyncStoresResourceBase(AsyncAPIResource):
             body=await async_maybe_transform(
                 {
                     "store_identifiers": store_identifiers,
-                    "top_k": top_k,
                     "filters": filters,
                     "file_ids": file_ids,
+                    "top_k": top_k,
                     "pattern": pattern,
                     "targets": targets,
                     "case_sensitive": case_sensitive,
@@ -1519,9 +1523,9 @@ class AsyncStoresResourceBase(AsyncAPIResource):
         self,
         *,
         store_identifiers: SequenceNotStr[str],
-        top_k: int | Omit = omit,
         filters: Optional[store_list_chunks_params.Filters] | Omit = omit,
         file_ids: Union[Iterable[object], SequenceNotStr[str], None] | Omit = omit,
+        top_k: int | Omit = omit,
         sort_by: Union[str, Iterable[object], None] | Omit = omit,
         search_options: StoreChunkSearchOptionsParam | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -1562,11 +1566,11 @@ class AsyncStoresResourceBase(AsyncAPIResource):
         Args:
           store_identifiers: IDs or names of stores
 
-          top_k: Number of results to return
-
           filters: Optional filter conditions
 
           file_ids: Optional list of file IDs to filter chunks by (inclusion filter)
+
+          top_k: Number of results to return
 
           sort_by: Optional sort applied to the returned chunks. Pass a metadata field path or a
               tuple of (field path, ascending). Unprefixed dot paths target file metadata;
@@ -1587,9 +1591,9 @@ class AsyncStoresResourceBase(AsyncAPIResource):
             body=await async_maybe_transform(
                 {
                     "store_identifiers": store_identifiers,
-                    "top_k": top_k,
                     "filters": filters,
                     "file_ids": file_ids,
+                    "top_k": top_k,
                     "sort_by": sort_by,
                     "search_options": search_options,
                 },
@@ -1605,10 +1609,10 @@ class AsyncStoresResourceBase(AsyncAPIResource):
         self,
         *,
         store_identifiers: SequenceNotStr[str],
-        top_k: int | Omit = omit,
         filters: Optional[store_metadata_facets_params.Filters] | Omit = omit,
         file_ids: Union[Iterable[object], SequenceNotStr[str], None] | Omit = omit,
         query: Optional[str] | Omit = omit,
+        top_k: int | Omit = omit,
         search_options: StoreChunkSearchOptionsParam | Omit = omit,
         facets: Optional[SequenceNotStr[str]] | Omit = omit,
         max_fields: int | Omit = omit,
@@ -1627,13 +1631,13 @@ class AsyncStoresResourceBase(AsyncAPIResource):
         Args:
           store_identifiers: IDs or names of stores
 
-          top_k: Number of results to return
-
           filters: Optional filter conditions
 
           file_ids: Optional list of file IDs to filter chunks by (inclusion filter)
 
           query: Search query text
+
+          top_k: Number of results to return
 
           search_options: Search configuration options
 
@@ -1658,10 +1662,10 @@ class AsyncStoresResourceBase(AsyncAPIResource):
             body=await async_maybe_transform(
                 {
                     "store_identifiers": store_identifiers,
-                    "top_k": top_k,
                     "filters": filters,
                     "file_ids": file_ids,
                     "query": query,
+                    "top_k": top_k,
                     "search_options": search_options,
                     "facets": facets,
                     "max_fields": max_fields,
@@ -1680,10 +1684,10 @@ class AsyncStoresResourceBase(AsyncAPIResource):
         self,
         *,
         store_identifiers: SequenceNotStr[str],
-        top_k: int | Omit = omit,
         filters: Optional[store_question_answering_params.Filters] | Omit = omit,
         file_ids: Union[Iterable[object], SequenceNotStr[str], None] | Omit = omit,
         query: str | Omit = omit,
+        top_k: Optional[int] | Omit = omit,
         search_options: StoreChunkSearchOptionsParam | Omit = omit,
         stream: bool | Omit = omit,
         instructions: Optional[str] | Omit = omit,
@@ -1701,14 +1705,16 @@ class AsyncStoresResourceBase(AsyncAPIResource):
         Args:
           store_identifiers: IDs or names of stores
 
-          top_k: Number of results to return
-
           filters: Optional filter conditions
 
           file_ids: Optional list of file IDs to filter chunks by (inclusion filter)
 
           query: Question to answer. If not provided, the question will be extracted from the
               passed messages.
+
+          top_k: Maximum number of results to return. When omitted or null, agentic search
+              returns all chunks selected by the agent without a final-result cap; non-agentic
+              search returns up to 10. Required when strict_top_k is true.
 
           search_options: Search configuration options
 
@@ -1734,10 +1740,10 @@ class AsyncStoresResourceBase(AsyncAPIResource):
             body=await async_maybe_transform(
                 {
                     "store_identifiers": store_identifiers,
-                    "top_k": top_k,
                     "filters": filters,
                     "file_ids": file_ids,
                     "query": query,
+                    "top_k": top_k,
                     "search_options": search_options,
                     "stream": stream,
                     "instructions": instructions,
@@ -1756,10 +1762,10 @@ class AsyncStoresResourceBase(AsyncAPIResource):
         *,
         x_mxbai_tool_ticket: str | Omit = omit,
         store_identifiers: SequenceNotStr[str],
-        top_k: int | Omit = omit,
         filters: Optional[store_search_params.Filters] | Omit = omit,
         file_ids: Union[Iterable[object], SequenceNotStr[str], None] | Omit = omit,
         query: store_search_params.Query,
+        top_k: Optional[int] | Omit = omit,
         search_options: StoreChunkSearchOptionsParam | Omit = omit,
         stream: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -1804,13 +1810,15 @@ class AsyncStoresResourceBase(AsyncAPIResource):
 
           store_identifiers: IDs or names of stores
 
-          top_k: Number of results to return
-
           filters: Optional filter conditions
 
           file_ids: Optional list of file IDs to filter chunks by (inclusion filter)
 
           query: Search query text
+
+          top_k: Maximum number of results to return. When omitted or null, agentic search
+              returns all chunks selected by the agent without a final-result cap; non-agentic
+              search returns up to 10. Required when strict_top_k is true.
 
           search_options: Search configuration options
 
@@ -1833,10 +1841,10 @@ class AsyncStoresResourceBase(AsyncAPIResource):
             body=await async_maybe_transform(
                 {
                     "store_identifiers": store_identifiers,
-                    "top_k": top_k,
                     "filters": filters,
                     "file_ids": file_ids,
                     "query": query,
+                    "top_k": top_k,
                     "search_options": search_options,
                     "stream": stream,
                 },

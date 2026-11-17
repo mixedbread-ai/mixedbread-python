@@ -31,9 +31,6 @@ class StoreQuestionAnsweringParams(TypedDict, total=False):
     store_identifiers: Required[SequenceNotStr[str]]
     """IDs or names of stores"""
 
-    top_k: int
-    """Number of results to return"""
-
     filters: Optional[Filters]
     """Optional filter conditions"""
 
@@ -44,6 +41,14 @@ class StoreQuestionAnsweringParams(TypedDict, total=False):
     """Question to answer.
 
     If not provided, the question will be extracted from the passed messages.
+    """
+
+    top_k: Optional[int]
+    """Maximum number of results to return.
+
+    When omitted or null, agentic search returns all chunks selected by the agent
+    without a final-result cap; non-agentic search returns up to 10. Required when
+    strict_top_k is true.
     """
 
     search_options: StoreChunkSearchOptionsParam

@@ -29,7 +29,9 @@ class TestStores:
 
     @parametrize
     def test_method_create(self, client: Mixedbread) -> None:
-        store = client.stores.create()
+        store = client.stores.create(
+            name="technical-documentation",
+        )
         assert_matches_type(Store, store, path=["response"])
 
     @parametrize
@@ -55,7 +57,9 @@ class TestStores:
 
     @parametrize
     def test_raw_response_create(self, client: Mixedbread) -> None:
-        response = client.stores.with_raw_response.create()
+        response = client.stores.with_raw_response.create(
+            name="technical-documentation",
+        )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -64,7 +68,9 @@ class TestStores:
 
     @parametrize
     def test_streaming_response_create(self, client: Mixedbread) -> None:
-        with client.stores.with_streaming_response.create() as response:
+        with client.stores.with_streaming_response.create(
+            name="technical-documentation",
+        ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
@@ -311,7 +317,6 @@ class TestStores:
     def test_method_decide_with_all_params(self, client: Mixedbread) -> None:
         store = client.stores.decide(
             store_identifiers=["string"],
-            top_k=1,
             filters={
                 "all": [
                     {
@@ -351,6 +356,7 @@ class TestStores:
                 ],
             },
             file_ids=["123e4567-e89b-12d3-a456-426614174000", "123e4567-e89b-12d3-a456-426614174001"],
+            top_k=1,
             search_options={
                 "score_threshold": 0,
                 "rewrite_query": True,
@@ -358,6 +364,10 @@ class TestStores:
                 "agentic": True,
                 "lsf": True,
                 "return_metadata": True,
+                "distinct": {
+                    "field": "file_id",
+                    "per_value": 1,
+                },
             },
             state={"vendor": "Acme Inc"},
             questions={
@@ -418,7 +428,6 @@ class TestStores:
         store = client.stores.grep(
             x_mxbai_tool_ticket="X-Mxbai-Tool-Ticket",
             store_identifiers=["string"],
-            top_k=1,
             filters={
                 "all": [
                     {
@@ -458,6 +467,7 @@ class TestStores:
                 ],
             },
             file_ids=["123e4567-e89b-12d3-a456-426614174000", "123e4567-e89b-12d3-a456-426614174001"],
+            top_k=1,
             pattern="ERR-\\d{4}",
             targets=["text"],
             case_sensitive=True,
@@ -502,7 +512,6 @@ class TestStores:
     def test_method_list_chunks_with_all_params(self, client: Mixedbread) -> None:
         store = client.stores.list_chunks(
             store_identifiers=["string"],
-            top_k=1,
             filters={
                 "all": [
                     {
@@ -542,6 +551,7 @@ class TestStores:
                 ],
             },
             file_ids=["123e4567-e89b-12d3-a456-426614174000", "123e4567-e89b-12d3-a456-426614174001"],
+            top_k=1,
             sort_by="price",
             search_options={
                 "score_threshold": 0,
@@ -550,6 +560,10 @@ class TestStores:
                 "agentic": True,
                 "lsf": True,
                 "return_metadata": True,
+                "distinct": {
+                    "field": "file_id",
+                    "per_value": 1,
+                },
             },
         )
         assert_matches_type(StoreListChunksResponse, store, path=["response"])
@@ -589,7 +603,6 @@ class TestStores:
     def test_method_metadata_facets_with_all_params(self, client: Mixedbread) -> None:
         store = client.stores.metadata_facets(
             store_identifiers=["string"],
-            top_k=1,
             filters={
                 "all": [
                     {
@@ -630,6 +643,7 @@ class TestStores:
             },
             file_ids=["123e4567-e89b-12d3-a456-426614174000", "123e4567-e89b-12d3-a456-426614174001"],
             query="how to configure SSL",
+            top_k=1,
             search_options={
                 "score_threshold": 0,
                 "rewrite_query": True,
@@ -637,6 +651,10 @@ class TestStores:
                 "agentic": True,
                 "lsf": True,
                 "return_metadata": True,
+                "distinct": {
+                    "field": "file_id",
+                    "per_value": 1,
+                },
             },
             facets=["author", "year", "author.name"],
             max_fields=1,
@@ -680,7 +698,6 @@ class TestStores:
     def test_method_question_answering_with_all_params(self, client: Mixedbread) -> None:
         store = client.stores.question_answering(
             store_identifiers=["string"],
-            top_k=1,
             filters={
                 "all": [
                     {
@@ -721,6 +738,7 @@ class TestStores:
             },
             file_ids=["123e4567-e89b-12d3-a456-426614174000", "123e4567-e89b-12d3-a456-426614174001"],
             query="x",
+            top_k=1,
             search_options={
                 "score_threshold": 0,
                 "rewrite_query": True,
@@ -728,6 +746,10 @@ class TestStores:
                 "agentic": True,
                 "lsf": True,
                 "return_metadata": True,
+                "distinct": {
+                    "field": "file_id",
+                    "per_value": 1,
+                },
             },
             stream=True,
             instructions="x",
@@ -775,7 +797,6 @@ class TestStores:
         store = client.stores.search(
             x_mxbai_tool_ticket="X-Mxbai-Tool-Ticket",
             store_identifiers=["string"],
-            top_k=1,
             filters={
                 "all": [
                     {
@@ -816,6 +837,7 @@ class TestStores:
             },
             file_ids=["123e4567-e89b-12d3-a456-426614174000", "123e4567-e89b-12d3-a456-426614174001"],
             query="how to configure SSL",
+            top_k=1,
             search_options={
                 "score_threshold": 0,
                 "rewrite_query": True,
@@ -823,6 +845,10 @@ class TestStores:
                 "agentic": True,
                 "lsf": True,
                 "return_metadata": True,
+                "distinct": {
+                    "field": "file_id",
+                    "per_value": 1,
+                },
             },
             stream=True,
         )
@@ -862,7 +888,9 @@ class TestAsyncStores:
 
     @parametrize
     async def test_method_create(self, async_client: AsyncMixedbread) -> None:
-        store = await async_client.stores.create()
+        store = await async_client.stores.create(
+            name="technical-documentation",
+        )
         assert_matches_type(Store, store, path=["response"])
 
     @parametrize
@@ -888,7 +916,9 @@ class TestAsyncStores:
 
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncMixedbread) -> None:
-        response = await async_client.stores.with_raw_response.create()
+        response = await async_client.stores.with_raw_response.create(
+            name="technical-documentation",
+        )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -897,7 +927,9 @@ class TestAsyncStores:
 
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncMixedbread) -> None:
-        async with async_client.stores.with_streaming_response.create() as response:
+        async with async_client.stores.with_streaming_response.create(
+            name="technical-documentation",
+        ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
@@ -1144,7 +1176,6 @@ class TestAsyncStores:
     async def test_method_decide_with_all_params(self, async_client: AsyncMixedbread) -> None:
         store = await async_client.stores.decide(
             store_identifiers=["string"],
-            top_k=1,
             filters={
                 "all": [
                     {
@@ -1184,6 +1215,7 @@ class TestAsyncStores:
                 ],
             },
             file_ids=["123e4567-e89b-12d3-a456-426614174000", "123e4567-e89b-12d3-a456-426614174001"],
+            top_k=1,
             search_options={
                 "score_threshold": 0,
                 "rewrite_query": True,
@@ -1191,6 +1223,10 @@ class TestAsyncStores:
                 "agentic": True,
                 "lsf": True,
                 "return_metadata": True,
+                "distinct": {
+                    "field": "file_id",
+                    "per_value": 1,
+                },
             },
             state={"vendor": "Acme Inc"},
             questions={
@@ -1251,7 +1287,6 @@ class TestAsyncStores:
         store = await async_client.stores.grep(
             x_mxbai_tool_ticket="X-Mxbai-Tool-Ticket",
             store_identifiers=["string"],
-            top_k=1,
             filters={
                 "all": [
                     {
@@ -1291,6 +1326,7 @@ class TestAsyncStores:
                 ],
             },
             file_ids=["123e4567-e89b-12d3-a456-426614174000", "123e4567-e89b-12d3-a456-426614174001"],
+            top_k=1,
             pattern="ERR-\\d{4}",
             targets=["text"],
             case_sensitive=True,
@@ -1335,7 +1371,6 @@ class TestAsyncStores:
     async def test_method_list_chunks_with_all_params(self, async_client: AsyncMixedbread) -> None:
         store = await async_client.stores.list_chunks(
             store_identifiers=["string"],
-            top_k=1,
             filters={
                 "all": [
                     {
@@ -1375,6 +1410,7 @@ class TestAsyncStores:
                 ],
             },
             file_ids=["123e4567-e89b-12d3-a456-426614174000", "123e4567-e89b-12d3-a456-426614174001"],
+            top_k=1,
             sort_by="price",
             search_options={
                 "score_threshold": 0,
@@ -1383,6 +1419,10 @@ class TestAsyncStores:
                 "agentic": True,
                 "lsf": True,
                 "return_metadata": True,
+                "distinct": {
+                    "field": "file_id",
+                    "per_value": 1,
+                },
             },
         )
         assert_matches_type(StoreListChunksResponse, store, path=["response"])
@@ -1422,7 +1462,6 @@ class TestAsyncStores:
     async def test_method_metadata_facets_with_all_params(self, async_client: AsyncMixedbread) -> None:
         store = await async_client.stores.metadata_facets(
             store_identifiers=["string"],
-            top_k=1,
             filters={
                 "all": [
                     {
@@ -1463,6 +1502,7 @@ class TestAsyncStores:
             },
             file_ids=["123e4567-e89b-12d3-a456-426614174000", "123e4567-e89b-12d3-a456-426614174001"],
             query="how to configure SSL",
+            top_k=1,
             search_options={
                 "score_threshold": 0,
                 "rewrite_query": True,
@@ -1470,6 +1510,10 @@ class TestAsyncStores:
                 "agentic": True,
                 "lsf": True,
                 "return_metadata": True,
+                "distinct": {
+                    "field": "file_id",
+                    "per_value": 1,
+                },
             },
             facets=["author", "year", "author.name"],
             max_fields=1,
@@ -1513,7 +1557,6 @@ class TestAsyncStores:
     async def test_method_question_answering_with_all_params(self, async_client: AsyncMixedbread) -> None:
         store = await async_client.stores.question_answering(
             store_identifiers=["string"],
-            top_k=1,
             filters={
                 "all": [
                     {
@@ -1554,6 +1597,7 @@ class TestAsyncStores:
             },
             file_ids=["123e4567-e89b-12d3-a456-426614174000", "123e4567-e89b-12d3-a456-426614174001"],
             query="x",
+            top_k=1,
             search_options={
                 "score_threshold": 0,
                 "rewrite_query": True,
@@ -1561,6 +1605,10 @@ class TestAsyncStores:
                 "agentic": True,
                 "lsf": True,
                 "return_metadata": True,
+                "distinct": {
+                    "field": "file_id",
+                    "per_value": 1,
+                },
             },
             stream=True,
             instructions="x",
@@ -1608,7 +1656,6 @@ class TestAsyncStores:
         store = await async_client.stores.search(
             x_mxbai_tool_ticket="X-Mxbai-Tool-Ticket",
             store_identifiers=["string"],
-            top_k=1,
             filters={
                 "all": [
                     {
@@ -1649,6 +1696,7 @@ class TestAsyncStores:
             },
             file_ids=["123e4567-e89b-12d3-a456-426614174000", "123e4567-e89b-12d3-a456-426614174001"],
             query="how to configure SSL",
+            top_k=1,
             search_options={
                 "score_threshold": 0,
                 "rewrite_query": True,
@@ -1656,6 +1704,10 @@ class TestAsyncStores:
                 "agentic": True,
                 "lsf": True,
                 "return_metadata": True,
+                "distinct": {
+                    "field": "file_id",
+                    "per_value": 1,
+                },
             },
             stream=True,
         )

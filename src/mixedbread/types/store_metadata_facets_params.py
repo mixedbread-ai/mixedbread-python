@@ -17,9 +17,6 @@ class StoreMetadataFacetsParams(TypedDict, total=False):
     store_identifiers: Required[SequenceNotStr[str]]
     """IDs or names of stores"""
 
-    top_k: int
-    """Number of results to return"""
-
     filters: Optional[Filters]
     """Optional filter conditions"""
 
@@ -28,6 +25,9 @@ class StoreMetadataFacetsParams(TypedDict, total=False):
 
     query: Optional[str]
     """Search query text"""
+
+    top_k: int
+    """Number of results to return"""
 
     search_options: StoreChunkSearchOptionsParam
     """Search configuration options"""

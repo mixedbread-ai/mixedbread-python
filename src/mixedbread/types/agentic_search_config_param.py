@@ -21,7 +21,7 @@ class AgenticSearchConfigParam(TypedDict, total=False):
     """
     Whether the agent fills the final ranking to top_k chunks from what it
     retrieved, capped at top_k, instead of returning only the chunks it judged
-    relevant
+    relevant. Requires an explicit top_k.
     """
 
     media_content: Literal["auto", "never", "always"]

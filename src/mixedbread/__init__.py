@@ -3,7 +3,13 @@
 import typing as _t
 
 from . import types
-from .lib import PartUploadEvent as PartUploadEvent, MultipartUploadOptions as MultipartUploadOptions
+from .lib import (
+    MxjsonFile as MxjsonFile,
+    MxjsonFileItem as MxjsonFileItem,
+    PartUploadEvent as PartUploadEvent,
+    MultipartUploadOptions as MultipartUploadOptions,
+    mxjson_file_item as mxjson_file_item,
+)
 from ._types import NOT_GIVEN, Omit, NoneType, NotGiven, Transport, ProxiesTypes, omit, not_given
 from ._utils import file_from_path
 from ._client import (
@@ -85,7 +91,10 @@ __all__ = [
     "DefaultAsyncHttpxClient",
     "DefaultAioHttpClient",
     "MultipartUploadOptions",
+    "MxjsonFile",
+    "MxjsonFileItem",
     "PartUploadEvent",
+    "mxjson_file_item",
 ]
 
 if not _t.TYPE_CHECKING:

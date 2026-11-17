@@ -25,14 +25,14 @@ class StoreDecideParams(TypedDict, total=False):
     store_identifiers: Required[SequenceNotStr[str]]
     """IDs or names of stores"""
 
-    top_k: int
-    """Number of chunks retrieved for each question"""
-
     filters: Optional[Filters]
     """Optional filter conditions"""
 
     file_ids: Union[Iterable[object], SequenceNotStr[str], None]
     """Optional list of file IDs to filter chunks by (inclusion filter)"""
+
+    top_k: int
+    """Number of chunks retrieved for each question"""
 
     search_options: StoreChunkSearchOptionsParam
     """
