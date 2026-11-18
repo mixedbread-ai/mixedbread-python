@@ -17,11 +17,11 @@ class AgenticSearchConfigParam(TypedDict, total=False):
     queries_per_round: int
     """Maximum queries per round"""
 
-    strict_top_k: bool
+    strict_top_k: Optional[bool]
     """
-    Whether the agent fills the final ranking to top_k chunks from what it
-    retrieved, capped at top_k, instead of returning only the chunks it judged
-    relevant. Requires an explicit top_k.
+    Whether the agent returns the top_k most relevant chunks it found instead of
+    only the chunks it judged relevant. When omitted or null, it is true whenever
+    top_k is set. Requires an explicit top_k when true.
     """
 
     media_content: Literal["auto", "never", "always"]
