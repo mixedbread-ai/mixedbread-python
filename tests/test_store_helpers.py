@@ -1,5 +1,5 @@
 from typing import List
-from unittest.mock import Mock, AsyncMock
+from unittest.mock import Mock, AsyncMock, patch
 
 import pytest
 
@@ -46,6 +46,22 @@ def test_poll_returns_a_failed_copy() -> None:
     assert stores.poll("vs_copy", poll_interval_ms=1).status == "failed"
 
 
+def test_poll_honors_zero_interval() -> None:
+    stores = _Stores(["in_progress", "completed"])
+
+    with patch("time.sleep") as sleep_mock:
+        assert stores.poll("vs_copy", poll_interval_ms=0).status == "completed"
+
+    sleep_mock.assert_called_once_with(0.0)
+
+
+def test_poll_honors_zero_timeout() -> None:
+    stores = _Stores(["in_progress", "in_progress", "completed"])
+
+    with pytest.raises(TimeoutError):
+        stores.poll("vs_copy", poll_interval_ms=1, poll_timeout_ms=0)
+
+
 @pytest.mark.asyncio
 async def test_async_copy_and_poll() -> None:
     stores = _AsyncStores(["in_progress", "completed"])
@@ -54,3 +70,21 @@ async def test_async_copy_and_poll() -> None:
 
     assert result.status == "completed"
     assert stores.retrieve_mock.await_count == 2
+
+
+@pytest.mark.asyncio
+async def test_async_poll_honors_zero_interval() -> None:
+    stores = _AsyncStores(["in_progress", "completed"])
+
+    with patch("asyncio.sleep", new=AsyncMock()) as sleep_mock:
+        assert (await stores.poll("vs_copy", poll_interval_ms=0)).status == "completed"
+
+    sleep_mock.assert_called_once_with(0.0)
+
+
+@pytest.mark.asyncio
+async def test_async_poll_honors_zero_timeout() -> None:
+    stores = _AsyncStores(["in_progress", "in_progress", "completed"])
+
+    with pytest.raises(TimeoutError):
+        await stores.poll("vs_copy", poll_interval_ms=1, poll_timeout_ms=0)

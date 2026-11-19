@@ -7,6 +7,7 @@ from typing import TYPE_CHECKING, Any, List, Optional
 
 from . import polling
 from .._types import Omit, NotGiven, FileTypes, omit, not_given
+from .._utils import is_given
 from .multipart_upload import MultipartUploadOptions
 from ..types.parsing.parsing_job import ParsingJob
 from ..types.parsing.element_type import ElementType
@@ -35,13 +36,13 @@ class ParsingJobHelpers(_SyncBase):
         **kwargs: Any,
     ) -> ParsingJob:
         """Poll a job's status until it reaches a terminal state."""
-        polling_interval_ms = poll_interval_ms or 500
-        polling_timeout_ms = poll_timeout_ms or None
+        polling_interval_ms = poll_interval_ms if is_given(poll_interval_ms) else 500
+        polling_timeout_ms = poll_timeout_ms if is_given(poll_timeout_ms) else None
         return polling.poll(
             fn=functools.partial(self.retrieve, job_id, **kwargs),
             condition=lambda res: res.status in _TERMINAL,
             interval_seconds=polling_interval_ms / 1000,
-            timeout_seconds=polling_timeout_ms / 1000 if polling_timeout_ms else None,
+            timeout_seconds=polling_timeout_ms / 1000 if polling_timeout_ms is not None else None,
         )
 
     def create_and_poll(
@@ -123,13 +124,13 @@ class AsyncParsingJobHelpers(_AsyncBase):
         **kwargs: Any,
     ) -> ParsingJob:
         """Poll a job's status until it reaches a terminal state."""
-        polling_interval_ms = poll_interval_ms or 500
-        polling_timeout_ms = poll_timeout_ms or None
+        polling_interval_ms = poll_interval_ms if is_given(poll_interval_ms) else 500
+        polling_timeout_ms = poll_timeout_ms if is_given(poll_timeout_ms) else None
         return await polling.poll_async(
             fn=functools.partial(self.retrieve, job_id, **kwargs),
             condition=lambda res: res.status in _TERMINAL,
             interval_seconds=polling_interval_ms / 1000,
-            timeout_seconds=polling_timeout_ms / 1000 if polling_timeout_ms else None,
+            timeout_seconds=polling_timeout_ms / 1000 if polling_timeout_ms is not None else None,
         )
 
     async def create_and_poll(
