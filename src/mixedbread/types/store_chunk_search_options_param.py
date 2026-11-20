@@ -40,12 +40,6 @@ class StoreChunkSearchOptionsParam(TypedDict, total=False):
     ranking. When enabled, rewrite_query and rerank options are ignored.
     """
 
-    lsf: Optional[bool]
-    """Whether to apply the learned scoring function to second-stage scoring.
-
-    Requires weights configured for the searched stores; silently skipped otherwise.
-    """
-
     return_metadata: bool
     """Whether to return file metadata"""
 

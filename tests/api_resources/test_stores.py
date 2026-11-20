@@ -47,10 +47,7 @@ class TestStores:
             },
             metadata={},
             tags=["production", "docs"],
-            config={
-                "contextualization": True,
-                "lsf": {"foo": "bar"},
-            },
+            config={"contextualization": True},
             file_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
         )
         assert_matches_type(Store, store, path=["response"])
@@ -362,7 +359,6 @@ class TestStores:
                 "rewrite_query": True,
                 "rerank": True,
                 "agentic": True,
-                "lsf": True,
                 "return_metadata": True,
                 "distinct": {
                     "field": "file_id",
@@ -558,7 +554,6 @@ class TestStores:
                 "rewrite_query": True,
                 "rerank": True,
                 "agentic": True,
-                "lsf": True,
                 "return_metadata": True,
                 "distinct": {
                     "field": "file_id",
@@ -649,7 +644,6 @@ class TestStores:
                 "rewrite_query": True,
                 "rerank": True,
                 "agentic": True,
-                "lsf": True,
                 "return_metadata": True,
                 "distinct": {
                     "field": "file_id",
@@ -744,7 +738,6 @@ class TestStores:
                 "rewrite_query": True,
                 "rerank": True,
                 "agentic": True,
-                "lsf": True,
                 "return_metadata": True,
                 "distinct": {
                     "field": "file_id",
@@ -843,7 +836,6 @@ class TestStores:
                 "rewrite_query": True,
                 "rerank": True,
                 "agentic": True,
-                "lsf": True,
                 "return_metadata": True,
                 "distinct": {
                     "field": "file_id",
@@ -906,10 +898,7 @@ class TestAsyncStores:
             },
             metadata={},
             tags=["production", "docs"],
-            config={
-                "contextualization": True,
-                "lsf": {"foo": "bar"},
-            },
+            config={"contextualization": True},
             file_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
         )
         assert_matches_type(Store, store, path=["response"])
@@ -1221,7 +1210,6 @@ class TestAsyncStores:
                 "rewrite_query": True,
                 "rerank": True,
                 "agentic": True,
-                "lsf": True,
                 "return_metadata": True,
                 "distinct": {
                     "field": "file_id",
@@ -1417,7 +1405,6 @@ class TestAsyncStores:
                 "rewrite_query": True,
                 "rerank": True,
                 "agentic": True,
-                "lsf": True,
                 "return_metadata": True,
                 "distinct": {
                     "field": "file_id",
@@ -1508,7 +1495,6 @@ class TestAsyncStores:
                 "rewrite_query": True,
                 "rerank": True,
                 "agentic": True,
-                "lsf": True,
                 "return_metadata": True,
                 "distinct": {
                     "field": "file_id",
@@ -1603,7 +1589,6 @@ class TestAsyncStores:
                 "rewrite_query": True,
                 "rerank": True,
                 "agentic": True,
-                "lsf": True,
                 "return_metadata": True,
                 "distinct": {
                     "field": "file_id",
@@ -1702,7 +1687,6 @@ class TestAsyncStores:
                 "rewrite_query": True,
                 "rerank": True,
                 "agentic": True,
-                "lsf": True,
                 "return_metadata": True,
                 "distinct": {
                     "field": "file_id",

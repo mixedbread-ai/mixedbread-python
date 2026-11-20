@@ -1,6 +1,6 @@
 # File generated from our OpenAPI spec by sdkgen. See CONTRIBUTING.md for details.
 
-from typing import Dict, Union, Optional
+from typing import Union, Optional
 from typing_extensions import TypeAlias
 
 from .._models import BaseModel
@@ -16,6 +16,3 @@ class StoreConfig(BaseModel):
 
     contextualization: Optional[Contextualization] = None
     """Include additional context when embedding chunks."""
-
-    lsf: Optional[Dict[str, object]] = None
-    """Learned-scoring-function settings a store opts into; an empty object enables it."""

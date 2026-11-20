@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Dict, Union, Optional
+from typing import Union
 from typing_extensions import TypeAlias, TypedDict
 
 from .contextualization_config_param import ContextualizationConfigParam
@@ -17,6 +17,3 @@ class StoreConfigParam(TypedDict, total=False):
 
     contextualization: Contextualization
     """Include additional context when embedding chunks."""
-
-    lsf: Optional[Dict[str, object]]
-    """Learned-scoring-function settings a store opts into; an empty object enables it."""
